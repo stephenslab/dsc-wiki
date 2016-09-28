@@ -8,7 +8,6 @@
 \usepackage{xspace}
 \usepackage[export]{adjustbox}
 \SetKwRepeat{Do}{do}{while}%
-
 \newcommand{\etal}{{\em et al.\@\xspace}}
 \setbeamertemplate{sections/subsections in toc}[default]
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -37,9 +36,16 @@
 \definecolor{d2tan}{HTML}{A6761D}
 \definecolor{d2gray}{HTML}{666666}
 
+\hypersetup{colorlinks,urlcolor=s1blue} % href's are correct, but navigation links are magenta
 %% Sequence data sources
 \newcommand{\dscr}{\CBr{d2orange}{DSCR}}
 \newcommand{\dscii}{\CBr{d2green}{DSC2}} 
+\makeatletter
+    \newenvironment{withoutheadline}{
+        \setbeamertemplate{headline}[default]
+        \def\beamer@entrycode{\vspace*{-\headheight}}
+    }{}
+\makeatother
 
 \title{A Simple yet Powerful Platform for \\ Dynamic Statistical Comparisons}
 \titlegraphic{\includegraphics[width=3cm]{uchicago}}
@@ -104,6 +110,31 @@ Our desired products:
       \item Assembly of statistical procedures like LEGO 
       \item Engineered by modern workflow management system standards
      \end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}{DSC2: key idea illustrated}
+  \centering \includegraphics[width=\textwidth]{figs/1}
+\end{frame}
+\begin{withoutheadline}
+\begin{frame}[fragile]
+  \centering \includegraphics[height=\textheight]{figs/2}
+\end{frame}
+\end{withoutheadline}
+\begin{withoutheadline}
+\begin{frame}[fragile]
+  \centering \includegraphics[width=\textwidth]{figs/3}
+\end{frame}
+\end{withoutheadline}
+\begin{frame}{User interface \& DSC browser}
+  A command line tool that generates HTML reports
+\begin{itemize}
+  \item Command line interface
+\end{itemize}
+  \centering \includegraphics[width=0.7\textwidth]{figs/4}
+\begin{itemize}
+  \item DSC example from \href{http://www.bioinformatics.org/labnotes/dr-tree/dsc/20160630/benchmark.html}{a lab project}
+  \item ... and the
+    \href{http://www.bioinformatics.org/labnotes/dr-tree/figures/20160630/simulation-brownian-20160630.html}{benchmark generated}
 \end{itemize}
 \end{frame}
 \end{document}
