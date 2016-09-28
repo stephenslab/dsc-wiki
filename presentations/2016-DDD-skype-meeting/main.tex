@@ -1,0 +1,109 @@
+\input{preamble.uchicago}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{algorithm2e}
+\usepackage{dsfont}
+\usepackage{mathtools}
+\usepackage{epstopdf}
+\usepackage{xspace}
+\usepackage[export]{adjustbox}
+\SetKwRepeat{Do}{do}{while}%
+
+\newcommand{\etal}{{\em et al.\@\xspace}}
+\setbeamertemplate{sections/subsections in toc}[default]
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\renewcommand{\UrlFont}{\color{ucMaroon}\footnotesize}
+
+%% Colored Blocks
+\newcommand{\CBc}[2]{\tikz \node[circle,scale=0.75,color=white,fill=#1]{\textbf{#2}};}
+\newcommand{\CBr}[2]{\tikz \node[rectangle,scale=0.9,color=white,fill=#1]{\textbf{#2}};}
+
+%% https://github.com/aschn/gnuplot-colorbrewer/blob/master/qualitative/Set1.plt
+\definecolor{s1red}{HTML}{E41A1C}
+\definecolor{s1blue}{HTML}{377EB8}
+\definecolor{s1green}{HTML}{4DAF4A}
+\definecolor{s1purple}{HTML}{984EA3}
+\definecolor{s1orange}{HTML}{FF7F00}
+\definecolor{s1yellow}{HTML}{FFFF33}
+\definecolor{s1brown}{HTML}{A65628}
+\definecolor{s1pink}{HTML}{F781BF}
+%% https://github.com/aschn/gnuplot-colorbrewer/blob/master/qualitative/Dark2.plt
+\definecolor{d2teal}{HTML}{1B9E77}
+\definecolor{d2orange}{HTML}{D95F02}
+\definecolor{d2lilac}{HTML}{7570B3}
+\definecolor{d2magenta}{HTML}{E7298A}
+\definecolor{d2green}{HTML}{66A61E}
+\definecolor{d2banana}{HTML}{E6AB02}
+\definecolor{d2tan}{HTML}{A6761D}
+\definecolor{d2gray}{HTML}{666666}
+
+%% Sequence data sources
+\newcommand{\dscr}{\CBr{d2orange}{DSCR}}
+\newcommand{\dscii}{\CBr{d2green}{DSC2}} 
+
+\title{A Simple yet Powerful Platform for \\ Dynamic Statistical Comparisons}
+\titlegraphic{\includegraphics[width=3cm]{uchicago}}
+\author[GW]{Gao Wang \& Matthew Stephens}
+\institute[UC]{
+ Stephens Lab \\ 
+ University of Chicago
+}
+\date{September 28, 2016}
+
+\begin{document}
+
+%% Title
+\begin{frame}[plain]
+  \titlepage
+  %% \footnotesize{Copyright (c) 2015 by Raman A.~Shah.\\
+  %% \href{https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode}
+  %%      {Creative Commons BY-NC-SA 3.0 Unported}.\\
+  %%  \href{https://github.com/ramanshah/intermediate\_git}
+  %%       {https://github.com/ramanshah/intermediate\_git}}
+\end{frame}
+
+%% Outline
+%%\begin{frame}[plain]
+%%\tableofcontents
+%%\end{frame}
+
+%%
+\section{Introduction}
+%%
+\begin{frame}{DSC aids in reproducible research}
+  Dynamic Statistical Comparisons (DSCs):
+\begin{itemize}
+\item Comparisons typically performed is suboptimal in many ways
+\item The idea of DSC is an attempt to make statistical comparisons
+  \textbf{easily extensible} and \textbf{reproducible}
+\end{itemize}
+\bigskip
+Our desired products: 
+\begin{itemize}
+\pause \item A \textit{platform} to make it \textbf{simple}, even \textbf{fun} to carry out DSC
+\item A \textit{DSC repository} to facilitate research in Stephens Lab
+\begin{itemize}
+  \item ... and the entire research community
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DSC2: the new DSC platform}
+  \dscr
+\begin{itemize}
+  \item Our first attempt to a DSC platform in the \texttt{R} language
+  \item A successful proof-of-concept implementation to DSC model
+  \item Lacks flexibility and capacity for complex and large scale DSC 
+\end{itemize}
+\bigskip
+  \dscii
+\begin{itemize}
+  \item Our recent attempt to a multi-language DSC platform 
+    \begin{itemize}
+      \item Mix-and-match \texttt{R}, \texttt{Python} and \texttt{Shell} programs 
+      \item Assembly of statistical procedures like LEGO 
+      \item Engineered by modern workflow management system standards
+     \end{itemize}
+\end{itemize}
+\end{frame}
+\end{document}
