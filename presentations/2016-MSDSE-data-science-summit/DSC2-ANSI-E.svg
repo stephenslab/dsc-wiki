@@ -1664,7 +1664,7 @@
        x2="1952.625"
        y2="-826.82526"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.91755295,0,0,1.036659,-2204.8874,-635.55173)" />
+       gradientTransform="matrix(0.91755295,0,0,1.036659,-2200.8874,-641.55173)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient64570-5-1-6-1-1-8"
@@ -1674,7 +1674,7 @@
        x2="1953.125"
        y2="-826.82526"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.91755295,0,0,1.036659,-2204.8874,-635.55173)" />
+       gradientTransform="matrix(0.91755295,0,0,1.036659,-2200.8874,-641.55173)" />
     <inkscape:path-effect
        effect="bend_path"
        id="path-effect6931-2"
@@ -2830,16 +2830,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.32"
-     inkscape:cx="480.3047"
-     inkscape:cy="2694.3857"
+     inkscape:zoom="0.64"
+     inkscape:cx="1543.8049"
+     inkscape:cy="1870.1831"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="mm"
      width="864mm"
      inkscape:window-width="1918"
      inkscape:window-height="2091"
-     inkscape:window-x="1920"
+     inkscape:window-x="0"
      inkscape:window-y="1"
      inkscape:window-maximized="0"
      inkscape:snap-nodes="false" />
@@ -3266,7 +3266,9 @@
          x="178.43448"
          y="-2112.489"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1"
-         id="tspan31096">to perform DSCs in research [1]</tspan></text>
+         id="tspan31096">to perform DSCs in research <tspan
+   style="fill:#ff3399;fill-opacity:1"
+   id="tspan5238">[1]</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Latin Modern Sans Bold"
@@ -3509,7 +3511,7 @@
     <path
        inkscape:connector-curvature="0"
        class="st0"
-       d="m 2744.7061,-1810.1421 c 0.19,0 0.19,0 0.38,0 2.28,0 3.99,-1.71 4.37,-3.99 1.9,-19.76 11.02,-38.19 25.65,-51.87 1.71,-1.71 1.9,-4.37 0.19,-6.08 -1.71,-1.71 -4.37,-1.9 -6.08,-0.19 -16.15,15.01 -26.22,35.34 -28.31,57.38 -0.38,2.47 1.33,4.56 3.8,4.75 z m 106.78,83.41 c -11.02,2.85 -22.8,3.23 -34.01,1.33 -2.28,-0.38 -4.56,1.14 -4.94,3.61 -0.38,2.28 1.14,4.56 3.61,4.94 4.94,0.76 10.07,1.33 15.01,1.33 7.6,0 15.2,-0.95 22.42,-2.85 2.28,-0.57 3.8,-2.85 3.04,-5.32 -0.38,-2.28 -2.85,-3.61 -5.13,-3.04 z m 61.75,-82.27 c 0,2.28 2.09,4.18 4.37,4.18 0,0 0.19,0 0.19,0 2.47,0 4.18,-2.09 4.18,-4.37 -0.95,-24.89 -12.16,-48.64 -30.97,-64.98 -1.71,-1.52 -4.56,-1.33 -6.08,0.38 -1.52,1.71 -1.33,4.56 0.38,6.08 16.91,14.82 27.17,36.29 27.93,58.71 z m -30.21,-89.68 c 0,-12.54 -10.07,-22.61 -22.61,-22.61 -1.14,0 -2.47,0 -3.61,0.19 -5.13,-9.69 -15.39,-16.34 -27.17,-16.34 -14.25,0 -26.22,9.69 -29.64,22.61 -0.38,0 -0.76,0 -1.14,0 -10.83,0 -19.38,8.74 -19.38,19.38 0,10.64 8.74,19.38 19.38,19.38 l 61.56,0 c 12.35,0 22.61,-10.07 22.61,-22.61 z m -22.61,14.06 -61.75,0 c -5.89,0 -10.83,-4.75 -10.83,-10.83 0,-5.89 4.94,-10.83 10.83,-10.83 0.19,0 0.38,0 0.57,0 l 7.03,0.38 1.9,-6.65 c 2.66,-9.5 11.4,-16.34 21.28,-16.34 8.17,0 15.77,4.56 19.57,11.78 l 2.85,5.51 6.08,-0.95 c 0.76,-0.19 1.52,-0.19 2.28,-0.19 7.79,0 14.06,6.27 14.06,14.06 0,7.79 -6.27,14.06 -13.87,14.06 z m -73.53,84.17 -84.36,0 c -5.32,0 -9.69,4.37 -9.69,9.69 l 0,53.39 c 0,5.32 4.37,9.69 9.69,9.69 l 84.36,0 c 5.32,0 9.69,-4.37 9.69,-9.69 l 0,-53.39 c 0,-5.32 -4.37,-9.69 -9.69,-9.69 z m 1.14,63.08 c 0,0.57 -0.57,1.14 -1.14,1.14 l -84.36,0 c -0.57,0 -1.14,-0.57 -1.14,-1.14 l 0,-53.39 c 0.19,-0.57 0.57,-1.14 1.14,-1.14 l 84.36,0 c 0.57,0 1.14,0.57 1.14,1.14 l 0,53.39 z m 4.18,13.87 -95,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0,2.28 1.9,4.37 4.37,4.37 l 95,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.28 -1.9,-4.37 -4.37,-4.37 z m 99.37,-51.3 10.83,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.28 -1.9,-4.37 -4.37,-4.37 l -10.83,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0.19,2.28 2.09,4.37 4.37,4.37 z m 51.87,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.47 -1.9,-4.37 -4.37,-4.37 -2.47,0 -4.37,1.9 -4.37,4.37 0.19,2.47 2.09,4.37 4.37,4.37 z m -25.84,0 10.83,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.28 -1.9,-4.37 -4.37,-4.37 l -10.83,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0,2.28 1.9,4.37 4.37,4.37 z m -51.87,-4.37 c 0,9.69 7.98,17.86 17.86,17.86 l 68.02,0 c 9.88,0 17.86,-7.98 17.86,-17.86 0,-9.69 -7.98,-17.86 -17.86,-17.86 l -68.02,0 c -9.88,0 -17.86,8.17 -17.86,17.86 z m 17.86,-9.12 68.02,0 c 5.13,0 9.12,4.18 9.12,9.12 0,5.13 -4.18,9.12 -9.12,9.12 l -68.02,0 c -5.13,0 -9.12,-4.18 -9.12,-9.12 -0.19,-5.13 3.99,-9.12 9.12,-9.12 z m 18.81,45.79 -10.83,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0,2.28 1.9,4.37 4.37,4.37 l 10.83,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.47 -1.9,-4.37 -4.37,-4.37 z m 41.04,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0,2.47 1.9,4.37 4.37,4.37 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.47 -1.9,-4.37 -4.37,-4.37 z m -15.01,0 -10.83,0 c -2.47,0 -4.37,1.9 -4.37,4.37 0,2.28 1.9,4.37 4.37,4.37 l 10.83,0 c 2.47,0 4.37,-1.9 4.37,-4.37 0,-2.47 -2.09,-4.37 -4.37,-4.37 z m 23.18,-13.49 -68.02,0 c -9.88,0 -17.86,7.98 -17.86,17.86 0,9.69 7.98,17.86 17.86,17.86 l 68.02,0 c 9.88,0 17.86,-7.98 17.86,-17.86 0,-9.88 -7.98,-17.86 -17.86,-17.86 z m 0,26.98 -68.02,0 c -5.13,0 -9.12,-4.18 -9.12,-9.12 0,-5.13 4.18,-9.12 9.12,-9.12 l 68.02,0 c 5.13,0 9.12,4.18 9.12,9.12 0,4.94 -3.99,9.12 -9.12,9.12 z"
+       d="m 2773.3511,-1809.7381 c 0.171,0 0.171,0 0.342,0 2.052,0 3.591,-1.539 3.933,-3.591 1.71,-17.784 9.918,-34.371 23.085,-46.683 1.539,-1.539 1.71,-3.933 0.171,-5.472 -1.539,-1.539 -3.933,-1.71 -5.472,-0.171 -14.535,13.509 -23.598,31.806 -25.479,51.642 -0.342,2.223 1.197,4.104 3.42,4.275 z m 96.102,75.069 c -9.918,2.565 -20.52,2.907 -30.609,1.197 -2.052,-0.342 -4.104,1.026 -4.446,3.249 -0.342,2.052 1.026,4.104 3.249,4.446 4.446,0.684 9.063,1.197 13.509,1.197 6.84,0 13.68,-0.855 20.178,-2.565 2.052,-0.513 3.42,-2.565 2.736,-4.788 -0.342,-2.052 -2.565,-3.249 -4.617,-2.736 z m 55.575,-74.043 c 0,2.052 1.881,3.762 3.933,3.762 0,0 0.171,0 0.171,0 2.223,0 3.762,-1.881 3.762,-3.933 -0.855,-22.401 -10.944,-43.776 -27.873,-58.482 -1.539,-1.368 -4.104,-1.197 -5.472,0.342 -1.368,1.539 -1.197,4.104 0.342,5.472 15.219,13.338 24.453,32.661 25.137,52.839 z m -27.189,-80.712 c 0,-11.286 -9.063,-20.349 -20.349,-20.349 -1.026,0 -2.223,0 -3.249,0.171 -4.617,-8.721 -13.851,-14.706 -24.453,-14.706 -12.825,0 -23.598,8.721 -26.676,20.349 -0.342,0 -0.684,0 -1.026,0 -9.747,0 -17.442,7.866 -17.442,17.442 0,9.576 7.866,17.442 17.442,17.442 l 55.404,0 c 11.115,0 20.349,-9.063 20.349,-20.349 z m -20.349,12.654 -55.575,0 c -5.301,0 -9.747,-4.275 -9.747,-9.747 0,-5.301 4.446,-9.747 9.747,-9.747 0.171,0 0.342,0 0.513,0 l 6.327,0.342 1.71,-5.985 c 2.394,-8.55 10.26,-14.706 19.152,-14.706 7.353,0 14.193,4.104 17.613,10.602 l 2.565,4.959 5.472,-0.855 c 0.684,-0.171 1.368,-0.171 2.052,-0.171 7.011,0 12.654,5.643 12.654,12.654 0,7.011 -5.643,12.654 -12.483,12.654 z m -66.177,75.753 -75.924,0 c -4.788,0 -8.721,3.933 -8.721,8.721 l 0,48.051 c 0,4.788 3.933,8.721 8.721,8.721 l 75.924,0 c 4.788,0 8.721,-3.933 8.721,-8.721 l 0,-48.051 c 0,-4.788 -3.933,-8.721 -8.721,-8.721 z m 1.026,56.772 c 0,0.513 -0.513,1.026 -1.026,1.026 l -75.924,0 c -0.513,0 -1.026,-0.513 -1.026,-1.026 l 0,-48.051 c 0.171,-0.513 0.513,-1.026 1.026,-1.026 l 75.924,0 c 0.513,0 1.026,0.513 1.026,1.026 l 0,48.051 z m 3.762,12.483 -85.5,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0,2.052 1.71,3.933 3.933,3.933 l 85.5,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.052 -1.71,-3.933 -3.933,-3.933 z m 89.433,-46.17 9.747,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.052 -1.71,-3.933 -3.933,-3.933 l -9.747,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0.171,2.052 1.881,3.933 3.933,3.933 z m 46.683,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.223 -1.71,-3.933 -3.933,-3.933 -2.223,0 -3.933,1.71 -3.933,3.933 0.171,2.223 1.881,3.933 3.933,3.933 z m -23.256,0 9.747,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.052 -1.71,-3.933 -3.933,-3.933 l -9.747,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0,2.052 1.71,3.933 3.933,3.933 z m -46.683,-3.933 c 0,8.721 7.182,16.074 16.074,16.074 l 61.218,0 c 8.892,0 16.074,-7.182 16.074,-16.074 0,-8.721 -7.182,-16.074 -16.074,-16.074 l -61.218,0 c -8.892,0 -16.074,7.353 -16.074,16.074 z m 16.074,-8.208 61.218,0 c 4.617,0 8.208,3.762 8.208,8.208 0,4.617 -3.762,8.208 -8.208,8.208 l -61.218,0 c -4.617,0 -8.208,-3.762 -8.208,-8.208 -0.171,-4.617 3.591,-8.208 8.208,-8.208 z m 16.929,41.211 -9.747,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0,2.052 1.71,3.933 3.933,3.933 l 9.747,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.223 -1.71,-3.933 -3.933,-3.933 z m 36.936,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0,2.223 1.71,3.933 3.933,3.933 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.223 -1.71,-3.933 -3.933,-3.933 z m -13.509,0 -9.747,0 c -2.223,0 -3.933,1.71 -3.933,3.933 0,2.052 1.71,3.933 3.933,3.933 l 9.747,0 c 2.223,0 3.933,-1.71 3.933,-3.933 0,-2.223 -1.881,-3.933 -3.933,-3.933 z m 20.862,-12.141 -61.218,0 c -8.892,0 -16.074,7.182 -16.074,16.074 0,8.721 7.182,16.074 16.074,16.074 l 61.218,0 c 8.892,0 16.074,-7.182 16.074,-16.074 0,-8.892 -7.182,-16.074 -16.074,-16.074 z m 0,24.282 -61.218,0 c -4.617,0 -8.208,-3.762 -8.208,-8.208 0,-4.617 3.762,-8.208 8.208,-8.208 l 61.218,0 c 4.617,0 8.208,3.762 8.208,8.208 0,4.446 -3.591,8.208 -8.208,8.208 z"
        id="path9"
        style="fill:#ffb547;fill-opacity:1" />
     <text
@@ -4093,8 +4095,8 @@
     <ellipse
        style="opacity:1;fill:url(#linearGradient5451);fill-opacity:1;stroke:url(#linearGradient5443);stroke-width:0.97452152;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5435"
-       cx="-830.45026"
-       cy="-1492.6875"
+       cx="-826.45026"
+       cy="-1498.6875"
        rx="417.19983"
        ry="442.19983"
        transform="matrix(0,1,-1,0,0,0)" />
@@ -5867,115 +5869,115 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:38.24158478px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="1454.78"
-       y="-1125.6088"
+       x="1464.5591"
+       y="-1113.3378"
        id="text9980"
        sodipodi:linespacing="125%"
        transform="scale(1.0225877,0.97791123)"><tspan
          sodipodi:role="line"
          id="tspan9982"
-         x="1454.78"
-         y="-1125.6088"
+         x="1464.5591"
+         y="-1113.3378"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:30px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffb547;fill-opacity:1">&gt; dsc settings.dsc -j8 --host viola.stephenslab.uchicago.edu</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-1091.9697"
+         x="1464.5591"
+         y="-1079.6987"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1"
          id="tspan10024">INFO: DSC script exported to <tspan
    style="fill:#8a9045;fill-opacity:1"
    id="tspan10030">settings.html</tspan> ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-1059.1058"
+         x="1464.5591"
+         y="-1046.8348"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1"
          id="tspan10028">INFO: Constructing DSC from <tspan
    style="fill:#8a9045;fill-opacity:1"
    id="tspan10044">settings.dsc</tspan> ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-1026.2419"
+         x="1464.5591"
+         y="-1013.9709"
          id="tspan9988"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">INFO: Running DSC jobs ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-993.37811"
+         x="1464.5591"
+         y="-981.10712"
          id="tspan9990"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_1+test_3+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-960.51422"
+         x="1464.5591"
+         y="-948.24323"
          id="tspan9992"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_1+test_4+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-927.65039"
+         x="1464.5591"
+         y="-915.37939"
          id="tspan9994"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_2+test_3+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-894.7865"
+         x="1464.5591"
+         y="-882.5155"
          id="tspan9996"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_2+test_4+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-861.92267"
+         x="1464.5591"
+         y="-849.65167"
          id="tspan9998"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_3+test_3+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-829.05878"
+         x="1464.5591"
+         y="-816.78778"
          id="tspan10000"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_3+test_4+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-796.19495"
+         x="1464.5591"
+         y="-783.92395"
          id="tspan10002"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_4+test_3+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-763.33105"
+         x="1464.5591"
+         y="-751.06006"
          id="tspan10004"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+correction_1+transform_4+test_4+score_1: 100% [===========] 5 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-730.46722"
+         x="1464.5591"
+         y="-718.19623"
          id="tspan10006"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">... ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-697.60333"
+         x="1464.5591"
+         y="-685.33234"
          id="tspan10008"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+test_1: 100% [====================================] 2 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-664.7395"
+         x="1464.5591"
+         y="-652.46851"
          id="tspan10010"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">simulate_1+test_2: 100% [===================================] 2 20.8/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-631.87561"
+         x="1464.5591"
+         y="-619.60461"
          id="tspan10012"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">... ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-599.01178"
+         x="1464.5591"
+         y="-586.74078"
          id="tspan10014"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">DSC: 100% [======================================] 116 6.1/s</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-566.14789"
+         x="1464.5591"
+         y="-553.87689"
          id="tspan10016"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">INFO: Building output database <tspan
    style="fill:#8a9045;fill-opacity:1"
    id="tspan10058">rna_seq.rds</tspan> ...</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-533.28406"
+         x="1464.5591"
+         y="-521.01306"
          id="tspan10018"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">INFO: DSC complete!</tspan><tspan
          sodipodi:role="line"
-         x="1454.78"
-         y="-500.42017"
+         x="1464.5591"
+         y="-488.14917"
          id="tspan10020"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:26.29109001px;font-family:'Agency FB';-inkscape-font-specification:'Agency FB Bold Condensed';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">INFO: Elapsed time <tspan
    style="fill:#8a9045;fill-opacity:1"
@@ -6023,7 +6025,7 @@
        id="path30544-34-4-6-1-5-2"
        sodipodi:sides="5"
        sodipodi:cx="855.39679"
-       sodipodi:cy="887.65277"
+       sodipodi:cy="893.65277"
        sodipodi:r1="17.422127"
        sodipodi:r2="8.7110643"
        sodipodi:arg1="2.5535901"
@@ -6031,24 +6033,26 @@
        inkscape:flatsided="false"
        inkscape:rounded="0"
        inkscape:randomized="0"
-       d="m 840.9007,897.31683 5.7921,-10.01516 -4.96661,-10.44914 11.31484,2.41376 8.40295,-7.95249 1.20085,11.50694 10.15993,5.53423 -10.57267,4.69792 -2.12377,11.37284 -7.73513,-8.60347 z"
+       d="m 840.9007,903.31683 5.7921,-10.01516 -4.96661,-10.44914 11.31484,2.41376 8.40295,-7.95249 1.20085,11.50694 10.15993,5.53423 -10.57267,4.69792 -2.12377,11.37284 -7.73513,-8.60347 z"
        inkscape:transform-center-x="-1.4559172"
        inkscape:transform-center-y="0.21696641" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="896.40302"
-       y="913.49829"
+       y="919.49829"
        id="text30546-4-84-9-3-2-8"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="896.40302"
-         y="913.49829"
+         y="919.49829"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
-         id="tspan6451">DSC harnesses workflow systems [3] yet is tailored</tspan><tspan
+         id="tspan6451">DSC harnesses workflow systems <tspan
+   style="fill:#ff3399;fill-opacity:1"
+   id="tspan5242">[3]</tspan> yet is tailored</tspan><tspan
          sodipodi:role="line"
          x="896.40302"
-         y="983.49829"
+         y="989.49829"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan6459">for use with methods development in statistics </tspan></text>
     <text
@@ -6070,7 +6074,7 @@
        id="path30544-34-4-6-1-5-2-3-3"
        sodipodi:sides="5"
        sodipodi:cx="855.35046"
-       sodipodi:cy="789.40186"
+       sodipodi:cy="795.40186"
        sodipodi:r1="17.422127"
        sodipodi:r2="8.7110643"
        sodipodi:arg1="2.5535901"
@@ -6078,19 +6082,19 @@
        inkscape:flatsided="false"
        inkscape:rounded="0"
        inkscape:randomized="0"
-       d="m 840.85438,799.06591 5.7921,-10.01515 -4.96662,-10.44914 11.31484,2.41376 8.40295,-7.9525 1.20086,11.50695 10.15992,5.53423 -10.57266,4.69792 -2.12378,11.37283 -7.73512,-8.60347 z"
+       d="m 840.85438,805.06591 5.7921,-10.01515 -4.96662,-10.44914 11.31484,2.41376 8.40295,-7.9525 1.20086,11.50695 10.15992,5.53423 -10.57266,4.69792 -2.12378,11.37283 -7.73512,-8.60347 z"
        inkscape:transform-center-x="-1.4559172"
        inkscape:transform-center-y="0.21696641" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="896.35675"
-       y="815.24731"
+       y="821.24731"
        id="text30546-4-84-9-3-2-8-6-2"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="896.35675"
-         y="815.24731"
+         y="821.24731"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan5942-6">DSC pipelines are linked by <tspan
    style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold Oblique'"
@@ -6222,7 +6226,9 @@
          x="1363.4453"
          y="-2450.4456"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1"
-         id="tspan31570-3">Readily usable [2]</tspan><tspan
+         id="tspan31570-3">Readily usable <tspan
+   style="fill:#ff3399;fill-opacity:1"
+   id="tspan5240">[2]</tspan></tspan><tspan
          sodipodi:role="line"
          x="1363.4453"
          y="-2380.4456"
@@ -6265,24 +6271,24 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       x="2293.5679"
+       x="2289.5679"
        y="562.61169"
        id="text30546-4-84-9-3-2-8-5-4"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="2293.5679"
+         x="2289.5679"
          y="562.61169"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan5893-4-9">[3] DSC2 uses <tspan
    style="font-size:40px;fill:#ffffff;fill-opacity:0.39215686;stroke:#ffffff;stroke-opacity:1"
    id="tspan5859-7-5">pysos </tspan>library for </tspan><tspan
          sodipodi:role="line"
-         x="2293.5679"
+         x="2289.5679"
          y="612.61169"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan6430-8">    workflow management and </tspan><tspan
          sodipodi:role="line"
-         x="2293.5679"
+         x="2289.5679"
          y="662.61169"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan6564"><tspan
@@ -6330,22 +6336,22 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       x="2294.2207"
+       x="2292.2207"
        y="838.32428"
        id="text30546-4-84-9-3-2-8-5-4-6"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="2294.2207"
+         x="2292.2207"
          y="838.32428"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan5893-4-9-1">[4] The RNA-Seq illustration is</tspan><tspan
          sodipodi:role="line"
-         x="2294.2207"
+         x="2292.2207"
          y="888.32428"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan6672">    adapted from a DSCR</tspan><tspan
          sodipodi:role="line"
-         x="2294.2207"
+         x="2292.2207"
          y="938.32428"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none"
          id="tspan6564-1">    implemention by Mengyin Lu    </tspan></text>
@@ -6366,5 +6372,17 @@
          y="1040.1128"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:56px;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans Bold';fill:#ff3399;fill-opacity:1;"
          id="tspan31337-9-9-6-9" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="1289.3127"
+       y="-1150.3055"
+       id="text5540-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="1289.3127"
+         y="-1150.3055"
+         id="tspan5546-7"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:45px;font-family:'Viner Hand ITC';-inkscape-font-specification:'Viner Hand ITC'">Command interface</tspan></text>
   </g>
 </svg>
