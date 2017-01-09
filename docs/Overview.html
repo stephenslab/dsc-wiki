@@ -1,3 +1,4 @@
+
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -6,12 +7,16 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
-
+<style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
       href="site_libs/highlight/textmate.css"
       type="text/css" />
 <script src="site_libs/highlight/highlight.js"></script>
-
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
    window.setTimeout(function() {
@@ -22,7 +27,32 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
 
 <style type = "text/css">
 .main-container {
@@ -47,7 +77,39 @@ button.code-folding-btn:focus {
 </style>
 
 
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
 
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
 
 <script>
 // manage active state of menu based on current page
@@ -121,3 +183,57 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Script of Scripts (SoS)</strong> is a <strong>file format</strong> for the inclusion of
+scripts in multiple languages into a single executable script, an
+<strong>interactive environment</strong> and <strong>notebook tool</strong> for working with different scripts, and
+a <strong>workflow engine</strong> for the execution of workflows consisting of scripts
+in different languages. It is designed for data scienticists and bioinformatics who routinely work with scripts in different languages such as Bash, R, Python, Julia, and Perl.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="File-Format-with-an-IDE">File Format with an IDE<a class="anchor-link" href="#File-Format-with-an-IDE">&#182;</a></h1><p>SoS helps you record all your analyses into a single script with minimal effort. It allows you to include scripts in different languages literally into a <code>.sos</code> files, and execute them as a single workflow. Additional SoS statements could be used to pass command line arguments to the script, customize scripts with variables, and control how these scripts are executed in batch mode. A Spyder IDE can be used to edit and execute SoS files in an integrated environment.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Multi-Language-Notebook">Multi-Language Notebook<a class="anchor-link" href="#Multi-Language-Notebook">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As an <strong>interactive environment</strong> and <strong>notebook tool</strong> that promotes <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, SoS
+allows you to perform and record your analysis in different languages in a single <a href="http://jupyter.org/">Jupyter notebook</a>, with simple data exchange between multiple Jupyter kernels. This allows you to, for example, collect and analyze data in Python, and visualize it in R.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Forward-and-Makefile-Style-Workflows">Forward and Makefile Style Workflows<a class="anchor-link" href="#Forward-and-Makefile-Style-Workflows">&#182;</a></h1><p>As a <strong>workflow engine</strong>, SoS helps you oraganize your commands and scripts in different languages into readable workflows that can be easily understood and modified by others. The workflows can be specified in both forward (step by step) style, makefile (dependency rules) style, and even a mixture of both styles. Beacuse of a great emphasis on readability, SoS is an easy-to-use alternative to specialized workflow systems such as <a href="http://www.commonwl.org/">CWL</a> which makes it an ideal tool for the creation and maintainance of workflows that need to be frequently updated and shared with others.</p>
+
+</div>
+</div>
+</div>
