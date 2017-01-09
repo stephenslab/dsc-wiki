@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>Installation</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  // sections numbering
+             'number_sections': false, 
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+
+            table_of_contents(cfg,st);
+
+            var file=documentationDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=documentation;
+            var pos=documentation.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/documentation/'+file+'.html'+'"]').css("color","#126dce");
+
+
+            $('<li id="indexHome"><a href="'+path+'/index.html#documentation"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.4+, because it takes advantage of some new features introduced since Python 3.4. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code>. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
+<p>We will use <code>miniconda</code>, which contains Python 3 plus <code>conda</code>, a package manager for Python like <code>cran</code> for R. Perhaps you have heard of <code>anaconda</code>, which is essentially <code>miniconda</code> plus over a hundred commonly used Python packages. DSC2 only depends on a few of the packages thus <code>miniconda</code> will serve the purpose.</p>
+<h3 id="For-Linux">For Linux<a class="anchor-link" href="#For-Linux">&#182;</a></h3>
+<pre><code>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
+<h3 id="For-MacOS">For MacOS<a class="anchor-link" href="#For-MacOS">&#182;</a></h3><p>Download the <code>conda</code> package from <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh">here</a>, and install it via terminal command:</p>
+
+<pre><code>bash Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
+<p>Follow the prompt to install it (use <code>ctrl+F</code> to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: say Yes unless you know what you are doing).</p>
+<p>After the program is installed, you have to reload your <code>bash</code> profile. If you do not know what this means, just exit the current terminal and open up a new one.</p>
+<h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be found at <a href="https://github.com/stephenslab/dsc2/releases">https://github.com/stephenslab/dsc2/releases</a>. You can download and decompress the package, then run:</p>
+
+<pre><code>cd src
+conda install numpy pandas
+python setup.py install</code></pre>
+<p>to install it. <code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> will take a while to install.</p>
+<p><em>Note: If you have a Mac and use <a href="cran.r-project.org">R</a> only from RStudio (not from command line), then you might experience an error message in DSC2 installation complaining that R command is not found. This is because the link to your R program from Mac terminal was accidentally wiped, most likely due to a major system update. In that case we suggest you download the same version of R from <a href="cran.r-project.org">cran</a> and re-install it. The command line link will be recovered after install.</em></p>
+<h2 id="Developmental-Version">Developmental Version<a class="anchor-link" href="#Developmental-Version">&#182;</a></h2><p>Since some DSC2 features are directly implemented into <code>pysos</code> library, the developmental version of DSC2 requires developmental version of <code>pysos</code>. Therefore the latest <code>pysos</code> library has to be installed before updating DSC2:</p>
+
+<pre><code>git clone https://github.com/vatlab/SOS.git
+python setup.py install</code></pre>
+<p>Then install DSC2:</p>
+
+<pre><code>git clone https://github.com/stephenslab/dsc2.git
+python setup.py install</code></pre>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+</html>
