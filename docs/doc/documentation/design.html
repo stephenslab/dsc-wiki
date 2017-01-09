@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>design</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  // sections numbering
+             'number_sections': false, 
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+
+            table_of_contents(cfg,st);
+
+            var file=documentationDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=documentation;
+            var pos=documentation.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/documentation/'+file+'.html'+'"]').css("color","#126dce");
+
+
+            $('<li id="indexHome"><a href="'+path+'/index.html#documentation"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Design-and-Features">Design and Features<a class="anchor-link" href="#Design-and-Features">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Design-Overview">Design Overview<a class="anchor-link" href="#Design-Overview">&#182;</a></h2><p>DSC2 is designed to execute a sequence of computational steps that generate (or gather) data, perform statistical analyses and evaluate the performance of statistical procedures involved. Each step will take some input and create some output. A DSC2 user thus has two jobs: define the steps, and define the sequence of steps.</p>
+<p>A typical DSC sequences consists of 3 logical types of steps: <strong>scenario</strong>, <strong>method</strong> and <strong>score</strong>, where</p>
+<ul>
+<li><strong>scenario</strong>: provides input data and / or computational routines that generate input data.</li>
+<li><strong>method</strong>: defines statistical procedures that analyzes data.</li>
+<li><strong>score</strong>: defines methods that evaluates the result of data analyses against the "truth" (model from which the data is generated) and calculates scores as measures of evaluations.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Peter: I was confused here because this is only an illustration of DSC2; not all use cases of DSC2 need to 
+follow this approach. I think you need to reframe this an illustrative example, and emphasize that DSC2
+is very generic.</p>
+<p>Also, maybe use the plural for all three (scenarios, methods and scores)?</p>
+</blockquote>
+<p><em>FIXME: At this point I'm not sure if we want to emphasize this typical logic, or emphasize it this heavily. This is essentially DSCR logic. Though DSC2 is more generic I do not want to make people think / use it as a tool to run pipelines. In the domain of methods comparisons any DSC sequence should follow along the line of these 3 broad types of steps</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>DSC allows for flexible combination of computational steps, as illustrated in the pipeline below,</p>
+
+<pre><code>  | scenario 1               |    | method 1 -&gt;                      |    | score 1 |
+  | scenario 2               | -&gt; | method 2 -&gt; method 1             | -&gt; | score 2 |
+  | scenario 1 -&gt; scenario 3 |    | method 3 -&gt; method 2 -&gt; method 1 |    | ...     |
+  | scenario 4 -&gt; ...        |    | method 4 -&gt; ...                  |    | ...     |</code></pre>
+<p>where each <strong>scenario</strong>, <strong>method</strong> and <strong>score</strong> is a computational step which can be different approaches to generate data, perform statistical analysis, or measure performance of methods, or can be the same approaches with different parameter settings. It is good to have the 3 logical types in mind when developing a DSC, though these are not necessarily keywords in DSC syntax, as will be demonstrated in the case study below. Naturally you do not have to fully developing each of these logical steps particularly in the exploratory phase of research.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Peter: What do the arrows mean here?</p>
+</blockquote>
+<p><em>FIXME: replace this text illustration with a figure generated via inkscape</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-Case-Study">A Case Study<a class="anchor-link" href="#A-Case-Study">&#182;</a></h2><p>To understand the DSC design we review a simple example with (mostly) self-explanatory syntax. DSC syntax is completely documented <a href="02-DSC2-Syntax">elsewhere</a>; readers should not worry about learning the syntax at this point.</p>
+<blockquote><p>Peter: Can you briefly describe (in a few sentences) what is the aim of this example? It looks like 
+this example is comparing two methods (windsor1 and windsor2) and evaluating these methods
+by computing the MSE between the estimate and the ground-truth value. Is this correct?
+I realize that you describe this example in more detail below, but it is useful to have
+a brief description upfront.</p>
+</blockquote>
+<p>The example reads:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R, rcauchy.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:5)</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_loc</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_loc</span>
+
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">transform</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winsor1.R, winsor2.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+          <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">fraction</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+          <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">multiple</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$loc</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_loc</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">(transform * estimate, estimate) *</span>
+           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R</span>
+      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>Each section in the DSC file, except for the last "DSC" section, is called a <em>DSC block</em>. Each DSC block defines <strong>a family of</strong> computational routines (or steps, defined by <code>exec</code> entries), input to these routines (<code>params</code>) and output (<code>return</code>). The family of routines in the same block share similar (not necessarily the same) input parameters, and strictly the same return values. In this example, computational steps from the same block are logically concurrent to each other, because routines for all <code>exec</code> entries are independent. The "DSC" section defines the sequence of steps to execute, via logical combinations of available DSC blocks.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Peter: I think I mostly understand what the paragraph above is saying. But maybe you can give an example?
+e.g., in the "transform" block, are the family of routines <code>winsor1.R</code> and <code>winsor2.R</code>?</p>
+<p>Are you required to define 'exec', 'params' and 'return' for all blocks? Are there many other 
+parameters that aren't mentioned here?</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example, the first part of the DSC sequence calls the "simulate" block, which has two computational routines <code>rcauchy.R</code> and <code>rt.R</code>. These routines generate <code>n</code> random samples under Cauchy distribution with location parameter <code>true_loc</code>, and <em>t</em> distribution with non-centrality parameter <code>true_loc</code>, respectively. There are 2 choices of computational routines, each routine has one choice of <code>n</code> (1000) and two choices of <code>true_loc</code> (0 and 1). 5 replicates are evaluated as defined by <code>seed</code>. As a result, the "simulate" block has 20 parallel computational steps.</p>
+<p>The second part of the sequence consists of "transform" and "estimate" blocks. "transform" block performs two types of winsorization on input data. "estimate" block defines two computational routines to estimate location parameter, via sample mean (<code>mean.R</code>) and median (<code>median.R</code>) respectively. In this part, there are two types of procedures: the first is <code>transform + estimate</code> which runs the "transform" family of steps first, then run the "estimate" family after data has been transformed; the second is <code>estimate</code> which directly performs parameter estimation with the original data produced by its upstream computational steps.</p>
+<p>The last part of the sequence calls the "mse" block, which has a single computational routine <code>MSE.R</code> to calculate the mean square error as a summary of comparison between the <em>true</em> (<code>true_mean</code>) and <em>estimated</em> (<code>mean_est</code>) location parameters, taking <code>$true_loc</code> and <code>$loc</code> respectively which correspond to the <code>return</code> values from previous computational steps.</p>
+<p>In this case study, the design of blocks logically follows the <strong>scenario</strong>, <strong>method</strong> (pre-processing and analysis), and <strong>score</strong> paradigm; thus there are 3 blocks. It does not have to be this way, though: one can even make separated blocks for each computational routine (in this case for every R script) and combine them in the <em>run</em> sequence in <em>DSC</em> section. The style adopted in this example appears to be the most reasonable choice because computational routines sharing input and output are consolidated into single blocks, and logic between blocks reflecting the DSC design are clearly presented.</p>
+<blockquote><p>Peter: I'm confused---aren't there 4 blocks in this example? (simulate, transform, estimate, mse)</p>
+</blockquote>
+<p>DSC2 script implements an implicit rule for the scope of variables starting with <code>$</code> sigil. Within a DSC block, all parameter variables should be considered <em>local</em> to the block, not accessible from outside the block; all returned values should be considered <em>global</em> variable accessible from other DSC blocks via <code>$</code> sigil. It is legitimate and sometimes necessary that multiple blocks have the same variable name in their return entry, for example here both "simulate" and "transform" blocks return <code>x</code>. In such case, which block provides value <code>$x</code> depends on the context of the DSC sequence. The implicit rule here is that DSC2 will always search for the nearest upstream block that yields the variable it looks for. For example, the DSC sequence <code>simulate * (transform * estimate, estimate) * mse</code> can be expanded to <code>simulate * transform * estimate * mse</code> and <code>simulate * estimate * mse</code>. In the first sequence, <code>$x</code> in "estimate" comes from its direct upstream neighbor "transform", not "simulate", while in the second sequence <code>$x</code> comes from "simulate".</p>
+<blockquote><p>Peter: The "transform" block takes x as input and returns x. Could DSC2 run transform multiple times?</p>
+</blockquote>
+<h2 id="Executable-modes">Executable modes<a class="anchor-link" href="#Executable-modes">&#182;</a></h2><p>DSC2 will consider a computational routine a <em>plugin</em> when the <code>exec</code> is R or Python script, and the return value is not <a href="02-DSC2-Syntax#file">File()</a>. Computational results and communications between blocks will be handled implicitly (via RDS files). In plugin mode, users only have to make sure the variables used in plugin scripts are defined in the DSC script not the plugin scripts, and the return value for the DSC block should be one or multiple variables in the plugin script. All the computational routines in the example above are plugins written in R.</p>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+</html>
