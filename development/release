@@ -63,7 +63,7 @@ output: _input[0].replace('/src/', '/doc/').replace('.ipynb', '.html')
 run:
 	cd ../docs/src/documentation
 	sos convert ${_input!a} ${_output!a}  --template toc_doc
-  	perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' ${_output!a}
+  perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' ${_output!a}
 
 [convert-tutorials]
 input:  '../docs/src/tutorials/*.ipynb', group_by=1
@@ -73,15 +73,15 @@ output: _input[0].replace('/src/', '/doc/').replace('.ipynb', '.html')
 run: 
 	cd ../docs/src/tutorials
 	sos convert ${_input!a} ${_output!a}  --template toc_tut
-  	perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' ${_output!a}
+  perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' ${_output!a}
 
 [convert-homepage]
 input:  '../docs/src/homepage/*.ipynb', group_by=1
 output: "../docs/${_input!bn}.html"
 
 run: 
-	cd ../docs/src/tutorials
-	sos convert ${_input!a} ${_output!a} --template basic
+	cd ../docs/src/homepage
+	sos convert ${_input!a} ${_output!a} --template homepage.tpl
 
 [convert-examples]
 input:  '../docs/src/examples/*.sos', 'release', group_by=1
@@ -97,7 +97,7 @@ run: workdir='../docs/doc/examples'
 #sos_run('getFileNames')
 sos_run('convert-documentation')
 #sos_run('convert-tutorials')
-#sos_run('convert-homepage')
+sos_run('convert-homepage')
 #sos_run('convert-examples')
 
 # push changes to website

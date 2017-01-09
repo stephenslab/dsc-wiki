@@ -1,4 +1,8 @@
+{%- extends 'basic.tpl' -%}
 
+
+{%- block header -%}
+{{ super() }}
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -203,18 +207,9 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Welcome-to-DSC2">Welcome to DSC2<a class="anchor-link" href="#Welcome-to-DSC2">&#182;</a></h1><p>DSC2 is successor of the <a href="https://github.com/stephens999/dscr">Dynamic Statistical Comparisons in R</a>.</p>
-<p>This wiki is the main source of documentation for both developers and users of the DSC2 project. If you are new to the concept of DSC, it may worth reading this <a href="http://stephens999.github.io/blog/2014/10/Data-Driven-Discovery.html">blog post</a> to understand the motivation behind this project.</p>
-<p>This work is supported by the the Gordon and Betty Moore Foundation via an Investigator Award to Matthew Stephens, <a href="https://www.moore.org/grants/list/GBMF4559">Grant GBMF4559</a>, as part of the <a href="https://www.moore.org/programs/science/data-driven-discovery">Data-Driven Discovery program</a>. If you have any questions or want to share some information with the developer / user community, please open a <a href="https://github.com/stephenslab/dsc2/issues">github issue</a>.</p>
 
-</div>
-</div>
-</div>
+{%- endblock header -%}
+{% block footer %}
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago
 <hr>
@@ -264,3 +259,4 @@ $(document).ready(function () {
 
 </body>
 </html>
+{% endblock %}

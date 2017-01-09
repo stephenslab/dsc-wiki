@@ -31,8 +31,11 @@ def findImages(docFile):
 	docFile.write(docString+"\n")
 
 
-with open(path+"/src/homepage/Documentation.ipynb") as json_data:
+with open(path+"/src/homepage/documentation.ipynb") as json_data:
  	d=json.load(json_data)
+with open(path+"/src/homepage/tutorials.ipynb") as json_data:
+ 	d.update(json.load(json_data))
+
 
 tutString="var tutorials=["
 docString="var documentation=["
