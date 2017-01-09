@@ -1,102 +1,186 @@
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Tutorials">Tutorials<a class="anchor-link" href="#Tutorials">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="doc/tutorials/Quick_Start_Guide.html">Quick Start Guide</a><br>
-    Brief introduction to the SoS format and basic usages</p>
-<p><a href="doc/tutorials/Using_SoS_Interactively.html">Using SoS interactively</a><br>
-Interactive execution of SoS workflows</p>
-<ul>
-<li><a href="doc/tutorials/Using_SoS_with_Jupyter_Notebook.html">Using SoS with Jupyter notebook</a><br>
-  For interactive data analysis in a notebook interface</li>
-<li><a href="doc/tutorials/Using_SoS_with_Spyder.html">Using Spyder as SoS IDE</a><br>
-  For data analysis and workflow development with an IDE</li>
-<li><a href="doc/tutorials/Using_SoS_with_IPython.html">Using Spyder with iPython</a><br>
-  For experienced iPyhton user</li>
-<li><a href="doc/tutorials/Using_SoS_with_VIM.html">using SoS with VIM</a><br>
-  For hard-core vim user</li>
-</ul>
-<p><a href="doc/tutorials/Execution_of_Workflow.html">Running SoS workflows</a><br>
-   Make effective use of SoS in batch mode</p>
-<p><a href="doc/tutorials/SoS_Docker_Guide.html">SoS Docker Guide</a><br>
-   Running commands in docker containers</p>
-<p><a href="doc/tutorials/Generating_Reports.html">Generating Reports</a><br>
-   Generate reports using <a href="http://pandoc.org/">pandoc</a> or <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a></p>
-<p><a href="doc/tutorials/File_Conversion.html">File Conversion</a><br>
-   Conversion between <code>.sos</code>, <code>.ipynb</code>, <code>.html</code> and other formats</p>
-<p><a href="doc/tutorials/Project_Management.html">Project Management</a><br>
-   Manage files and archive projects.</p>
+
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="installation.html">Installation</a>
+</li>
+<li>
+  <a href="documentation.html">Documentation</a>
+</li>
+<li>
+  <a href="tutorial.html">Tutorial</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Welcome to DSC2</h1>
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h1><p><a href="doc/documentation/SoS_Syntax.html">SoS Syntax</a><br>
-   An overview of the SoS syntax and key components of SoS scripts</p>
-<ul>
-<li><a href="doc/documentation/String_Interpolation.html">String Interpolation</a><br>
-  Compose scripts in other languages using SoS variables</li>
-</ul>
-<p><a href="doc/documentation/Workflow_Specification.html">Defining workflows</a><br>
-  Define one or more workflows in a SoS script</p>
-<ul>
-<li><a href="doc/documentation/Understanding_Targets.html">Understanding Targets</a><br>
-Beyond file targets</li>
-<li><a href="doc/documentation/SoS_Actions.html">SoS Actions</a><br>
-How to use and define SoS actions</li>
-<li><a href="doc/documentation/SoS_Step.html">Steps of workflow</a><br>
-Step input, depends, output, and process</li>
-<li><a href="doc/documentation/Auxiliary_Steps.html">Makefile-style workflows</a><br>
-Steps that are executed only when needed</li>
-<li><a href="doc/documentation/External_task.html">External tasks and job queues</a><br>
-Running and monitoring tasks externally</li>
-</ul>
-<p><a href="doc/documentation/User_Interface.html">User Interface</a><br>
-Command line and notebook interface</p>
-<ul>
-<li><a href="doc/documentation/Command_Line_Options.html">Command line options</a><br>
-Customize workflow with command line options</li>
-<li><a href="doc/documentation/Configuration_Files.html">Configuration files</a><br>
-Use of global, local and user-specified configuration files</li>
-<li><a href="doc/documentation/Notebook_Interface.html">Jupyter notebook interface</a><br>
-Using SoS with Jupyter notebook</li>
-</ul>
-<p><a href="doc/documentation/Function_Reference.html">Function Reference</a><br>
-   References to all SoS functions, actions, and objects.</p>
-<p><a href="doc/documentation/Extending_SoS.html">Extending SoS</a><br>
-  Define your own target, language, converter.</p>
+
+
+<p>DSC2 is successor of the <a href="https://github.com/stephens999/dscr."> Dynamic Statistical Comparisons in R</a>.</p>
+
+<p>This wiki is the main source of documentation for both developers and users of the DSC2 project. If you are new to the concept of DSC, it may worth reading this <a href="http://stephens999.github.io/blog/2014/10/Data-Driven-Discovery.html"> blog post</a> to understand the motivation behind this project.</p>
+
+<p>
+ This work is supported by the the Gordon and Betty Moore Foundation via an Investigator Award to Matthew Stephens, <a href="https://www.moore.org/grants/list/GBMF4559">Grant GBMF4559</a>, as part of the <a href="https://www.moore.org/programs/science/data-driven-discovery"> Data-Driven Discovery program</a>. If you have any questions or want to share some information with the developer / user community, please open a <a href="https://github.com/stephenslab/dsc2/issues">github issue</a>.</p>
+</p>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago
+<hr>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h1><p>SoS scripts for the maintenance of SoS</p>
-<ul>
-<li><a href="doc/examples/update_toc.html">update_toc.sos</a><br>
- A sos script that was used by SoS to update TOC of the wiki pages.</li>
-<li><a href="doc/examples/release.html">release</a><br>
- Script to manage SoS website and release SoS to pip, docker hub, etc</li>
-</ul>
 
-</div>
-</div>
-</div>
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>

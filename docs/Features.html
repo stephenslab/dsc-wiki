@@ -1,109 +1,186 @@
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Readable-Multi-Script-Format">Readable Multi-Script Format<a class="anchor-link" href="#Readable-Multi-Script-Format">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The SoS format is highly readable with almost verbatim inclusion of scripts in other languages. Anyone, including those who have no idea about SoS, would be able to read and modify workflows written in SoS format. This makes SoS an idea tool for the sharing of workflows with others, and for the creation of workflows that would be frequently updated for newer versions of tools.</p>
+
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="installation.html">Installation</a>
+</li>
+<li>
+  <a href="documentation.html">Documentation</a>
+</li>
+<li>
+  <a href="tutorial.html">Tutorial</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Welcome to DSC2</h1>
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Multi-Kernel-Jupyter-Notebook">Multi-Kernel Jupyter Notebook<a class="anchor-link" href="#Multi-Kernel-Jupyter-Notebook">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>As an <strong>interactive environment</strong> and <strong>notebook tool</strong> that promotes <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, SoS
-allows you to perform and record your analysis in different languages in a single <a href="http://jupyter.org/">Jupyter notebook</a>, with seamless integration
-of multiple Jupyter kernels (e.g. python, and <a href="https://github.com/IRkernel/IRkernel">R</a>). The ability toexchange data between different kernels allows you to use the most appropriate languages for different parts of your work.</p>
+
+
+<p>DSC2 is successor of the <a href="https://github.com/stephens999/dscr."> Dynamic Statistical Comparisons in R</a>.</p>
+
+<p>This wiki is the main source of documentation for both developers and users of the DSC2 project. If you are new to the concept of DSC, it may worth reading this <a href="http://stephens999.github.io/blog/2014/10/Data-Driven-Discovery.html"> blog post</a> to understand the motivation behind this project.</p>
+
+<p>
+ This work is supported by the the Gordon and Betty Moore Foundation via an Investigator Award to Matthew Stephens, <a href="https://www.moore.org/grants/list/GBMF4559">Grant GBMF4559</a>, as part of the <a href="https://www.moore.org/programs/science/data-driven-discovery"> Data-Driven Discovery program</a>. If you have any questions or want to share some information with the developer / user community, please open a <a href="https://github.com/stephenslab/dsc2/issues">github issue</a>.</p>
+</p>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago
+<hr>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Mixed-Style-Workflows">Mixed Style Workflows<a class="anchor-link" href="#Mixed-Style-Workflows">&#182;</a></h1><p>SoS follows your definition of workflow that allows you to define workflows in both foward and makefile style, even a mixture of both. More specifically, you can define workflows as ordered steps that would be executed sequentially step by step to process specified input files; or as a set of makefile-style rules that would be executed to generated specified output files; or as a sequence of steps with help from makefile-style steps. SoS automatically analyzes the input and output of steps and execute workflows using a dynamic DAG (Directed Acyclic Graph) that would be expanded and shrinked during the execution.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Intelligent-Runtime-Features">Intelligent Runtime Features<a class="anchor-link" href="#Intelligent-Runtime-Features">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>SoS separates the execution of workflows as individual <strong>execution units</strong> and record the signature of the execution units during the execution of the workflow. A highly intelligent signature system will ignore execution units if they have been executed and are being re-executed with identical input, output, dependent files, user parameters, and even environment variables. The execution units are indepedent of workflows so some steps of your workflow could be ignored if they have been executed by another workflow.</p>
+<script>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Power-without-Steep-Learning-Curve">Power without Steep Learning Curve<a class="anchor-link" href="#Power-without-Steep-Learning-Curve">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>SoS is very easy to learn so that you can start using it in minutes without having to learn any of the advanced features. As demonstrated in our <a href="doc/tutorials/Quick_Start_Guide.html">Quick Start Guide</a>, you can easily consolidate your scripts into an executable workflow using SoS and add more features to the script step by step if necessary. The multi-kernel feature of the Jupyter notebook is also easy to use with only two magics to remember.</p>
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="For-PC,-Cluster,-and-Cloud">For PC, Cluster, and Cloud<a class="anchor-link" href="#For-PC,-Cluster,-and-Cloud">&#182;</a></h1><p>SoS is released under a <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL 3 license</a> and is available for Mac OSX, Linux, and Windows operating systems. SoS provides an interactive environment for interactive data analysis on your PC. With just a few additional steps, your script can be transformed to a workflow that deals with different input files and different processing logics, and can be run in batch mode on a cluster system or in a cloud environment.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="An-Open-and-Extensible-Framework">An Open and Extensible Framework<a class="anchor-link" href="#An-Open-and-Extensible-Framework">&#182;</a></h1><p>SoS is open source and provides <a href="doc/documentation/Extending_SoS.html">an API</a> to work with aribitrary languages. Its data-exchange model allows the exachange of arbitrary data types between languages with results in native data types. If your favoriate language is not yet support and you are familiar with Python, feel free to add it to SoS.</p>
+</script>
 
-</div>
-</div>
-</div>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
