@@ -1,0 +1,18 @@
+:
+    	cd ../docs/src/documentation
+    	sos convert /home/gaow/GIT/github/dsc-wiki/docs/src/documentation/Installation.ipynb /home/gaow/GIT/github/dsc-wiki/docs/doc/documentation/Installation.html  --template toc_doc
+      	perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' /home/gaow/GIT/github/dsc-wiki/docs/doc/documentation/Installation.html
+    
+    
+:
+    git add --all docs/doc/* docs/*.html
+    git commit docs/*.html docs/doc/* --no-verify -m 'Update website'
+    git push --no-verify
+    
+    
+:
+    git add --all docs/doc/* docs/*.html
+    git commit docs/*.html docs/doc/* --no-verify -m 'Update website'
+    git push --no-verify
+    
+    

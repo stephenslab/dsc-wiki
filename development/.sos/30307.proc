@@ -1,0 +1,10 @@
+# 	cd ../docs/src/documentation
+# 	sos convert /home/gaow/GIT/github/dsc-wiki/docs/src/documentation/Installation.ipynb /home/gaow/GIT/github/dsc-wiki/docs/doc/documentation/Installation.html  --template toc_doc
+#   	perl -0777 -pi -e 'BEGIN{undef $/;}  s/<style type=\"text\/css\">(.+?)<\/style>//smg' /home/gaow/GIT/github/dsc-wiki/docs/doc/documentation/Installation.html
+# 
+# 
+# step_sig: bad4b70db70114a67e05187f4b6a36fc
+#started at Monday, 09. January 2017 10:49AM
+#
+#time	proc_cpu	proc_mem	children	children_cpu	children_mem
+1483980545.674693	0.00	757760	2	0.0	10620928
