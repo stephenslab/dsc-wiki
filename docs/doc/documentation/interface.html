@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>interface</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  // sections numbering
+             'number_sections': false, 
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+
+            table_of_contents(cfg,st);
+
+            var file=documentationDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=documentation;
+            var pos=documentation.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/documentation/'+file+'.html'+'"]').css("color","#126dce");
+
+
+            $('<li id="indexHome"><a href="'+path+'/index.html#documentation"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Command-interface">Command interface<a class="anchor-link" href="#Command-interface">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>DSC2 implements DSC by executing DSC script via command line program <code>dsc</code>, and browse results via command line program <code>dsc-viz</code>.</p>
+<h2 id="dsc"><code>dsc</code><a class="anchor-link" href="#dsc">&#182;</a></h2><p>This is the command to execute a DSC script. Available options are (listed via <code>dsc -h</code>):</p>
+
+<pre><code>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-s str [str ...]] [-o str] [-f]
+           [--recover] [-j N] [--host str] [-r str [str ...]]
+           DSC file
+
+Implementation of Dynamic Statistical Comparisons
+
+positional arguments:
+  DSC file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
+                        Output error (0), warning (1), info (2), debug (3) and
+                        trace (4) information.
+  -s str [str ...], --sequence str [str ...]
+                        DSC sequence to be executed. It will override the
+                        DSC::run entry when specified. Multiple sequences are
+                        allowed. Each input should be a quoted string defining
+                        a valid DSC sequence. Multiple such strings should be
+                        separated by space.
+  -o str                DSC output filename/directory. When used, it will
+                        override the specification in DSC script
+
+Execute DSC:
+  -f                    Force executing DSC ignoring existing results.
+  --recover             Recover DSC based on names (not contents) of existing
+                        files.
+  -j N                  Number of concurrent processes allowed.
+  --host str            URL of Redis server for distributed computation.
+
+Remove DSC:
+  -r str [str ...], --to_remove str [str ...]
+                        DSC steps whose output are to be removed. Multiple
+                        steps are allowed. Each step should be a quoted string
+                        defining a valid DSC step, in the format of
+                        "block_name[step_index]". Multiple such steps should
+                        be separated by space.</code></pre>
+<ul>
+<li><code>-s</code> specifies which particular DSC sequence to run. See this <a href="https://github.com/stephenslab/dsc2/wiki/04-Multiple-DSC-Sequences#execute-sequences-from-command-line">section</a> for an example.</li>
+<li><code>-j</code> specifies number of CPU threads to use. You may run DSC in parallel on a single desktop, or on distributed computer system that runs <code>Redis</code> server / worker (FIXME: link to tutorial), in which case <code>--host</code> will have to be specified.</li>
+<li><code>-o</code> changes the default output filename / directory specified in the DSC script.</li>
+<li><code>-f</code> forces executing DSC without using existing cache and runtime signature. During a DSC execution, cache files of intermediate output and runtime signatures of parameters are saved so that future re-runs of the same computational routine will be skipped. The <code>-f</code> option forces DSC to ignore existing cache and run the entire procedure afresh.</li>
+<li><code>--recover</code> executes DSC using only existing cache but not runtime signature -- it will skip existing files by file name, without trying to figure out if the file property has been changed. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties in this case.</li>
+<li><code>-v</code> controls verbosity level. Default level is 2. If you encounter error messages you can increase the verbosity level to output more information to diagnose the cause.</li>
+<li><code>-r</code> will remove some DSC steps as specified. In order to remove data properly, the dsc result database (defined in <code>DSC File</code>) must be accessible.</li>
+</ul>
+<h2 id="dsc-viz"><code>dsc-viz</code><a class="anchor-link" href="#dsc-viz">&#182;</a></h2><p>This tool can search and perform queries on DSC results:</p>
+
+<pre><code>usage: dsc-viz [-h] [--version] -t str -q str [str ...] [-o str] [--no-header]
+               DSC output database
+
+Implementation of Dynamic Statistical Comparisons (the visualization module)
+
+positional arguments:
+  DSC output database
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --version            show program's version number and exit
+
+Output query:
+  -t str               Name of master table to query from.
+  -q str [str ...]     Queries to run. Please see DSC2 documentation for
+                       details.
+  -o str               Patterns of desired output columns. Please see DSC2
+                       documentation for details.
+  --no-header          Do not display header in output</code></pre>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+</html>
