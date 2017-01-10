@@ -96,7 +96,7 @@ run: workdir='../docs/doc/examples'
 # convert ipynb to HTML
 sos_run('getFileNames')
 sos_run('convert-documentation')
-#sos_run('convert-tutorials')
+sos_run('convert-tutorials')
 sos_run('convert-homepage')
 #sos_run('convert-examples')
 

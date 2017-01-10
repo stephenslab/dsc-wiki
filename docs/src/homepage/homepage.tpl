@@ -107,19 +107,19 @@ button.code-folding-btn:focus {
  font-family: 'Droid Sans';
  font-weight: normal;
  font-style: normal;
- src: local('Droid Sans'), url('../fonts/droid-sans.ttf') format('truetype');
+ src: local('Droid Sans'), url('fonts/droid-sans.ttf') format('truetype');
 }
 @font-face {
  font-family: 'Fira Code';
  font-weight: normal;
  font-style: normal;
- src: local('Fira Code'), url('../fonts/firacode.otf') format('opentype');
+ src: local('Fira Code'), url('fonts/firacode.otf') format('opentype');
 }
 @font-face {
  font-family: 'PT Mono';
  font-weight: normal;
  font-style: normal;
- src: local('PT Mono'), url('../fonts/ptmono.ttf') format('truetype');
+ src: local('PT Mono'), url('fonts/ptmono.ttf') format('truetype');
 }
 
 body {
