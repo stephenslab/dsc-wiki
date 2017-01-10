@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>ashr</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  
+             'number_sections': false,  // sections numbering
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+            table_of_contents(cfg,st);
+
+
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            
+            var tuts=tutorials;
+            var pos=tutorials.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=tuts[a]
+                  $('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/tutorials/'+file+'.html'+'"]').css("color","#126dce");
+
+            $('<li id="indexHome"><a href="'+path+'/tutorials.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<tuts.length;a++){
+                  var name=tuts[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="An-R-example:-ashr-benchmark">An R example: <code>ashr</code> benchmark<a class="anchor-link" href="#An-R-example:-ashr-benchmark">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a more advanced application of DSC with R codes. We demonstrate in this tutorial features of DSC2 including:</p>
+<ul>
+<li>Inline code as input parameters</li>
+<li>Alias: for executables, parameters and return values</li>
+<li>R library installation and version check</li>
+</ul>
+<h2 id="DSC-Problem">DSC Problem<a class="anchor-link" href="#DSC-Problem">&#182;</a></h2><p>The DSC problem is based on the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">ASH example</a> of DSCR. Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/ash">DSC2 vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
+<blockquote><p>To illustrate we consider the problem of shrinkage, which is tackled by the <code>ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output "shrunk" estimates for $\beta$ (so output is a list with one element, called <code>beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code>beta_est</code> with beta.</p>
+<p>First define a datamaker which simulates true values of $\beta$ from a user-specified normal mixture, where one of the components is a point mass at 0 of mass $\pi_0$, which is a user-specified parameter. It then simulates $\hat\beta \sim N(\beta_j,s_j)$ (where $s_j$ is again user-specified). It returns the true $\beta$ values and true $\pi_0$ value as meta-data, and the estimates $\hat\beta$ and $s$ as input-data.</p>
+<p>Now define a <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> for the <code>ash</code> function from the <code>ashr</code> package. Notice that this wrapper does not return output in the required format - it simply returns the entire ash output.</p>
+<p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code>ash</code>.</p>
+</blockquote>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC2 language below:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">datamaker.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:5)</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),</span>
+             <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),</span>
+             <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))</span>
+          <span class="l l-Scalar l-Scalar-Plain">min_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+          <span class="l l-Scalar l-Scalar-Plain">max_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+          <span class="l l-Scalar l-Scalar-Plain">nsamp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+          <span class="l l-Scalar l-Scalar-Plain">betahatsd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">args = Pack()</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data, true_beta = R(data$meta$beta), true_pi0 = R(data$meta$pi0)</span>
+
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runash.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">input</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$data</span>
+          <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal, halfuniform</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ash_data, beta_est = R(ash_data$PosteriorMean),</span>
+              <span class="l l-Scalar l-Scalar-Plain">pi0_est = R(ashr::get_pi0(ash_data))</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">beta_score</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_beta</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">beta_true</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_beta</span>
+          <span class="l l-Scalar l-Scalar-Plain">beta_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$beta_est</span>
+          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = beta_est, truth = beta_true</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">pi0_score</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_pi0</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">pi0_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$pi0_est</span>
+          <span class="l l-Scalar l-Scalar-Plain">pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_pi0</span>
+          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = pi0_est, truth = pi0</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">shrink *</span>
+           <span class="l l-Scalar l-Scalar-Plain">(beta_score, pi0_score)</span>
+      <span class="l l-Scalar l-Scalar-Plain">R_libs</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">stephens999/ashr (1.0.0+)</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bin</span>
+      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>This is a more complicated example. It is suggested that you walk through every DSC block, cross-referencing the corresponding R code for <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/datamaker.R">datamaker</a>, <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC2 communicates with your R program.</p>
+<h3 id="simulate-block"><code>simulate</code> block<a class="anchor-link" href="#simulate-block">&#182;</a></h3><h4 id="Inline-R-code-as-parameters">Inline R code as parameters<a class="anchor-link" href="#Inline-R-code-as-parameters">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which are R codes within <code>Asis()</code> function. Contents inside <code>Asis()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret it as <code>g &lt;- ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned output of R codes in <code>Asis()</code> for use with <code>datamaker.R</code>.</p>
+<p>Inline code as parameters can make DSC script more succinct. Otherwise in this example, we will have to replace <code>g</code> with 3 other parameters for <code>normalmix</code> function, use <code>R(rep(1/7,7))</code> to deal with complex parameter assignment, and specify <code>.logic</code> to properly combine these parameters, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">g1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(2/3, 1/3), R(rep(1/7,7)), (1/4,1/4,1/3,1/6)</span>
+            <span class="l l-Scalar l-Scalar-Plain">g2</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(0, 0), (-1.5,-1,-0.5,0,0.5,1,1.5), (-2,-1,0,1)</span>
+            <span class="l l-Scalar l-Scalar-Plain">g3</span><span class="p p-Indicator">:</span>  <span class="l l-Scalar l-Scalar-Plain">(1, 2), rep(0.5,7), (2,1.5,1,1)</span>
+            <span class="l l-Scalar l-Scalar-Plain">min_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+            <span class="l l-Scalar l-Scalar-Plain">max_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+            <span class="l l-Scalar l-Scalar-Plain">nsamp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+            <span class="l l-Scalar l-Scalar-Plain">betahatsd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+            <span class="l l-Scalar l-Scalar-Plain">.logic</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(g1 + g2 + g3) * min_pi0 * max_pi0 * nsamp * betahatsd</span>
+</pre></div>
+<h4 id="Parameter-alias-for-R-list">Parameter alias for R list<a class="anchor-link" href="#Parameter-alias-for-R-list">&#182;</a></h4><p>Inside <code>datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this block. The <code>.alias</code> entry uses a special DSC2 operation <code>Pack()</code> to consolidate these parameters into an R list <code>args</code> which corresponds to the input parameter in <code>datamaker.R</code>.</p>
+<h4 id="Return-alias-to-extract-output">Return alias to extract output<a class="anchor-link" href="#Return-alias-to-extract-output">&#182;</a></h4><p>The return object is <code>data</code> which is consistent with codes in <code>datamaker.R</code>. However we want to extract some variables from <code>data</code> for use with other steps. This is achieved by return alias which creates variables based on existing values. <code>R()</code> operator is used here to extract information from existing objects using R syntax.</p>
+<h3 id="shrink-block"><code>shrink</code> block<a class="anchor-link" href="#shrink-block">&#182;</a></h3><p>Here notice the return alias <code>pi0_est</code> which uses the <code>get_pi0</code> function in <code>R()</code> operator to extract information from existing output <code>ash_data</code>.</p>
+<h3 id="beta_score-and-pi0_score-block"><code>beta_score</code> and <code>pi0_score</code> block<a class="anchor-link" href="#beta_score-and-pi0_score-block">&#182;</a></h3><p>These two blocks uses the same computational routine <code>score.R</code> but on different input data. Adjustment have to be made via <code>.alias</code> to distinguish these blocks for DSC output and to match input variable names for <code>score.R</code>. Executable <code>.alias</code> renames the computational routines from generic <code>score.R</code> to <code>score_beta</code> and <code>score_pi0</code> respectively. These routine names will become part of column names in the DSC output database and they should be made distinct. Parameter <code>.alias</code> converts input variables names to variable names matching what has been coded in <code>score.R</code>. It is possible to use these names directly, e.g.,</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">beta_score</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">...</span>
+        <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">trueth</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_beta</span>
+            <span class="l l-Scalar l-Scalar-Plain">est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$beta_est</span>
+        <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+<p>The DSC will work, but the problem is that in the output database, columns will be named after <code>truth</code> and <code>est</code>, which is less informative than <code>beta_true</code> and <code>beta_est</code>. For clarity we use informative names as parameter names in DSC, and use alias to convert these names to what is required by the R codes.</p>
+<p>Notice too that different from the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">ASH example</a> the output score is a simple value (a float of RMSE). Therefore the <code>result</code> variable returned can be directly imported to DSC output database. If the outcome of the R code is not a simple object, for example it returns a list variable <code>score_output</code>, then you may want to use return alias to extract important information to simple values so that they'll be available from output database, e.g., <code>return: score_output, mse = R(score_output$mse)</code>.</p>
+<h3 id="DSC-section"><code>DSC</code> section<a class="anchor-link" href="#DSC-section">&#182;</a></h3><p>The <code>DSC::run</code> executes two sequences which we have discussed in previous tutorials. The <code>R_libs</code> entry specifies the R package required by the DSC. It is formatted as a github package (<code>repo/pkg</code>) and the minimal version requirement is <code>1.0.0</code>. DSC will check first if the package is available, and install it if necessary. It will then check its version and quit on error if it does not satisfy the requirement. DSC does not attempt to change a package for version mismatch.</p>
+<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+simulate:1+shrink:1+beta_score:1: 100% [===================] 3 0.2/s in 00:00:14
+simulate:1+shrink:1+pi0_score:1: 100% [====================] 3 0.2/s in 00:00:13
+DSC: 100% [================================================] 2 0.1/s in 00:00:28
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">29.480</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>FIXME: add output query and analysis</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</body>
+</html>

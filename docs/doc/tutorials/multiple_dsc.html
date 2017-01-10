@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>multiple_dsc</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  
+             'number_sections': false,  // sections numbering
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+            table_of_contents(cfg,st);
+
+
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            
+            var tuts=tutorials;
+            var pos=tutorials.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=tuts[a]
+                  $('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/tutorials/'+file+'.html'+'"]').css("color","#126dce");
+
+            $('<li id="indexHome"><a href="'+path+'/tutorials.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<tuts.length;a++){
+                  var name=tuts[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Multiple-DSC-sequences">Multiple DSC sequences<a class="anchor-link" href="#Multiple-DSC-sequences">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is an enhanced version of <a href="quick_start.html">the Quick Start tutorial</a> to demonstrate the use of multiple sequences in DSC. Material used in this document can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location_winsor">DSC2 vignettes repo</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-Specification-and-Execution">DSC Specification and Execution<a class="anchor-link" href="#DSC-Specification-and-Execution">&#182;</a></h2><p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code>transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two possible DSC sequences:</p>
+<ul>
+<li>simulate -&gt; estimate -&gt; score</li>
+<li>simulate -&gt; transform -&gt; estimate -&gt; score</li>
+</ul>
+<p>The DSC problem is fully specified as:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R, rcauchy.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:5)</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_loc</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_loc</span>
+
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">transform</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winsor1.R, winsor2.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+          <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">fraction</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+          <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">multiple</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$loc</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_loc</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">(transform * estimate, estimate) *</span>
+           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R</span>
+      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>where Winsorization routines in <code>transform</code> block are:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location_winsor<span class="o">/</span>R<span class="o">/</span>winsor1.R <span class="o">&lt;==</span>
+  <span class="c1">##  replace the extreme values with limits</span>
+  winsor1 <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span>x<span class="p">,</span> fraction<span class="o">=</span><span class="m">.05</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="kr">if</span><span class="p">(</span><span class="kp">length</span><span class="p">(</span>fraction<span class="p">)</span> <span class="o">!=</span> <span class="m">1</span> <span class="o">||</span> fraction <span class="o">&lt;</span> <span class="m">0</span> <span class="o">||</span>
+           fraction <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kp">stop</span><span class="p">(</span><span class="s">&quot;bad value for &#39;fraction&#39;&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+     lim <span class="o">&lt;-</span> quantile<span class="p">(</span>x<span class="p">,</span> probs<span class="o">=</span><span class="kt">c</span><span class="p">(</span>fraction<span class="p">,</span> <span class="m">1</span><span class="o">-</span>fraction<span class="p">))</span>
+     x<span class="p">[</span> x <span class="o">&lt;</span> lim<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">]</span> <span class="o">&lt;-</span> lim<span class="p">[</span><span class="m">1</span><span class="p">]</span>
+     x<span class="p">[</span> x <span class="o">&gt;</span> lim<span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="p">]</span> <span class="o">&lt;-</span> lim<span class="p">[</span><span class="m">2</span><span class="p">]</span>
+     <span class="kr">return</span><span class="p">(</span>x<span class="p">)</span>
+  <span class="p">}</span>
+  x <span class="o">=</span> winsor1<span class="p">(</span>x<span class="p">,</span> fraction<span class="p">)</span>
+
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location_winsor<span class="o">/</span>R<span class="o">/</span>winsor2.R <span class="o">&lt;==</span>
+  <span class="c1">## move the datapoints that are x times the absolute deviations from mean</span>
+  winsor2 <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span>x<span class="p">,</span> multiple<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="kr">if</span><span class="p">(</span><span class="kp">length</span><span class="p">(</span>multiple<span class="p">)</span> <span class="o">!=</span> <span class="m">1</span> <span class="o">||</span> multiple <span class="o">&lt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kp">stop</span><span class="p">(</span><span class="s">&quot;bad value for &#39;multiple&#39;&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+     med <span class="o">&lt;-</span> median<span class="p">(</span>x<span class="p">)</span>
+     y <span class="o">&lt;-</span> x <span class="o">-</span> med
+     sc <span class="o">&lt;-</span> mad<span class="p">(</span>y<span class="p">,</span> center<span class="o">=</span><span class="m">0</span><span class="p">)</span> <span class="o">*</span> multiple
+     y<span class="p">[</span> y <span class="o">&gt;</span> sc <span class="p">]</span> <span class="o">&lt;-</span> sc
+     y<span class="p">[</span> y <span class="o">&lt;</span> <span class="o">-</span>sc <span class="p">]</span> <span class="o">&lt;-</span> <span class="o">-</span>sc
+     <span class="kr">return</span><span class="p">(</span>y <span class="o">+</span> med<span class="p">)</span>
+  <span class="p">}</span>
+  x <span class="o">=</span> winsor2<span class="p">(</span>x<span class="p">,</span> multiple<span class="p">)</span>
+</pre></div>
+<p>To execute the DSC on a computer using 8 CPU threads,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+simulate:1+transform:1+estimate:1+mse:1: 100% [============] 4 2.2/s in 00:00:01
+simulate:1+transform:1+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
+simulate:1+transform:2+estimate:1+mse:1: 100% [============] 4 2.6/s in 00:00:01
+simulate:1+transform:2+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
+simulate:2+transform:1+estimate:1+mse:1: 100% [============] 4 2.7/s in 00:00:01
+simulate:2+transform:1+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
+simulate:2+transform:2+estimate:1+mse:1: 100% [============] 4 2.4/s in 00:00:01
+simulate:2+transform:2+estimate:2+mse:1: 100% [============] 4 2.4/s in 00:00:01
+simulate:1+estimate_1:1+mse:1: 100% [======================] 3 3.6/s in 00:00:00
+simulate:1+estimate_1:2+mse:1: 100% [======================] 3 3.6/s in 00:00:00
+simulate:2+estimate_1:1+mse:1: 100% [======================] 3 3.2/s in 00:00:00
+simulate:2+estimate_1:2+mse:1: 100% [======================] 3 4.1/s in 00:00:00
+DSC: 100% [===============================================] 12 0.7/s in 00:00:16
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">18.613</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>FIXME</em> demo for result viz</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -148,10 +148,31 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>DSC2 implements DSC by executing DSC script via command line program <code>dsc</code>, and browse results via command line program <code>dsc-viz</code>.</p>
-<h2 id="dsc"><code>dsc</code><a class="anchor-link" href="#dsc">&#182;</a></h2><p>This is the command to execute a DSC script. Available options are (listed via <code>dsc -h</code>):</p>
+<h2 id="dsc"><code>dsc</code><a class="anchor-link" href="#dsc">&#182;</a></h2><p>This is the command to execute a DSC script. Available options are:</p>
 
-<pre><code>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-s str [str ...]] [-o str] [-f]
-           [--recover] [-j N] [--host str] [-r str [str ...]]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-s str [str ...]] [-o str] [-f]
+           [-r] [-j N] [--host str] [--remove str [str ...]]
            DSC file
 
 Implementation of Dynamic Statistical Comparisons
@@ -161,7 +182,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --version             show program's version number and exit
+  --version             show program&#39;s version number and exit
   -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
                         Output error (0), warning (1), info (2), debug (3) and
                         trace (4) information.
@@ -176,30 +197,73 @@ optional arguments:
 
 Execute DSC:
   -f                    Force executing DSC ignoring existing results.
-  --recover             Recover DSC based on names (not contents) of existing
+  -r                    Recover DSC based on names (not contents) of existing
                         files.
   -j N                  Number of concurrent processes allowed.
   --host str            URL of Redis server for distributed computation.
 
 Remove DSC:
-  -r str [str ...], --to_remove str [str ...]
+  --remove str [str ...]
                         DSC steps whose output are to be removed. Multiple
                         steps are allowed. Each step should be a quoted string
                         defining a valid DSC step, in the format of
-                        "block_name[step_index]". Multiple such steps should
-                        be separated by space.</code></pre>
+                        &#34;block_name[step_index]&#34;. Multiple such steps should
+                        be separated by space.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li><code>-s</code> specifies which particular DSC sequence to run. See this <a href="https://github.com/stephenslab/dsc2/wiki/04-Multiple-DSC-Sequences#execute-sequences-from-command-line">section</a> for an example.</li>
 <li><code>-j</code> specifies number of CPU threads to use. You may run DSC in parallel on a single desktop, or on distributed computer system that runs <code>Redis</code> server / worker (FIXME: link to tutorial), in which case <code>--host</code> will have to be specified.</li>
 <li><code>-o</code> changes the default output filename / directory specified in the DSC script.</li>
 <li><code>-f</code> forces executing DSC without using existing cache and runtime signature. During a DSC execution, cache files of intermediate output and runtime signatures of parameters are saved so that future re-runs of the same computational routine will be skipped. The <code>-f</code> option forces DSC to ignore existing cache and run the entire procedure afresh.</li>
-<li><code>--recover</code> executes DSC using only existing cache but not runtime signature -- it will skip existing files by file name, without trying to figure out if the file property has been changed. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties in this case.</li>
+<li><code>-r</code> executes DSC using only existing cache but not runtime signature -- it will skip existing files by file name, without trying to figure out if the file property has been changed. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties in this case.</li>
 <li><code>-v</code> controls verbosity level. Default level is 2. If you encounter error messages you can increase the verbosity level to output more information to diagnose the cause.</li>
-<li><code>-r</code> will remove some DSC steps as specified. In order to remove data properly, the dsc result database (defined in <code>DSC File</code>) must be accessible.</li>
+<li><code>--remove</code> will remove some DSC steps as specified. In order to remove data properly, the dsc result database (defined in <code>DSC File</code>) must be accessible.</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="dsc-viz"><code>dsc-viz</code><a class="anchor-link" href="#dsc-viz">&#182;</a></h2><p>This tool can search and perform queries on DSC results:</p>
 
-<pre><code>usage: dsc-viz [-h] [--version] -t str -q str [str ...] [-o str] [--no-header]
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">viz</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>usage: dsc-viz [-h] [--version] -t str -q str [str ...] [-o str] [--no-header]
                DSC output database
 
 Implementation of Dynamic Statistical Comparisons (the visualization module)
@@ -209,7 +273,7 @@ positional arguments:
 
 optional arguments:
   -h, --help           show this help message and exit
-  --version            show program's version number and exit
+  --version            show program&#39;s version number and exit
 
 Output query:
   -t str               Name of master table to query from.
@@ -217,10 +281,14 @@ Output query:
                        details.
   -o str               Patterns of desired output columns. Please see DSC2
                        documentation for details.
-  --no-header          Do not display header in output</code></pre>
+  --no-header          Do not display header in output
+</pre>
+</div>
+</div>
 
 </div>
 </div>
+
 </div>
     </div>
   </div>

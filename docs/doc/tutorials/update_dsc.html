@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>update_dsc</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
+
+ <script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             // 'number_sections': false,  
+             'number_sections': false,  // sections numbering
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             // 'sideBar':false,      
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+            table_of_contents(cfg,st);
+
+
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            var path="http://gaow.github.io/dsc-wiki"
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            
+            var tuts=tutorials;
+            var pos=tutorials.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=tuts[a]
+                  $('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+path+'/doc/tutorials/'+file+'.html'+'"]').css("color","#126dce");
+
+            $('<li id="indexHome"><a href="'+path+'/tutorials.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<tuts.length;a++){
+                  var name=tuts[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Update-existing-DSC">Update existing DSC<a class="anchor-link" href="#Update-existing-DSC">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="quick_start.html">Quick Start</a> example contains 3 DSC blocks, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational routine for location estimate via the <em>Winsorized</em> mean. The routine is implemented as <code>winsor.R</code>:</p>
+<div class="highlight"><pre><span></span>mean <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+<p>There are two ways to incorporate this new computational routine into DSC: either by adding it to the existing <code>estimate</code> block, or by adding a new block. For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>estimate</code>. We will show here two flavors to update, both involving minimal changes to the DSC file and result in the same outcome. In practice one should always try to adopt a flavor that is most logically clear and succinct.</p>
+<h2 id="Add-Steps-to-Existing-Block">Add Steps to Existing Block<a class="anchor-link" href="#Add-Steps-to-Existing-Block">&#182;</a></h2><p>We change the <code>estimate</code> block to the following:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R, winsor.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+          <span class="l l-Scalar l-Scalar-Plain">exec[3]</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">trim</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1, 0.2</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+</pre></div>
+<p>where we appended the new executable <code>winsor.R</code> to the <code>exec</code> entry, along with an executable specific parameter specification in the <code>params</code> section to assign two possible values to <code>trim</code> which essentially provides two versions of Winsorization for comparison.</p>
+<p>To run the new DSC,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Checking R library <span class="ansi-green-fg">psych</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">settings_add_method_v1.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v1.dsc</span> ...
+simulate:1+estimate:1+mse:1: 100% [========================] 3 1.0/s in 00:00:03
+simulate:1+estimate:2+mse:1: 100% [========================] 3 1.0/s in 00:00:03
+simulate:1+estimate:3+mse:1: 100% [========================] 3 0.7/s in 00:00:04
+simulate:2+estimate:1+mse:1: 100% [========================] 3 1.1/s in 00:00:02
+simulate:2+estimate:2+mse:1: 100% [========================] 3 1.1/s in 00:00:02
+simulate:2+estimate:3+mse:1: 100% [========================] 3 0.7/s in 00:00:04
+DSC: 100% [================================================] 6 0.3/s in 00:00:20
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">21.980</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that compared to using <code>-f</code> flag the computation time above is shorter. This is because after running the Quick Start tutorial DSC2 has cached steps in that DSC script along with their outcome; thus here only newly added steps are executed.</p>
+<h2 id="Add-a-New-Block">Add a New Block<a class="anchor-link" href="#Add-a-New-Block">&#182;</a></h2><p>Here we show an alternative flavor to update the existing DSC file: we keep the <code>estimate</code> block as is but add a new block <code>estimate_winsor</code>, and modify the <strong>run</strong> sequence in the DSC section to include this new block:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate_winsor</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winsor.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+          <span class="l l-Scalar l-Scalar-Plain">trim</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1, 0.2</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">...</span>
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">(estimate, estimate_winsor) *</span>
+           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+<p>In the <strong>run</strong> sequence, the previous <code>estimate</code> and the new <code>estimate_winsor</code> blocks will be executed in parallel to each other, both taking input from <code>simulate</code> block and generating output for <code>mse</code> block.</p>
+<p>To run this version,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings_add_method_v2.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v2.dsc</span> ...
+simulate:1+estimate:1+mse:1: 100% [========================] 3 1.0/s in 00:00:02
+simulate:1+estimate:2+mse:1: 100% [========================] 3 1.0/s in 00:00:03
+simulate:2+estimate:1+mse:1: 100% [========================] 3 1.0/s in 00:00:02
+simulate:2+estimate:2+mse:1: 100% [========================] 3 1.0/s in 00:00:03
+simulate:1+estimate_winsor:1+mse_1:1: 100% [===============] 3 0.6/s in 00:00:04
+simulate:2+estimate_winsor:1+mse_1:1: 100% [===============] 3 0.7/s in 00:00:04
+DSC: 100% [================================================] 6 0.3/s in 00:00:21
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">22.946</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The result is identical to that from previous section.</p>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+</html>
