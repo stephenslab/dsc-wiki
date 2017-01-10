@@ -213,7 +213,7 @@ $(document).ready(function () {
   <a href="documentation.html">Documentation</a>
 </li>
 <li>
-  <a href="tutorial.html">Tutorial</a>
+  <a href="tutorials.html">Tutorials</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
