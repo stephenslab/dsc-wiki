@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>implementation</title>
+<title>Debug_Tips</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -53,6 +53,7 @@
 .lev6 {margin-left: 180px}
 </style>
 
+
 <link rel="stylesheet" type="text/css" href="../../css/jt.css">
 <link rel="stylesheet" type="text/css" href="../../css/toc2.css">
 
@@ -78,8 +79,8 @@
 $( document ).ready(function(){
 
             var cfg={'threshold':3,     // depth of toc (number of levels)
-             // 'number_sections': false,  // sections numbering
-             'number_sections': false, 
+             // 'number_sections': false,  
+             'number_sections': false,  // sections numbering
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
              "toc_section_display": "block", // display toc contents in the window
@@ -102,29 +103,30 @@ $( document ).ready(function(){
             // fire the main function with these parameters
 
 
-
             table_of_contents(cfg,st);
 
-            var file=documentationDict[$("h1:first").attr("id")];
+
+            var file=tutorialsDict[$("h1:first").attr("id")];
             var path="http://gaow.github.io/dsc-wiki"
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=documentation;
-            var pos=documentation.indexOf(file);
+            
+            var tuts=tutorials;
+            var pos=tutorials.indexOf(file);
         
             for (var a=pos;a>=0;a--){
-                  var name=docs[a]
-                  $('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+                  var name=tuts[a]
+                  $('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
-            $('a[href="'+path+'/doc/documentation/'+file+'.html'+'"]').css("color","#126dce");
+            $('a[href="'+path+'/doc/tutorials/'+file+'.html'+'"]').css("color","#126dce");
 
-
-            $('<li id="indexHome"><a href="'+path+'/documentation.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
-            for (var a=pos+1;a<docs.length;a++){
-                  var name=docs[a]
-                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            $('<li id="indexHome"><a href="'+path+'/tutorials.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<tuts.length;a++){
+                  var name=tuts[a]
+                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
             }
             $("#toc-header").hide();
+
 
     });
 </script>
@@ -137,7 +139,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Implementation-details">Implementation details<a class="anchor-link" href="#Implementation-details">&#182;</a></h1>
+<h1 id="Debugging-in-DSC2">Debugging in DSC2<a class="anchor-link" href="#Debugging-in-DSC2">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -146,18 +148,42 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC2 is implemented in Python 3. It relies on a number of libraries:</p>
-<ul>
-<li><a href="https://github.com/vatlab/SOS"><code>sos</code></a> library supports the execution of steps in DSC, which implements job dependency management via <a href="https://networkx.github.io/">networkx</a> and controls parallelization via <a href="http://python-rq.org">rq</a>. Development of DSC is contributed directly to <code>sos</code> whenever approperate.</li>
-<li><a href="http://www.sympy.org/en/index.html"><code>sympy</code></a> is used to interpret logic behind DSC sequences and parameter assignment (if <code>.logic</code> options are available).</li>
-<li><a href="http://rpy2.bitbucket.org/"><code>ryp2</code></a> controls interactions between DSC2 plugins written in R or Python.</li>
-<li><a href="http://pandas.pydata.org/"><code>pandas</code></a> is used to ensure proper conversion between R and Python data frames. It is also used to manipulate output data.</li>
-<li>The DSC2 script follows from a customized <a href="http://www.yaml.org/">YAML</a> format. <code>pyyaml</code> is used for initial processing (although we may drop it in the future due to lack of flexibility to load DSC2 script safely).</li>
-</ul>
-<p>Data flow between computational routines via <a href="http://www.inside-r.org/r-doc/base/saverds">RDS files</a>, if those routines are implemented as R or Python plugins (as opposed to command line programs). Saving and loading RDS files can be costly in both execution time and disk space; you may notice that it seems to take DSC2 relatively long time to complete a job compared to a straightforward R implementation. On the other hand, archiving outcome of computational routines in the form of RDS files makes it possible to re-use existing results, thus beneficial in the long run, particularly for projects where computational steps are not trivial and there is a need to actively add new computational routines to existing DSC framework.</p>
+<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, I mess with this R script by adding an undefined function to it:</p>
+<div class="highlight"><pre><span></span>undefined_foo_showoff<span class="p">()</span>
+score <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>est<span class="p">,</span> truth<span class="p">){</span>
+  <span class="kr">return</span><span class="p">(</span><span class="kp">sqrt</span><span class="p">(</span><span class="kp">mean</span><span class="p">((</span>est<span class="o">-</span>truth<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)))</span>
+<span class="p">}</span>
+result <span class="o">=</span> score<span class="p">(</span>est<span class="p">,</span> truth<span class="p">)</span>
+</pre></div>
+<p>And the DSC run fails:</p>
+
+<pre><code>INFO: Constructing DSC from settings.dsc ...
+INFO: DSC exported to settings.html
+simulate_1+shrink_1+beta_score_1:   0.0% [&gt;                                                          ]  in 00:00:00
+
+Error: could not find function "undefined_foo_showoff"
+Execution halted
+ERROR: Failed to process statement "sos_run('simulate_1+shrink_1+beta_score_1')": Failed to execute process
+"R(r'''## BEGIN code auto-gener...1.0\n\n''')\n"
+Failed to execute script. The script is saved to /home/gaow/GIT/software/dsc2/vignettes/ash/.sos/beta_score_1_0.R. Please use command "Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/software/dsc2/vignettes/ash/.sos/beta_score_1_0.R" under /home/gaow/GIT/software/dsc2/vignettes/ash to test it.</code></pre>
+<p>In the error message you see that the problematic script is saved to <code>.sos/beta_score_1_0.R</code>. You can run this script to debug without having to worry about the input / output because DSC automatically completed it. Then you can apply the fix to your original script and re-run the benchmark.</p>
+<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>settings.log</code> generated for the DSC run. You can look into the log file for more run-time information and perform diagnostics.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
