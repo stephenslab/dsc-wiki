@@ -232,7 +232,6 @@ $(document).ready(function () {
 {% block footer %}
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago
-<hr>
 
 <!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
 

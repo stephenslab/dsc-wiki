@@ -22,9 +22,8 @@
 <link rel="stylesheet" type="text/css" href="../../css/jt.css">
 <link rel="stylesheet" type="text/css" href="../../css/toc2.css">
 
-<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
-
- <script src="../../js/docs.js"></script>
+<script src="../../js/toc2.js"></script>
+<script src="../../js/docs.js"></script>
 
 <script>
     MathJax.Hub.Config({

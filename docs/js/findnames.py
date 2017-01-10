@@ -2,9 +2,7 @@ import glob,os
 import json
 import re
 
-
 path="../docs"
-#path="../"
 
 def fileDict(docFile,folder):
 	docString="var "+folder+"Dict={"
@@ -26,33 +24,33 @@ def findImages(docFile):
 	for file in glob.glob(path+"/img/*"):
 		name=file.split("/")[-1]
 		docString+='"'+name+'",'
-	docString=docString[:-1]
-	docString+="]"
+	docString=docString.rstrip(',') + ']'
 	docFile.write(docString+"\n")
 
 
 with open(path+"/src/homepage/documentation.ipynb") as json_data:
- 	d=json.load(json_data)
+ 	d_doc=json.load(json_data)
 with open(path+"/src/homepage/tutorials.ipynb") as json_data:
- 	d.update(json.load(json_data))
+ 	d_tut=(json.load(json_data))
 
 
 tutString="var tutorials=["
 docString="var documentation=["
-for cell in d["cells"]:
+for cell in d_doc["cells"]:
+	for sentence in cell["source"]:
+		doc=re.search('doc/documentation/(.+?).html',sentence)
+		if doc:
+			name=doc.group(1)
+			docString+='"'+name+'", '
+for cell in d_tut["cells"]:
 	for sentence in cell["source"]:
 		tut=re.search('doc/tutorials/(.+?).html',sentence)
 		if tut:
 			name=tut.group(1)
 			tutString+='"'+name+'", '
-		doc=re.search('doc/documentation/(.+?).html',sentence)
-		if doc:
-			name=doc.group(1)
-			docString+='"'+name+'", '
-tutString=tutString[:-2]
-tutString+="]"
-docString=docString[:-2]
-docString+="]"
+
+tutString=tutString.rstrip().rstrip(',') + ']'
+docString=docString.rstrip().rstrip(',') + ']'
 
 
 # print(tutString)
