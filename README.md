@@ -1,2 +1,2 @@
-# dsc-paper
-Manuscript and other documents introducing Dynamic statistical comparison
+# dsc-wiki
+Documents / write-up for Dynamic Statistical Comparison
