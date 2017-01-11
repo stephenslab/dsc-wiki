@@ -146,11 +146,12 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a more advanced application of DSC with R codes. We demonstrate in this tutorial features of DSC2 including:</p>
+<p>This is a more advanced application of DSC with R scripts. We demonstrate in this tutorial features of DSC2 including:</p>
 <ul>
 <li>Inline code as input parameters</li>
 <li>Alias: for executables, parameters and return values</li>
 <li>R library installation and version check</li>
+<li>Extracting results via combinations of tags</li>
 </ul>
 <h2 id="DSC-Problem">DSC Problem<a class="anchor-link" href="#DSC-Problem">&#182;</a></h2><p>The DSC problem is based on the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">ASH example</a> of DSCR. Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/ash">DSC2 vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
 <blockquote><p>To illustrate we consider the problem of shrinkage, which is tackled by the <code>ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output "shrunk" estimates for $\beta$ (so output is a list with one element, called <code>beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code>beta_est</code> with beta.</p>
@@ -402,7 +403,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Result-extraction">Result extraction<a class="anchor-link" href="#Result-extraction">&#182;</a></h2><p>Suppose we are interested in performance of tag <code>ash_n</code> and <code>ash_nu</code> in estimating $pi_0$ under simulation setting <code>An</code>. We extract the data to file <code>ashr_pi0_1.rds</code>:</p>
+<h2 id="Result-extraction">Result extraction<a class="anchor-link" href="#Result-extraction">&#182;</a></h2><p>Suppose we are interested in performance of methods <code>ash_n</code> and <code>ash_nu</code> in estimating $\pi_0$ under simulation setting <code>An</code>. We extract the data to file <code>ashr_pi0_1.rds</code>:</p>
 
 </div>
 </div>
@@ -412,7 +413,8 @@ INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">extract</span> <span class="n">result</span> <span class="o">--</span><span class="n">extract_from</span> <span class="n">pi0_score</span> <span class="o">--</span><span class="n">extract_to</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;An &amp;&amp; ash_nu&quot;</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">extract</span> <span class="n">result</span> <span class="o">--</span><span class="n">extract_from</span> <span class="n">pi0_score</span> <span class="o">--</span><span class="n">extract_to</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> \
+    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;An &amp;&amp; ash_nu&quot;</span>
 </pre></div>
 
 </div>
