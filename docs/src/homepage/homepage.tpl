@@ -1,8 +1,8 @@
 {%- extends 'basic.tpl' -%}
 
-
 {%- block header -%}
 {{ super() }}
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,8 +12,6 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-
-
 
 
 <title>Dynamic Statistical Comparisions</title>
@@ -44,65 +42,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 }
 </script>
 
-
-
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 36px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
-
-
 </head>
 
 <body>
 
 <style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-</style>
-
-
-<style type="text/css">
-/* padding for bootstrap navbar */
 @font-face {
  font-family: 'Droid Sans';
  font-weight: normal;
@@ -124,34 +68,44 @@ button.code-folding-btn:focus {
 
 body {
   font-family: "Droid Sans";
+  font-size: 175%;
   padding-top: 51px;
   padding-bottom: 40px;
 }
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
 }
 
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
 }
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
 }
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+img {
+  max-width:100%;
+  height: auto;
 }
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
 
