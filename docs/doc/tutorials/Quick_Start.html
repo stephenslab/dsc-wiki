@@ -157,34 +157,35 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods via simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom; then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.R, rt.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<pre><code>yml
+  simulate:
+      exec: rnorm.R, rt.R
+      seed: R(1:10)
+      params:
+          n: 1000
+          true_mean: 0, 1
+      return: x, true_mean
 
-  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+  estimate:
+      exec: mean.R, median.R
+      params:
+          x: $x
+      return: mean
 
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">mse</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
-      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
-</pre></div>
+  mse:
+      exec: MSE.R
+      params:
+          mean_est: $mean
+          true_mean: $true_mean
+      return: mse
+
+  DSC:
+      run: simulate *
+           estimate *
+           mse
+      exec_path: R/scenarios, R/methods, R/scores
+      output: dsc_result</code></pre>
 <p>All computational routines in this DSC are R scripts (each with one line of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
   mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
