@@ -137,7 +137,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="An-R-example:-ashr-benchmark">An R example: <code>ashr</code> benchmark<a class="anchor-link" href="#An-R-example:-ashr-benchmark">&#182;</a></h1>
+<h1 id="An-R-example:-ashr-benchmark">An R example: ashr benchmark<a class="anchor-link" href="#An-R-example:-ashr-benchmark">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -208,7 +208,7 @@ $( document ).ready(function(){
       <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
 </pre></div>
 <p>This is a more complicated example. It is suggested that you walk through every DSC block, cross-referencing the corresponding R code for <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/datamaker.R">datamaker</a>, <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC2 communicates with your R program.</p>
-<h3 id="simulate-block"><code>simulate</code> block<a class="anchor-link" href="#simulate-block">&#182;</a></h3><h4 id="Inline-R-code-as-parameters">Inline R code as parameters<a class="anchor-link" href="#Inline-R-code-as-parameters">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which are R codes within <code>Asis()</code> function. Contents inside <code>Asis()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret it as <code>g &lt;- ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned output of R codes in <code>Asis()</code> for use with <code>datamaker.R</code>.</p>
+<h3 id="simulate"><code>simulate</code><a class="anchor-link" href="#simulate">&#182;</a></h3><h4 id="Inline-R-code-as-parameters">Inline R code as parameters<a class="anchor-link" href="#Inline-R-code-as-parameters">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which are R codes within <code>Asis()</code> function. Contents inside <code>Asis()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret it as <code>g &lt;- ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned output of R codes in <code>Asis()</code> for use with <code>datamaker.R</code>.</p>
 <p>Inline code as parameters can make DSC script more succinct. Otherwise in this example, we will have to replace <code>g</code> with 3 other parameters for <code>normalmix</code> function, use <code>R(rep(1/7,7))</code> to deal with complex parameter assignment, and specify <code>.logic</code> to properly combine these parameters, for example:</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
             <span class="l l-Scalar l-Scalar-Plain">g1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(2/3, 1/3), R(rep(1/7,7)), (1/4,1/4,1/3,1/6)</span>
@@ -222,8 +222,8 @@ $( document ).ready(function(){
 </pre></div>
 <h4 id="Parameter-alias-for-R-list">Parameter alias for R list<a class="anchor-link" href="#Parameter-alias-for-R-list">&#182;</a></h4><p>Inside <code>datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this block. The <code>.alias</code> entry uses a special DSC2 operation <code>Pack()</code> to consolidate these parameters into an R list <code>args</code> which corresponds to the input parameter in <code>datamaker.R</code>.</p>
 <h4 id="Return-alias-to-extract-output">Return alias to extract output<a class="anchor-link" href="#Return-alias-to-extract-output">&#182;</a></h4><p>The return object is <code>data</code> which is consistent with codes in <code>datamaker.R</code>. However we want to extract some variables from <code>data</code> for use with other steps. This is achieved by return alias which creates variables based on existing values. <code>R()</code> operator is used here to extract information from existing objects using R syntax.</p>
-<h3 id="shrink-block"><code>shrink</code> block<a class="anchor-link" href="#shrink-block">&#182;</a></h3><p>Here notice the return alias <code>pi0_est</code> which uses the <code>get_pi0</code> function in <code>R()</code> operator to extract information from existing output <code>ash_data</code>.</p>
-<h3 id="beta_score-and-pi0_score-block"><code>beta_score</code> and <code>pi0_score</code> block<a class="anchor-link" href="#beta_score-and-pi0_score-block">&#182;</a></h3><p>These two blocks uses the same computational routine <code>score.R</code> but on different input data. Adjustment have to be made via <code>.alias</code> to distinguish these blocks for DSC output and to match input variable names for <code>score.R</code>. Executable <code>.alias</code> renames the computational routines from generic <code>score.R</code> to <code>score_beta</code> and <code>score_pi0</code> respectively. These routine names will become part of column names in the DSC output database and they should be made distinct. Parameter <code>.alias</code> converts input variables names to variable names matching what has been coded in <code>score.R</code>. It is possible to use these names directly, e.g.,</p>
+<h3 id="shrink"><code>shrink</code><a class="anchor-link" href="#shrink">&#182;</a></h3><p>Here notice the return alias <code>pi0_est</code> which uses the <code>get_pi0</code> function in <code>R()</code> operator to extract information from existing output <code>ash_data</code>.</p>
+<h3 id="beta_score-&amp;-pi0_score"><code>beta_score</code> &amp; <code>pi0_score</code><a class="anchor-link" href="#beta_score-&amp;-pi0_score">&#182;</a></h3><p>These two blocks uses the same computational routine <code>score.R</code> but on different input data. Adjustment have to be made via <code>.alias</code> to distinguish these blocks for DSC output and to match input variable names for <code>score.R</code>. Executable <code>.alias</code> renames the computational routines from generic <code>score.R</code> to <code>score_beta</code> and <code>score_pi0</code> respectively. These routine names will become part of column names in the DSC output database and they should be made distinct. Parameter <code>.alias</code> converts input variables names to variable names matching what has been coded in <code>score.R</code>. It is possible to use these names directly, e.g.,</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">beta_score</span><span class="p p-Indicator">:</span>
         <span class="l l-Scalar l-Scalar-Plain">...</span>
         <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
@@ -232,7 +232,7 @@ $( document ).ready(function(){
         <span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 <p>The DSC will work, but the problem is that in the output database, columns will be named after <code>truth</code> and <code>est</code>, which is less informative than <code>beta_true</code> and <code>beta_est</code>. For clarity we use informative names as parameter names in DSC, and use alias to convert these names to what is required by the R codes.</p>
-<p>Notice too that different from the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">ASH example</a> the output score is a simple value (a float of RMSE). Therefore the <code>result</code> variable returned can be directly imported to DSC output database. If the outcome of the R code is not a simple object, for example it returns a list variable <code>score_output</code>, then you may want to use return alias to extract important information to simple values so that they'll be available from output database, e.g., <code>return: score_output, mse = R(score_output$mse)</code>.</p>
+<p>Notice too that different from the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> the output score is a simple value (a float of RMSE). Therefore the <code>result</code> variable returned can be directly imported to DSC output database. If the outcome of the R code is not a simple object, for example it returns a list variable <code>score_output</code>, then you may want to use return alias to extract important information to simple values so that they'll be available from output database, e.g., <code>return: score_output, mse = R(score_output$mse)</code>.</p>
 <h3 id="DSC-section"><code>DSC</code> section<a class="anchor-link" href="#DSC-section">&#182;</a></h3><p>The <code>DSC::run</code> executes two sequences which we have discussed in previous tutorials. The <code>R_libs</code> entry specifies the R package required by the DSC. It is formatted as a github package (<code>repo/pkg</code>) and the minimal version requirement is <code>1.0.0</code>. DSC will check first if the package is available, and install it if necessary. It will then check its version and quit on error if it does not satisfy the requirement. DSC does not attempt to change a package for version mismatch.</p>
 <h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2>
 </div>
@@ -278,20 +278,425 @@ INFO: Elapsed time <span class="ansi-green-fg">29.480</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>FIXME: add output query and analysis</em></p>
+<h2 id="Result-annotation">Result annotation<a class="anchor-link" href="#Result-annotation">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> adds names to various simulation settings and methods. Here we use DSC annotation file to reproduce the DSCR example. We create a <code>settings.ann</code> file as follows:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">An</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2)))</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Bn</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7)))</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Cn</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))</span>
+
+<span class="l l-Scalar l-Scalar-Plain">ash_n</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal</span>
+
+<span class="l l-Scalar l-Scalar-Plain">ash_nu</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">halfuniform</span>
+</pre></div>
+<p>and we apply this annotation to two type of scores separately:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">annotation</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">annotate_to</span> <span class="n">pi0_score</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC result <span class="ansi-green-fg">pi0_score</span> has been annotated.
+	Tag <span class="ansi-green-fg">Cn</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;)
+
+	Tag <span class="ansi-green-fg">An</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;)
+
+	Tag <span class="ansi-green-fg">Bn</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;)
+
+	Tag <span class="ansi-green-fg">ash_n</span> created via:
+	[runash.R] (mixcompdist == &#34;&#39;normal&#39;&#34;)
+
+	Tag <span class="ansi-green-fg">ash_nu</span> created via:
+	[runash.R] (mixcompdist == &#34;&#39;halfuniform&#39;&#34;)
+INFO: Elapsed time <span class="ansi-green-fg">0.044</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">annotation</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">annotate_to</span> <span class="n">beta_score</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC result <span class="ansi-green-fg">beta_score</span> has been annotated.
+	Tag <span class="ansi-green-fg">ash_n</span> created via:
+	[runash.R] (mixcompdist == &#34;&#39;normal&#39;&#34;)
+
+	Tag <span class="ansi-green-fg">An</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;)
+
+	Tag <span class="ansi-green-fg">ash_nu</span> created via:
+	[runash.R] (mixcompdist == &#34;&#39;halfuniform&#39;&#34;)
+
+	Tag <span class="ansi-green-fg">Cn</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;)
+
+	Tag <span class="ansi-green-fg">Bn</span> created via:
+	[datamaker.R] (g == &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;)
+INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Result-extraction">Result extraction<a class="anchor-link" href="#Result-extraction">&#182;</a></h2><p>Suppose we are interested in performance of tag <code>ash_n</code> and <code>ash_nu</code> in estimating $pi_0$ under simulation setting <code>An</code>. We extract the data to file <code>ashr_pi0_1.rds</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">extract</span> <span class="n">result</span> <span class="o">--</span><span class="n">extract_from</span> <span class="n">pi0_score</span> <span class="o">--</span><span class="n">extract_to</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;An &amp;&amp; ash_nu&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: <span class="ansi-green-fg">result</span> data saved to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for annotations An &amp;&amp; ash_n, An &amp;&amp; ash_nu from DSC block <span class="ansi-green-fg">pi0_score</span>.
+INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can examine the result in <code>R</code>, similar to what we have done in the <a href="Explore_Output.html">Quick Start exampe</a>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">use</span> <span class="n">ir</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;ashr_pi0_1.rds&#39;</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span><span class="p">)</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">cbind</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">,</span> <span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">&#39;ash_n&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">)),</span> 
+                                             <span class="n">rep</span><span class="p">(</span><span class="s1">&#39;ash_nu&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span><span class="p">))))</span>
+<span class="n">colnames</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;MSE&#39;</span><span class="p">,</span> <span class="s1">&#39;Method&#39;</span><span class="p">)</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+<span class="n">dat</span><span class="err">$</span><span class="n">MSE</span> <span class="o">&lt;-</span> <span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">MSE</span><span class="p">))</span>
+<span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">Method</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">MSE</span><span class="p">))</span> <span class="o">+</span> 
+    <span class="n">geom_violin</span><span class="p">()</span> <span class="o">+</span>
+    <span class="n">geom_dotplot</span><span class="p">(</span><span class="n">binaxis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">stackdir</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">dotsize</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">p</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+0.117954348895535
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+0.17035703182274
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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"
+>
+</div>
+
+</div>
+
 </div>
 </div>
 
