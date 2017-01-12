@@ -7,14 +7,18 @@
 # 2. docker images to docker hub
 # 3. website to github.io
 
+parameter: web_url = 'http://stephenslab.github.io/dsc-wiki'
+parameter: pkg = 'dsc'
+parameter: software_dir = '~/GIT/software/dsc2'
+
 [pip]
 # check the version of the latest version
-cur_ver = get_output("pip show dsc | grep Version | cut -d' ' -f2").strip()
-version = get_output("dsc --version")
+cur_ver = get_output("pip show ${pkg} | grep Version | cut -d' ' -f2").strip()
+version = get_output("${pkg} --version")
 # do not upload if the version on pip is the current one
 stop_if(cur_ver == version)
 
-sh:	workdir='~/GIT/software/dsc2'
+sh:	workdir="${software_dir}"
 	python setup.py sdist upload
   
 [update-docker]
@@ -113,14 +117,14 @@ depends: executable('blc')
 
 # check homepage
 run:
-    blc http://gaow.github.io/dsc-wiki
+    blc ${web_url}
 
 input: '../docs/src/*/*.ipynb', group_by=1
 
 if 'homepage' in _input[0]:
-    run("blc http://gaow.github.io/dsc/${_input!bn}.html")
+    run("blc ${web_url}/${_input!bn}.html")
 else:
-    run("blc http://gaow.github.io/dsc/doc/${_input!db}/${_input!bn}.html")
+    run("blc ${web_url}/doc/${_input!db}/${_input!bn}.html")
 
 
 [default]
