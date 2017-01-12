@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Command_Options</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Command_Options</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -142,7 +140,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC2 implements DSC by executing DSC script via command line program <code>dsc</code>:</p>
+<p>DSC2 implements DSC by executing DSC script and annotation via command line program <code>dsc</code>:</p>
 <h2 id="Help-message">Help message<a class="anchor-link" href="#Help-message">&#182;</a></h2>
 </div>
 </div>
@@ -218,7 +216,9 @@ Extract DSC results:
                         executed.
   --extract_to str      Prefix of file name to which extracted data is
                         written.
-  --tags str [str ...]  Tags to extract for. Default to all tags.
+  --tags str [str ...]  Tags to extract. The &#34;&amp;&amp;&#34; symbol can be used to
+                        specify intersect of multiple tags. Default to
+                        extracting for all tags.
 </pre>
 </div>
 </div>
@@ -240,10 +240,10 @@ Extract DSC results:
 <li><code>-r</code> executes DSC using only existing cache but not runtime signature -- it will skip existing files by file name, without trying to figure out if the file property has been changed. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties in this case.</li>
 <li><code>-v</code> controls verbosity level. Default level is 2. If you encounter error messages you can increase the verbosity level to output more information to diagnose the cause.</li>
 </ul>
-<h2 id="DSC-results-removal">DSC results removal<a class="anchor-link" href="#DSC-results-removal">&#182;</a></h2><ul>
+<h2 id="DSC-output-removal">DSC output removal<a class="anchor-link" href="#DSC-output-removal">&#182;</a></h2><ul>
 <li><code>--remove</code> will remove some DSC steps as specified. In order to remove data properly, the dsc result database (defined in <code>dsc_file</code>) must be accessible.</li>
 </ul>
-<h2 id="DSC-result-annotation">DSC result annotation<a class="anchor-link" href="#DSC-result-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
+<h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
 <ul>
 <li><code>--annotation</code> specifies the annotation file. See this <a href="">section</a> for an example annotation file.</li>
 <li><code>--annotate_to</code> by default, is the name of the last DSC block if the DSC procedure only runs one sequence. Otherwise the name of the last DSC block has to be provided.</li>
@@ -253,7 +253,7 @@ Extract DSC results:
 <li><code>--extract</code> specifies the name of variable to extract. The variable name should be avaiable in the last DSC block.</li>
 <li><code>--extract_from</code> same as <code>--annotate_to</code> above. </li>
 <li><code>--extract_to</code> output file for extracted data.</li>
-<li><code>--tags</code> Annotations to extract.</li>
+<li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator.</li>
 </ul>
 
 </div>
@@ -262,4 +262,8 @@ Extract DSC results:
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>

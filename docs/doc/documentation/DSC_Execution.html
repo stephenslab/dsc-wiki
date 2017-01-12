@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>DSC_Execution</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="../../js/toc2.js"></script>
+<script src="../../js/docs.js"></script>
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false, 
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+            table_of_contents(cfg,st);
+
+            var file=documentationDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=documentation;
+            var pos=documentation.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+
+
+            $('<li id="indexHome"><a href="../../documentation.html"><b>Documentation Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Syntax:-DSC-execution">Syntax: DSC execution<a class="anchor-link" href="#Syntax:-DSC-execution">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-Sequences">DSC Sequences<a class="anchor-link" href="#DSC-Sequences">&#182;</a></h2><p>Blocks are executed from the <strong>DSC</strong> section as <em>sequences</em>, defined by the <code>DSC::run</code> entry. Ways these blocks are connected can be specified via "*", "," and "()" operators:</p>
+<p><em>FIXME: give example for</em> <code>+</code></p>
+<ul>
+<li>"*": right hand side (RHS) is executed after the left hand side (LHS).</li>
+<li>"+": LHS and RHS are pair-wise combined first. <strong>In DSC, + operator has higher precedence than * operator</strong>.</li>
+<li>",": RHS and LHS are concurrent.</li>
+<li>"()": allows for combinations of "*" and ",".</li>
+</ul>
+<p>These operators also apply to <code>.logic</code> entries which define the ways parameters are combined.</p>
+<h3 id="Example-1">Example 1<a class="anchor-link" href="#Example-1">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate) * score</span>
+</pre></div>
+<p>DSC will run "transform" first, followed by "estimate".</p>
+<h3 id="Example-2">Example 2<a class="anchor-link" href="#Example-2">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate, estimate) * score</span>
+</pre></div>
+<p>DSC will run 2 concurrent sequences of steps. The first involves "transform" followed by "estimate"; the second is "estimate" only.</p>
+<p>Slicing is supported, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform[1:3] * estimate[1], transform[4:5] * estimate[2], estimate) * score</span>
+</pre></div>
+<h3 id="Example-3">Example 3<a class="anchor-link" href="#Example-3">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (voom, sqrt, identity) * (RUV, SVA) * (DESeq, edgeRglm, ash) * score</span>
+</pre></div>
+<p>will be expanded to:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * DESeq * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * edgeRglm * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * edgeRglm * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * edgeRglm * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * edgeRglm * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * ash * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * edgeRglm * score,</span>
+       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * edgeRglm * score</span>
+</pre></div>
+<h2 id="DSC-Section-Parameters">DSC Section Parameters<a class="anchor-link" href="#DSC-Section-Parameters">&#182;</a></h2><ul>
+<li><code>master</code>: Block names that will become one of the <em>master</em> tables in DSC output. By default the last block of a DSC sequence will be the master table. When a block becomes a master table, DSC will attempt to extract information from the block output and write them explicitly to the DSC output database.</li>
+<li><code>parameters</code>: Defines DSC variables which can be used anywhere in the DSC file through <code>$()</code> sigil.</li>
+<li><code>exec_path</code>: Search path for executable files.</li>
+<li><code>lib_path</code>: Search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed.</li>
+<li><code>R_libs</code>: Required R libraries, from cran, bioconductor or github:<ul>
+<li><code>package</code>: DSC will check / install <code>package</code> from cran or bioconductor.</li>
+<li><code>github_repo/package</code>: DSC will install <code>package</code> from <code>github_repo</code> on github.</li>
+<li><code>package (version[s])</code>: DSC will install <code>package</code> and check version as required. A warning message will be generated if version do not match. It is possible to specify several versions such as <code>edgeR (3.12.0, 3.12.1)</code> or simply <code>edgeR (3.12.0+)</code>.</li>
+</ul>
+</li>
+<li><code>work_dir</code>: work directory where DSC runs take place.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</body>
+
+ 
+
+
+</html>
