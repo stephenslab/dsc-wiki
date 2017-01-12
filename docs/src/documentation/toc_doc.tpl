@@ -65,11 +65,9 @@ $( document ).ready(function(){
             // fire the main function with these parameters
 
 
-
             table_of_contents(cfg,st);
 
             var file=documentationDict[$("h1:first").attr("id")];
-            var path="http://gaow.github.io/dsc-wiki"
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
             var docs=documentation;
@@ -77,15 +75,15 @@ $( document ).ready(function(){
         
             for (var a=pos;a>=0;a--){
                   var name=docs[a]
-                  $('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+                  $('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
-            $('a[href="'+path+'/doc/documentation/'+file+'.html'+'"]').css("color","#126dce");
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
 
 
-            $('<li id="indexHome"><a href="'+path+'/documentation.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            $('<li id="indexHome"><a href="../../documentation.html"><b>Documentation Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
             for (var a=pos+1;a<docs.length;a++){
                   var name=docs[a]
-                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/documentation/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
             }
             $("#toc-header").hide();
 

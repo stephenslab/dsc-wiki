@@ -70,7 +70,6 @@ $( document ).ready(function(){
 
 
             var file=tutorialsDict[$("h1:first").attr("id")];
-            var path="http://gaow.github.io/dsc-wiki"
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
             
@@ -79,14 +78,14 @@ $( document ).ready(function(){
         
             for (var a=pos;a>=0;a--){
                   var name=tuts[a]
-                  $('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+                  $('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
-            $('a[href="'+path+'/doc/tutorials/'+file+'.html'+'"]').css("color","#126dce");
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
 
-            $('<li id="indexHome"><a href="'+path+'/tutorials.html"><b>Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            $('<li id="indexHome"><a href="../../tutorials.html"><b>Tutorials Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
             for (var a=pos+1;a<tuts.length;a++){
                   var name=tuts[a]
-                  $(".toc #toc-level0").append('<li><a href="'+path+'/doc/tutorials/'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
             }
             $("#toc-header").hide();
 
