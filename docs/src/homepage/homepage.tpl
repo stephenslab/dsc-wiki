@@ -73,6 +73,15 @@ body {
   padding-bottom: 40px;
 }
 
+h1 {
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin-bottom: 25px;
+}
+
 a.anchor-link:link {
   text-decoration: none;
   padding: 0px 20px;
