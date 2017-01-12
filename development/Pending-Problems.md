@@ -2,30 +2,24 @@ This page documents some pre-mature thoughts that do not make to the github issu
 
 ## Pending
 ### TODO
-*  Release to anaconda
+*  [Unit tests](https://github.com/stephenslab/dsc2/issues/6)
 *  Allow for mixture Python and R in **the same** section (i.e. design a compatible output alias syntax)
+*  Matlab support
 *  Get command based system work 100%
    *  Currently the only major difficulty is that in plugin mode I only allow for one return file per block. I am not sure how to write it for multiple file output and more importantly how to distinguish different groups of files when they are passed to the next step.
-*  [Unit tests](https://github.com/stephenslab/dsc2/issues/6)
 *  Force build result database -- should add a command to build what has been done
    * so that at least we can have something to show for when errors occur
 *  On the fly mode, via `.option`
-*  Better result browsing, e.g., [shinydsc](https://github.com/stephenslab/shinydsc), and fancybox implementation
-*  Improve engineering for file signature and caching
+*  Better result browsing, e.g., a separate tool based on fancybox?
+*  Portability
 *  Clean up the code
 
-### TODO (UPSTREAM)
-*  Export in dryrun mode
-*  Project portability
-*  DAG powered parallel 
-*  Cluster support
-
 ### Hard TODO
-*  Smarter way to avoid loading HUGE rpy2 objects when building results database
-  * Partially done: at least nested list will not be loaded. But large matrices remains loaded because I cannot properly distinguish between multi-dimentional Array and 1-dimentional vector as RPY objects.
+*  NA, NAN, NULL in R are impossible to distinguish in Python generated database.
 
 ## Resolved
 ### Done
+*  Improve engineering for file signature and caching
 *  Formal documentations
 *  Parameter by natural groups
 *  Implement `dsc view` for extracting data from results
