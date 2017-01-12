@@ -146,7 +146,7 @@ $( document ).ready(function(){
 <li><code>*</code>: right hand side (RHS) is executed after the left hand side (LHS).</li>
 <li><code>+</code>: LHS and RHS are pair-wise combined first. <strong>In DSC, + operator has higher precedence than * operator</strong>.</li>
 <li><code>,</code>: RHS and LHS are concurrent.</li>
-<li><code>()</code>: allows for combinations of "*" and ",".</li>
+<li><code>()</code>: allows for combinations of <code>*</code> and <code>,</code>.</li>
 </ul>
 <p>These operators also apply to <code>.logic</code> entries which define the ways parameters are combined.</p>
 <h3 id="Example-1">Example 1<a class="anchor-link" href="#Example-1">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate) * score</span>
