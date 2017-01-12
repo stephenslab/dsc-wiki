@@ -143,10 +143,10 @@ $( document ).ready(function(){
 <h2 id="DSC-Sequences">DSC Sequences<a class="anchor-link" href="#DSC-Sequences">&#182;</a></h2><p>Blocks are executed from the <strong>DSC</strong> section as <em>sequences</em>, defined by the <code>DSC::run</code> entry. Ways these blocks are connected can be specified via "*", "," and "()" operators:</p>
 <p><em>FIXME: give example for</em> <code>+</code></p>
 <ul>
-<li>"*": right hand side (RHS) is executed after the left hand side (LHS).</li>
-<li>"+": LHS and RHS are pair-wise combined first. <strong>In DSC, + operator has higher precedence than * operator</strong>.</li>
-<li>",": RHS and LHS are concurrent.</li>
-<li>"()": allows for combinations of "*" and ",".</li>
+<li><code>*</code>: right hand side (RHS) is executed after the left hand side (LHS).</li>
+<li><code>+</code>: LHS and RHS are pair-wise combined first. <strong>In DSC, + operator has higher precedence than * operator</strong>.</li>
+<li><code>,</code>: RHS and LHS are concurrent.</li>
+<li><code>()</code>: allows for combinations of "*" and ",".</li>
 </ul>
 <p>These operators also apply to <code>.logic</code> entries which define the ways parameters are combined.</p>
 <h3 id="Example-1">Example 1<a class="anchor-link" href="#Example-1">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate) * score</span>
@@ -196,19 +196,6 @@ $( document ).ready(function(){
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
