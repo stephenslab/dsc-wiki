@@ -7,22 +7,15 @@
 # 2. docker images to docker hub
 # 3. website to github.io
 
-[patch: shared='version']
-parameter: version = str
-sh:
-	perl -pi.bak -e "s/^__version__ = .*/__version__ = '${version}'/" ../sos/_version.py
-
-
 [pip]
 # check the version of the latest version
-cur_ver = get_output("pip show sos | grep Version | cut -d' ' -f2").strip()
-
+cur_ver = get_output("pip show dsc | grep Version | cut -d' ' -f2").strip()
+version = get_output("dsc --version")
 # do not upload if the version on pip is the current one
 stop_if(cur_ver == version)
 
-sh:	workdir='..'
+sh:	workdir='~/GIT/software/dsc2'
 	python setup.py sdist upload
-	pip install sos --upgrade
   
 [update-docker]
 # add documentation to Docker container
@@ -131,4 +124,4 @@ else:
 
 
 [default]
-sos_run('patch + pip + update-docker + update-ec2 + update-website')
+sos_run('pip + update-docker + update-ec2 + update-website')
