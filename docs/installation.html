@@ -211,18 +211,16 @@ bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
 <pre><code>bash Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
 <p>Follow the prompt to install it (use <code>ctrl+F</code> to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: say Yes unless you know what you are doing).</p>
 <p>After the program is installed, you have to reload your <code>bash</code> profile. If you do not know what this means, just exit the current terminal and open up a new one.</p>
-<h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be found at <a href="https://github.com/stephenslab/dsc2/releases">https://github.com/stephenslab/dsc2/releases</a>. You can download and decompress the package, then run:</p>
+<h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be installed via <code>pip install</code>:</p>
 
-<pre><code>cd src
-conda install numpy pandas
-python setup.py install</code></pre>
-<p>to install it. <code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> will take a while to install.</p>
+<pre><code>pip install dsc</code></pre>
+<p><code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> may take a while to install.</p>
 <p><em>Note: If you have a Mac and use <a href="cran.r-project.org">R</a> only from RStudio (not from command line), then you might experience an error message in DSC2 installation complaining that R command is not found. This is because the link to your R program from Mac terminal was accidentally wiped, most likely due to a major system update. In that case we suggest you download the same version of R from <a href="cran.r-project.org">cran</a> and re-install it. The command line link will be recovered after install.</em></p>
-<h2 id="Developmental-Version">Developmental Version<a class="anchor-link" href="#Developmental-Version">&#182;</a></h2><p>Since some DSC2 features are directly implemented into <code>pysos</code> library, the developmental version of DSC2 requires developmental version of <code>pysos</code>. Therefore the latest <code>pysos</code> library has to be installed before updating DSC2:</p>
+<h2 id="Developmental-Version">Developmental Version<a class="anchor-link" href="#Developmental-Version">&#182;</a></h2><p>DSC2 co-evolves with the <a href="http://github.com/vatlab/sos">SoS library</a>. The developmental version (<code>master</code> branch on github) requires the developmental version of SoS. To install the latest SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SOS.git
 python setup.py install</code></pre>
-<p>Then install DSC2:</p>
+<p>Then the latest DSC2:</p>
 
 <pre><code>git clone https://github.com/stephenslab/dsc2.git
 python setup.py install</code></pre>
