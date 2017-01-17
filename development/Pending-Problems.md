@@ -21,6 +21,7 @@ This page documents some pre-mature thoughts that do not make to the github issu
 *  Force plugin to be non-plug in
 *  Pack() change
 *  DSC::parameters change to DSC::params
+*  Need an example and a tutorial running DSC on the cluster via rq
 
 ### Hard TODO
 *  NA, NAN, NULL in R are impossible to distinguish in Python generated database.
