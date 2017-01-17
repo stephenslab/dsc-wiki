@@ -10,9 +10,17 @@ This page documents some pre-mature thoughts that do not make to the github issu
 *  Force build result database -- should add a command to build what has been done
    * so that at least we can have something to show for when errors occur
 *  On the fly mode, via `.option`
+*  Looped DSC steps, e.g. perform `transform` multiple times
+*  Resource usage monitor and extract: time, CPU and Memory
+   * should be part of the output data
+   * may be achieved by `.option`
+*  Resource usage per option translate to SoS
 *  Better result browsing, e.g., a separate tool based on fancybox?
 *  Portability
 *  Clean up the code
+*  Force plugin to be non-plug in
+*  Pack() change
+*  DSC::parameters change to DSC::params
 
 ### Hard TODO
 *  NA, NAN, NULL in R are impossible to distinguish in Python generated database.

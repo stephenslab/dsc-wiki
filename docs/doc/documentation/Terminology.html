@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Terminology</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Terminology</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -140,7 +142,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is a list of terms defined for elements of DSC. We will use these terms throughout the DSC documentation.</p>
+<p>Here is a list of terms defined for elements in DSC. We will use these terms throughout the DSC documentation.</p>
 
 </div>
 </div>
@@ -151,17 +153,15 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>DSC script</strong>: A <a href="http://yaml.org">YAML</a> flavored text file that configures the entire DSC procedure.<ul>
+<li><strong>DSC script</strong> or <strong>DSC configuration</strong>: A <a href="http://yaml.org">YAML</a> flavored text file that configures the entire DSC procedure.<ul>
 <li>DSC script is YAML flavored but not standard YAML file. It is based on YAML parser yet it is capable of handling block operators and DSC variables as it loads the script.</li>
 </ul>
 </li>
 <li><strong>DSC block</strong>: Sections in DSC script that defines a family of computational routines.</li>
 <li><strong>DSC step</strong>: A computational routine defined in a DSC block.</li>
-<li><strong>Block parameters</strong>: Keywords constituting a DSC block specification.<ul>
-<li>Available block parameters: <code>exec</code>, <code>params</code>, <code>seed</code>, <code>return</code>, <code>.alias</code>, <code>.logic</code>, <code>.options</code></li>
-</ul>
-</li>
-<li><strong>DSC entry</strong>: Lines in DSC blocks, labeled by block parameters and separated by comma (","), to allow for a range of values be assigned to multiple computational routines.</li>
+<li><strong>Block parameters</strong>: <code>exec</code>, <code>params</code>, <code>seed</code>, <code>return</code></li>
+<li><strong>Block options</strong>: <code>.alias</code>, <code>.logic</code>, <code>.options</code></li>
+<li><strong>DSC entry</strong>: Lines in DSC blocks, labeled by block parameters or options and separated by comma (","), to allow for a range of values be assigned to multiple computational routines.</li>
 <li><strong>Block operators</strong>: Special functions to help DSC specification, including:<ul>
 <li><code>$, $(), (), R(), Python(), Shell(), Combo(), Pairs(), Asis(), File(), Pack()</code></li>
 </ul>
@@ -171,11 +171,12 @@ $( document ).ready(function(){
 </ul>
 </li>
 <li><strong>DSC sequence</strong> &amp; <strong>DSC sequence operators</strong>: A sequence of logical expression that defines how the DSC blocks should be connected to each other.</li>
-<li><strong>DSC variables</strong>: The <code>parameters</code> entry in the <code>DSC</code> section that defines variables to be accessed by DSC blocks (via <code>$()</code> sigil).</li>
+<li><strong>DSC variables</strong>: The <code>params</code> entry in the <code>DSC</code> section that defines variables to be accessed by DSC blocks (via <code>$()</code> sigil).</li>
 <li><strong>DSC annotation</strong>: A <a href="http://yaml.org">YAML</a> text file that annotates DSC with tags.<ul>
 <li>DSC annotation file is a strict YAML file. Only limited block operators are supported.</li>
 </ul>
 </li>
+<li><code>block::entry::value</code> is the notation to refer to an entry in a DSC block. For example <code>simulate::params::K</code> refers to the parameter <code>K</code> in <code>simulate</code> block.</li>
 </ul>
 <p>You may glance over some <a href="../../tutorials.html#Intermediate-examples">sample DSC scripts</a> to have an idea of DSC2 syntax. It is also recommended that you read the <a href="Design_and_Features">DSC design concept</a> before diving into the details throughout the rest of the document.</p>
 
@@ -185,8 +186,4 @@ $( document ).ready(function(){
     </div>
   </div>
 </body>
-
- 
-
-
 </html>

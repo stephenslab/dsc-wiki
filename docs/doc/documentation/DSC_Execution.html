@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>DSC_Execution</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>DSC_Execution</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -140,7 +142,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Sequences">DSC Sequences<a class="anchor-link" href="#DSC-Sequences">&#182;</a></h2><p>Blocks are executed from the <strong>DSC</strong> section as <em>sequences</em>, defined by the <code>DSC::run</code> entry. Ways these blocks are connected can be specified via "*", "," and "()" operators:</p>
+<h2 id="DSC-Sequences">DSC Sequences<a class="anchor-link" href="#DSC-Sequences">&#182;</a></h2><p>Blocks are executed from the <strong>DSC section</strong> as <em>sequences</em>, defined by the <code>DSC::run</code> entry. Ways these blocks are connected can be specified via "*", "," and "()" operators:</p>
 <p><em>FIXME: give example for</em> <code>+</code></p>
 <ul>
 <li><code>*</code>: right hand side (RHS) is executed after the left hand side (LHS).</li>
@@ -182,7 +184,10 @@ $( document ).ready(function(){
 </pre></div>
 <h2 id="DSC-Section-Parameters">DSC Section Parameters<a class="anchor-link" href="#DSC-Section-Parameters">&#182;</a></h2><ul>
 <li><code>master</code>: Block names that will become one of the <em>master</em> tables in DSC output. By default the last block of a DSC sequence will be the master table. When a block becomes a master table, DSC will attempt to extract information from the block output and write them explicitly to the DSC output database.</li>
-<li><code>parameters</code>: Defines DSC variables which can be used anywhere in the DSC file through <code>$()</code> sigil.</li>
+</ul>
+<p><em>FIXME: we should no longer need master parameter once we have simple interface to extract intermediate output</em></p>
+<ul>
+<li><code>params</code>: Defines DSC variables which can be used anywhere in the DSC file through <code>$()</code> sigil.</li>
 <li><code>exec_path</code>: Search path for executable files.</li>
 <li><code>lib_path</code>: Search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed.</li>
 <li><code>R_libs</code>: Required R libraries, from cran, bioconductor or github:<ul>
@@ -200,8 +205,4 @@ $( document ).ready(function(){
     </div>
   </div>
 </body>
-
- 
-
-
 </html>
