@@ -142,7 +142,55 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This page is under development</p>
+<p>DSC annotation is a file that tags the DSC procedure with meaningful identifiers so that one can easily extract results for given computational step under given condition, from numerous combinations of computational setups. Readers may notice that in our introduction to <a href="DSC_Configuration.html">DSC configuration</a> we have not discussed how output from DSC is handled or interpreted. In fact DSC2 will generate intermediate output for each unique parameter combination of every computational step, along with a lookup data base that stores connection between these steps. However it is rather difficult, though still possible, to interact directly with these output. With <strong>DSC annotation</strong> file we can keep track of combinations we are interested in and can easily extract data for these combinations one at a time as it is desired.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is an example annotation section:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mean_t</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
+        <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example we add a tag called <code>mean_t</code> to part of a DSC sequence where data is simulated under <em>t</em> distribution with location parameter zero, and analyzed using <code>mean.R</code> method. The format of DSC annotation structure is essentially DSC configuration file with an additional level or hierarchy being the tag name. However unlike DSC configuration whose syntax is designed to generate combinations of steps and parameters, syntax for annotation statement is designed to execute queries on databases, thus resembling query lauguages. There are 3 types of supported annotation statements:</p>
+<ul>
+<li>Single numeric or string values. For example <code>rt.R</code>, <code>mean.R</code> and <code>0</code> from the example above all belong to this type of annotation statement. It is a simple "equals" statement when converted to database queries.<ul>
+<li>if <code>Asis()</code> operator was used in DSC configuration to set parameters, the corresponding annotation statement should also use this operator. Here is <a href="../tutorials/Intermediate_R_1.html#Result-annotation">an example</a> involving the <code>Asis()</code> operator.</li>
+</ul>
+</li>
+<li>A set of values, specified by <code>()</code> similar to the SQL style. For example, <code>K: (1, 2, 5, 10)</code> means <code>K == 1</code> OR <code>K == 2</code> OR <code>K == 5</code> OR <code>K == 10</code>.</li>
+<li>A <code>%</code> symbol followed by a query statement. For example, <code>K: % K &gt; 20 AND K &lt; 30</code>. This statement will be passed to query command directly. </li>
+</ul>
+<p>Query statement is the most flexible way to compose an annotation though one has to ensure the statement is valid; DSC will otherwise fail to annotate the result with bad queries. The table below summarizes supported syntax for annotation queries:</p>
+<p><em>FIXME: to be adapted from pandas.query()</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It is possible to create as many tags as needed from one DSC annotation file. The results will be annotated with the <code>--annotation</code> switch to apply all tags, and one can extract data from specific tags or combination of tags with <code>--extract</code> switch. Please see documentation for these command line options <a href="Command_Options.html">here</a>. To see how DSC annotation works in action please follow through the <a href="../tutorials/Explore_Output.html">2nd part of the Quick Start tutorial</a>.</p>
 
 </div>
 </div>
