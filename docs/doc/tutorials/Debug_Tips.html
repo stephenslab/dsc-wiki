@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Debug_Tips</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Debug_Tips</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -143,18 +145,18 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, I mess with this R script by adding an undefined function to it:</p>
+<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, we break the R script below by executing an undefined function <code>undefined_foo_showoff</code>:</p>
 <div class="highlight"><pre><span></span>undefined_foo_showoff<span class="p">()</span>
 score <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>est<span class="p">,</span> truth<span class="p">){</span>
   <span class="kr">return</span><span class="p">(</span><span class="kp">sqrt</span><span class="p">(</span><span class="kp">mean</span><span class="p">((</span>est<span class="o">-</span>truth<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)))</span>
 <span class="p">}</span>
 result <span class="o">=</span> score<span class="p">(</span>est<span class="p">,</span> truth<span class="p">)</span>
 </pre></div>
-<p>And the DSC run fails:</p>
+<p>And the DSC run fails as expected:</p>
 
 <pre><code>INFO: Constructing DSC from settings.dsc ...
 INFO: DSC exported to settings.html
-simulate_1+shrink_1+beta_score_1:   0.0% [&gt;                                                          ]  in 00:00:00
+simulate:1+shrink:1+beta_score:1:   0.0% [&gt;      ]  in 00:00:00
 
 Error: could not find function "undefined_foo_showoff"
 Execution halted
@@ -167,24 +169,7 @@ Failed to execute script. The script is saved to /home/gaow/GIT/software/dsc2/vi
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
     </div>
   </div>
 </body>
-
- 
-
-
 </html>
