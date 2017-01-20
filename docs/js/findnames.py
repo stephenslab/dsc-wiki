@@ -6,7 +6,7 @@ path="../docs"
 
 def fileDict(docFile,folder):
 	docString="var "+folder+"Dict={"
-	for file in glob.glob(path+"/src/"+folder+"/*.ipynb"):
+	for file in sorted(glob.glob(path+"/src/"+folder+"/*.ipynb")):
 		name=file.replace(".ipynb","").split("/")[-1]
 		with open(file) as json_data:
  			d=json.load(json_data)

@@ -19,9 +19,12 @@ This page documents some pre-mature thoughts that do not make to the github issu
 *  Portability
 *  Clean up the code
 *  Force plugin to be non-plug in
-*  Pack() change
+*  Pack() change to Map()
 *  DSC::parameters change to DSC::params
 *  Need an example and a tutorial running DSC on the cluster via rq
+*  R function definition overload check
+   * after making lib_path and exec_path be block specific
+*  exec specific return alias (what should be the syntax??)
 
 ### Hard TODO
 *  NA, NAN, NULL in R are impossible to distinguish in Python generated database.
