@@ -12787,7 +12787,7 @@ samp {
 }
 code {
  font-family: "PT Mono", monospace;
- font-size: 11pt !important;
+ /*font-size: 11pt !important;*/
  line-height: 170% !important;
  color: #353535;
  background: #efefef;
