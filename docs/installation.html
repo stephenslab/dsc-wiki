@@ -201,7 +201,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.4+, because it takes advantage of some new features introduced since Python 3.4. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code>. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
+<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.4+, because it takes advantage of some new features introduced since Python 3.4. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code> for Linux and <code>brew</code> for Mac. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
 <p>You can check if your system satisfies the requirement via:</p>
 
 <pre><code>python3 --version</code></pre>
@@ -226,10 +226,12 @@ bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
 <h2 id="Developmental-Version">Developmental Version<a class="anchor-link" href="#Developmental-Version">&#182;</a></h2><p>DSC2 co-evolves with the <a href="http://github.com/vatlab/sos">SoS library</a>. The developmental version (<code>master</code> branch on github) requires the developmental version of SoS. To install the latest SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SOS.git
+cd SOS
 python3 setup.py install</code></pre>
 <p>Then the latest DSC2:</p>
 
 <pre><code>git clone https://github.com/stephenslab/dsc2.git
+cd dsc2
 python3 setup.py install</code></pre>
 
 </div>
