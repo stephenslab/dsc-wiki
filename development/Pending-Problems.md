@@ -2,29 +2,30 @@ This page documents some pre-mature thoughts that do not make to the github issu
 
 ## Pending
 ### TODO
+*  exec specific return alias (what should be the syntax??)
+*  Pack() change to List() / Dict() along with documentation fixes
+*  DSC::parameters change to DSC::params along with documentation fixes
+*  Resource usage monitor and extract: time, CPU and Memory
+   * should be part of the output data
+   * may be achieved by `.option`
+*  Fix pip installation js files
+*  Force build result database -- should add a command to build what has been done
+   * so that at least we can have something to show for when errors occur
+*  On the fly mode, via `.option`
 *  [Unit tests](https://github.com/stephenslab/dsc2/issues/6)
 *  Allow for mixture Python and R in **the same** section (i.e. design a compatible output alias syntax)
 *  Matlab support
 *  Get command based system work 100%
    *  Currently the only major difficulty is that in plugin mode I only allow for one return file per block. I am not sure how to write it for multiple file output and more importantly how to distinguish different groups of files when they are passed to the next step.
-*  Force build result database -- should add a command to build what has been done
-   * so that at least we can have something to show for when errors occur
-*  On the fly mode, via `.option`
 *  Looped DSC steps, e.g. perform `transform` multiple times
-*  Resource usage monitor and extract: time, CPU and Memory
-   * should be part of the output data
-   * may be achieved by `.option`
 *  Resource usage per option translate to SoS
 *  Better result browsing, e.g., a separate tool based on fancybox?
 *  Portability
 *  Clean up the code
 *  Force plugin to be non-plug in
-*  Pack() change to Map()
-*  DSC::parameters change to DSC::params
 *  Need an example and a tutorial running DSC on the cluster via rq
 *  R function definition overload check
    * after making lib_path and exec_path be block specific
-*  exec specific return alias (what should be the syntax??)
 
 ### Hard TODO
 *  NA, NAN, NULL in R are impossible to distinguish in Python generated database.
