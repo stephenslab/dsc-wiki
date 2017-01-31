@@ -3,12 +3,13 @@ This page documents some pre-mature thoughts that do not make to the github issu
 ## Pending
 ### TODO
 *  exec specific return alias (what should be the syntax??)
+*  Fix pip installation js files
+*  Issue 49
 *  Pack() change to List() / Dict() along with documentation fixes
 *  DSC::parameters change to DSC::params along with documentation fixes
 *  Resource usage monitor and extract: time, CPU and Memory
    * should be part of the output data
    * may be achieved by `.option`
-*  Fix pip installation js files
 *  Force build result database -- should add a command to build what has been done
    * so that at least we can have something to show for when errors occur
 *  On the fly mode, via `.option`
