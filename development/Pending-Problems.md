@@ -2,11 +2,13 @@ This page documents some pre-mature thoughts that do not make to the github issu
 
 ## Pending
 ### TODO
-*  exec specific return alias (what should be the syntax??)
 *  Fix pip installation js files
+*  Issue 55
 *  Issue 49
 *  Pack() change to List() / Dict() along with documentation fixes
 *  DSC::parameters change to DSC::params along with documentation fixes
+*  Fix --remove
+*  Fix interface (grouped args, better connections between annotate, extract, etc.)
 *  Resource usage monitor and extract: time, CPU and Memory
    * should be part of the output data
    * may be achieved by `.option`
@@ -33,6 +35,7 @@ This page documents some pre-mature thoughts that do not make to the github issu
 
 ## Resolved
 ### Done
+*  exec specific return alias (what should be the syntax??)
 *  Improve engineering for file signature and caching
 *  Formal documentations
 *  Parameter by natural groups
