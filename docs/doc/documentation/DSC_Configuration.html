@@ -125,7 +125,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Block-Parameters">Block Parameters<a class="anchor-link" href="#Block-Parameters">&#182;</a></h2><p>A DSC block is composed of block parameters <code>exec</code>, <code>seed</code>, <code>params</code> and <code>return</code>, of which <code>exec</code> and <code>return</code> are required and <code>seed</code> and <code>params</code> optional.</p>
+<h2 id="Block-Properties:-main">Block Properties: main<a class="anchor-link" href="#Block-Properties:-main">&#182;</a></h2><p>Main properties of a DSC block are <code>exec</code>, <code>seed</code>, <code>params</code> and <code>return</code>, of which <code>exec</code> and <code>return</code> are required and <code>seed</code> and <code>params</code> optional.</p>
 <h3 id="exec">exec<a class="anchor-link" href="#exec">&#182;</a></h3><p><code>exec</code> specifies the names of executable computational routines as well as their command line arguments if applicable. For example an <code>exec</code> entry reads:</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">datamaker.R, ms $nsam $nreps -t $theta -seed $seed</span>
 </pre></div>
@@ -193,7 +193,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Block-options">Block options<a class="anchor-link" href="#Block-options">&#182;</a></h2><p>Block options fine-tunes how block parameters are combined, renamed or defines the particular environment running a DSC block. Available block options are <code>.logic</code>, <code>.alias</code> and <code>.options</code>. All block options are optional.</p>
+<h2 id="Block-properties:-optional">Block properties: optional<a class="anchor-link" href="#Block-properties:-optional">&#182;</a></h2><p>Optional block properties fine-tunes how the main properties are combined, renamed or defines the particular environment running a DSC block. Available optional properties are <code>.logic</code>, <code>.alias</code> and <code>.options</code>.</p>
 <h3 id=".logic">.logic<a class="anchor-link" href="#.logic">&#182;</a></h3><p><code>.logic</code> defines how parameter values are combined. It can be used outside or inside <code>params</code>.</p>
 <h4 id="For-executables">For executables<a class="anchor-link" href="#For-executables">&#182;</a></h4><p>When <code>.logic</code> appears outside <code>params</code> (typically unter <code>exec</code> ), it annotates the logic beind <code>exec</code> useing the <code>+</code> operator to specify how the computational routines should be combined. By default, routines under <code>exec</code> are independent from each other; yet this can be changed via <code>.logic</code>, for example:</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span>

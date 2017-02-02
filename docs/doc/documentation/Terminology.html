@@ -142,8 +142,11 @@ $( document ).ready(function(){
 </li>
 <li><strong>DSC block</strong>: Sections in DSC script that defines a family of computational routines.</li>
 <li><strong>DSC step</strong>: A computational routine defined in a DSC block.</li>
-<li><strong>Block parameters</strong>: <code>exec</code>, <code>params</code>, <code>seed</code>, <code>return</code></li>
-<li><strong>Block options</strong>: <code>.alias</code>, <code>.logic</code>, <code>.options</code></li>
+<li><strong>Block properties</strong>: <ul>
+<li>Main properties: <code>exec</code>, <code>params</code>, <code>seed</code>, <code>return</code></li>
+<li>Optional properties: <code>.alias</code>, <code>.logic</code>, <code>.options</code></li>
+</ul>
+</li>
 <li><strong>DSC entry</strong>: Lines in DSC blocks, labeled by block parameters or options and separated by comma (","), to allow for a range of values be assigned to multiple computational routines.</li>
 <li><strong>Block operators</strong>: Special functions to help DSC specification, including:<ul>
 <li><code>$, $(), (), R(), Python(), Shell(), Combo(), Pairs(), Asis(), File(), Pack()</code></li>
