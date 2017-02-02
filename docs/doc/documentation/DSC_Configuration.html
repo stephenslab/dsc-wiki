@@ -182,6 +182,12 @@ $( document ).ready(function(){
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, y = x_new</span>
 </pre></div>
 <p>where <code>x</code> and <code>x_new</code> exist in data but <code>x_new</code> is returned as another variable named <code>y</code>.</p>
+<p>It is also possible to specify return alias specific to executables, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = lkhd</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = mse</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[3]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = fisher</span>
+</pre></div>
 <p>For plugin executables, return value should match a variable name in the corresponding script and thus may or may not be in <code>params</code>. For non-plugin executables, return value hae to be one of the <code>params</code> values as it is impossible to set other values to a non-plugin executable other than the <code>params</code> specification. If return value is a file name (via <a href="#File(">File()</a>) syntax), the corresponding file will be registered to DSC2 to track for possible changes further down the pipelines.</p>
 <p><code>return</code> is required parameter.</p>
 
