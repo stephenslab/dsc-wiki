@@ -218,7 +218,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">annotation</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
 
 </div>
@@ -231,13 +231,14 @@ $( document ).ready(function(){
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC result annotation summary:
-	Tag <span class="ansi-green-fg">median_t</span> created via:
-	[median.R] ALL &amp; [rt.R] (true_mean == 0)
-
-	Tag <span class="ansi-green-fg">mean_t</span> created via:
-	[mean.R] ALL &amp; [rt.R] (true_mean == 0)
-INFO: Elapsed time <span class="ansi-green-fg">0.034</span> seconds.
+<pre>INFO: 
++----------------+--------------------------------------------------+
+|  Tag           |  No. unique obj.                                 |
++----------------+--------------------------------------------------+
+|  <span class="ansi-green-fg">mean_t</span>    |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">median_t</span>  |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
++----------------+--------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
 </pre>
 </div>
 </div>
@@ -271,7 +272,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.034</span> seconds.
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">extract</span> <span class="n">mse</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span>
 </pre></div>
 
 </div>
@@ -284,8 +285,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.034</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: <span class="ansi-green-fg">mse</span> data saved to <span class="ansi-green-fg">dsc_result.extracted.rds</span> for all annotations from DSC block <span class="ansi-green-fg">mse</span>.
-INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
+<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00, 10.93it/s]
+INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for all annotations for DSC result <span class="ansi-green-fg">mse</span>.
+INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 </pre>
 </div>
 </div>
@@ -299,7 +301,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The resulting <code>dsc_result.extracted.rds</code> file contains the information of interest, which we are going to examine next.</p>
+<p>The resulting <code>dsc_result.mse.rds</code> file contains the information of interest, which we are going to examine next.</p>
 
 </div>
 </div>
@@ -309,18 +311,18 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Analyzing-DSC-results">Analyzing DSC results<a class="anchor-link" href="#Analyzing-DSC-results">&#182;</a></h2><p>We load <code>dsc_result.extracted.rds</code> to <code>R</code> and generate plots to compare the two scenarios we are interested in:</p>
+<h2 id="Analyzing-DSC-results">Analyzing DSC results<a class="anchor-link" href="#Analyzing-DSC-results">&#182;</a></h2><p>We load <code>dsc_result.mse.rds</code> to <code>R</code> and generate plots to compare the two scenarios we are interested in:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">use</span> <span class="n">ir</span>
-<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;dsc_result.extracted.rds&#39;</span><span class="p">)</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;dsc_result.mse.rds&#39;</span><span class="p">)</span>
 <span class="n">dat</span>
 </pre></div>
 
@@ -336,22 +338,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 
 <div class="output_html rendered_html output_subarea ">
 <dl>
-	<dt>$median_t</dt>
-		<dd><ol class=list-inline>
-	<li>0.00198952016908845</li>
-	<li>0.0104148812308528</li>
-	<li>0.00403952323919894</li>
-	<li>0.00118967181916342</li>
-	<li>0.000354714586543617</li>
-	<li>0.001267905058322</li>
-	<li>4.00338221002128e-06</li>
-	<li>2.88309606529807e-05</li>
-	<li>0.00046901832920954</li>
-	<li>0.00159731146402349</li>
-</ol>
-</dd>
-	<dt>$mean_t</dt>
-		<dd><ol class=list-inline>
+	<dt>$mean_t_mse_mse</dt>
+		<dd><ol>
+	<li>0.00199846387851795</li>
 	<li>0.000375966958457247</li>
 	<li>0.0253637489566151</li>
 	<li>0.0480915157268725</li>
@@ -361,7 +350,20 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 	<li>0.0149624750787922</li>
 	<li>0.000222295205586497</li>
 	<li>0.00487296421360862</li>
-	<li>0.00199846387851795</li>
+</ol>
+</dd>
+	<dt>$median_t_mse_mse</dt>
+		<dd><ol>
+	<li>0.00159731146402349</li>
+	<li>0.00198952016908845</li>
+	<li>0.0104148812308528</li>
+	<li>0.00403952323919894</li>
+	<li>0.00118967181916342</li>
+	<li>0.000354714586543617</li>
+	<li>0.001267905058322</li>
+	<li>4.00338221002128e-06</li>
+	<li>2.88309606529807e-05</li>
+	<li>0.00046901832920954</li>
 </ol>
 </dd>
 </dl>
@@ -376,10 +378,11 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t_mse_mse</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -404,10 +407,11 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">)</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t_mse_mse</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -442,7 +446,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">cbind</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">,</span> <span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">))))</span>
@@ -466,6 +470,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 <table>
 <thead><tr><th scope=col>MSE</th><th scope=col>Method</th></tr></thead>
 <tbody>
+	<tr><td>1.998464e-03</td><td>mean        </td></tr>
 	<tr><td>3.759670e-04</td><td>mean        </td></tr>
 	<tr><td>2.536375e-02</td><td>mean        </td></tr>
 	<tr><td>4.809152e-02</td><td>mean        </td></tr>
@@ -475,7 +480,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 	<tr><td>1.496248e-02</td><td>mean        </td></tr>
 	<tr><td>2.222952e-04</td><td>mean        </td></tr>
 	<tr><td>4.872964e-03</td><td>mean        </td></tr>
-	<tr><td>1.998464e-03</td><td>mean        </td></tr>
+	<tr><td>1.597311e-03</td><td>median      </td></tr>
 	<tr><td>1.989520e-03</td><td>median      </td></tr>
 	<tr><td>1.041488e-02</td><td>median      </td></tr>
 	<tr><td>4.039523e-03</td><td>median      </td></tr>
@@ -485,7 +490,6 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 	<tr><td>4.003382e-06</td><td>median      </td></tr>
 	<tr><td>2.883096e-05</td><td>median      </td></tr>
 	<tr><td>4.690183e-04</td><td>median      </td></tr>
-	<tr><td>1.597311e-03</td><td>median      </td></tr>
 </tbody>
 </table>
 
@@ -499,7 +503,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.020</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>

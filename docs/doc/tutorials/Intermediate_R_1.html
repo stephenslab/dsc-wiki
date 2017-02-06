@@ -225,7 +225,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span> <span class="o">-</span><span class="n">f</span>
 </pre></div>
 
 </div>
@@ -238,15 +238,22 @@ $( document ).ready(function(){
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
-INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-simulate:1+shrink:1+beta_score:1: 100% [===================] 3 0.2/s in 00:00:14
-simulate:1+shrink:1+pi0_score:1: 100% [====================] 3 0.2/s in 00:00:13
-DSC: 100% [================================================] 2 0.1/s in 00:00:28
+DSC:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+simulate:1+shrink:1+beta_score:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:1+shrink:1+beta_score:1:  33%|███▎      | 1/3 [00:01&lt;00:03,  1.81s/it]
+simulate:1+shrink:1+beta_score:1:  67%|██████▋   | 2/3 [00:12&lt;00:04,  4.56s/it]
+simulate:1+shrink:1+beta_score:1: 100%|██████████| 3/3 [00:16&lt;00:00,  4.22s/it]
+DSC:  50%|█████     | 1/2 [00:16&lt;00:16, 16.27s/it]
+simulate:1+shrink:1+pi0_score:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:1+shrink:1+pi0_score:1:  33%|███▎      | 1/3 [00:02&lt;00:04,  2.02s/it]
+simulate:1+shrink:1+pi0_score:1:  67%|██████▋   | 2/3 [00:11&lt;00:04,  4.34s/it]
+simulate:1+shrink:1+pi0_score:1: 100%|██████████| 3/3 [00:14&lt;00:00,  4.00s/it]
+DSC: 100%|██████████| 2/2 [00:31&lt;00:00, 15.91s/it]
 INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">29.480</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">32.134</span> seconds.
 </pre>
 </div>
 </div>
@@ -297,10 +304,10 @@ INFO: Elapsed time <span class="ansi-green-fg">29.480</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">annotation</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">annotate_to</span> <span class="n">pi0_score</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">target</span> <span class="n">pi0_score</span>
 </pre></div>
 
 </div>
@@ -313,22 +320,17 @@ INFO: Elapsed time <span class="ansi-green-fg">29.480</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC result <span class="ansi-green-fg">pi0_score</span> has been annotated.
-	Tag <span class="ansi-green-fg">Cn</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;)
-
-	Tag <span class="ansi-green-fg">An</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;)
-
-	Tag <span class="ansi-green-fg">Bn</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;)
-
-	Tag <span class="ansi-green-fg">ash_n</span> created via:
-	[runash.R] (mixcompdist == &#34;&#39;normal&#39;&#34;)
-
-	Tag <span class="ansi-green-fg">ash_nu</span> created via:
-	[runash.R] (mixcompdist == &#34;&#39;halfuniform&#39;&#34;)
-INFO: Elapsed time <span class="ansi-green-fg">0.044</span> seconds.
+<pre>INFO: 
++--------------+------------------------------------------------------+
+|  Tag         |  No. unique obj.                                     |
++--------------+------------------------------------------------------+
+|  <span class="ansi-green-fg">An</span>      |  <span class="ansi-green-fg">10</span> pi0_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">Bn</span>      |  <span class="ansi-green-fg">10</span> pi0_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">Cn</span>      |  <span class="ansi-green-fg">10</span> pi0_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">ash_n</span>   |  <span class="ansi-green-fg">15</span> pi0_score &amp; <span class="ansi-green-fg">15</span> shrink &amp; <span class="ansi-green-fg">15</span> simulate  |
+|  <span class="ansi-green-fg">ash_nu</span>  |  <span class="ansi-green-fg">15</span> pi0_score &amp; <span class="ansi-green-fg">15</span> shrink &amp; <span class="ansi-green-fg">15</span> simulate  |
++--------------+------------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.089</span> seconds.
 </pre>
 </div>
 </div>
@@ -339,10 +341,10 @@ INFO: Elapsed time <span class="ansi-green-fg">0.044</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">annotation</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">annotate_to</span> <span class="n">beta_score</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span> <span class="o">--</span><span class="n">target</span> <span class="n">beta_score</span>
 </pre></div>
 
 </div>
@@ -355,22 +357,17 @@ INFO: Elapsed time <span class="ansi-green-fg">0.044</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC result <span class="ansi-green-fg">beta_score</span> has been annotated.
-	Tag <span class="ansi-green-fg">ash_n</span> created via:
-	[runash.R] (mixcompdist == &#34;&#39;normal&#39;&#34;)
-
-	Tag <span class="ansi-green-fg">An</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;)
-
-	Tag <span class="ansi-green-fg">ash_nu</span> created via:
-	[runash.R] (mixcompdist == &#34;&#39;halfuniform&#39;&#34;)
-
-	Tag <span class="ansi-green-fg">Cn</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;)
-
-	Tag <span class="ansi-green-fg">Bn</span> created via:
-	[datamaker.R] (g == &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;)
-INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
+<pre>INFO: 
++--------------+-------------------------------------------------------+
+|  Tag         |  No. unique obj.                                      |
++--------------+-------------------------------------------------------+
+|  <span class="ansi-green-fg">An</span>      |  <span class="ansi-green-fg">10</span> beta_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">Bn</span>      |  <span class="ansi-green-fg">10</span> beta_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">Cn</span>      |  <span class="ansi-green-fg">10</span> beta_score &amp; <span class="ansi-green-fg">10</span> shrink &amp; <span class="ansi-green-fg">5</span> simulate   |
+|  <span class="ansi-green-fg">ash_n</span>   |  <span class="ansi-green-fg">15</span> beta_score &amp; <span class="ansi-green-fg">15</span> shrink &amp; <span class="ansi-green-fg">15</span> simulate  |
+|  <span class="ansi-green-fg">ash_nu</span>  |  <span class="ansi-green-fg">15</span> beta_score &amp; <span class="ansi-green-fg">15</span> shrink &amp; <span class="ansi-green-fg">15</span> simulate  |
++--------------+-------------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.087</span> seconds.
 </pre>
 </div>
 </div>
@@ -391,10 +388,10 @@ INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">extract</span> <span class="n">result</span> <span class="o">--</span><span class="n">extract_from</span> <span class="n">pi0_score</span> <span class="o">--</span><span class="n">extract_to</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> \
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">pi0_score</span><span class="p">:</span><span class="n">result</span> <span class="o">--</span><span class="n">target</span> <span class="n">pi0_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> \
     <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;An &amp;&amp; ash_nu&quot;</span>
 </pre></div>
 
@@ -408,8 +405,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.045</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: <span class="ansi-green-fg">result</span> data saved to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for annotations An &amp;&amp; ash_n, An &amp;&amp; ash_nu from DSC block <span class="ansi-green-fg">pi0_score</span>.
-INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
+<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.64it/s]
+INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for annotations <span class="ansi-green-fg">An &amp;&amp; ash_n, An &amp;&amp; ash_nu</span> for DSC result <span class="ansi-green-fg">pi0_score</span>.
+INFO: Elapsed time <span class="ansi-green-fg">0.809</span> seconds.
 </pre>
 </div>
 </div>
@@ -430,11 +428,13 @@ INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">use</span> <span class="n">ir</span>
 <span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;ashr_pi0_1.rds&#39;</span><span class="p">)</span>
+<span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu_pi0_score_result</span><span class="p">)</span>
+<span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n_pi0_score_result</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">),</span> <span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span><span class="p">)))</span>
 </pre></div>
 
@@ -459,7 +459,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">cbind</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">,</span> <span class="n">dat</span><span class="err">$</span><span class="n">An_ash_nu</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">&#39;ash_n&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">An_ash_n</span><span class="p">)),</span> 
@@ -484,16 +484,16 @@ INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
 <table>
 <thead><tr><th scope=col>MSE</th><th scope=col>Method</th></tr></thead>
 <tbody>
-	<tr><td>0.04602232</td><td>ash_n     </td></tr>
-	<tr><td>0.08712680</td><td>ash_n     </td></tr>
-	<tr><td>0.11999805</td><td>ash_n     </td></tr>
-	<tr><td>0.06496407</td><td>ash_n     </td></tr>
 	<tr><td>0.27166051</td><td>ash_n     </td></tr>
-	<tr><td>0.10693453</td><td>ash_nu    </td></tr>
-	<tr><td>0.09425834</td><td>ash_nu    </td></tr>
-	<tr><td>0.07956973</td><td>ash_nu    </td></tr>
-	<tr><td>0.18023017</td><td>ash_nu    </td></tr>
+	<tr><td>0.06496407</td><td>ash_n     </td></tr>
+	<tr><td>0.11999805</td><td>ash_n     </td></tr>
+	<tr><td>0.08712680</td><td>ash_n     </td></tr>
+	<tr><td>0.04602232</td><td>ash_n     </td></tr>
 	<tr><td>0.39079238</td><td>ash_nu    </td></tr>
+	<tr><td>0.09425834</td><td>ash_nu    </td></tr>
+	<tr><td>0.18023017</td><td>ash_nu    </td></tr>
+	<tr><td>0.10693453</td><td>ash_nu    </td></tr>
+	<tr><td>0.07956973</td><td>ash_nu    </td></tr>
 </tbody>
 </table>
 
@@ -507,7 +507,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.019</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>

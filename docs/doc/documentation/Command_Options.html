@@ -148,59 +148,64 @@ $( document ).ready(function(){
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-s str [str ...]] [-o str] [-f]
-           [-r] [-j N] [--host str] [--remove str [str ...]]
-           [--annotation str] [--annotate_to str] [--extract str]
-           [--extract_from str] [--extract_to str] [--tags str [str ...]]
-           DSC file
+<pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
+           [--target str] [-x DSC script] [--sequence str [str ...]]
+           [--recover] [--clean [str [str ...]]] [--host str]
+           [-a DSC files [DSC files ...]]
+           [-e block:variable [block:variable ...]] [--tags str [str ...]]
 
 Implementation of Dynamic Statistical Comparisons
-
-positional arguments:
-  DSC file
 
 optional arguments:
   -h, --help            show this help message and exit
   --version             show program&#39;s version number and exit
   -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
                         Output error (0), warning (1), info (2), debug (3) and
-                        trace (4) information.
-  -s str [str ...], --sequence str [str ...]
+                        trace (4) information. Default to 2.
+  -j N                  Number of maximum concurrent processes.
+  -o str                Output data prefix for -x / -e commands.
+  -f                    Force re-run -x / -e commands from scratch.
+  --target str          The ultimate target of a DSC benchmark is the name of
+                        the last block in a DSC sequence. This option is
+                        relevant to -a / -e commands when there exists
+                        multiple DSC sequences with different targets.
+
+Execute DSC:
+  -x DSC script, --execute DSC script
+                        Execute DSC.
+  --sequence str [str ...]
                         DSC sequence to be executed. It will override the
                         DSC::run entry when specified. Multiple sequences are
                         allowed. Each input should be a quoted string defining
                         a valid DSC sequence. Multiple such strings should be
                         separated by space.
-  -o str                DSC output filename/directory. When used, it will
-                        override the specification in DSC script
-
-Execute DSC:
-  -f                    Force executing DSC ignoring existing results.
-  -r                    Recover DSC based on names (not contents) of existing
+  --recover             Recover DSC based on names (not contents) of existing
                         files.
-  -j N                  Number of concurrent processes allowed.
+  --clean [str [str ...]]
+                        Instead of running DSC, output for one or multiple
+                        steps from previous DSC runs are to be cleaned. Each
+                        step should be a valid DSC step in the format of
+                        &#34;block[index]&#34;, or &#34;block&#34; for all steps in the block.
+                        Multiple steps should be separated by space. When &#34;--
+                        clean&#34; is used with &#34;-f&#34;, all specified files will be
+                        removed regardless of their step execution status.
   --host str            URL of Redis server for distributed computation.
 
-Remove DSC:
-  --remove str [str ...]
-                        DSC steps whose output are to be removed. Multiple
-                        steps are allowed. Each step should be a quoted string
-                        defining a valid DSC step, in the format of
-                        &#34;block_name[step_index]&#34;. Multiple such steps should
-                        be separated by space.
-
 Annotate DSC:
-  --annotation str      DSC annotation configuration file.
-  --annotate_to str     Name of last block in DSC to annotate, applicable when
-                        there are multiple DSC sequences executed.
+  -a DSC files [DSC files ...], --annotate DSC files [DSC files ...]
+                        Annotate DSC. An annotation file name is required and
+                        DSC will look for the script file having the same base
+                        name but with *.dsc extension. Optionally one can
+                        input 2 file names with the first the annotation file
+                        name and the second the DSC script name, eg, -a
+                        test.ann test.dsc
 
 Extract DSC results:
-  --extract str         Variable name to extract.
-  --extract_from str    Name of last block in DSC to extract data from,
-                        applicable when there are multiple DSC sequences
-                        executed.
-  --extract_to str      Prefix of file name to which extracted data is
-                        written.
+  -e block:variable [block:variable ...], --extract block:variable [block:variable ...]
+                        Variable(s) to extract. Variable(s) should be
+                        specified by &#34;block:variable&#34;. Valid `variable` are
+                        variables found in `return` of the corresponding DSC
+                        block.
   --tags str [str ...]  Tags to extract. The &#34;&amp;&amp;&#34; symbol can be used to
                         specify intersect of multiple tags. Default to
                         extracting for all tags.
@@ -217,27 +222,26 @@ Extract DSC results:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Execution-options">DSC Execution options<a class="anchor-link" href="#DSC-Execution-options">&#182;</a></h2><ul>
-<li><code>-s</code> specifies which particular DSC sequence to run. See this <a href="https://github.com/stephenslab/dsc2/wiki/04-Multiple-DSC-Sequences#execute-sequences-from-command-line">section</a> for an example.</li>
+<h2 id="Global-options">Global options<a class="anchor-link" href="#Global-options">&#182;</a></h2><ul>
 <li><code>-j</code> specifies number of CPU threads to use. You may run DSC in parallel on a single desktop, or on distributed computer system that runs <code>Redis</code> server / worker (FIXME: link to tutorial), in which case <code>--host</code> will have to be specified.</li>
-<li><code>-o</code> changes the default output filename / directory specified in the DSC script.</li>
-<li><code>-f</code> forces executing DSC without using existing cache and runtime signature. During a DSC execution, cache files of intermediate output and runtime signatures of parameters are saved so that future re-runs of the same computational routine will be skipped. The <code>-f</code> option forces DSC to ignore existing cache and run the entire procedure afresh.</li>
-<li><code>-r</code> executes DSC using only existing cache but not runtime signature -- it will skip existing files by file name, without trying to figure out if the file property has been changed. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties in this case.</li>
 <li><code>-v</code> controls verbosity level. Default level is 2. If you encounter error messages you can increase the verbosity level to output more information to diagnose the cause.</li>
+<li><code>-o</code> changes the default output filename / directory specified in the DSC script.</li>
+<li><code>-f</code> forces executing DSC or extracting DSC results without using existing cache. During a DSC execution, cache files of intermediate output and parameters are saved so that future re-runs of the same computation will be skipped. The <code>-f</code> option forces DSC to ignore existing cache and run the entire procedure from scratch.</li>
+<li><code>--target</code> by default, is the name of the last DSC block if the DSC procedure only runs one sequence. Otherwise the name of the last DSC block has to be provided when <code>-a</code> or <code>-e</code> switches are turned on.</li>
 </ul>
-<h2 id="DSC-output-removal">DSC output removal<a class="anchor-link" href="#DSC-output-removal">&#182;</a></h2><ul>
-<li><code>--remove</code> will remove some DSC steps as specified. In order to remove data properly, the dsc result database (defined in <code>dsc_file</code>) must be accessible.</li>
+<h2 id="DSC-Execution-options">DSC Execution options<a class="anchor-link" href="#DSC-Execution-options">&#182;</a></h2><ul>
+<li><code>-x</code> specifies the DSC configuration script.</li>
+<li><code>--sequence</code> specifies which particular DSC sequence to run. See this <a href="https://github.com/stephenslab/dsc2/wiki/04-Multiple-DSC-Sequences#execute-sequences-from-command-line">section</a> for an example.</li>
+<li><code>--recover</code> executes DSC using existing output files without checking for their properties. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties (mostly absoluate path to file) in this case.</li>
+<li><code>--clean</code> will remove specified DSC steps, instead of executing them. In order to remove data properly, the dsc result meta data (and RDS file defined in <code>DSC::output</code>) must be accessible.</li>
 </ul>
 <h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
 <ul>
-<li><code>--annotation</code> specifies the annotation file. See this <a href="">section</a> for an example annotation file.</li>
-<li><code>--annotate_to</code> by default, is the name of the last DSC block if the DSC procedure only runs one sequence. Otherwise the name of the last DSC block has to be provided.</li>
+<li><code>-a</code> specifies the annotation file. See this <a href="DSC_Annotation.html">section</a> for an example annotation file. The annotation file must have the same prefix as the corresponding DSC configuration file. Otherwise one needs to use <code>-a annotation.ann dsc_script.dsc</code> to specify both of them.</li>
 </ul>
 <h2 id="DSC-results-extraction">DSC results extraction<a class="anchor-link" href="#DSC-results-extraction">&#182;</a></h2><p>These options will extract annotated DSC to a separate file for further analysis.</p>
 <ul>
-<li><code>--extract</code> specifies the name of variable to extract. The variable name should be avaiable in the last DSC block.</li>
-<li><code>--extract_from</code> same as <code>--annotate_to</code> above. </li>
-<li><code>--extract_to</code> output file for extracted data.</li>
+<li><code>-e</code> specifies the name of variable to extract.</li>
 <li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator.</li>
 </ul>
 

@@ -223,7 +223,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
 </pre></div>
 
 </div>
@@ -238,22 +238,78 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-simulate:1+transform:1+estimate:1+mse:1: 100% [============] 4 2.2/s in 00:00:01
-simulate:1+transform:1+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
-simulate:1+transform:2+estimate:1+mse:1: 100% [============] 4 2.6/s in 00:00:01
-simulate:1+transform:2+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
-simulate:2+transform:1+estimate:1+mse:1: 100% [============] 4 2.7/s in 00:00:01
-simulate:2+transform:1+estimate:2+mse:1: 100% [============] 4 2.8/s in 00:00:01
-simulate:2+transform:2+estimate:1+mse:1: 100% [============] 4 2.4/s in 00:00:01
-simulate:2+transform:2+estimate:2+mse:1: 100% [============] 4 2.4/s in 00:00:01
-simulate:1+estimate_1:1+mse:1: 100% [======================] 3 3.6/s in 00:00:00
-simulate:1+estimate_1:2+mse:1: 100% [======================] 3 3.6/s in 00:00:00
-simulate:2+estimate_1:1+mse:1: 100% [======================] 3 3.2/s in 00:00:00
-simulate:2+estimate_1:2+mse:1: 100% [======================] 3 4.1/s in 00:00:00
-DSC: 100% [===============================================] 12 0.7/s in 00:00:16
+DSC:   0%|          | 0/12 [00:00&lt;?, ?it/s]
+simulate:1+transform:1+estimate:1+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:1+transform:1+estimate:1+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:1+transform:1+estimate:1+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:1+transform:1+estimate:1+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.41it/s]
+simulate:1+transform:1+estimate:1+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.41it/s]
+DSC:   8%|▊         | 1/12 [00:03&lt;00:33,  3.01s/it]
+simulate:1+transform:1+estimate:2+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:1+transform:1+estimate:2+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:1+transform:1+estimate:2+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.47it/s]
+simulate:1+transform:1+estimate:2+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.45it/s]
+simulate:1+transform:1+estimate:2+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.43it/s]
+DSC:  17%|█▋        | 2/12 [00:05&lt;00:29,  2.99s/it]
+simulate:1+transform:2+estimate:1+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:1+transform:2+estimate:1+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:1+transform:2+estimate:1+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:1+transform:2+estimate:1+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.41it/s]
+simulate:1+transform:2+estimate:1+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.47it/s]
+DSC:  25%|██▌       | 3/12 [00:08&lt;00:26,  2.96s/it]
+simulate:1+transform:2+estimate:2+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:1+transform:2+estimate:2+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:1+transform:2+estimate:2+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:1+transform:2+estimate:2+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.48it/s]
+simulate:1+transform:2+estimate:2+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.46it/s]
+DSC:  33%|███▎      | 4/12 [00:11&lt;00:23,  2.95s/it]
+simulate:2+transform:1+estimate:1+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:2+transform:1+estimate:1+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:2+transform:1+estimate:1+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:2+transform:1+estimate:1+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.41it/s]
+simulate:2+transform:1+estimate:1+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.48it/s]
+DSC:  42%|████▏     | 5/12 [00:14&lt;00:20,  2.94s/it]
+simulate:2+transform:1+estimate:2+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:2+transform:1+estimate:2+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:2+transform:1+estimate:2+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:2+transform:1+estimate:2+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.41it/s]
+simulate:2+transform:1+estimate:2+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.41it/s]
+DSC:  50%|█████     | 6/12 [00:17&lt;00:17,  2.96s/it]
+simulate:2+transform:2+estimate:1+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:2+transform:2+estimate:1+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.41it/s]
+simulate:2+transform:2+estimate:1+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.41it/s]
+simulate:2+transform:2+estimate:1+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.41it/s]
+simulate:2+transform:2+estimate:1+mse:1: 100%|██████████| 4/4 [00:02&lt;00:00,  1.41it/s]
+DSC:  58%|█████▊    | 7/12 [00:20&lt;00:14,  2.98s/it]
+simulate:2+transform:2+estimate:2+mse:1:   0%|          | 0/4 [00:00&lt;?, ?it/s]
+simulate:2+transform:2+estimate:2+mse:1:  25%|██▌       | 1/4 [00:00&lt;00:02,  1.24it/s]
+simulate:2+transform:2+estimate:2+mse:1:  50%|█████     | 2/4 [00:01&lt;00:01,  1.29it/s]
+simulate:2+transform:2+estimate:2+mse:1:  75%|███████▌  | 3/4 [00:02&lt;00:00,  1.32it/s]
+simulate:2+transform:2+estimate:2+mse:1: 100%|██████████| 4/4 [00:03&lt;00:00,  1.25it/s]
+DSC:  67%|██████▋   | 8/12 [00:24&lt;00:12,  3.08s/it]
+simulate:1+estimate_1:1+mse:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:1+estimate_1:1+mse:1:  33%|███▎      | 1/3 [00:00&lt;00:01,  1.41it/s]
+simulate:1+estimate_1:1+mse:1:  67%|██████▋   | 2/3 [00:01&lt;00:00,  1.35it/s]
+simulate:1+estimate_1:1+mse:1: 100%|██████████| 3/3 [00:02&lt;00:00,  1.37it/s]
+DSC:  75%|███████▌  | 9/12 [00:26&lt;00:08,  2.88s/it]
+simulate:1+estimate_1:2+mse:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:1+estimate_1:2+mse:1:  33%|███▎      | 1/3 [00:00&lt;00:01,  1.64it/s]
+simulate:1+estimate_1:2+mse:1:  67%|██████▋   | 2/3 [00:01&lt;00:00,  1.57it/s]
+simulate:1+estimate_1:2+mse:1: 100%|██████████| 3/3 [00:02&lt;00:00,  1.52it/s]
+DSC:  83%|████████▎ | 10/12 [00:28&lt;00:05,  2.68s/it]
+simulate:2+estimate_1:1+mse:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:2+estimate_1:1+mse:1:  33%|███▎      | 1/3 [00:00&lt;00:01,  1.64it/s]
+simulate:2+estimate_1:1+mse:1:  67%|██████▋   | 2/3 [00:01&lt;00:00,  1.57it/s]
+simulate:2+estimate_1:1+mse:1: 100%|██████████| 3/3 [00:02&lt;00:00,  1.52it/s]
+DSC:  92%|█████████▏| 11/12 [00:30&lt;00:02,  2.55s/it]
+simulate:2+estimate_1:2+mse:1:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+simulate:2+estimate_1:2+mse:1:  33%|███▎      | 1/3 [00:00&lt;00:01,  1.22it/s]
+simulate:2+estimate_1:2+mse:1:  67%|██████▋   | 2/3 [00:01&lt;00:00,  1.27it/s]
+simulate:2+estimate_1:2+mse:1: 100%|██████████| 3/3 [00:02&lt;00:00,  1.31it/s]
+DSC: 100%|██████████| 12/12 [00:33&lt;00:00,  2.51s/it]
 INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">18.613</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">35.680</span> seconds.
 </pre>
 </div>
 </div>
@@ -267,23 +323,10 @@ INFO: Elapsed time <span class="ansi-green-fg">18.613</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>FIXME</em> demo for result viz</p>
+<p><em>FIXME</em> annotation and link to shinydsc for result exploration</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
