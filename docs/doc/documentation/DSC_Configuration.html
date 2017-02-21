@@ -312,10 +312,21 @@ $( document ).ready(function(){
 <p>With <code>()</code>, <code>(1,2,3)</code> will be translated to vector assignment <code>c(1, 2, 3)</code> in R plugin, tuple <code>(1,2,3)</code> in Python plugin, or space separated argument sequence <code>program.exe 1 2 3</code> for non-plugin routines. Values will be assigned in units defined by <code>()</code> instead of separately.</p>
 <h3 id="R(),-Python(),-Shell()">R(), Python(), Shell()<a class="anchor-link" href="#R(),-Python(),-Shell()">&#182;</a></h3><p>These operators run codes inside parenthesis using R, Python or Shell interpreters and evaluate the output. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
 <h3 id="Combo(),-Pairs()">Combo(), Pairs()<a class="anchor-link" href="#Combo(),-Pairs()">&#182;</a></h3><p>Cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Combo(classifier.R (kernal_1, kernal_2, kernal_3))</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Combo(classifier.R, (kernel_1, kernel_2, kernel_3))</span>
 </pre></div>
 <p>is equivalent to the Cartesian product logic</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">classifier.R kernal_1, classifier.R kernal_2, classifier.R kernal_3</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">classifier.R kernel_1, classifier.R kernel_2, classifier.R kernel_3</span>
+</pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Pairs($(classifier), $(kernel))</span>
+<span class="nn">...</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">classifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">m1.R, m2.R, m3.R</span>
+    <span class="l l-Scalar l-Scalar-Plain">kernel</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">k1, k2, k3</span>
+</pre></div>
+<p>is equivalent to:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">m1.R k1, m2.R k2, m3.R k3</span>
 </pre></div>
 <h3 id="Asis()">Asis()<a class="anchor-link" href="#Asis()">&#182;</a></h3><p>In DSC file, numeric vs. string data-types are automatically determined and there is no need to add quotes to strings. This is convenient in most cases but can be problematic when the input appear as strings but are in fact, for example, a chunk of R codes that should be executed in computational routines rather than converted to strings. <code>Asis()</code> operator will safeguard these special input from being treated as strings. For example,</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(normalmix(c(2/3,1/3),c(0,0),c(1,2)))</span>
