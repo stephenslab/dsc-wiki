@@ -127,25 +127,271 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, we break the R script below by executing an undefined function <code>undefined_foo_showoff</code>:</p>
-<div class="highlight"><pre><span></span>undefined_foo_showoff<span class="p">()</span>
-score <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>est<span class="p">,</span> truth<span class="p">){</span>
-  <span class="kr">return</span><span class="p">(</span><span class="kp">sqrt</span><span class="p">(</span><span class="kp">mean</span><span class="p">((</span>est<span class="o">-</span>truth<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)))</span>
-<span class="p">}</span>
-result <span class="o">=</span> score<span class="p">(</span>est<span class="p">,</span> truth<span class="p">)</span>
+<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, we break the R script <code>R/scores/MSE.R</code> in the <a href="Quick_Start.html">Quick Start tutorial</a> by executing an undefined function <code>undefined_foo_showoff</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">cat</span> <span class="n">R</span><span class="o">/</span><span class="n">scores</span><span class="o">/</span><span class="n">MSE</span><span class="o">.</span><span class="n">R</span>
 </pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>undefined_foo_showoff()
+mse = (mean_est-true_mean)^2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>And the DSC run fails as expected:</p>
 
-<pre><code>INFO: Constructing DSC from settings.dsc ...
-INFO: DSC exported to settings.html
-simulate:1+shrink:1+beta_score:1:   0.0% [&gt;      ]  in 00:00:00
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
 
-Error: could not find function "undefined_foo_showoff"
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+DSC:  45%|████▌     | 5/11 [00:04&lt;00:06,  1.04s/it]Error: could not find function &#34;undefined_foo_showoff&#34;
 Execution halted
-ERROR: Failed to process statement "sos_run('simulate_1+shrink_1+beta_score_1')": Failed to execute process
-"R(r'''## BEGIN code auto-gener...1.0\n\n''')\n"
-Failed to execute script. The script is saved to /home/gaow/GIT/software/dsc2/vignettes/ash/.sos/beta_score_1_0.R. Please use command "Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/software/dsc2/vignettes/ash/.sos/beta_score_1_0.R" under /home/gaow/GIT/software/dsc2/vignettes/ash to test it.</code></pre>
-<p>In the error message you see that the problematic script is saved to <code>.sos/beta_score_1_0.R</code>. You can run this script to debug without having to worry about the input / output because DSC automatically completed it. Then you can apply the fix to your original script and re-run the benchmark.</p>
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+Error: could not find function &#34;undefined_foo_showoff&#34;
+Execution halted
+DSC:  91%|█████████ | 10/11 [00:07&lt;00:00,  1.35it/s]
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Failed to execute workflow DSC
+[mse_1_3s [&#39;dsc_result/rt.R_2_mean.R_1_MS] RuntimeError:
+	Failed to process statement sos_run(&#39;core_mse:1&#39;, output_f...&#39;input&#39;])\n: Failed to execute workflow core_mse
+[core_mse_1 (MSE.R)] RuntimeError:
+	Failed to execute script (ret=1). 
+Please use command
+    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
+under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
+[core_mse] RuntimeError:
+	1 failed step: core_mse_1 (MSE.R)
+[mse_1_2s [&#39;dsc_result/rnorm.R_8_median.R] RuntimeError:
+	Failed to process statement sos_run(&#39;core_mse:1&#39;, output_f...&#39;input&#39;])\n: Failed to execute workflow core_mse
+[core_mse_1 (MSE.R)] RuntimeError:
+	Failed to execute script (ret=1). 
+Please use command
+    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
+under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
+-- 12 lines --
+[core_mse_1 (MSE.R)] RuntimeError:
+	Failed to execute script (ret=1). 
+Please use command
+    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
+under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
+[core_mse] RuntimeError:
+	1 failed step: core_mse_1 (MSE.R)
+[DSC] RuntimeError:
+	4 failed steps: mse_1_2s, mse_1_4s, mse_1_3s, mse_1_1s</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The error message is quite verbose as multiple instances of DSC jobs involving <code>MSE.R</code> have failed. If you look at the end of the error message you should see that the problematic script is saved to <code>.sos/core_mse_1_0.R</code>. You can execute this script to debug without having to worry about the input / output because DSC has automatically completed it. Once you have fixed this intermediate script you can apply the fix to your original script and re-run the DSC.</p>
 <h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>settings.log</code> generated for the DSC run. You can look into the log file for more run-time information and perform diagnostics.</p>
 
 </div>
