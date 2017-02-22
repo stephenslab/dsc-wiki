@@ -1,5 +1,5 @@
 var documentationDict={"Command-interface-1":"Command_Options","Syntax:-DSC-annotation-1":"DSC_Annotation","Syntax:-DSC-configuration-1":"DSC_Configuration","Syntax:-DSC-execution-1":"DSC_Execution","Design-and-Features-1":"Design_and_Features","Implementation-details-1":"Implementation_Details","Terminology-1":"Terminology"}
 var tutorialsDict={"Debugging-in-DSC2-1":"Debug_Tips","Update-existing-DSC-1":"Expand_Existing_DSC","Explore-DSC-output-1":"Explore_Output","An-R-example:-ashr-benchmark-1":"Intermediate_R_1","Working-in-Python-1":"Mixed_Languages","Multiple-DSC-sequences-1":"Multiple_Sequences","Quick-start-tutorial-1":"Quick_Start"}
-var images=["cmd.png","course.png","debug-tips-1.png","design.png","fancybox_sprite.png","setup.png"]
+var images=["ash.png","cmd.png","course.png","debug-tips-1.png","design.png","fancybox_sprite.png","setup.png"]
 var documentation=["Terminology", "Design_and_Features", "DSC_Configuration", "DSC_Execution", "DSC_Annotation", "Command_Options", "Implementation_Details"]
 var tutorials=["Quick_Start", "Explore_Output", "Expand_Existing_DSC", "Multiple_Sequences", "Mixed_Languages", "Debug_Tips", "Intermediate_R_1"]
