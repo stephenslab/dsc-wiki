@@ -178,6 +178,9 @@ $(document).ready(function () {
 <li>
   <a href="tutorials.html">Tutorials</a>
 </li>
+<li>
+  <a href="examples.html">Examples</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
