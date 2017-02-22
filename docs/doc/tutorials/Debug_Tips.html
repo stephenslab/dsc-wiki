@@ -127,7 +127,12 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. When there is an error from provided computational routine the DSC procedure will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. For example, we break the R script <code>R/scores/MSE.R</code> in the <a href="Quick_Start.html">Quick Start tutorial</a> by executing an undefined function <code>undefined_foo_showoff</code>:</p>
+<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. There are often roughly two types of errors that may occur:</p>
+<ul>
+<li>There is an error from provided computational routine</li>
+<li>There is an error, most commonly and inconsistency between DSC script interface and the computational routine.</li>
+</ul>
+<p>In case of errors DSC will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. Here we look at an example from <a href="https://github.com/stephenslab/dsc2-blm">a benchmark on application of Bayesian Linear Model in genomic prediction</a>.</p>
 
 </div>
 </div>
@@ -137,45 +142,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">cat</span> <span class="n">R</span><span class="o">/</span><span class="n">scores</span><span class="o">/</span><span class="n">MSE</span><span class="o">.</span><span class="n">R</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>undefined_foo_showoff()
-mse = (mean_est-true_mean)^2
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>And the DSC run fails as expected:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
 </pre></div>
 
 </div>
@@ -188,196 +155,25 @@ mse = (mean_est-true_mean)^2
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-DSC:  45%|████▌     | 5/11 [00:04&lt;00:06,  1.04s/it]Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-Error: could not find function &#34;undefined_foo_showoff&#34;
-Execution halted
-DSC:  91%|█████████ | 10/11 [00:07&lt;00:00,  1.35it/s]
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">blm.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">blm.dsc</span> ...
+INFO: Building execution graph ...
+DSC:  90%|█████████ | 9/10 [00:00&lt;00:00, 10.97it/s]
 <span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Failed to execute workflow DSC
-[mse_1_3s [&#39;dsc_result/rt.R_2_mean.R_1_MS] RuntimeError:
-	Failed to process statement sos_run(&#39;core_mse:1&#39;, output_f...&#39;input&#39;])\n: Failed to execute workflow core_mse
-[core_mse_1 (MSE.R)] RuntimeError:
-	Failed to execute script (ret=1). 
+[score_1 [&#39;dsc_blm/datamaker.R_1_gemma_bs] RuntimeError:
+	Failed to process statement sos_run(&#39;core_score_1:1&#39;, outp...ignature)\n: Failed to execute workflow core_score_1
+[core_score_1_1 (score.R)] RuntimeError:
+	Failed to execute script (ret=1).
 Please use command
-    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
-under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
-[core_mse] RuntimeError:
-	1 failed step: core_mse_1 (MSE.R)
-[mse_1_2s [&#39;dsc_result/rnorm.R_8_median.R] RuntimeError:
-	Failed to process statement sos_run(&#39;core_mse:1&#39;, output_f...&#39;input&#39;])\n: Failed to execute workflow core_mse
-[core_mse_1 (MSE.R)] RuntimeError:
-	Failed to execute script (ret=1). 
-Please use command
-    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
-under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
--- 12 lines --
-[core_mse_1 (MSE.R)] RuntimeError:
-	Failed to execute script (ret=1). 
-Please use command
-    Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/core_mse_1_0.R
-under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
-[core_mse] RuntimeError:
-	1 failed step: core_mse_1 (MSE.R)
+	</span><span class="ansi-green-fg">Rscript \
+	  --default-packages=datasets,methods,utils,stats,grDevices,graphics \
+	  /home/gaow/GIT/lab-dsc/dsc2-blm/.sos/core_score_1_1_6.R</span><span class="ansi-red-intense-fg">
+under &#34;/home/gaow/GIT/lab-dsc/dsc2-blm&#34; to test it.
+[core_score_1] RuntimeError:
+	1 failed step: core_score_1_1 (score.R)
 [DSC] RuntimeError:
-	4 failed steps: mse_1_2s, mse_1_4s, mse_1_3s, mse_1_1s</span>
+	1 failed step: score_1</span>
+<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">If needed, you can open </span><span class="ansi-green-fg">dsc_blm.transcript.html</span><span class="ansi-magenta-intense-fg"> and use </span><span class="ansi-green-fg">ctrl-F</span><span class="ansi-magenta-intense-fg"> to search for the problematic chunk of code by output file name.</span>
 </pre>
 </div>
 </div>
@@ -391,8 +187,248 @@ under /home/gaow/GIT/dsc2/vignettes/one_sample_location to test it.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The error message is quite verbose as multiple instances of DSC jobs involving <code>MSE.R</code> have failed. If you look at the end of the error message you should see that the problematic script is saved to <code>.sos/core_mse_1_0.R</code>. You can execute this script to debug without having to worry about the input / output because DSC has automatically completed it. Once you have fixed this intermediate script you can apply the fix to your original script and re-run the DSC.</p>
-<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>settings.log</code> generated for the DSC run. You can look into the log file for more run-time information and perform diagnostics.</p>
+<p>The error message is a bit verbose but the part most relevant to debugging are hightlighted in green color on your terminal. Towards the end of the error message you should see that the problematic script is saved to <code>.sos/core_score_1_1_6.R</code>. You can also see that a file called <code>dsc_blm.transcript.html</code> is generated.</p>
+<h2 id="Debug-with-the-problematic-script">Debug with the problematic script<a class="anchor-link" href="#Debug-with-the-problematic-script">&#182;</a></h2><p>As prompted in the error message, let's try to execute <code>.sos/core_score_1_1_6.R</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="c1">## r script UUID: dcfc55ef9ae7c9eab6397eefe425afc0</span>
+<span class="c1">## BEGIN code by DSC2</span>
+<span class="n">DSC_LIBPATH</span> <span class="o">&lt;-</span> <span class="n">NULL</span>
+<span class="n">source</span><span class="p">(</span><span class="s2">&quot;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&quot;</span><span class="p">)</span>
+<span class="n">DSC_714A6C66AA</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
+<span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_blm/datamaker.R_7.rds&#39;</span><span class="p">,</span> <span class="s1">&#39;dsc_blm/datamaker.R_7_gemma_bslmm_1.rds&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_714A6C66AA</span> <span class="o">&lt;-</span> <span class="n">DSC_LMERGE</span><span class="p">(</span><span class="n">DSC_714A6C66AA</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">DSC_714A6C66AA</span><span class="err">$</span><span class="n">meta</span>
+<span class="n">prediction</span> <span class="o">&lt;-</span> <span class="n">DSC_714A6C66AA</span><span class="err">$</span><span class="n">prediction</span>
+<span class="c1">## END code by DSC2</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">prediction</span><span class="p">){</span>
+  <span class="n">true</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">meta</span><span class="err">$</span><span class="n">true</span><span class="o">.</span><span class="n">value</span>
+  <span class="n">mse</span> <span class="o">=</span> <span class="n">mean</span><span class="p">((</span><span class="n">true</span><span class="o">.</span><span class="n">value</span><span class="o">-</span><span class="n">prediction</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">rmse</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">mean</span><span class="p">((</span><span class="n">true</span><span class="o">.</span><span class="n">value</span><span class="o">-</span><span class="n">prediction</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span>
+  <span class="n">pcor</span> <span class="o">=</span> <span class="n">cor</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">true</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+  <span class="n">slope</span> <span class="o">=</span> <span class="n">lm</span><span class="p">(</span><span class="n">true</span><span class="o">.</span><span class="n">value</span><span class="o">~</span><span class="n">prediction</span><span class="p">)</span><span class="err">$</span><span class="n">coef</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+  <span class="k">return</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mse</span><span class="o">=</span><span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="o">=</span><span class="n">rmse</span><span class="p">,</span> <span class="n">pcor</span><span class="o">=</span><span class="n">pcor</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="n">slope</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">score</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+<span class="c1">## BEGIN code by DSC2</span>
+<span class="n">saveRDS</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mse</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">mse</span><span class="p">,</span> <span class="n">pcor</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">pcor</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">slope</span><span class="p">),</span> <span class="s1">&#39;dsc_blm/datamaker.R_7_gemma_bslmm_1_score.R_1.rds&#39;</span><span class="p">)</span>
+<span class="c1">## END code by DSC2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in true.value - prediction:
+“longer object length is not a multiple of shorter object length”Warning message in true.value - prediction:
+“longer object length is not a multiple of shorter object length”</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+Error in cor(prediction, true.value): incompatible dimensions
+Traceback:
+
+1. score(meta, prediction)
+2. cor(prediction, true.value)   # at line 13 of file &lt;text&gt;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You see that the script was propagated by DSC2 with variable assignment and input / output specifications. Also this script failed because of <code>incompatible dimensions</code> as indidcated by R. So what's going on? The function call takes two variables, <code>meta</code> and <code>prediction</code>. Let's examine what these variables look like:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">source</span><span class="p">(</span><span class="s2">&quot;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&quot;</span><span class="p">)</span>
+<span class="n">DSC_714A6C66AA</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
+<span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_blm/datamaker.R_7.rds&#39;</span><span class="p">,</span> <span class="s1">&#39;dsc_blm/datamaker.R_7_gemma_bslmm_1.rds&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_714A6C66AA</span> <span class="o">&lt;-</span> <span class="n">DSC_LMERGE</span><span class="p">(</span><span class="n">DSC_714A6C66AA</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">meta</span> <span class="o">&lt;-</span> <span class="n">DSC_714A6C66AA</span><span class="err">$</span><span class="n">meta</span>
+<span class="n">prediction</span> <span class="o">&lt;-</span> <span class="n">DSC_714A6C66AA</span><span class="err">$</span><span class="n">prediction</span>
+<span class="k">print</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;length meta: &quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">meta</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;length prediction: &quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">prediction</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>$true.value
+       3881        3889       39359       41471       41484       41686 
+ 0.99831761  2.33609688  1.49504952  0.74828619  0.28221675  0.40967975 
+      41800       41804       42274       62633       64869       78690 
+ 0.68604098 -0.45643508  0.44940658  0.38118361  0.52587135 -0.72295826 
+      82710       83123       85599       85676       85711       85741 
+-0.05990794  1.29932283  0.52996782  1.25576829  0.51239290  0.62052186 
+      85786       96619      107059      133128      143058      143808 
+ 1.44805003  0.70355076  1.25938426  0.32484286  0.63805606  0.03753599 
+     143989      217562      217777      218794      220384      292703 
+ 1.07711159 -0.48228439  0.04524029  0.15653729 -0.76760412  0.64203852 
+     295146      295191      320849      321614      321822      321833 
+ 1.00396960  0.10798228 -0.68283238 -0.15248985  0.86163551  1.02641469 
+     321840      323172      342294      343215      353782      359354 
+ 1.09444220  1.15157292  0.68958366  0.47540248 -0.46720970  0.59572313 
+     369670      376770      377276      390604      393017      412956 
+ 0.10580781  0.55220931  0.13729283  0.85225353 -0.57501290  0.40696777 
+     413235      419152      421018      421340      422181      427650 
+-0.45474926 -0.16824864  0.56170530  1.00852215  1.75413716 -0.15158585 
+     428988      430174      430433      454059      471420      609307 
+ 0.09478073  0.17486147  0.21150984  1.54804306 -0.76649652  1.19920765 
+     653215      673831      675238      835884      877657      904516 
+ 1.16681050  0.29330898  0.41849979  0.03905079  1.26586695  0.57880787 
+     934019     1210458     1290414     1298205     1410845     1437563 
+ 0.04472721 -1.53023212 -0.33237630 -0.95163591 -1.38193655 -0.55183484 
+    1477928     1491661     1507236     1541043     1630947     1630957 
+-0.89434230 -0.26762272 -1.28624360  0.35441402  0.13366871  0.15286431 
+    1642433     1673085     1799716     1987795     2151597     2485043 
+-0.12495471 -1.12012879 -0.93171548  0.07713251  0.57741524 -1.35715411 
+    2586622     2588632     2621094     3826178     3827768     3827770 
+-0.10364165 -0.46663147 -0.69299619 -1.22189722 -2.28909755 -2.31129831 
+    3827774     3830167     3830201     3830206     3848815     3863169 
+-2.05032125 -1.78563863 -1.69475069 -1.74084618 -1.70271560 -2.14879133 
+    4057141     4057155     4059217     4059227 
+-0.84147093 -1.02510366 -1.14887739 -0.49037147 
+
+[1] &#34;length meta:  1&#34;
+ [1]  0.1975210  0.2256670  0.5637760 -0.3171690 -0.6541230 -1.1402300
+ [7]  0.1176520 -0.3587820  0.1419840  0.2371910 -0.2146280 -0.6184410
+[13]  1.1502500 -0.1172700  0.1651820  0.0489489 -0.2423130 -0.5081880
+[19]  0.1954180  0.4832560 -0.1633740  0.2889630 -0.5772470 -0.9211860
+[25] -0.2271150 -0.3913900  0.1802350  0.2908560  0.0703415  0.1579900
+[31]  0.2151020 -0.0525270
+[1] &#34;length prediction:  32&#34;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It looks like <code>meta$true.value</code> has a lot more elements than <code>prediction</code>. Therefore the statement <code>mse = mean((true.value-prediction)^2)</code> must fail. We know from the <a href="https://github.com/stephenslab/dsc2-blm/blob/master/blm.dsc">DSC script</a> that since we have set <code>test_size = 100</code> we do expect both <code>prediction</code> and <code>true.value</code> to be of length 100. So there must be something wrong with <code>prediction</code>, that somehow it gets truncated. This variable comes from <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code> so there is nothing we can do in this script to fix the problem.</p>
+<p>However in practice, perhaps you run into error in your DSC benchmark that can obviously be identified and fixed in this script. You should fix it, test it out interactively, and if it works, you should apply your patch to the original scripts that DSC calls because fixing these propagated intermediate scripts is not enough. In this example the <code>score</code> function seems fine so there is nothing to do to the <a href="https://github.com/stephenslab/dsc2-blm/blob/master/score.R"><code>score.R</code> script</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Debugging-with-the-entire-transcript-profile">Debugging with the entire transcript profile<a class="anchor-link" href="#Debugging-with-the-entire-transcript-profile">&#182;</a></h2><p>Now we want to find out which command has generated this set of problematic <code>prediction</code> data. That is, we want to find the command that generated <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code> from which <code>prediction</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examining the entire transcript of the DSC benchmark, written in <code>dsc_blm.transcript.html</code>.</p>
+<p>You can open up this file in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code>. This leads you to the following:</p>
+<p><img src="../../img/debug-tips-1.png" alt="debug-1"></p>
+<p>Unsurprisingly, running the code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. Usually one should starting to interact with this new piece of code, fixing it until the output looks good, and applying the patch to the original benchmark code and run DSC again.</p>
+<p>For this example, what exactly is the problem that led to truncated result? Well, the issue is not very apparent unless you are aware of the parallel proessing nature of DSC and familiar with the use of DSC <code>File()</code> operator. However this is a very common mistake one can make and this is why we want to show it here. Please take a look at line 7 of the R code:</p>
+<div class="highlight"><pre><span></span>result <span class="o">&lt;-</span> <span class="s">&#39;gemma.out&#39;</span>
+</pre></div>
+<p>This is code automatically generated by DSC, based on your DSC script. In the DSC script the corresponding section is:</p>
+
+<pre><code>gemma_bslmm(bayeslasso):
+  exec: gemma.bslmm.wrapper.R
+  .alias: gemma_bslmm
+  params:
+    result: gemma.out
+    .alias: args = List(w = nIter, s = burnin, result = result)</code></pre>
+<p>However it turns out here <code>gemma.out</code> is used as temporary file prefix for intermediate results from <code>gemma</code>, a command line program. It is directly called from shell, see Line 27, 37 and 42 of the R code. In practice what happens is all parallel DSC instances all creates / writes on the <strong>same file</strong> <code>gemma.out</code>, creating a I/O race. Therefore the file would have been corrupted, leading to truncated file.</p>
+<p>To fix the problem one should use <code>File()</code> operator for such cases:</p>
+
+<pre><code>gemma_bslmm(bayeslasso):
+  exec: gemma.bslmm.wrapper.R
+  .alias: gemma_bslmm
+  params:
+    result: File()
+    .alias: args = List(w = nIter, s = burnin, result = result)</code></pre>
+<p>This is the 2nd type of error listed in the beginning of this document, ie, an error in communication between DSC and your script. After fixing the error you can run DSC again:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">blm.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">blm.dsc</span> ...
+INFO: Building execution graph ...
+Running core_gemma_bslmm_1 (gemma_bslmm) (00:02:00): 
+
+DSC: 100%|██████████| 10/10 [02:19&lt;00:00,  7.25s/it]
+INFO: Building output database <span class="ansi-green-fg">dsc_blm.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">140.619</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You see that all <code>gemma_bslmm</code> related codes are re-executed and the DSC benchmark completed without an issue.</p>
+<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
 
 </div>
 </div>
