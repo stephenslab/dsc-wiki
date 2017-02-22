@@ -129,8 +129,8 @@ $( document ).ready(function(){
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. There are often roughly two types of errors that may occur:</p>
 <ul>
-<li>There is an error from provided computational routine</li>
-<li>There is an error, most commonly and inconsistency between DSC script interface and the computational routine.</li>
+<li>There is an error from user provided computational routine</li>
+<li>There is an inconsistency between DSC script interface and user provided computational routine.</li>
 </ul>
 <p>In case of errors DSC will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. Here we look at an example from <a href="https://github.com/stephenslab/dsc2-blm">a benchmark on application of Bayesian Linear Model in genomic prediction</a>.</p>
 
@@ -359,9 +359,9 @@ Traceback:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Debugging-with-the-entire-transcript-profile">Debugging with the entire transcript profile<a class="anchor-link" href="#Debugging-with-the-entire-transcript-profile">&#182;</a></h2><p>Now we want to find out which command has generated this set of problematic <code>prediction</code> data. That is, we want to find the command that generated <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code> from which <code>prediction</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examining the entire transcript of the DSC benchmark, written in <code>dsc_blm.transcript.html</code>.</p>
-<p>You can open up this file in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code>. This leads you to the following:</p>
+<p>You can open up this file in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code>. This leads you to the following (this is a screenshot of a chunk of <code>dsc_blm.transcript.html</code>):</p>
 <p><img src="../../img/debug-tips-1.png" alt="debug-1"></p>
-<p>Unsurprisingly, running the code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. Usually one should starting to interact with this new piece of code, fixing it until the output looks good, and applying the patch to the original benchmark code and run DSC again.</p>
+<p>Unsurprisingly, running the code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. Usually one should start interacting with this new piece of code, fixing it until the output looks good, and apply the patch to the original benchmark code, and finally run DSC again.</p>
 <p>For this example, what exactly is the problem that led to truncated result? Well, the issue is not very apparent unless you are aware of the parallel proessing nature of DSC and familiar with the use of DSC <code>File()</code> operator. However this is a very common mistake one can make and this is why we want to show it here. Please take a look at line 7 of the R code:</p>
 <div class="highlight"><pre><span></span>result <span class="o">&lt;-</span> <span class="s">&#39;gemma.out&#39;</span>
 </pre></div>
