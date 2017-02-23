@@ -210,9 +210,10 @@ Extract DSC results:
                         specified by &#34;block:variable&#34;. Valid `variable` are
                         variables found in `return` of the corresponding DSC
                         block.
-  --tags str [str ...]  Tags to extract. The &#34;&amp;&amp;&#34; symbol can be used to
-                        specify intersect of multiple tags. Default to
-                        extracting for all tags.
+  --tags str [str ...]  Tags to extract. The &#34;&amp;&amp;&#34; sign can be used to specify
+                        intersect of multiple tags. The &#34;=&#34; sign can be used
+                        to rename extracted tags. Default to extracting for
+                        all tags.
 
 Distribute DSC:
   --distribute [files [files ...]]
@@ -254,7 +255,7 @@ Distribute DSC:
 <h2 id="DSC-results-extraction">DSC results extraction<a class="anchor-link" href="#DSC-results-extraction">&#182;</a></h2><p>These options will extract annotated DSC to a separate file for further analysis.</p>
 <ul>
 <li><code>-e</code> specifies the name of variable to extract.</li>
-<li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator.</li>
+<li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator. One can also rename extracted fields using <code>=</code> operator. For example, <code>--tags "case1 = small_sample &amp;&amp; large_features &amp;&amp; elasticnet"</code>.</li>
 </ul>
 <h2 id="DSC-release">DSC release<a class="anchor-link" href="#DSC-release">&#182;</a></h2><p>The <code>--distribute</code> option will bundle the DSC benchmark into a tarball that can be uploaded to <code>shinydsc</code> for data query and visualization, or be transfered to other computational environment. DSC benchmarks should be released with this command.</p>
 <ul>
