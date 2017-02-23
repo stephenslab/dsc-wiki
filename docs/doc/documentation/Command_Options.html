@@ -150,11 +150,10 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
            [--target str] [-x DSC script] [--sequence str [str ...]]
-           [--recover] [--clean [str [str ...]]] [--host str]
-           [-a DSC files [DSC files ...]]
+           [--seeds n [n ...]] [--recover] [--clean [str [str ...]]]
+           [--host str] [-a file.ann [file.ann ...]]
            [-e block:variable [block:variable ...]] [--tags str [str ...]]
-
-Implementation of Dynamic Statistical Comparisons
+           [--distribute [files [files ...]]]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -179,6 +178,9 @@ Execute DSC:
                         allowed. Each input should be a quoted string defining
                         a valid DSC sequence. Multiple such strings should be
                         separated by space.
+  --seeds n [n ...]     This will override any &#34;seed&#34; property in the DSC
+                        script. This feature is useful for using a small
+                        number of seeds for a test run.
   --recover             Recover DSC based on names (not contents) of existing
                         files.
   --clean [str [str ...]]
@@ -192,13 +194,15 @@ Execute DSC:
   --host str            URL of Redis server for distributed computation.
 
 Annotate DSC:
-  -a DSC files [DSC files ...], --annotate DSC files [DSC files ...]
-                        Annotate DSC. An annotation file name is required and
-                        DSC will look for the script file having the same base
-                        name but with *.dsc extension. Optionally one can
-                        input 2 file names with the first the annotation file
-                        name and the second the DSC script name, eg, -a
-                        test.ann test.dsc
+  -a file.ann [file.ann ...], --annotate file.ann [file.ann ...]
+                        Annotate DSC. Annotation files must have &#34;.ann&#34;
+                        extension. If &#34;-a&#34; option is used independently from
+                        &#34;-x&#34;, then the first file should be the DSC
+                        configuration file with a non-&#34;.ann&#34; extension. If
+                        this rule is violated, the program will attempt to
+                        look for a file having the same base name as the first
+                        file but with &#34;.dsc&#34; extension and if found it will be
+                        used as the DSC configuration file.
 
 Extract DSC results:
   -e block:variable [block:variable ...], --extract block:variable [block:variable ...]
@@ -209,6 +213,14 @@ Extract DSC results:
   --tags str [str ...]  Tags to extract. The &#34;&amp;&amp;&#34; symbol can be used to
                         specify intersect of multiple tags. Default to
                         extracting for all tags.
+
+Distribute DSC:
+  --distribute [files [files ...]]
+                        Additional files to distribute. This option will
+                        create a tarball for the DSC benchmark for
+                        distribution. If additional files are given to this
+                        option, then those files will also be included in the
+                        benchmark.
 </pre>
 </div>
 </div>
@@ -237,12 +249,16 @@ Extract DSC results:
 </ul>
 <h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
 <ul>
-<li><code>-a</code> specifies the annotation file. See this <a href="DSC_Annotation.html">section</a> for an example annotation file. The annotation file must have the same prefix as the corresponding DSC configuration file. Otherwise one needs to use <code>-a annotation.ann dsc_script.dsc</code> to specify both of them.</li>
+<li><code>-a</code> specifies annotation files. See this <a href="DSC_Annotation.html">section</a> for an example annotation file. An annotation file name must end with <code>.ann</code>.</li>
 </ul>
 <h2 id="DSC-results-extraction">DSC results extraction<a class="anchor-link" href="#DSC-results-extraction">&#182;</a></h2><p>These options will extract annotated DSC to a separate file for further analysis.</p>
 <ul>
 <li><code>-e</code> specifies the name of variable to extract.</li>
 <li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator.</li>
+</ul>
+<h2 id="DSC-release">DSC release<a class="anchor-link" href="#DSC-release">&#182;</a></h2><p>The <code>--distribute</code> option will bundle the DSC benchmark into a tarball that can be uploaded to <code>shinydsc</code> for data query and visualization, or be transfered to other computational environment. DSC benchmarks should be released with this command.</p>
+<ul>
+<li><code>--distribute</code> when used without any argument it will pack project meta information, DSC configuration and annotation script (if applicable), and benchmark output into a tarball. This tarball contains enough information to be used with <code>shinydsc</code>. To port the complete benchmark, one should specify additional files such as computational scripts and data used, eg, <code>--distribute /path/to/scripts</code>. </li>
 </ul>
 
 </div>
