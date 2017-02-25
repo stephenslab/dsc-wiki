@@ -150,7 +150,7 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
            [--target str] [-x DSC script] [--sequence str [str ...]]
-           [--seeds n [n ...]] [--recover] [--clean [str [str ...]]]
+           [--seeds values [values ...]] [--recover] [--clean [str [str ...]]]
            [--host str] [-a file.ann [file.ann ...]]
            [-e block:variable [block:variable ...]] [--tags str [str ...]]
            [--distribute [files [files ...]]]
@@ -176,11 +176,15 @@ Execute DSC:
                         DSC sequence to be executed. It will override the
                         DSC::run entry when specified. Multiple sequences are
                         allowed. Each input should be a quoted string defining
-                        a valid DSC sequence. Multiple such strings should be
-                        separated by space.
-  --seeds n [n ...]     This will override any &#34;seed&#34; property in the DSC
+                        a valid DSC sequence, or referring to the key of an
+                        existing sequence in the DSC script. Multiple such
+                        strings should be separated by space.
+  --seeds values [values ...]
+                        This will override any &#34;seed&#34; property in the DSC
                         script. This feature is useful for using a small
-                        number of seeds for a test run.
+                        number of seeds for a test run. Example: `--seeds 1`,
+                        `--seeds 1 2 3 4`, `--seeds {1..10}`, `--seeds
+                        &#34;R(1:10)&#34;`
   --recover             Recover DSC based on names (not contents) of existing
                         files.
   --clean [str [str ...]]
