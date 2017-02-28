@@ -150,8 +150,13 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
            [--target str] [-x DSC script] [--sequence str [str ...]]
+<<<<<<< HEAD
            [--seed values [values ...]] [--recover levels] [--ignore-errors]
            [--clean [str [str ...]]] [--host str] [-a file.ann [file.ann ...]]
+=======
+           [--seeds values [values ...]] [--recover] [--clean [str [str ...]]]
+           [--host str] [-a file.ann [file.ann ...]]
+>>>>>>> a156033a7166c9d3cecfe4d44d54ec1d76fa037d
            [-e block:variable [block:variable ...]] [--tags str [str ...]]
            [--distribute [files [files ...]]]
 
@@ -179,6 +184,7 @@ Execute DSC:
                         a valid DSC sequence, or referring to the key of an
                         existing sequence in the DSC script. Multiple such
                         strings should be separated by space.
+<<<<<<< HEAD
   --seed values [values ...]
                         This will override any &#34;seed&#34; property in the DSC
                         script. This feature is useful for using a small
@@ -195,6 +201,16 @@ Execute DSC:
                         will keep the benchmark running but all results will
                         be set to missing values and the problematic script
                         will be saved when applicable.
+=======
+  --seeds values [values ...]
+                        This will override any &#34;seed&#34; property in the DSC
+                        script. This feature is useful for using a small
+                        number of seeds for a test run. Example: `--seeds 1`,
+                        `--seeds 1 2 3 4`, `--seeds {1..10}`, `--seeds
+                        &#34;R(1:10)&#34;`
+  --recover             Recover DSC based on names (not contents) of existing
+                        files.
+>>>>>>> a156033a7166c9d3cecfe4d44d54ec1d76fa037d
   --clean [str [str ...]]
                         Instead of running DSC, output for one or multiple
                         steps from previous DSC runs are to be cleaned. Each

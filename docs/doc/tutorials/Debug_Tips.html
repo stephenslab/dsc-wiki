@@ -142,7 +142,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
 </pre></div>
 
 </div>
@@ -392,7 +392,7 @@ Traceback:
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
 </pre></div>
 
 </div>
@@ -428,6 +428,15 @@ INFO: Elapsed time <span class="ansi-green-fg">140.619</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You see that all <code>gemma_bslmm</code> related codes are re-executed and the DSC benchmark completed without an issue.</p>
+<h2 id="Command-options---sequence-and---seeds">Command options <code>--sequence</code> and <code>--seeds</code><a class="anchor-link" href="#Command-options---sequence-and---seeds">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seeds 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
+
+<pre><code>DSC:
+  run: simulate * test * score</code></pre>
+<p>When the benchmark is tested for the first time, one should run 3 commands each introducing a new block sequentially:</p>
+
+<pre><code>dcs -x file.dsc ... --sequence simulate --seeds 1
+dcs -x file.dsc ... --sequence "simulate * test" --seeds 1
+dcs -x file.dsc ... --sequence "simulate * test * score" --seeds 1</code></pre>
 <h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
 
 </div>
