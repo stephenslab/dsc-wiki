@@ -155,11 +155,14 @@ $( document ).ready(function(){
         exec[1]:
           g: Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),
         exec[2]:
-          g: Asis(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),
+          g: Asis(ashr::normalmix(rep(1/7,7),
+          c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),
         exec[3]:
-          g: Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))
+          g: Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),
+          c(-2,-1,0,1),c(2,1.5,1,1)))
         .alias: args = List()
-    return: data, true_beta = R(data$meta$beta), true_pi0 = R(data$meta$pi0)
+    return: data, true_beta = R(data$meta$beta), 
+            true_pi0 = R(data$meta$pi0)
 
 shrink:
     exec: runash.R
@@ -247,7 +250,7 @@ DSC:
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">ann</span> <span class="o">-</span><span class="n">f</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
 
 </div>
