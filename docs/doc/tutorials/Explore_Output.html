@@ -706,6 +706,118 @@ RU5ErkJggg=="
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Automatic-annotation">Automatic annotation<a class="anchor-link" href="#Automatic-annotation">&#182;</a></h2><p>For this very simple application, particularly when the value of <code>true_mean</code> does not matter for location parameter estimate, one should take advantage of automatic annotation DSC provides to create a tag for every executable. To activate automatic annotation, simply create an empty annotation file with only the DSC configuration file name specified:</p>
+
+<pre><code>DSC:
+    configuration: settings.dsc</code></pre>
+<p>and execute it:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_auto</span><span class="o">.</span><span class="n">ann</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">mse</span>
++--------------+--------------------------------------------------+
+|  Tag         |  No. unique obj.                                 |
++--------------+--------------------------------------------------+
+|  <span class="ansi-green-fg">rnorm</span>   |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">rt</span>      |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">mean</span>    |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
+|  <span class="ansi-green-fg">median</span>  |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
+|  <span class="ansi-green-fg">MSE</span>     |  <span class="ansi-green-fg">40</span> estimate &amp; <span class="ansi-green-fg">40</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
++--------------+--------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to extract results for, for example samples from $t$ distribution using method <code>mean</code>, one can overlay the tags <code>rt</code> and <code>mean</code> to extract the MSE on this sequence. Multiple tag combinations is also allowed. Here we extract 4 cases:</p>
+<ul>
+<li>Case 1: simulated from <code>rt</code> and analyzed by <code>mean</code></li>
+<li>Case 2: simulated from <code>rnorm</code> and analyzed by <code>mean</code></li>
+<li>Case 3: simulated from <code>rt</code> and analyzed by <code>median</code></li>
+<li>Case 4: simulated from <code>rnorm</code> and analyzed by <code>median</code></li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span> <span class="o">--</span><span class="n">tags</span> \
+    <span class="s2">&quot;case1 = rt&amp;&amp;mean&quot;</span> <span class="s2">&quot;case2 = rnorm&amp;&amp;mean&quot;</span> \
+    <span class="s2">&quot;case3 = rt&amp;&amp;median&quot;</span> <span class="s2">&quot;case4 = rnorm&amp;&amp;median&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.72it/s]
+INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for DSC result <span class="ansi-green-fg">mse</span> via annotations: 
+	<span class="ansi-green-fg">case1 = rt&amp;&amp;mean
+	case2 = rnorm&amp;&amp;mean
+	case3 = rt&amp;&amp;median
+	case4 = rnorm&amp;&amp;median</span>
+INFO: Elapsed time <span class="ansi-green-fg">0.656</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>mean_t</code> and <code>median_t</code> tags in the previous section is equivalent to <code>case1</code> and <code>case3</code> in this automatic annotation.</p>
+
+</div>
+</div>
+</div>
     </div>
   </div>
 </body>

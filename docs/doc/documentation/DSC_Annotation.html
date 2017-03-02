@@ -125,7 +125,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC annotation is a file that tags the DSC procedure with meaningful identifiers so that one can easily extract results for given computational step under given condition, from numerous combinations of computational setups. Readers may notice that in our introduction to <a href="DSC_Configuration.html">DSC configuration</a> we have not discussed how output from DSC is handled or interpreted. In fact DSC2 will generate intermediate output for each unique parameter combination of every computational step, along with a lookup data base that stores connection between these steps. However it is rather difficult, though still possible, to interact directly with these output. With <strong>DSC annotation</strong> file we can keep track of combinations we are interested in and can easily extract data for these combinations one at a time as it is desired.</p>
+<h2 id="DSC-annotation-file">DSC annotation file<a class="anchor-link" href="#DSC-annotation-file">&#182;</a></h2><p>DSC annotation is a file that tags the DSC procedure with meaningful identifiers so that one can easily extract results for given computational step under given condition, from numerous combinations of computational setups. Readers may notice that in our introduction to <a href="DSC_Configuration.html">DSC configuration</a> we have not discussed how output from DSC is handled or interpreted. In fact DSC2 will generate intermediate output for each unique parameter combination of every computational step, along with a lookup data base that stores connection between these steps. However it is rather difficult, though still possible, to interact directly with these output. With <strong>DSC annotation</strong> file we can keep track of combinations we are interested in and can easily extract data for these combinations one at a time as it is desired.</p>
 
 </div>
 </div>
@@ -135,7 +135,7 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is an example annotation section:</p>
+<p>Here is an example annotation (one section of tag and one required section <code>DSC</code>):</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mean_t</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
         <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
@@ -143,6 +143,8 @@ $( document ).ready(function(){
           <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
     <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
         <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
 </pre></div>
 
 </div>
@@ -163,6 +165,21 @@ $( document ).ready(function(){
 <li>A <code>%</code> symbol followed by a query statement. For example, <code>K: % K &gt; 20 AND K &lt; 30</code>. This statement will be passed to query command directly. </li>
 </ul>
 <p>Query statement is the most flexible way to compose an annotation though one has to ensure the statement is valid; DSC will otherwise fail to annotate the result with bad queries.</p>
+<p>The section <code>DSC</code> is required that specifies the DSC script name, which will be used to parse annotation file, or to generate automatic annotations.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Automatic-annotation">Automatic annotation<a class="anchor-link" href="#Automatic-annotation">&#182;</a></h2><p>For simple applications when annotation is straightforward, DSC provides automatic annotations in two flavors:</p>
+<ol>
+<li>When input <code>DSC::run</code> sequence are un-named DSC will create a tag for every computational step. Please see <a href="../tutorials/Explore_Output.html#Automatic-annotation">this example</a>.</li>
+<li>When input <code>DSC::run</code> are named, DSC will create a tag for every named sequence. Please see <a href="../tutorials/Intermediate_R_2.html#DSC-annotation-12">this example</a>.</li>
+</ol>
 
 </div>
 </div>
