@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>Intermediate_R_2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<style>  /* defined here in case the main.css below cannot be loaded */
+.lev1 {margin-left: 80px}
+.lev2 {margin-left: 100px}
+.lev3 {margin-left: 120px}
+.lev4 {margin-left: 140px}
+.lev5 {margin-left: 160px}
+.lev6 {margin-left: 180px}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../../css/toc2.css">
+
+<script src="../../js/toc2.js"></script>
+<script src="../../js/docs.js"></script>
+
+<script>
+$( document ).ready(function(){
+
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,  // sections numbering
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+
+            // fire the main function with these parameters
+
+
+            table_of_contents(cfg,st);
+
+
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            
+            var tuts=tutorials;
+            var pos=tutorials.indexOf(file);
+        
+            for (var a=pos;a>=0;a--){
+                  var name=tuts[a]
+                  $('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+
+            $('<li id="indexHome"><a href="../../tutorials.html"><b>Tutorials Home<b></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            for (var a=pos+1;a<tuts.length;a++){
+                  var name=tuts[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html">'+name.replace(/_/g," ")+'</a></li>');
+            }
+            $("#toc-header").hide();
+
+
+    });
+</script>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Same-example,-different-style:-ashr-benchmark">Same example, different style: ashr benchmark<a class="anchor-link" href="#Same-example,-different-style:-ashr-benchmark">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is another implementation of the <a href="Intermediate_R_1.html">ashr benchmark</a>. In the previous implementation, we had to prepare a separate annotation file to tag simulation scenarios and analysis methods. This reproduces the approach in <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">ashr DSCR example</a> (that steps are tagged separatedly) but it has obvious draw-backs under DSC2 design:</p>
+<ul>
+<li>It requires a separate annotation file</li>
+<li>It requires using overlapping tags (<code>--tags An &amp;&amp; ash_n</code>) to extract results.</li>
+</ul>
+<p>In this tutorial we demonstrate another style of <code>ashr</code> benchmark execution: the configuration is not very much different, yet we use named run sequences and automatic annotation in DSC2.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC2-Specification">DSC2 Specification<a class="anchor-link" href="#DSC2-Specification">&#182;</a></h2>
+<pre><code>simulate:
+    exec: datamaker.R
+    .alias: An, Bn, Cn
+    seed: R(1:5)
+    params:
+        min_pi0: 0
+        max_pi0: 1
+        nsamp: 1000
+        betahatsd: 1
+        exec[1]:
+          g: Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),
+        exec[2]:
+          g: Asis(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),
+        exec[3]:
+          g: Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))
+        .alias: args = List()
+    return: data, true_beta = R(data$meta$beta), true_pi0 = R(data$meta$pi0)
+
+shrink:
+    exec: runash.R
+    .alias: ash_n, ash_hu
+    params:
+        input: $data
+        exec[1]:
+          mixcompdist: normal
+        exec[2]:
+          mixcompdist: halfuniform
+    return: ash_data, beta_est = R(ashr::get_pm(ash_data)),
+            pi0_est = R(ashr::get_pi0(ash_data))
+
+beta_score:
+    exec: score.R
+    .alias: score_beta
+    params:
+        beta_true: $true_beta
+        beta_est: $beta_est
+        .alias: est = beta_est, truth = beta_true
+    return: result
+
+pi0_score(beta_score):
+    .alias: score_pi0
+    params:
+        pi0_est: $pi0_est
+        pi0: $true_pi0
+        .alias: est = pi0_est, truth = pi0
+
+DSC:
+    run:
+      An_ash_n: simulate[1] * shrink[1] * (beta_score, pi0_score)
+      An_ash_hu: simulate[1] * shrink[2] * (beta_score, pi0_score)
+      Bn_ash_n: simulate[2] * shrink[1] * (beta_score, pi0_score)
+      Bn_ash_hu: simulate[2] * shrink[2] * (beta_score, pi0_score)
+      Cn_ash_n: simulate[3] * shrink[1] * (beta_score, pi0_score)
+      Cn_ash_hu: simulate[3] * shrink[2] * (beta_score, pi0_score)
+    R_libs: stephens999/ashr (2.0.0+)
+    exec_path: bin
+    output: dsc_result_auto</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Compared to the previous example, notice that</p>
+<ol>
+<li>Computational routine <code>datamaker.R</code> in <code>simulate</code> block is splitted into 3 routines, via <code>.alias</code> that renames them to distinguish from each other, and each takes a different <code>g</code> value. This essentially makes it 3 different methods.</li>
+<li>Similiarly in <code>shrink</code> there are two methods now.</li>
+<li>In <code>DSC::run</code>, instead of one sequence there are now multiple sub-sequences each with a name. Combined they are equivalent to the one sequence setup <code>simulate * shrink * (beta_score, pi0_score)</code>.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>The DSC annotation is now very simple:</p>
+
+<pre><code>DSC:
+  configuration: settings_autotag.dsc</code></pre>
+<p>It only has one required section <code>DSC</code> where it specifies the configuration file name. When there is no other tags in an annotation file, DSC will attempt to automatically annotate the DSC based on how the benchmark is executed, ie, the <code>DSC::run</code> logic.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reproducing-previous-results-using-simpler-commands">Reproducing <a href="Intermediate_R_1.html">previous</a> results using simpler commands<a class="anchor-link" href="#Reproducing-previous-results-using-simpler-commands">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">ann</span> <span class="o">-</span><span class="n">f</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result_auto.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings_autotag.dsc</span> ...
+INFO: Building execution graph ...
+Running core_shrink_2 (ash_hu) (00:02:00): 
+
+DSC:  18%|█▊        | 4/22 [02:40&lt;08:45, 29.18s/it]
+
+DSC:  23%|██▎       | 5/22 [02:43&lt;05:59, 21.18s/it]
+
+DSC:  55%|█████▍    | 12/22 [03:46&lt;01:53, 11.35s/it]
+
+DSC:  59%|█████▉    | 13/22 [03:48&lt;01:17,  8.61s/it]
+
+DSC:  64%|██████▎   | 14/22 [03:50&lt;00:51,  6.46s/it]
+
+DSC: 100%|██████████| 22/22 [04:19&lt;00:00,  4.19s/it]
+INFO: Writing output metadata ...
+INFO: DSC complete!
+INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">beta_score</span>
++-----------------+-------------------------------------------------------+
+|  Tag            |  No. unique obj.                                      |
++-----------------+-------------------------------------------------------+
+|  <span class="ansi-green-fg">An_ash_n</span>   |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">An_ash_hu</span>  |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Bn_ash_n</span>   |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Bn_ash_hu</span>  |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Cn_ash_n</span>   |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Cn_ash_hu</span>  |  <span class="ansi-green-fg">50</span> beta_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
++-----------------+-------------------------------------------------------+
+INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">pi0_score</span>
++-----------------+------------------------------------------------------+
+|  Tag            |  No. unique obj.                                     |
++-----------------+------------------------------------------------------+
+|  <span class="ansi-green-fg">An_ash_n</span>   |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">An_ash_hu</span>  |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Bn_ash_n</span>   |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Bn_ash_hu</span>  |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Cn_ash_n</span>   |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
+|  <span class="ansi-green-fg">Cn_ash_hu</span>  |  <span class="ansi-green-fg">50</span> pi0_score &amp; <span class="ansi-green-fg">50</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate  |
++-----------------+------------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">262.334</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we execute and annotate the benchmark using one command. From the annotation summary table we see that tags created corresponds to the DSC sequences specified in <code>DSC::run</code> of DSC configuration file. Each sequence is annotated with 50 results in each block, corresponding to our seed setting <code>--seeds "R(1:50)"</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reproducing-results-exploration">Reproducing results exploration<a class="anchor-link" href="#Reproducing-results-exploration">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">pi0_score</span><span class="p">:</span><span class="n">result</span> <span class="o">--</span><span class="n">target</span> <span class="n">pi0_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_pi0_2</span><span class="o">.</span><span class="n">rds</span> \
+    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An_ash_n&quot;</span> <span class="s2">&quot;case2 = An_ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result_auto</span>
+<span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">beta_score</span><span class="p">:</span><span class="n">result</span> <span class="n">shrink</span><span class="p">:</span><span class="n">beta_est</span> <span class="o">--</span><span class="n">target</span> <span class="n">beta_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_beta_2</span><span class="o">.</span><span class="n">rds</span> \
+    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An_ash_n&quot;</span> <span class="s2">&quot;case2 = An_ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result_auto</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.62it/s]
+INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_2.rds</span> for DSC result <span class="ansi-green-fg">pi0_score</span> via annotations: 
+	<span class="ansi-green-fg">case1 = An_ash_n
+	case2 = An_ash_hu</span>
+INFO: Elapsed time <span class="ansi-green-fg">0.948</span> seconds.
+Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.16it/s]
+INFO: Data extracted to <span class="ansi-green-fg">ashr_beta_2.rds</span> for DSC result <span class="ansi-green-fg">beta_score</span> via annotations: 
+	<span class="ansi-green-fg">case1 = An_ash_n
+	case2 = An_ash_hu</span>
+INFO: Elapsed time <span class="ansi-green-fg">1.292</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and the plots:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">use</span> <span class="n">ir</span>
+<span class="n">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;ashr_pi0_2.rds&#39;</span><span class="p">)</span>
+<span class="n">case1</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case1_pi0_score_result</span><span class="p">)</span>
+<span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_pi0_score_result</span><span class="p">)</span>
+<span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;MSE for pi_0 estimate&quot;</span><span class="p">)</span>
+<span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;pi0_score_2.html&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;ashr_beta_2.rds&#39;</span><span class="p">)</span>
+<span class="n">case1</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case1_beta_score_result</span><span class="p">)</span>
+<span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_beta_score_result</span><span class="p">)</span>
+<span class="n">case1_beta</span> <span class="o">=</span> <span class="n">rowMeans</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case1_shrink_beta_est</span><span class="p">))</span>
+<span class="n">case2_beta</span> <span class="o">=</span> <span class="n">rowMeans</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_shrink_beta_est</span><span class="p">))</span>
+<span class="c1">#</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;MSE for beta estimate&quot;</span><span class="p">)</span>
+<span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_score_2.html&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case1_beta</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case2_beta</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Posterior mean distribution&quot;</span><span class="p">)</span>
+<span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_2.html&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">case1</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">DSC_TIMER</span><span class="err">$</span><span class="n">case1_shrink_beta_est</span><span class="p">)</span>
+<span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">DSC_TIMER</span><span class="err">$</span><span class="n">case2_shrink_beta_est</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Time elapsed for posterior mean estimation&quot;</span><span class="p">)</span>
+<span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_time_2.html&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The results are:</p>
+<ul>
+<li><a href="pi0_score_2.html">MSE for $\pi_0$ estimate</a></li>
+<li><a href="beta_score_2.html">MSE for $\beta$ estimate</a></li>
+<li><a href="beta_2.html">Posterior mean distribution</a></li>
+<li><a href="beta_time_2.html">Time elapsed for posterior mean estimation</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+
+ 
+
+
+</html>

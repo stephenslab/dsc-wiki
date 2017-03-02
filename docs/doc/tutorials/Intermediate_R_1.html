@@ -220,7 +220,7 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span> <span class="o">-</span><span class="n">f</span>
 </pre></div>
 
 </div>
@@ -233,13 +233,20 @@ $( document ).ready(function(){
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+<pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph ...
-DSC: 100%|██████████| 5/5 [00:00&lt;00:00, 10.98it/s]
+Running core_shrink_1 (runash) (00:02:00): 
+
+Running core_beta_score_1 (score_beta) (00:01:00): 
+Running core_pi0_score_1 (score_pi0) (00:01:00): 
+Running beta_score (00:01:00): 
+Running pi0_score (00:01:00): 
+DSC: 100%|██████████| 5/5 [04:12&lt;00:00, 44.10s/it]
 INFO: Writing output metadata ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">1.470</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">253.911</span> seconds.
 </pre>
 </div>
 </div>
@@ -279,9 +286,12 @@ INFO: Elapsed time <span class="ansi-green-fg">1.470</span> seconds.
   <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal</span>
 
-<span class="l l-Scalar l-Scalar-Plain">ash_nu</span><span class="p p-Indicator">:</span>
+<span class="l l-Scalar l-Scalar-Plain">ash_hu</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">halfuniform</span>
+    <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">halfuniform</span> 
+
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
 </pre></div>
 <p>and we apply this annotation to our benchmark:</p>
 
@@ -306,17 +316,7 @@ INFO: Elapsed time <span class="ansi-green-fg">1.470</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">pi0_score</span>
-+--------------+---------------------------------------------------------+
-|  Tag         |  No. unique obj.                                        |
-+--------------+---------------------------------------------------------+
-|  <span class="ansi-green-fg">An</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
-|  <span class="ansi-green-fg">Bn</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
-|  <span class="ansi-green-fg">Cn</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
-|  <span class="ansi-green-fg">ash_n</span>   |  <span class="ansi-green-fg">150</span> pi0_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
-|  <span class="ansi-green-fg">ash_hu</span>  |  <span class="ansi-green-fg">150</span> pi0_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
-+--------------+---------------------------------------------------------+
-INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">beta_score</span>
+<pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">beta_score</span>
 +--------------+----------------------------------------------------------+
 |  Tag         |  No. unique obj.                                         |
 +--------------+----------------------------------------------------------+
@@ -326,7 +326,17 @@ INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">be
 |  <span class="ansi-green-fg">ash_n</span>   |  <span class="ansi-green-fg">150</span> beta_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
 |  <span class="ansi-green-fg">ash_hu</span>  |  <span class="ansi-green-fg">150</span> beta_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
 +--------------+----------------------------------------------------------+
-INFO: Elapsed time <span class="ansi-green-fg">0.141</span> seconds.
+INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">pi0_score</span>
++--------------+---------------------------------------------------------+
+|  Tag         |  No. unique obj.                                        |
++--------------+---------------------------------------------------------+
+|  <span class="ansi-green-fg">An</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
+|  <span class="ansi-green-fg">Bn</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
+|  <span class="ansi-green-fg">Cn</span>      |  <span class="ansi-green-fg">100</span> pi0_score &amp; <span class="ansi-green-fg">100</span> shrink &amp; <span class="ansi-green-fg">50</span> simulate   |
+|  <span class="ansi-green-fg">ash_n</span>   |  <span class="ansi-green-fg">150</span> pi0_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
+|  <span class="ansi-green-fg">ash_hu</span>  |  <span class="ansi-green-fg">150</span> pi0_score &amp; <span class="ansi-green-fg">150</span> shrink &amp; <span class="ansi-green-fg">150</span> simulate  |
++--------------+---------------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.149</span> seconds.
 </pre>
 </div>
 </div>
@@ -352,7 +362,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.141</span> seconds.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">pi0_score</span><span class="p">:</span><span class="n">result</span> <span class="o">--</span><span class="n">target</span> <span class="n">pi0_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> \
-    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_nu&quot;</span>
+    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
 </pre></div>
 
 </div>
@@ -365,11 +375,11 @@ INFO: Elapsed time <span class="ansi-green-fg">0.141</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00, 10.81it/s]
+<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.67it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for DSC result <span class="ansi-green-fg">pi0_score</span> via annotations: 
 	<span class="ansi-green-fg">case1 = An &amp;&amp; ash_n
-	case2 = An &amp;&amp; ash_nu</span>
-INFO: Elapsed time <span class="ansi-green-fg">0.802</span> seconds.
+	case2 = An &amp;&amp; ash_hu</span>
+INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 </pre>
 </div>
 </div>
@@ -398,24 +408,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.802</span> seconds.
 <span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;ashr_pi0_1.rds&#39;</span><span class="p">)</span>
 <span class="n">case1</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case1_pi0_score_result</span><span class="p">)</span>
 <span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_pi0_score_result</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">case1</span><span class="p">),</span> <span class="n">mean</span><span class="p">(</span><span class="n">case2</span><span class="p">)))</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1] 0.1763984 0.2004572
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -464,7 +459,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.802</span> seconds.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">beta_score</span><span class="p">:</span><span class="n">result</span> <span class="n">shrink</span><span class="p">:</span><span class="n">beta_est</span> <span class="o">--</span><span class="n">target</span> <span class="n">beta_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_beta_1</span><span class="o">.</span><span class="n">rds</span> \
-    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_nu&quot;</span>
+    <span class="o">--</span><span class="n">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
 </pre></div>
 
 </div>
@@ -477,11 +472,11 @@ INFO: Elapsed time <span class="ansi-green-fg">0.802</span> seconds.
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.50it/s]
+<pre>Extracting: 100%|██████████| 5/5 [00:01&lt;00:00,  4.86it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_beta_1.rds</span> for DSC result <span class="ansi-green-fg">beta_score</span> via annotations: 
 	<span class="ansi-green-fg">case1 = An &amp;&amp; ash_n
-	case2 = An &amp;&amp; ash_nu</span>
-INFO: Elapsed time <span class="ansi-green-fg">1.385</span> seconds.
+	case2 = An &amp;&amp; ash_hu</span>
+INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 </pre>
 </div>
 </div>
@@ -583,7 +578,7 @@ INFO: Elapsed time <span class="ansi-green-fg">1.385</span> seconds.
 <span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
-  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Timer elapsed for posterior mean estimation&quot;</span><span class="p">)</span>
+  <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Time elapsed for posterior mean estimation&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_time.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta_time.html&quot;), collapse=&quot;\n&quot;))</span>
 </pre></div>
@@ -599,6 +594,16 @@ INFO: Elapsed time <span class="ansi-green-fg">1.385</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can view the output <a href="beta_time.html">here</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Alternative-implementation-using-automatic-annotation">Alternative implementation using automatic annotation<a class="anchor-link" href="#Alternative-implementation-using-automatic-annotation">&#182;</a></h2><p>DSC provides automatic annotation. This feature is particularly useful if your DSC configuration <code>DSC::run</code> specifies named sequences. See <a href="Intermediate_R_2.html">this tutorial</a> for more details.</p>
 
 </div>
 </div>
