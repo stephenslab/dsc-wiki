@@ -148,12 +148,12 @@ $( document ).ready(function(){
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
+<pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-b str] [-f]
            [--target str] [-x DSC script] [--sequence str [str ...]]
-           [--seed values [values ...]] [--recover levels] [--ignore-errors]
-           [--clean [str [str ...]]] [--host str] [-a file.ann [file.ann ...]]
+           [--seeds values [values ...]] [--recover levels] [--ignore-errors]
+           [--clean [str [str ...]]] [--host str] [-a DSC Annotation]
            [-e block:variable [block:variable ...]] [--tags str [str ...]]
-           [--distribute [files [files ...]]]
+           [-o str] [--distribute [files [files ...]]]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -162,7 +162,8 @@ optional arguments:
                         Output error (0), warning (1), info (2), debug (3) and
                         trace (4) information. Default to 2.
   -j N                  Number of maximum concurrent processes.
-  -o str                Output data prefix for -x / -e commands.
+  -b str                Benchmark name. Will overwrite &#34;DSC::run&#34; in DSC
+                        configuration file.
   -f                    Force re-run -x / -e commands from scratch.
   --target str          The ultimate target of a DSC benchmark is the name of
                         the last block in a DSC sequence. This option is
@@ -179,11 +180,12 @@ Execute DSC:
                         a valid DSC sequence, or referring to the key of an
                         existing sequence in the DSC script. Multiple such
                         strings should be separated by space.
-  --seed values [values ...]
+  --seeds values [values ...]
                         This will override any &#34;seed&#34; property in the DSC
                         script. This feature is useful for using a small
-                        number of seeds for a test run. Example: `--seed 1`,
-                        `--seed 1 2 3 4`, `--seed {1..10}`, `--seed &#34;R(1:10)&#34;`
+                        number of seeds for a test run. Example: `--seeds 1`,
+                        `--replicate 1 2 3 4`, `--seeds {1..10}`, `--seeds
+                        &#34;R(1:10)&#34;`
   --recover levels      Recover DSC based on names (not contents) of existing
                         files. Level 1 recover will try to reconstruct the
                         entire benchmark skipping existing files. Level 2
@@ -206,15 +208,8 @@ Execute DSC:
   --host str            URL of Redis server for distributed computation.
 
 Annotate DSC:
-  -a file.ann [file.ann ...], --annotate file.ann [file.ann ...]
-                        Annotate DSC. Annotation files must have &#34;.ann&#34;
-                        extension. If &#34;-a&#34; option is used independently from
-                        &#34;-x&#34;, then the first file should be the DSC
-                        configuration file with a non-&#34;.ann&#34; extension. If
-                        this rule is violated, the program will attempt to
-                        look for a file having the same base name as the first
-                        file but with &#34;.dsc&#34; extension and if found it will be
-                        used as the DSC configuration file.
+  -a DSC Annotation, --annotate DSC Annotation
+                        Annotate DSC.
 
 Extract DSC results:
   -e block:variable [block:variable ...], --extract block:variable [block:variable ...]
@@ -226,6 +221,7 @@ Extract DSC results:
                         intersect of multiple tags. The &#34;=&#34; sign can be used
                         to rename extracted tags. Default to extracting for
                         all tags.
+  -o str                Output file name.
 
 Distribute DSC:
   --distribute [files [files ...]]
@@ -250,7 +246,7 @@ Distribute DSC:
 <h2 id="Global-options">Global options<a class="anchor-link" href="#Global-options">&#182;</a></h2><ul>
 <li><code>-j</code> specifies number of CPU threads to use. You may run DSC in parallel on a single desktop, or on distributed computer system that runs <code>Redis</code> server / worker (FIXME: link to tutorial), in which case <code>--host</code> will have to be specified.</li>
 <li><code>-v</code> controls verbosity level. Default level is 2. If you encounter error messages you can increase the verbosity level to output more information to diagnose the cause.</li>
-<li><code>-o</code> changes the default output filename / directory specified in the DSC script.</li>
+<li><code>-b</code> changes the default output filename / directory specified in the DSC script.</li>
 <li><code>-f</code> forces executing DSC or extracting DSC results without using existing cache. During a DSC execution, cache files of intermediate output and parameters are saved so that future re-runs of the same computation will be skipped. The <code>-f</code> option forces DSC to ignore existing cache and run the entire procedure from scratch.</li>
 <li><code>--target</code> by default, is the name of the last DSC block if the DSC procedure only runs one sequence. Otherwise the name of the last DSC block has to be provided when <code>-a</code> or <code>-e</code> switches are turned on.</li>
 </ul>
@@ -258,18 +254,19 @@ Distribute DSC:
 <li><code>-x</code> specifies the DSC configuration script.</li>
 <li><code>--sequence</code> specifies which particular DSC sequence to run. See this <a href="DSC_Execution.html#Load-sequence-from-command-line">section</a> for an example.</li>
 <li><code>--recover</code> executes DSC using existing output files without checking for their properties. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties (mostly absoluate path to file) in this case. This option takes parameters 1 or 2. 1 will re-run the benchmark ignoring existing output; 2 will attempt to recover the output metadata without re-running the benchmark at all (this is useful when the benchmark is not complete but a preview of results is desired).</li>
-<li><code>--seed</code> is useful in exploratory analysis and debug. One can use <code>--seed 1</code> or <code>--seed 1 2</code> to overwrite all <code>seed</code> properties defined in the DSC file, thus only executing a small number of replicates, for testing purpose.</li>
+<li><code>--seeds</code> is useful in exploratory analysis and debug. One can use <code>--seeds 1</code> or <code>--seeds 1 2</code> to overwrite all <code>seed</code> properties defined in the DSC file, thus only executing a small number of replicates, for testing purpose.</li>
 <li><code>--ignore-errors</code> is a flag which, when added, will ignore errors from user provided scripts thus keep the benchmark running. There are often situations when we use other people's software packages that produces errors in random corner cases that will interrupt the benchmark from moving forward. It is suggested that one should develop the DSC benchmark without adding this flag, and use this flag to run the benchmark in large scale when all codes are gauranteed to work in most situations. Instead of throwing an error, DSC will <strong>store the problematic chunk of code that resulted in an error to the output, creating a fake output file that keeps DSC moving</strong>. These faked output will result in a chain reaction of failure in every other step that depends on them. In the end the <code>dsc -e</code> option will try to deal with this situation by extracting values whenever available, otherwise using the problematic file name in place of the values. In this way the users can either filter out these bad output as if they are missing values, or track those files to examine what goes wrong, by executing them as plain text script.</li>
 <li><code>--clean</code> will remove output from specified DSC sequences / steps, instead of executing them.</li>
 </ul>
 <h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
 <ul>
-<li><code>-a</code> specifies annotation files. See this <a href="DSC_Annotation.html">section</a> for an example annotation file. An annotation file name must end with <code>.ann</code>.</li>
+<li><code>-a</code> specifies annotation files. See this <a href="DSC_Annotation.html">section</a> for an example annotation file.</li>
 </ul>
 <h2 id="DSC-results-extraction">DSC results extraction<a class="anchor-link" href="#DSC-results-extraction">&#182;</a></h2><p>These options will extract annotated DSC to a separate file for further analysis.</p>
 <ul>
 <li><code>-e</code> specifies the name of variable to extract.</li>
 <li><code>--tags</code> annotations to extract. It is possible to extract intersection of annotations using the <code>&amp;&amp;</code> operator. One can also rename extracted fields using <code>=</code> operator. For example, <code>--tags "case1 = small_sample &amp;&amp; large_features &amp;&amp; elasticnet"</code>.</li>
+<li><code>-o</code> specifies ultimate output data file name.</li>
 </ul>
 <h2 id="DSC-release">DSC release<a class="anchor-link" href="#DSC-release">&#182;</a></h2><p>The <code>--distribute</code> option will bundle the DSC benchmark into a tarball that can be uploaded to <code>shinydsc</code> for data query and visualization, or be transfered to other computational environment. DSC benchmarks should be released with this command.</p>
 <ul>
