@@ -150,8 +150,8 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>usage: dsc [-h] [--version] [-v {0,1,2,3,4}] [-j N] [-o str] [-f]
            [--target str] [-x DSC script] [--sequence str [str ...]]
-           [--seeds values [values ...]] [--recover] [--clean [str [str ...]]]
-           [--host str] [-a file.ann [file.ann ...]]
+           [--seed values [values ...]] [--recover levels] [--ignore-errors]
+           [--clean [str [str ...]]] [--host str] [-a file.ann [file.ann ...]]
            [-e block:variable [block:variable ...]] [--tags str [str ...]]
            [--distribute [files [files ...]]]
 
@@ -173,20 +173,28 @@ Execute DSC:
   -x DSC script, --execute DSC script
                         Execute DSC.
   --sequence str [str ...]
-                        DSC sequence to be executed. It will override the
+                        DSC sequences to be executed. It will override the
                         DSC::run entry when specified. Multiple sequences are
                         allowed. Each input should be a quoted string defining
                         a valid DSC sequence, or referring to the key of an
                         existing sequence in the DSC script. Multiple such
                         strings should be separated by space.
-  --seeds values [values ...]
+  --seed values [values ...]
                         This will override any &#34;seed&#34; property in the DSC
                         script. This feature is useful for using a small
-                        number of seeds for a test run. Example: `--seeds 1`,
-                        `--seeds 1 2 3 4`, `--seeds {1..10}`, `--seeds
-                        &#34;R(1:10)&#34;`
-  --recover             Recover DSC based on names (not contents) of existing
-                        files.
+                        number of seeds for a test run. Example: `--seed 1`,
+                        `--seed 1 2 3 4`, `--seed {1..10}`, `--seed &#34;R(1:10)&#34;`
+  --recover levels      Recover DSC based on names (not contents) of existing
+                        files. Level 1 recover will try to reconstruct the
+                        entire benchmark skipping existing files. Level 2
+                        recover will only use existing files to reconstruct
+                        the benchmark output metadata, making it possible to
+                        explore partial benchmark results without having to
+                        wait until completion of entire benchmark.
+  --ignore-errors       Bypass all errors from computational programs. This
+                        will keep the benchmark running but all results will
+                        be set to missing values and the problematic script
+                        will be saved when applicable.
   --clean [str [str ...]]
                         Instead of running DSC, output for one or multiple
                         steps from previous DSC runs are to be cleaned. Each
@@ -248,9 +256,11 @@ Distribute DSC:
 </ul>
 <h2 id="DSC-Execution-options">DSC Execution options<a class="anchor-link" href="#DSC-Execution-options">&#182;</a></h2><ul>
 <li><code>-x</code> specifies the DSC configuration script.</li>
-<li><code>--sequence</code> specifies which particular DSC sequence to run. See this <a href="https://github.com/stephenslab/dsc2/wiki/04-Multiple-DSC-Sequences#execute-sequences-from-command-line">section</a> for an example.</li>
-<li><code>--recover</code> executes DSC using existing output files without checking for their properties. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties (mostly absoluate path to file) in this case.</li>
-<li><code>--clean</code> will remove specified DSC steps, instead of executing them. In order to remove data properly, the dsc result meta data (and RDS file defined in <code>DSC::output</code>) must be accessible.</li>
+<li><code>--sequence</code> specifies which particular DSC sequence to run. See this <a href="DSC_Execution.html#Load-sequence-from-command-line">section</a> for an example.</li>
+<li><code>--recover</code> executes DSC using existing output files without checking for their properties. This is useful when files are migrated from one computational system to another: <code>--recover</code> prevents DSC from re-running due to change of file properties (mostly absoluate path to file) in this case. This option takes parameters 1 or 2. 1 will re-run the benchmark ignoring existing output; 2 will attempt to recover the output metadata without re-running the benchmark at all (this is useful when the benchmark is not complete but a preview of results is desired).</li>
+<li><code>--seed</code> is useful in exploratory analysis and debug. One can use <code>--seed 1</code> or <code>--seed 1 2</code> to overwrite all <code>seed</code> properties defined in the DSC file, thus only executing a small number of replicates, for testing purpose.</li>
+<li><code>--ignore-errors</code> is a flag which, when added, will ignore errors from user provided scripts thus keep the benchmark running. There are often situations when we use other people's software packages that produces errors in random corner cases that will interrupt the benchmark from moving forward. It is suggested that one should develop the DSC benchmark without adding this flag, and use this flag to run the benchmark in large scale when all codes are gauranteed to work in most situations. Instead of throwing an error, DSC will <strong>store the problematic chunk of code that resulted in an error to the output, creating a fake output file that keeps DSC moving</strong>. These faked output will result in a chain reaction of failure in every other step that depends on them. In the end the <code>dsc -e</code> option will try to deal with this situation by extracting values whenever available, otherwise using the problematic file name in place of the values. In this way the users can either filter out these bad output as if they are missing values, or track those files to examine what goes wrong, by executing them as plain text script.</li>
+<li><code>--clean</code> will remove output from specified DSC sequences / steps, instead of executing them.</li>
 </ul>
 <h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>These options will annotate DSC by applying "tags" to DSC results. This is a pre-processing step to DSC results extraction</p>
 <ul>

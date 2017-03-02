@@ -234,7 +234,7 @@ $( document ).ready(function(){
 <p>Alternatively you can use pythonic syntax, for example with <code>in</code>:</p>
 
 <pre><code>      .logic: (.n in [100,200,300] and .mu == 0) or (.n in [400, 500] and .mu == 1)</code></pre>
-<p>Note that to refer to variables in <code>.logic</code> the dit <code>.</code> prefix has to be added to variables. Failure to obey this rule will result in error complaining of invalid logic statement.</p>
+<p>Note that to refer to variables in <code>.logic</code> the dot <code>.</code> prefix has to be added to variables. Failure to obey this rule will result in error complaining of invalid logic statement.</p>
 <h3 id=".alias">.alias<a class="anchor-link" href="#.alias">&#182;</a></h3><h4 id="For-parameters">For parameters<a class="anchor-link" href="#For-parameters">&#182;</a></h4><p><code>.alias</code> is often used to adjust parameter names for input to different executables. For example:</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">mu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1, 2, 3</span>
@@ -242,7 +242,7 @@ $( document ).ready(function(){
       <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">theta = mu</span>
 </pre></div>
 <p>in this example, all <code>exec</code> takes a parameter named <code>mu</code>, except for <code>exec[2]</code> which requires parameter with name <code>theta</code>, but <code>theta</code> in <code>exec[2]</code> is equivalent to <code>mu</code> in other <code>exec</code>. To deal with this situation the <code>.alias</code> option can be used to rename <code>mu</code> to <code>theta</code> for <code>exec[2]</code> while keeping it as is for other executables.</p>
-<p>For plugins, <code>.alias</code> is often used with <a href="#Pack("><code>Pack()</code></a>) operator to consolidate parameters to a single data object (<code>list</code> for R, <code>dictionary</code> for Python).</p>
+<p>For plugins, <code>.alias</code> is often used with <a href="#List("><code>List()</code> (or <code>Dict()</code>)</a>-or-Dict()-137) operator to consolidate parameters to a single data object (<code>list</code> for R, <code>dictionary</code> for Python).</p>
 <h4 id="For-executables">For executables<a class="anchor-link" href="#For-executables">&#182;</a></h4><p><code>.alias</code> outside <code>params</code> should have a one-to-one correspondence with <code>exec</code> entry. The goal of <code>alias</code> here is to rename executables for output to DSC database that will be <a href="DSC_Annotation.html">annotated and queried from</a> after executing the DSC. For example:</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pi0_score</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
@@ -319,8 +319,8 @@ $( document ).ready(function(){
 </pre></div>
 <p>With <code>()</code>, <code>(1,2,3)</code> will be translated to vector assignment <code>c(1, 2, 3)</code> in R plugin, tuple <code>(1,2,3)</code> in Python plugin, or space separated argument sequence <code>program.exe 1 2 3</code> for non-plugin routines. Values will be assigned in units defined by <code>()</code> instead of separately.</p>
 <h3 id="R(),-Python(),-Shell()">R(), Python(), Shell()<a class="anchor-link" href="#R(),-Python(),-Shell()">&#182;</a></h3><p>These operators run codes inside parenthesis using R, Python or Shell interpreters and evaluate the output. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
-<h3 id="Combo(),-Pairs()">Combo(), Pairs()<a class="anchor-link" href="#Combo(),-Pairs()">&#182;</a></h3><p>Cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Combo(classifier.R, (kernel_1, kernel_2, kernel_3))</span>
+<h3 id="ForEach(),-Pairs()">ForEach(), Pairs()<a class="anchor-link" href="#ForEach(),-Pairs()">&#182;</a></h3><p>Cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ForEach(classifier.R, (kernel_1, kernel_2, kernel_3))</span>
 </pre></div>
 <p>is equivalent to the Cartesian product logic</p>
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">classifier.R kernel_1, classifier.R kernel_2, classifier.R kernel_3</span>
@@ -389,7 +389,7 @@ $( document ).ready(function(){
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">SVA.R</span>
       <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
           <span class="l l-Scalar l-Scalar-Plain">data</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$data</span>
-          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Pack(args)</span>
+          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">List(args)</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
 
 <span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">RUV(SVA)</span><span class="p p-Indicator">:</span>

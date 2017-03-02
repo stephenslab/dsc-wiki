@@ -187,7 +187,7 @@ under &#34;/home/gaow/GIT/lab-dsc/dsc2-blm&#34; to test it.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The error message is a bit verbose but the part most relevant to debugging are hightlighted in green color on your terminal. Towards the end of the error message you should see that the problematic script is saved to <code>.sos/core_score_1_1_6.R</code>. You can also see that a file called <code>dsc_blm.transcript.html</code> is generated.</p>
+<p>The error message is a bit verbose but the part most relevant to debugging are highlighted in green color on your terminal. Towards the end of the error message you should see that the problematic script is saved to <code>.sos/core_score_1_1_6.R</code>. You can also see that a file called <code>dsc_blm.transcript.html</code> is generated.</p>
 <h2 id="Debug-with-the-problematic-script">Debug with the problematic script<a class="anchor-link" href="#Debug-with-the-problematic-script">&#182;</a></h2><p>As prompted in the error message, let's try to execute <code>.sos/core_score_1_1_6.R</code>:</p>
 
 </div>
@@ -258,7 +258,7 @@ Traceback:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You see that the script was propagated by DSC2 with variable assignment and input / output specifications. Also this script failed because of <code>incompatible dimensions</code> as indidcated by R. So what's going on? The function call takes two variables, <code>meta</code> and <code>prediction</code>. Let's examine what these variables look like:</p>
+<p>You see that the script was propagated by DSC2 with variable assignment and input / output specifications. Also this script failed because of <code>incompatible dimensions</code> as indidcated by R. So what's going on? The function call takes two variables, <code>meta</code> and <code>prediction</code>. Let's examine what these variables look like, by copying chunk of the code that generated <code>meta</code> and <code>prediction</code> to an interactive analysis console and look at them:</p>
 
 </div>
 </div>
@@ -361,7 +361,7 @@ Traceback:
 <h2 id="Debugging-with-the-entire-transcript-profile">Debugging with the entire transcript profile<a class="anchor-link" href="#Debugging-with-the-entire-transcript-profile">&#182;</a></h2><p>Now we want to find out which command has generated this set of problematic <code>prediction</code> data. That is, we want to find the command that generated <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code> from which <code>prediction</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examining the entire transcript of the DSC benchmark, written in <code>dsc_blm.transcript.html</code>.</p>
 <p>You can open up this file in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code>. This leads you to the following (this is a screenshot of a chunk of <code>dsc_blm.transcript.html</code>):</p>
 <p><img src="../../img/debug-tips-1.png" alt="debug-1"></p>
-<p>Unsurprisingly, running the code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. Usually one should start interacting with this new piece of code, fixing it until the output looks good, and apply the patch to the original benchmark code, and finally run DSC again.</p>
+<p>Unsurprisingly, running the code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. Usually one should start interacting with this new piece of code, fixing it until the output looks good, and apply the patch to the original benchmark code, and finally run DSC again.</p>
 <p>For this example, what exactly is the problem that led to truncated result? Well, the issue is not very apparent unless you are aware of the parallel proessing nature of DSC and familiar with the use of DSC <code>File()</code> operator. However this is a very common mistake one can make and this is why we want to show it here. Please take a look at line 7 of the R code:</p>
 <div class="highlight"><pre><span></span>result <span class="o">&lt;-</span> <span class="s">&#39;gemma.out&#39;</span>
 </pre></div>
@@ -373,7 +373,7 @@ Traceback:
   params:
     result: gemma.out
     .alias: args = List(w = nIter, s = burnin, result = result)</code></pre>
-<p>However it turns out here <code>gemma.out</code> is used as temporary file prefix for intermediate results from <code>gemma</code>, a command line program. It is directly called from shell, see Line 27, 37 and 42 of the R code. In practice what happens is all parallel DSC instances all creates / writes on the <strong>same file</strong> <code>gemma.out</code>, creating a I/O race. Therefore the file would have been corrupted, leading to truncated file.</p>
+<p>However it turns out here <code>gemma.out</code> is used as temporary file prefix for intermediate results from <code>gemma</code>, a command line program. It is directly called from shell, see Line 27, 37 and 42 of the R code. In practice what happens is all parallel DSC instances all creates / writes on the <strong>same file</strong> <code>gemma.out</code>, creating I/O race conditions. Therefore the file would have been corrupted, leading to truncated files.</p>
 <p>To fix the problem one should use <code>File()</code> operator for such cases:</p>
 
 <pre><code>gemma_bslmm(bayeslasso):
@@ -428,15 +428,15 @@ INFO: Elapsed time <span class="ansi-green-fg">140.619</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You see that all <code>gemma_bslmm</code> related codes are re-executed and the DSC benchmark completed without an issue.</p>
-<h2 id="Command-options---sequence-and---seeds">Command options <code>--sequence</code> and <code>--seeds</code><a class="anchor-link" href="#Command-options---sequence-and---seeds">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seeds 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
+<h2 id="Command-options---sequence-and---seed">Command options <code>--sequence</code> and <code>--seed</code><a class="anchor-link" href="#Command-options---sequence-and---seed">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seed 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
 
 <pre><code>DSC:
   run: simulate * test * score</code></pre>
 <p>When the benchmark is tested for the first time, one should run 3 commands each introducing a new block sequentially:</p>
 
-<pre><code>dcs -x file.dsc ... --sequence simulate --seeds 1
-dcs -x file.dsc ... --sequence "simulate * test" --seeds 1
-dcs -x file.dsc ... --sequence "simulate * test * score" --seeds 1</code></pre>
+<pre><code>dcs -x file.dsc ... --sequence simulate --seed 1
+dcs -x file.dsc ... --sequence "simulate * test" --seed 1
+dcs -x file.dsc ... --sequence "simulate * test * score" --seed 1</code></pre>
 <h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
 
 </div>
