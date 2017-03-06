@@ -1,41 +1,51 @@
 # Terminology:
 
-- Module: A module is a piece of code that takes input and produces output.
+- *Module*: A module is a piece of code that takes input and produces output.
   It is defined by an executable (or inline code?), and (optionally) a set of parameters that determine the behavior of the code.
   (It may be important to note that the parameters are considered to be part of the module specification, not an addendum to it,
   so the same executable with different parameters is a different module.)
   Each module must have a name, which will be useful for referring to that module later.
-  We require the module names to be distinct from one another, with the exception of "multi-modules" (see later).
+  We generally require the module names to be distinct from one another (with an exception to be discussed later).
   We use a $ prefix to distinguish variables that are inputs and outputs from a module, vs parameters.
 
-  Conceptually: $input_var -> module = (exec, param) -> $output_var
+  Conceptually: `$input_vars -> module = (exec, param) -> $output_vars`
 
-  For example, a module called `lasso` might run lasso on inputs $x and $y, and produce output $beta_est.
-  The module might consist of code `glm` plus parameters (type= lasso, lambda=CV) [get syntax here?]
+  Example: a module called `lasso` might run lasso regression on inputs `$x` (covariates) and `$y` (response), and produce output `$beta_est` (regression coefficient estimates). The module might consist of executable code that implements several penalized regression methods, plus a parameter (`type= "lasso"`) that indicates the type of penalized regression (lasso).  Another module `en` might run Elastic net regression on inputs $x and $y, and produce output $beta_est. It might consist of the same executable code but a different parameter (`type="en"`). [Of course it would also be possible for two modules like this to be implemented using different executables; this example just illustrates the ideas of inputs and outputs vs parameters, and also the fact that a module is (executable+parameters) and not only the executable.]
 
-- Pipeline: A pipeline is a sequence of modules. (or, possibly, a set of initial inputs plus a sequence of modules. One can
+- *Pipeline*: A pipeline is a sequence of modules. (or, possibly, a set of initial inputs plus a sequence of modules. One can
   simply consider the initial inputs to be a simple module that produces those inputs...). The name of a pipeline
   is given by the sequence of modules separated by :, for example module1:module2:module3
 
-- Pipeline Output: The pipeline output is defined to be the values of all the output variables output by all modules in the pipeline.
+- *Pipeline variable*: any output variable from any module in the pipeline (will often also be an input variable to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run.)
+
+- *Pipeline Output*: The pipeline output is defined to be the values of all the output variables output by all modules in the pipeline. 
+
+- *Pipeline Definition*: The pipeline definition is the sequence of modules make up the pipeline (plus the definitions of these modules). It is a synonym for pipeline that emphasises we are talking about the pipeline definition and not the output.
+
+- *Seed and input issue*: I'm still thinking about this. Do we consider the pipeline to include the seed or not? I think maybe it makes sense to think of the pipeline definition as independent of the seed. A pipeline instance would then consist of a (seed,pipeline) pair. A more general question is whether to allow inputs (eg a list of files) to a pipeline, or whether to force this kind of thing to be created by the first module (so it becomes part of the pipeline definition rather than an addendum). That is we could generalize the notion of pipeline instance to mean (input, pipeline)  (where seed is part of input) or (seed, input, pipeline). 
+
+
+
+## Note to clarify the distinction between Parameters vs Pipeline variables:
+
+- Parameters: are parts of a module that determine how code should behave. They are not passed through the pipeline. So subsequent modules cannot access the parameters of a previous module. (However, if necessary a module could output its parameters as an output variable to be passed through the pipeline).
 
 
 # Extracting information about a pipeline:
 
 A key thing we want to be able to do is extract information about a pipeline.
 Conceptually a pipeline creates an object p (actually a collection of files), which contains all this information.
-We want to be able to extract things from p. These would certainly include:
+We want to be able to extract things from p.
+
+One attractive possibility would be to be able to read the result of a pipeline into `R`, using something like:
+`load_pipeline(dir,normal:mean:mse, SEED = s)`. This could return a named list, `p`,
+where `names(p)[i]` is the name of the module was run at step i of the pipeline, and with elements:
 
 `p$[modulename]$output` : a named list containing the values of the output variables of `[modulename]`
-
-and probably also:
-
-`p$[modulename]$exec`  : the value of the executable of `[modulename]`
+`p$[modulename]$exec`  : the value (or filename) of the executable of `[modulename]`
 `p$[modulename]$param`  : a named list containing the values of the parameters of `[modulename]`
 `p$[modulename]$input` : a named list containing the values of the input variables of `[modulename]`
 
-`p` is itself a named list of modules, indicating which modules were run in the pipeline.
-So `names(p)[i]` indicates which module was run at step i of the pipeline.
 
 ## Edge case: pipelines with modules that are used more than once.
 
