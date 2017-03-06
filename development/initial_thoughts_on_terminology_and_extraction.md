@@ -12,9 +12,9 @@
 
   Example: a module called `lasso` might run lasso regression on inputs `$x` (covariates) and `$y` (response), and produce output `$beta_est` (regression coefficient estimates). The module might consist of executable code that implements several penalized regression methods, plus a parameter (`type= "lasso"`) that indicates the type of penalized regression (lasso).  Another module `en` might run Elastic net regression on inputs $x and $y, and produce output $beta_est. It might consist of the same executable code but a different parameter (`type="en"`). [Of course it would also be possible for two modules like this to be implemented using different executables; this example just illustrates the ideas of inputs and outputs vs parameters, and also the fact that a module is (executable+parameters) and not only the executable.]
 
-- *Pipeline*: A pipeline is a sequence of modules. (or, possibly, a set of initial inputs plus a sequence of modules. One can
-  simply consider the initial inputs to be a simple module that produces those inputs...). The name of a pipeline
-  is given by the sequence of modules separated by :, for example module1:module2:module3
+- *Pipeline*: A pipeline is a sequence of modules. (or, possibly, a seed, and set of initial inputs plus a sequence of modules. See discussion on seed). The name of a pipeline is given by the names of the sequence of modules separated by :, for example module1:module2:module3.
+
+- *Valid Pipeline*: A pipeline is *valid* if, for each module in the pipeline, the input variables are output variables of (at least one) previous module in the sequence.
 
 - *Pipeline variable*: any output variable from any module in the pipeline (will often also be an input variable to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run.)
 
