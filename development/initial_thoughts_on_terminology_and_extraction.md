@@ -42,8 +42,11 @@ One attractive possibility would be to be able to read the result of a pipeline 
 where `names(p)[i]` is the name of the module was run at step i of the pipeline, and with elements:
 
 `p$[modulename]$output` : a named list containing the values of the output variables of `[modulename]`
+
 `p$[modulename]$exec`  : the value (or filename) of the executable of `[modulename]`
+
 `p$[modulename]$param`  : a named list containing the values of the parameters of `[modulename]`
+
 `p$[modulename]$input` : a named list containing the values of the input variables of `[modulename]`
 
 
