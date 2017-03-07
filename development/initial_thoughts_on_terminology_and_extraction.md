@@ -1,6 +1,6 @@
 # Terminology:
 
-- *Module*: A module is a piece of code that takes input and produces output.
+- *Module* (or *Module Definition*): A module is a piece of code that takes input and produces output.
   It is defined by an executable (or inline code?), and (optionally) a set of parameters that determine the behavior of the code.
   (It may be important to note that the parameters are considered to be part of the module specification, not an addendum to it,
   so the same executable with different parameters is a different module.)
@@ -12,17 +12,25 @@
 
   Example: a module called `lasso` might run lasso regression on inputs `$x` (covariates) and `$y` (response), and produce output `$beta_est` (regression coefficient estimates). The module might consist of executable code that implements several penalized regression methods, plus a parameter (`type= "lasso"`) that indicates the type of penalized regression (lasso).  Another module `en` might run Elastic net regression on inputs $x and $y, and produce output $beta_est. It might consist of the same executable code but a different parameter (`type="en"`). [Of course it would also be possible for two modules like this to be implemented using different executables; this example just illustrates the ideas of inputs and outputs vs parameters, and also the fact that a module is (executable+parameters) and not only the executable.]
 
-- *Pipeline Definition*: A pipeline definition is a sequence of modules, together with their definitions. The name of a pipeline is given by the names of the sequence of modules separated by :, for example module1:module2:module3.
+- *Module Instance* is what is created when you actually execute a module in practice
+  - module: A module definition
+  - seed: value of the seed set before the module is run
+  - input: the set of inputs to the module
+  - output: the set of outputs produced by executing the module
+  
+- *Pipeline Definition*: A pipeline definition is a sequence of module definitions. 
 
 - *Valid Pipeline Definition*: A pipeline definition is *valid* if, for each module in the pipeline, the input variables are output variables of (at least one) previous module in the sequence.
 
-- *Pipeline Instance*: 
-    - A pipeline definition 
-    - A seed 
-    - A set of initial inputs to the pipeline
-    - The set of all outputs produced by invoking each module in the pipeline in turn 
+- *Pipeline Instance* is a sequence of Module instances. It results from actually executing an instance of a pipeline on data.
+  
+- *Pipeline output* the set of *all* outputs produced by all module instances in a pipeline instance (not just the final module instance).
 
-- *Pipeline* may be used as synonym for either "pipeline definition" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "valid pipeline" must mean "valid pipeline definition";  "pipeline seed" must mean "pipeline instance seed", and "pipeline input/output" must mean "pipeline instance input/output". 
+- *Pipeline input* the input to the *first* module instance in a pipeline instance.
+
+- *Module* may be used as a synonym for module definition or module instance when the potential ambiguity is clear from the context. 
+
+- *Pipeline* may be used as synonym for either "pipeline definition" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "valid pipeline" must mean "valid pipeline definition";  and "pipeline input/output" must mean "pipeline instance input/output". 
 
 - *Pipeline Variable*: any output variable from any module in the pipeline (will often also be an input variable to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run.)
 
