@@ -34,6 +34,17 @@
 
 - *Pipeline Variable*: any output variable from any module in the pipeline (will often also be an input variable to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run.)
 
+## Terminology finalized
+
+| where   |      old       |  new |
+|----------|:-------------:|------:|
+| DSC file |  block | module |
+| DSC file |    step   |   ?? |
+| `DSC::run` | sequence |  pipeline   |
+| meta-data | depends |  parent   |
+| meta-data | master |  pipeline??   |
+
+
 ## Seed issue: 
 
 We definitely want to set a seed at the start of the pipeline. What about at the start of each module? My
