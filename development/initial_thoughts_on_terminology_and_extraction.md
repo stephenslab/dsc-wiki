@@ -39,7 +39,9 @@
 | where   |      old       |  new |
 |----------|:-------------:|------:|
 | DSC file |  block | module |
-| DSC file |    step   |   ?? |
+| DSC file |    step   | module instance ?? (we are a bit unclear about steps in blocks without the `multi-module` concept)|
+| DSC file |    return variable   |   pipeline variable / pipeline output ?|
+| DSC file | NA | super-module, to be added? ([Issue #69](https://github.com/stephenslab/dsc2/issues/69))|
 | `DSC::run` | sequence |  pipeline   |
 | meta-data | depends |  parent   |
 | meta-data | master |  pipeline??   |
