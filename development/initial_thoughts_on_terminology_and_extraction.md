@@ -1,6 +1,6 @@
 # Terminology:
 
-- *Module* (or *Module Definition*): A module is a piece of code that takes input and produces output.
+- *Module* (or *Module Definition*): A module is a piece of code that takes input and produces output, and otherwise has no side effects.
   It is defined by an executable (or inline code?), and (optionally) a set of parameters that determine the behavior of the code.
   (It may be important to note that the parameters are considered to be part of the module specification, not an addendum to it,
   so the same executable with different parameters is a different module.)
@@ -34,7 +34,7 @@
 
 - *Pipeline Variable*: any output variable from any module in the pipeline (will often also be an input variable to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run.)
 
-## Terminology finalized
+## New terminology summary
 
 | where   |      old       |  new |
 |:----------|:-------------:|:------:|
@@ -55,7 +55,7 @@ suggestion is yes. But by default derive this somehow from the pipeline seed.
 
 ## Note to clarify the distinction between Parameters vs Pipeline variables:
 
-- Parameters: are parts of a module that determine how code should behave. They are not passed through the pipeline. So subsequent modules cannot access the parameters of a previous module. (However, if necessary a module could output its parameters as an output variable to be passed through the pipeline).
+- Parameters: are parts of a module that determine how code should behave. They are local to a module, and not passed through the pipeline. Thus subsequent modules in a pipeline cannot access the parameters of a previous module. (However, if necessary a module could output its parameters as an output variable to be passed through the pipeline).
 
 
 # Extracting information about a pipeline:
