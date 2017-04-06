@@ -109,7 +109,7 @@ But this will be invalid syntax because under the hood we do not store values of
 1. Use a partial SQL (more constrained) syntax hybrid with command switch:
 
 ```bash
-dsc -e mse:score_beta --condition "mixcompdist:runash = "normal" and nsamp:datamaker = 1000"
+dsc -e mse:score_beta --condition "mixcompdist:runash = 'normal' and nsamp:datamaker = 1000"
 ```
 which will still be translated to the SQL query above and use R to extract results. That is to say, we do not claim to adopt a full version of SQL but rather only the "WHERE" clause.
 
