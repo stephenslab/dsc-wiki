@@ -96,3 +96,21 @@ where mixcompdist.runash == "normal" and nsamp.datamaker == 1000
 dat = readRDS('1.rds')$mse
 ```
 Again even this simplified SQL style interface requires users to understand the organization of meta data. I'm thinking we should implement a command to display this information nicely -- maybe output to an HTML file? Any R/Rstudio widgets for lists of tables that I can borrow? And if it is easier to do it in R we should build this in shinydsc instead?
+
+Another protential problem is that it is then tempting to write:
+
+```sql
+select avg(mse)
+from score_beta 
+...
+```
+But this will be invalid syntax because under the hood we do not store values of `mse` in the meta-data. Instead we query the output file name and extract `mse` from there. There are 2 ways around this: 
+
+1. Use a partial SQL (more constrained) syntax hybrid with command switch:
+
+```bash
+dsc -e mse:score_beta --condition "mixcompdist:runash == "normal" and nsamp:datamaker == 1000"
+```
+which will still be translated to the SQL query above and use R to extract results. That is to say, we do not claim to adopt a full version of SQL but rather only the "WHERE" clause.
+
+2. We parse the quantity `mse` from the SQL-like query, extract the quantity from RDS file to swap with the meta table (in memory), and perform query directly. The upside is one can use a number of SQL functions for `SELECT` statement and there is no need to further process the output. The downside is apparently implementation difficulties. 
