@@ -81,6 +81,15 @@ Then internally we'll have to figure out
 1. Tables `score_beta`, `runash` and `datamaker` are involved (via parsing the query)
 2. `score_beta` depends on `runash` and `datamaker`, and `runash` depends on `datamaker` (via information stored in `pipeline` table)
 3. Complete a JOIN statement to properly put together the relational tables and propagate the SQL query
+```sql
+select score_beta.mse
+from score_beta
+inner join runash 
+on score_beta.parent = runash.id
+inner join datamaker
+on runash.parent = datamaker.id
+where mixcompdist.runash == "normal" and nsamp.datamaker == 1000
+```
 4. Execute propagated query to obtain output file names, for example `1.rds`. This is what we get after running the SQL-style query.
 5. Extract desired quantity in R:
 ```r
