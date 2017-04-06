@@ -65,7 +65,7 @@ DSC:
 We have discussed this in [this ticket](https://github.com/stephenslab/dsc2/issues/72) and [this ticket](https://github.com/stephenslab/dsc2/issues/71).
 
 From our discussion I get an impression that if users can understand how meta data tables are connected as relational tables, 
-it is perhaps more appealing to adopt some simplified version of SQL syntax directly. 
+it is perhaps more appealing to adopt some simplified version of SQL syntax, ie let's create a DSC query language based on SQL. 
 
 The simplification I have in mind is to automatically guess and join tables so that users do not have to write JOIN clause. 
 For example users type:
@@ -86,5 +86,4 @@ Then internally we'll have to figure out
 ```r
 dat = readRDS('1.rds')$mse
 ```
-
-
+Again even this simplified SQL style interface requires users to understand the organization of meta data. I'm thinking we should implement a command to display this information nicely -- maybe output to an HTML file? Any R/Rstudio widgets for lists of tables that I can borrow?
