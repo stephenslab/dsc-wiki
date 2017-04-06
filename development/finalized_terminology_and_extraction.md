@@ -26,13 +26,13 @@ Change `depends` to `parent`; change `master` to pipeline
 
 ## New syntax
 1. Remove `exec` and `.alias` for `exec`, and replace the old `block` concept with using module directly
-```
+```yaml
 ash : ash.R
   seed: ...
   return: ...
 ```
 2. For multiple similar modules the succinct definition is:
-```
+```yaml
 ash.hu, ash.n : ash.R
   seed: ...
   return ...
@@ -40,20 +40,20 @@ ash.hu, ash.n : ash.R
 
 Or,
 
-```
+```yaml
 method1, method2 : xxx.R, yyy.R
   seed: ...
 ```
 
 and for module derivation:
 
-```
+```yaml
 method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
 ```
 
 3. Module groups. This has not been discussed but we can do something in DSC section like:
 
-```
+```yaml
 DSC:
   groups: method = (method1, method2), 
           preprocess = split * normalize, 
