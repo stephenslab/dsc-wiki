@@ -21,8 +21,8 @@ To banish
 To discuss
 * We have not yet defined DSC. Is it a "benchmark" running multiple pipelines?
 
-## DSC result terminology
-Change `depends` to `parent`; change `master` to pipeline
+## DSC result meta-data terminology
+Change `depends` to `parent`; change `master` to `pipeline`
 
 ## New syntax
 1. Remove `exec` and `.alias` for `exec`, and replace the old `block` concept with using module directly
