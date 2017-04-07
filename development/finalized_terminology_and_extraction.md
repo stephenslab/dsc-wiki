@@ -13,6 +13,8 @@ To adopt
   * Pipeline variable
   * Pipeline instance: when a pipeline is executed given input and parameters
   * Pipeline seed
+* Ensemble of pipelines
+  * A group of modules or pipelines as an entity with well defined functionality  
 
 To banish
 * Block
@@ -73,7 +75,7 @@ For example users type:
 ```sql
 select mse 
 from score_beta
-where mixcompdist.runash = "normal" and nsamp.datamaker = 1000
+where runash.mixcompdist = "normal" and datamaker.nsamp = 1000
 ```
 
 Then internally we'll have to figure out 
@@ -88,7 +90,7 @@ inner join runash
 on score_beta.parent = runash.id
 inner join datamaker
 on runash.parent = datamaker.id
-where mixcompdist.runash = "normal" and nsamp.datamaker = 1000
+where runash.mixcompdist = "normal" and datamaker.nsamp = 1000
 ```
 4. Execute propagated query to obtain output file names, for example `1.rds`. This is what we get after running the SQL-style query.
 5. Extract desired quantity in R:
@@ -109,7 +111,7 @@ But this will be invalid syntax because under the hood we do not store values of
 1. Use a partial SQL (more constrained) syntax hybrid with command switch:
 
 ```bash
-dsc -e mse:score_beta --condition "mixcompdist:runash = 'normal' and nsamp:datamaker = 1000"
+dsc -e mse:score_beta --condition "runash:mixcompdist = 'normal' and datamaker:nsamp = 1000"
 ```
 which will still be translated to the SQL query above and use R to extract results. That is to say, we do not claim to adopt a full version of SQL but rather only the "WHERE" clause.
 
