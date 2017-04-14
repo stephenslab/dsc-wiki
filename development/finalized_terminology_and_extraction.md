@@ -54,7 +54,7 @@ method1, method2 : xxx.R, yyy.R
   seed: ...
 ```
 
-and for module derivation:
+and for [module derivation](https://stephenslab.github.io/dsc-wiki/doc/documentation/DSC_Configuration.html#Block-Inheritance-14):
 
 ```yaml
 method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
