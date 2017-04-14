@@ -11,7 +11,7 @@ To adopt
   * Module instance: when a module is executed given input and parameters
 * Pipeline
   * Pipeline input and output
-  * Pipeline variable
+  * Pipeline variable: a collection of all input / output of modules involved in the pipeline
   * Pipeline instance: when a pipeline is executed given input and parameters
   * Pipeline seed
 * Ensemble of pipelines
