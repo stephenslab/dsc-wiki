@@ -10,7 +10,9 @@ To adopt
   * Module input and output (`$` variables)
   * Module instance: when a module is executed given input and parameters
 * Pipeline
-  * Pipeline input and output
+  * Pipeline is a sequence of modules
+  * Pipeline input is input of the first module in the sequence
+  * Pipeline output is output of the last module in the sequence
   * Pipeline variable: a collection of all input / output of modules involved in the pipeline
   * Pipeline instance: when a pipeline is executed given input and parameters
   * Pipeline seed
