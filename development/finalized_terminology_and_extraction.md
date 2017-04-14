@@ -18,8 +18,8 @@ To adopt
   * A group of modules or pipelines as an entity with well defined functionality  
 * Variables
   * Input / output / parameters are all variables
-  * Input / output are public variables accessible to other modules 
-  * Parameters are private variables local to a module
+  * Input / output are public (or external) variables accessible to other modules 
+  * Parameters are private (or internal) variables local to a module
   
 To banish
 * Block
