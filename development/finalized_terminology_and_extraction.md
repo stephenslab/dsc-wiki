@@ -5,6 +5,7 @@ in [github issues 68 - 74](https://github.com/stephenslab/dsc2/issues).
 # Terminology
 ## DSC script terminology
 To adopt
+
 * Module
   * Module input and output (`$` variables)
   * Module instance: when a module is executed given input and parameters
@@ -15,7 +16,11 @@ To adopt
   * Pipeline seed
 * Ensemble of pipelines
   * A group of modules or pipelines as an entity with well defined functionality  
-
+* Variables
+  * Input / output / parameters are all variables
+  * Input / output are public variables accessible to other modules 
+  * Parameters are private variables local to a module
+  
 To banish
 * Block
 * Step
@@ -57,7 +62,7 @@ method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
 
 ```yaml
 DSC:
-  groups: method = (method1, method2), 
+  define: method = (method1, method2), 
           preprocess = split * normalize, 
           simulate = (simulate1 * process_simulate1, simulate2)
   run: simulate * preprocess * method * score
