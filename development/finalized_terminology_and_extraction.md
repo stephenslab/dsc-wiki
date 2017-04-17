@@ -5,17 +5,24 @@ in [github issues 68 - 74](https://github.com/stephenslab/dsc2/issues).
 # Terminology
 ## DSC script terminology
 To adopt
+
 * Module
   * Module input and output (`$` variables)
-  * Module instance: when a module is executed given input and parameters
+  * Module instance: ~~when a module is executed given input and parameters~~
 * Pipeline
-  * Pipeline input and output
-  * Pipeline variable
-  * Pipeline instance: when a pipeline is executed given input and parameters
-  * Pipeline seed
+  * Pipeline is a sequence of modules; a module is a special case of a pipeline
+  * Pipeline input is input of the first module in the sequence
+  * Pipeline output is output of the last module in the sequence
+  * Pipeline variable: a collection of all input / output of modules involved in the pipeline
+  * Pipeline instance: ~~when a pipeline is executed given input and parameters~~
+  * Pipeline seed:
 * Ensemble of pipelines
   * A group of modules or pipelines as an entity with well defined functionality  
-
+* Variables
+  * Input / output / parameters are all variables
+  * Input / output are public (or external) variables accessible to other modules 
+  * Parameters are private (or internal) variables local to a module
+  
 To banish
 * Block
 * Step
@@ -47,7 +54,7 @@ method1, method2 : xxx.R, yyy.R
   seed: ...
 ```
 
-and for module derivation:
+and for [module derivation](https://stephenslab.github.io/dsc-wiki/doc/documentation/DSC_Configuration.html#Block-Inheritance-14):
 
 ```yaml
 method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
@@ -57,7 +64,7 @@ method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
 
 ```yaml
 DSC:
-  groups: method = (method1, method2), 
+  define: method = (method1, method2), 
           preprocess = split * normalize, 
           simulate = (simulate1 * process_simulate1, simulate2)
   run: simulate * preprocess * method * score
