@@ -154,3 +154,20 @@ will make a table that looks like:
 |----------|:-------------:|------:|
 | xx |  1000 | ash_hu |
 | xx |  1000   |   ash_n |
+
+This can also be generalized to selecting or conditioning on common parameters in emsemble case. For example, suppose `simulate = (datamaker1, datamaker2)` then the query
+
+```sql
+select score_beta.mse, simulate, simulate.n, ash
+where simulate.n < 500
+```
+will be processed as follows: 
+
+1. The `where` clause will be expanded to `where datamaker1.n <= 1000 or datamaker2.n < 1000`
+2. The `select` clause will be expanded to use module names `(datamaker1, datamaker2)`
+3. The resulting table should be consolidated into 
+
+| mse   |  simulate  | simulate.n      |  ash |
+|----------|:-------:|:-------------:|------:|
+| xx | datamaker1 | 1000 | ash_hu |
+| xx | datamaker2 | 1000   |   ash_n |
