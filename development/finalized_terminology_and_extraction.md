@@ -171,3 +171,10 @@ will be processed as follows:
 |----------|:-------:|:-------------:|------:|
 | xx | datamaker1 | 1000 | ash_hu |
 | xx | datamaker2 | 1000   |   ash_n |
+
+In fact `1` would be most difficult because my intension is to keep the `where` clause extremely flexible -- this means fully compatible with SQL so that we can harness as much SQL magic as possible. It would not be too bad for me to see this hybrid statement:
+
+```sql
+select score_beta.mse, simulate, simulate.n, ash
+where datamaker1.n <= 1000 or datamaker2.n < 1000
+```
