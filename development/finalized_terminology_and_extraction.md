@@ -159,7 +159,7 @@ This can also be generalized to selecting or conditioning on common parameters i
 
 ```sql
 select score_beta.mse, simulate, simulate.n, ash
-where simulate.n < 500
+where simulate.n <= 1000
 ```
 will be processed as follows: 
 
@@ -176,5 +176,5 @@ In fact `1` would be most difficult because my intension is to keep the `where` 
 
 ```sql
 select score_beta.mse, simulate, simulate.n, ash
-where datamaker1.n <= 1000 or datamaker2.n < 1000
+where datamaker1.n <= 1000 or datamaker2.n <= 1000
 ```
