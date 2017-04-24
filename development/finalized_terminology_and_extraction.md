@@ -85,6 +85,9 @@ ash.n: R($ash_res = ash($beta, $s, mixcompdist="normal"))
 
 This would mean no condition-based query but in simple situations it might be fine to lose condition-based query, in return for the extreme convinience it brings along.
 
+## Pending
+* Concept and syntax of `.alias`
+
 # Result extraction
 We have discussed this in [this ticket](https://github.com/stephenslab/dsc2/issues/72) and [this ticket](https://github.com/stephenslab/dsc2/issues/71).
 
