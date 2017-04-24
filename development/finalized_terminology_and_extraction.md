@@ -34,33 +34,36 @@ To discuss
 Change `depends` to `parent`; change `master` to `pipeline`
 
 ## New syntax
-1. Remove `exec` and `.alias` for `exec`, and replace the old `block` concept with using module directly
+1. Remove `.alias` for `exec`; use it for the section name (as module name) directly
 ```yaml
-ash : ash.R
-  seed: ...
-  return: ...
+ash : 
+  exec: ash.R
 ```
 2. For multiple similar modules the succinct definition is:
 ```yaml
-ash.hu, ash.n : ash.R
-  seed: ...
-  return ...
+ash.hu, ash.n :
+  exec: ash.R
 ```
 
 Or,
 
 ```yaml
-method1, method2 : xxx.R, yyy.R
-  seed: ...
+method1, method2 : 
+  exec: xxx.R, yyy.R
 ```
 
 and for [module derivation](https://stephenslab.github.io/dsc-wiki/doc/documentation/DSC_Configuration.html#Block-Inheritance-14):
 
 ```yaml
-method1, method2 (ash.hu, ash.n): xxx.R, yyy.R
+method1, method2 (ash.hu, ash.n): 
+   exec: xxx.R, yyy.R
 ```
 
-3. Module groups. This has not been discussed but we can do something in DSC section like:
+3. Replace `params` with `input`, replace `return` with `output`. 
+
+4. Pipeline variables are always `$`. Previously this is explicit in `input` but implicit in `output`. Now we make it explicit in output, such as `$x: x`. Having return just `x` is a shorthand but it obscures the logic, therefore we'll not adopt.
+
+5. Module groups. This has not been discussed but we can do something in DSC section like:
 
 ```yaml
 DSC:
@@ -69,6 +72,18 @@ DSC:
           simulate = (simulate1 * process_simulate1, simulate2)
   run: simulate * preprocess * method * score
 ```
+
+6. Implement 
+
+```
+g: score_beta: R($mse_beta = mean(($true_beta-$beta_est)^2))
+```
+and
+```￼
+ash.n: R($ash_res = ash($beta, $s, mixcompdist="normal"))
+```
+
+This would mean no condition-based query but in simple situations it might be fine to lose condition-based query, in return for the extreme convinience it brings along.
 
 # Result extraction
 We have discussed this in [this ticket](https://github.com/stephenslab/dsc2/issues/72) and [this ticket](https://github.com/stephenslab/dsc2/issues/71).
@@ -163,7 +178,7 @@ where simulate.n <= 1000
 ```
 will be processed as follows: 
 
-1. The `where` clause will be expanded to `where datamaker1.n <= 1000 or datamaker2.n < 1000`
+1. The `where` clause will be expanded to `where datamaker1.n <= 1000 or datamaker2.n <= 1000`
 2. The `select` clause will be expanded to use module names `(datamaker1, datamaker2)`
 3. The resulting table should be consolidated into 
 
@@ -178,3 +193,8 @@ In fact `1` would be most difficult because my intention is to keep the `where` 
 select score_beta.mse, simulate, simulate.n, ash
 where datamaker1.n <= 1000 or datamaker2.n <= 1000
 ```
+
+## Can we query based on input / output?
+Not for now, because pipeline variables are generated only at execution, and are passed along in DSC via files. They are basically "capsuled". However with additional work we can query on them, ie, make a first query without these conditions, then for each RDS file involved so far, we load it from disk, compare it with the condition, and drop the entire row (of pipeline instance) if it does not satisfy it. It would not need us to change our design to make it happen. Just some post-processing.
+
+When this is supported we have to use `$` to refer to pipeline variables in queries.
