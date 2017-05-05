@@ -231,7 +231,9 @@ $( document ).ready(function(){
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
@@ -314,7 +316,9 @@ INFO: Elapsed time <span class="ansi-green-fg">253.911</span> seconds.
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">beta_score</span>
 +--------------+----------------------------------------------------------+
@@ -373,7 +377,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.149</span> seconds.
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.67it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for DSC result <span class="ansi-green-fg">pi0_score</span> via annotations: 
@@ -421,8 +427,8 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
   <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;MSE for pi_0 estimate&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;pi0_score.html&quot;</span><span class="p">)</span>
 <span class="c1"># IRdisplay::display_html(paste(readLines(&quot;pi0_score.html&quot;), collapse=&quot;\n&quot;))</span>
@@ -470,7 +476,9 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 5/5 [00:01&lt;00:00,  4.86it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_beta_1.rds</span> for DSC result <span class="ansi-green-fg">beta_score</span> via annotations: 
@@ -508,8 +516,8 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <span class="n">case2_beta</span> <span class="o">=</span> <span class="n">rowMeans</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_shrink_beta_est</span><span class="p">))</span>
 <span class="c1">#</span>
 <span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
   <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;MSE for beta estimate&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_score.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta_score.html&quot;), collapse=&quot;\n&quot;))</span>
@@ -535,8 +543,8 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case1_beta</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="n">add_trace</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case2_beta</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case1_beta</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">case2_beta</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Posterior mean distribution&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta.html&quot;), collapse=&quot;\n&quot;))</span>
@@ -576,8 +584,8 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">DSC_TIMER</span><span class="err">$</span><span class="n">case2_shrink_beta_est</span><span class="p">)</span>
 <span class="c1">#</span>
 <span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case1</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 1&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">add_trace</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">case2</span><span class="p">,</span> <span class="kp">name</span> <span class="o">=</span> <span class="s1">&#39;case 2&#39;</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span> 
   <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Time elapsed for posterior mean estimation&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_time.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta_time.html&quot;), collapse=&quot;\n&quot;))</span>
