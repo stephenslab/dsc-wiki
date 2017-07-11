@@ -1,0 +1,144 @@
+#!/usr/bin/env sos-runner
+#fileformat=SOS1.0
+
+DEFAULT_CONF = {
+           'name': 'Human Genome Project',
+           'repo': 'http://github.com/gaow/test-jnbinder',
+           'footer': "&copy 2016-2017 Gao Wang at Stephens Lab, University of Chicago",
+           'include_dir': [],
+           'exclude_file': [],
+           'hide_navbar': [],
+           'disqus': None,
+           'release_message': None,
+           'post_release_actions': None,
+           'homepage_label': 'Overview',
+           'source_label': '<span class="fa fa-github"></span>',
+           'theme': 'cosmo',
+           'homepage': 'Overview.ipynb',
+           'font': "Droid Sans",
+           'notebook_toc': True
+           }
+CONFIG.update({k:v for k,v in DEFAULT_CONF.items() if k not in CONFIG})
+CONFIG['jt_theme'] = CONFIG['theme'] if os.path.isfile("docs/css/{}.css".format(CONFIG['theme'])) else None
+parameter: binders = CONFIG['include_dir']
+# parameter: binders = [x for x in next(os.walk('./'))[1] if x not in CONFIG['exclude_dir'] + ['docs'] and not x.startswith('.')]
+parameter: notebook_files = sum([[y for y in glob.glob("{}/*.ipynb".format(x)) if y not in ["{}/index.ipynb".format(x), "{}/_index.ipynb".format(x), CONFIG['homepage']] + CONFIG['exclude_file']] for x in binders], [])
+parameter: pipeline_files = sum([[y for y in glob.glob("{}/*.sos".format(x)) if y not in CONFIG['exclude_file']] for x in binders], [])
+
+[download-jnbinder: provides = 'master.zip']
+download:
+  https://github.com/gaow/jnbinder/archive/master.zip
+
+[setup-jnbinder]
+depends: 'master.zip'
+run:
+  unzip master.zip
+  yes | cp -rf jnbinder-master/docs ./
+  cp jnbinder-master/config.yml config.default.yml
+  rm -rf jnbinder-master master.zip
+
+[upgrade-jnbinder]
+depends: 'master.zip'
+run:
+  unzip master.zip
+  cp jnbinder-master/docs/jnbinder.py docs
+  cp jnbinder-master/docs/css/* docs/css
+  if [ -f release.sos ]; then
+     cp jnbinder-master/release ./release.sos
+  else
+     cp jnbinder-master/release ./
+  fi
+  rm -rf jnbinder-master master.zip
+
+[check-link]
+depends: executable('linkchecker')
+run:
+  linkchecker http://${CONFIG['repo']!db}.github.io/${CONFIG['repo']!b}
+
+[update-tpl]
+# set up templates in existing directories
+# and update gitignore file
+depends: 'docs/jnbinder.py'
+output: ["docs/{}.tpl".format(x) for x in binders] + ['docs/index.tpl', '.gitignore']
+import os, sys
+sys.path.append('docs')
+from jnbinder import make_template
+make_template(CONFIG, binders, 'docs')
+flag = True
+if os.path.isfile('.gitignore'):
+  lines = [x.strip() for x in open('.gitignore').readlines()]
+  if '**/.sos' in lines:
+    flag = False
+if flag:
+  with open('.gitignore', 'a') as f:
+    f.write('\n**/.sos\n**/.ipynb_checkpoints\ndocs/__pycache__\n**/_index.ipynb\n**/_index.html')
+
+[update-index]
+# update index
+import os, sys
+sys.path.append('docs')
+from jnbinder import make_index_nb, make_empty_nb
+for binder in binders:
+  if not os.path.isfile('{}/index.ipynb'.format(binder)):
+    data = make_index_nb(binder, CONFIG['exclude_file'] + [CONFIG['homepage']])
+    with open('{}/_index.ipynb'.format(binder), 'w') as f:
+      f.write(data.strip())
+if not os.path.isfile(CONFIG['homepage']):
+  with open(CONFIG['homepage'], 'w') as f:
+    f.write(make_empty_nb(CONFIG['name']))
+
+[update-hp]
+# update homepages HTML
+input: ['{}/index.ipynb'.format(x) if os.path.isfile('{}/index.ipynb'.format(x)) else '{}/_index.ipynb'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + [CONFIG['homepage']], group_by = 1
+output: ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html']
+#task:
+run:
+  sos convert ${_input!a} ${output[_index]!a} --template docs/index.tpl --log-level 0
+  perl -i -ne 'print if /\S/' ${output[_index]!a}
+
+[update-nb]
+# update notebook HTML
+input: notebook_files, group_by = 1
+output: 'docs/' + _input[0].replace('.ipynb', '.html')
+#task:
+run:
+  sos convert ${_input!a} ${_output!a} --template docs/${_input!d}.tpl --log-level 0
+  perl -i -ne 'print if /\S/' ${_output!a}
+
+[update-sos]
+# update pipeline HTML
+input: pipeline_files, group_by = 1
+output: 'docs/' + _input[0].replace('.sos', '.pipeline.html')
+#task:
+run:
+  sos convert ${_input} ${_output}
+
+[update-toc]
+# update js file for toc
+import sys
+sys.path.append('docs')
+from jnbinder import get_toc
+out = [get_toc(x, CONFIG['exclude_file'] + [CONFIG['homepage']]) for x in binders]
+with open('docs/js/docs.js', 'w') as f:
+  f.write('\n'.join(['\n'.join(x) for x in out]))
+
+[release-website]
+# release website
+run:
+  cd docs && git add . && git commit --no-verify -m "${CONFIG['release_message']}" && git push --no-verify
+if CONFIG['post_release_actions']:
+   run(CONFIG['post_release_actions'])
+
+[default_1]
+# compile everything
+if len(binders):
+   sos_run('update-tpl')
+   sos_run('update-index')
+   sos_run('update-hp')
+if len(notebook_files):
+   sos_run('update-nb')
+if len(pipeline_files):
+   sos_run('update-sos')
+sos_run('update-toc')
+if CONFIG['release_message']:
+   sos_run('release-website')
