@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=manualDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=manualArray;
+            var pos=manualArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+<title>Dynamic Statistical Comparisons</title>
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+<!-- code folding -->
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+    <a href="http://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+    </a>
+    </li>
+    </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Syntax:-DSC-configuration">Syntax: DSC configuration<a class="anchor-link" href="#Syntax:-DSC-configuration">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Block-Properties:-main">Block Properties: main<a class="anchor-link" href="#Block-Properties:-main">&#182;</a></h2><p>Main properties of a DSC block are <code>exec</code>, <code>seed</code>, <code>params</code> and <code>return</code>, of which <code>exec</code> and <code>return</code> are required and <code>seed</code> and <code>params</code> optional.</p>
+<h3 id="exec">exec<a class="anchor-link" href="#exec">&#182;</a></h3><p><code>exec</code> specifies the names of executable computational routines as well as their command line arguments if applicable. For example an <code>exec</code> entry reads:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">datamaker.R, ms $nsam $nreps -t $theta -seed $seed</span>
+</pre></div>
+<p>where data is generated by two programs, <code>datamaker.R</code> and <code>ms</code>, with command line arguments <code>nsam</code>, <code>nreps</code> and <code>theta</code> &amp; <code>seed</code> for <code>ms</code>. Although <code>exec</code> takes arbitrary command line programs, if the computational routine is <a href="Design_and_Features.html#Executable-modes">a plugin</a>, for example <code>datamaker.R</code>, then there is no need to explicitly specify input parameters such as <code>nsam</code> and <code>nreps</code> for non-plugin routine <code>ms</code>. Caution that for plugin the parameter names must match the variable names coded in the plugin script and for non-plugin the input parameters should start with <code>$</code> followed by parameter names which should be found under the <a href="#params"><code>params</code></a> entry of <strong>the same block</strong>.</p>
+<p><code>exec</code> is a required parameter.</p>
+<h3 id="params">params<a class="anchor-link" href="#params">&#182;</a></h3><p><code>params</code> defines parameters to be used by computational routines in <code>exec</code>. It is a indented list with labels (parameter names) corresponding to command arguments (for non-plugin mode) or variable names (for plugin mode) of <code>exec</code>. A typical <code>params</code> reads:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000, 2000</span>
+    <span class="l l-Scalar l-Scalar-Plain">mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+</pre></div>
+<p>which indicates that there are 2 input parameters, namely <code>n</code> and <code>mean</code>, for computational routines in <code>exec</code>. Combinations of parameter values (Cartesian product style by default) will be assigned to all <code>exec</code> unless <a href="#.logic">otherwise instructed</a>. For example, each executable under <code>exec</code> will take 4 sets of parameter from the example above: <code>(n = 1000, mean = 0), (n = 1000, mean = 1), (n = 2000, mean = 0), (n = 2000, mean = 1)</code>.</p>
+<p><code>params</code> is optional parameter.</p>
+<h4 id="exec-specific-parameters"><code>exec</code> specific parameters<a class="anchor-link" href="#exec-specific-parameters">&#182;</a></h4><p>Often we need to sepcify parameters unique to one <code>exec</code> but not applicable to others. Executable specific parameter assignment is needed in this case:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000, 2000</span>
+    <span class="l l-Scalar l-Scalar-Plain">mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">t</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5, 10</span>
+</pre></div>
+<p>where <code>n</code> and <code>mean</code> are shared by all <code>exec</code> but parameter <code>t</code> is only used by the first executable (indexed by <code>[1]</code>) in <code>exec</code>.</p>
+<h4 id="Grouped-parameters">Grouped parameters<a class="anchor-link" href="#Grouped-parameters">&#182;</a></h4><p>This is a "house-keeping" feature that organizes parameters in groups to enhance readability. These group names will be ignored by DSC2 interpreter in action. For example the following two blocks are equivalent:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">sample_params</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">n_samples</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000, 2000</span>
+      <span class="l l-Scalar l-Scalar-Plain">p_cases</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+    <span class="l l-Scalar l-Scalar-Plain">genotype_params</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">n_snps</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">500, 800</span>
+      <span class="l l-Scalar l-Scalar-Plain">n_genes</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">n_samples</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000, 2000</span>
+    <span class="l l-Scalar l-Scalar-Plain">p_cases</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+    <span class="l l-Scalar l-Scalar-Plain">n_snps</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">500, 800</span>
+    <span class="l l-Scalar l-Scalar-Plain">n_genes</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+</pre></div>
+<h3 id="seed">seed<a class="anchor-link" href="#seed">&#182;</a></h3><p><code>seed</code> sets random seeds for programs that use random number generators. This is a frequently used feature in simulation studies where multiple replicates for the same analytical routine are required. Setting a range of seeds naturally creates <em>replicates</em> of the same scenario or same methods. If there are plugins in <code>exec</code>, DSC will call language specific functions (<code>set.seed()</code> in R and <code>numpy.random.seed()</code> in Python) to set seeds; otherwise the seed values will be treated same as a parameter in <code>param</code> and be passed to <code>exec</code> the same fashion as other parameters, for example <code>ms ... -seed $seed</code> as demonstrated above.</p>
+<p><code>seed</code> is optional parameter.</p>
+<h3 id="return">return<a class="anchor-link" href="#return">&#182;</a></h3><p><code>return</code> parameter are values to be saved to disk at the end of computation for each block. Only <code>return</code> values of a block can be referred to by other blocks (via the <code>$</code> symbol). For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">...</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, y</span>
+</pre></div>
+<p>then <code>return</code> values <code>x</code> and <code>y</code> can be used in other blocks, for example,</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">test</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">z</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+        <span class="l l-Scalar l-Scalar-Plain">y</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$y</span>
+</pre></div>
+<p>where input parameters <code>z</code> and <code>y</code> for "test" consists of values from <code>return</code> of the <code>simiulate</code> step <code>x</code> and <code>y</code>.</p>
+<p>It is possible to apply <em>alias</em> to return. There are two types of alias supported: extract and re-name. For example to extract a specific attribute from an R list:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data, beta = R(data$meta$beta)</span>
+</pre></div>
+<p>then in addition to returning <code>data</code> which is an R list, it also returns value <code>beta</code> which is part of the <code>data</code> list, i.e., <code>data$meta$beta</code>. For another example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, y = x_new</span>
+</pre></div>
+<p>where <code>x</code> and <code>x_new</code> exist in data but <code>x_new</code> is returned as another variable named <code>y</code>.</p>
+<p>It is also possible to specify return alias specific to executables, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = lkhd</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = mse</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[3]</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score = fisher</span>
+</pre></div>
+<p>For plugin executables, return value should match a variable name in the corresponding script and thus may or may not be in <code>params</code>. For non-plugin executables, return value hae to be one of the <code>params</code> values as it is impossible to set other values to a non-plugin executable other than the <code>params</code> specification. If return value is a file name (via <a href="#File(">File()</a>) syntax), the corresponding file will be registered to DSC2 to track for possible changes further down the pipelines.</p>
+<p><code>return</code> is required parameter.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Block-properties:-optional">Block properties: optional<a class="anchor-link" href="#Block-properties:-optional">&#182;</a></h2><p>Optional block properties fine-tunes how the main properties are combined, renamed or defines the particular environment running a DSC block. Available optional properties are <code>.logic</code>, <code>.alias</code> and <code>.options</code>.</p>
+<h3 id=".logic">.logic<a class="anchor-link" href="#.logic">&#182;</a></h3><p><code>.logic</code> defines how parameter values are combined. It can be used outside or inside <code>params</code>.</p>
+<h4 id="For-executables">For executables<a class="anchor-link" href="#For-executables">&#182;</a></h4><p>When <code>.logic</code> appears outside <code>params</code> (typically unter <code>exec</code> ), it annotates the logic beind <code>exec</code> useing the <code>+</code> operator to specify how the computational routines should be combined. By default, routines under <code>exec</code> are independent from each other; yet this can be changed via <code>.logic</code>, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test1.R, test2.R</span>
+        <span class="l l-Scalar l-Scalar-Plain">.logic</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">exec[2], exec[1] + exec[2]</span>
+</pre></div>
+<p>DSC will then run two procedures: one only involving <code>test2.R</code>, the other runs <code>test1.R</code> followed by <code>test2.R</code>.</p>
+<p>A handy user case for <code>.logic</code> under <code>exec</code> is pre/post processing of data in between plugin and non-plugin, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">admixture</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">make_ped.py $data $ped,</span>
+            <span class="l l-Scalar l-Scalar-Plain">admixture $ped $K &gt; $output,</span>
+            <span class="l l-Scalar l-Scalar-Plain">new_admixture_method.R $data $output</span>
+      <span class="l l-Scalar l-Scalar-Plain">.logic</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">exec[1] + exec[2], exec[3]</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">K</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3, 6, 9, 15</span>
+</pre></div>
+<p>Here two different admixture analysis methods are compared: the <code>admixture</code> program and a new method under development, coded in <code>new_admixture_method.R</code>. The <code>admixture</code> program requires input data in PED format, and a <code>make_ped.py</code> script is used to convert data to PED. <code>.logic</code> here indicates that <code>exec[1]</code> is a pre-processor for <code>exec[2]</code> and they should always be executed as one unit.</p>
+<h4 id="For-parameters">For parameters<a class="anchor-link" href="#For-parameters">&#182;</a></h4><p>When <code>.logic</code> appears inside <code>params</code>, it overrides the default logic (that all parameters are combined the Cartesian product style). These operators can be written in:</p>
+<ul>
+<li>simple logic statement with <code>and</code>, <code>or</code>, <code>not</code></li>
+<li>Pythonic syntax: with Python keywords and lambda functions</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">100, 200, 300, 400, 500</span>
+    <span class="l l-Scalar l-Scalar-Plain">mu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">sigma</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1, 2</span>
+      <span class="l l-Scalar l-Scalar-Plain">.logic</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(.n &lt;= 300 and .mu == 0) or (.n &gt; 300 and .mu == 1)</span>
+</pre></div>
+<p>Without <code>.logic</code>, DSC will exhaust all combinations of 5 values of <code>n</code>, 2 of <code>mu</code> and 2 of <code>sigma</code>, a total of 20 parallel jobs. The <code>.logic</code> here states that instead of 20 jobs, DSC will first run 3 values of <code>n</code> with <code>mu = 0</code> and 2 values of <code>sigma</code>, then run another 2 values of <code>n</code> with <code>mu = 1</code> and <code>sigma = 1</code>, which is a total of 8 jobs. Notice that parameter index slicing makes it possible to run a subset of parameter values.</p>
+<p>Alternatively you can use pythonic syntax, for example with <code>in</code>:</p>
+<pre><code>      .logic: (.n in [100,200,300] and .mu == 0) or (.n in [400, 500] and .mu == 1)</code></pre>
+<p>Note that to refer to variables in <code>.logic</code> the dot <code>.</code> prefix has to be added to variables. Failure to obey this rule will result in error complaining of invalid logic statement.</p>
+<h3 id=".alias">.alias<a class="anchor-link" href="#.alias">&#182;</a></h3><h4 id="For-parameters">For parameters<a class="anchor-link" href="#For-parameters">&#182;</a></h4><p><code>.alias</code> is often used to adjust parameter names for input to different executables. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">mu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1, 2, 3</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">theta = mu</span>
+</pre></div>
+<p>in this example, all <code>exec</code> takes a parameter named <code>mu</code>, except for <code>exec[2]</code> which requires parameter with name <code>theta</code>, but <code>theta</code> in <code>exec[2]</code> is equivalent to <code>mu</code> in other <code>exec</code>. To deal with this situation the <code>.alias</code> option can be used to rename <code>mu</code> to <code>theta</code> for <code>exec[2]</code> while keeping it as is for other executables.</p>
+<p>For plugins, <code>.alias</code> is often used with <a href="#List("><code>List()</code> (or <code>Dict()</code>)</a>-or-Dict()-137) operator to consolidate parameters to a single data object (<code>list</code> for R, <code>dictionary</code> for Python).</p>
+<h4 id="For-executables">For executables<a class="anchor-link" href="#For-executables">&#182;</a></h4><p><code>.alias</code> outside <code>params</code> should have a one-to-one correspondence with <code>exec</code> entry. The goal of <code>alias</code> here is to rename executables for output to DSC database that will be <a href="DSC_Annotation.html">annotated and queried from</a> after executing the DSC. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pi0_score</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_pi0</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">...</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+</pre></div>
+<p>Without <code>.alias</code>, the output step name in DSC database for this DSC block will be <code>score.R</code>. With <code>.alias</code> however, the output step name will be changed to <code>score_pi0</code>.</p>
+<p>Other than enhancing readiability, <code>.alias</code> is particularly useful when the same <code>exec</code> is used as different steps for different purposes. For example as demonstrated in <a href="../tutorials/Intermediate_R_1.html">the complete version of the example above</a> the <code>score.R</code> routine is used to evaluate both $\pi_0$ and $\beta$ estimates. It is necessary to distinguish between these two contexts.</p>
+<p><code>.alias</code> can also be used along with <code>.logic</code> for <code>exec</code> to rename composite steps. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">BM.R, MultiBM.R, PostProcBM.py, PostProcMultiBM.py</span>
+  <span class="l l-Scalar l-Scalar-Plain">.logic</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">exec[1] + exec[3], exec[2] + exec[4]</span>
+  <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">BM, MultiBM</span>
+</pre></div>
+<h3 id=".options">.options<a class="anchor-link" href="#.options">&#182;</a></h3><p><em>FIXME: this feature is not yet implemented as of Jan 16, 2017. With the cluster support we may end up using a separate cluster job configuration file for it to keep DSC configuration file concise.</em></p>
+<p><code>.options</code> include parameters that controls behavior of the corresponding <code>exec</code> as it executes, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">.options</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ncpu = 2, mem = 4G</span>
+</pre></div>
+<p>Supported options are:</p>
+<ul>
+<li><code>ncpu</code>: Number of required CPUs.</li>
+<li><code>mem</code>: Required memory.</li>
+<li><code>inline</code>: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply <code>runif(500000)</code> it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.</li>
+</ul>
+<h3 id="Scope-of-optional-properties-inside-params">Scope of optional properties inside <code>params</code><a class="anchor-link" href="#Scope-of-optional-properties-inside-params">&#182;</a></h3><p>When these parameters appear in <code>params</code> but outside any <code>exec[i]</code>, then they will also effect all parameters under <code>exec[i]</code> when applicable. However this behavior can be overloaded inside <code>exec[i]</code> if the same parameter is re-defined.</p>
+<p>Take <code>.alias</code> for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">mu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mu</span>
+    <span class="l l-Scalar l-Scalar-Plain">beta</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$beta</span>
+    <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">theta = beta</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">theta = mu</span>
+</pre></div>
+<p>Then for all <code>exec</code> except for <code>exec[2]</code>, the <code>theta</code> parameter will take the value of <code>beta</code>, whereas for <code>exec[2]</code> the <code>theta</code> parameter takes value of <code>mu</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-Block-Operators">DSC Block Operators<a class="anchor-link" href="#DSC-Block-Operators">&#182;</a></h2><h3 id="Wildcard-sigils">Wildcard sigils<a class="anchor-link" href="#Wildcard-sigils">&#182;</a></h3><p>There are two types of wildcard sigils: <code>$</code> and <code>$()</code>.</p>
+<h4 id="$-in-exec"><code>$</code> in <code>exec</code><a class="anchor-link" href="#$-in-exec">&#182;</a></h4><p>In <code>exec</code>, <code>$</code> refers to <em>parameters</em> defined inside <code>params</code> of <strong>the same</strong> block, eg., parameters <code>ped</code> and <code>K</code> in this example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">admixture</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admixture $ped $K</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">K</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3, 6, 9, 15</span>
+        <span class="l l-Scalar l-Scalar-Plain">ped</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+<h4 id="$-in-params"><code>$</code> in <code>params</code><a class="anchor-link" href="#$-in-params">&#182;</a></h4><p>In <code>params</code>, <code>$</code> refers to <em>return values</em> from an <strong>upstream block</strong>, for example <code>$x</code> in the <a href="../tutorials/Quick_Start.html">Quick Start tutorial</a>.</p>
+<h4 id="$()"><code>$()</code><a class="anchor-link" href="#$()">&#182;</a></h4><p><code>$()</code> refers to variables defined in <code>DSC::params</code>, ie, <code>params</code> entry under <code>DSC</code> block. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span> 
+         <span class="l l-Scalar l-Scalar-Plain">methods</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$(data_functions)</span>
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">...</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">data_functions</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mvngenotypes, discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</span>
+</pre></div>
+<p>is equivalent to</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+         <span class="l l-Scalar l-Scalar-Plain">methods</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mvngenotypes, discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</span>
+</pre></div>
+<h3 id="group-operator">group operator<a class="anchor-link" href="#group-operator">&#182;</a></h3><p>The group operator is <code>()</code>, parenthesis that groups parameters as one unit. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">method.R, program.exe $K</span>
+  <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+     <span class="l l-Scalar l-Scalar-Plain">K</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(1,2,3), (4,5,6)</span>
+</pre></div>
+<p>With <code>()</code>, <code>(1,2,3)</code> will be translated to vector assignment <code>c(1, 2, 3)</code> in R plugin, tuple <code>(1,2,3)</code> in Python plugin, or space separated argument sequence <code>program.exe 1 2 3</code> for non-plugin routines. Values will be assigned in units defined by <code>()</code> instead of separately.</p>
+<h3 id="R(),-Python(),-Shell()">R(), Python(), Shell()<a class="anchor-link" href="#R(),-Python(),-Shell()">&#182;</a></h3><p>These operators run codes inside parenthesis using R, Python or Shell interpreters and evaluate the output. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
+<h3 id="ForEach(),-Pairs()">ForEach(), Pairs()<a class="anchor-link" href="#ForEach(),-Pairs()">&#182;</a></h3><p>Cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ForEach(classifier.R, (kernel_1, kernel_2, kernel_3))</span>
+</pre></div>
+<p>is equivalent to the Cartesian product logic</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">classifier.R kernel_1, classifier.R kernel_2, classifier.R kernel_3</span>
+</pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Pairs($(classifier), $(kernel))</span>
+<span class="nn">...</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">classifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">m1.R, m2.R, m3.R</span>
+    <span class="l l-Scalar l-Scalar-Plain">kernel</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">k1, k2, k3</span>
+</pre></div>
+<p>is equivalent to:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">m1.R k1, m2.R k2, m3.R k3</span>
+</pre></div>
+<h3 id="Asis()">Asis()<a class="anchor-link" href="#Asis()">&#182;</a></h3><p>In DSC file, numeric vs. string data-types are automatically determined and there is no need to add quotes to strings. This is convenient in most cases but can be problematic when the input appear as strings but are in fact, for example, a chunk of R codes that should be executed in computational routines rather than converted to strings. <code>Asis()</code> operator will safeguard these special input from being treated as strings. For example,</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(normalmix(c(2/3,1/3),c(0,0),c(1,2)))</span>
+</pre></div>
+<p>will result in</p>
+<div class="highlight"><pre><span></span>g <span class="o">=</span> normalmix<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+</pre></div>
+<p>But without <code>Asis()</code> it will result in</p>
+<div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="s">&quot;normalmix(c(2/3,1/3),c(0,0),c(1,2))&quot;</span>
+</pre></div>
+<p>which is problematic.</p>
+<p><code>Asis()</code> can also be used to indicate a <em>raw string</em>, for example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(1, 2, 3)</span>
+  <span class="l l-Scalar l-Scalar-Plain">k</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;)</span>
+  <span class="l l-Scalar l-Scalar-Plain">l</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(Asis(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;))</span>
+</pre></div>
+<p>will result in</p>
+<div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+  k <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">)</span>
+  l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&#39;1&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;2&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;3&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+<h3 id="File()">File()<a class="anchor-link" href="#File()">&#182;</a></h3><p><em>FIXME: multiple return files are not yet implemented as of Jan 16, 2017.</em></p>
+<p>There are two user cases with <code>File()</code> operator:</p>
+<ol>
+<li>Without an extension</li>
+<li>With an extension specified, eg. <code>File(txt)</code> or equivalently <code>File(.txt)</code></li>
+</ol>
+<h4 id="Extension-not-specified">Extension not specified<a class="anchor-link" href="#Extension-not-specified">&#182;</a></h4><p>When using <code>File()</code> without specifing the extension, it generates a file path in the system <a href="https://en.wikipedia.org/wiki/Temporary_folder">temporary folder</a> and can be used as a "temp file". It will not appear in users' work directory, and as with other system temp files there is no need to worry about their management / maintenance (in the example below the variable <code>ped</code> may well be set a temporary file if users deem that there is no need to keep it for trouble-shooting).</p>
+<h4 id="Extension-specified">Extension specified<a class="anchor-link" href="#Extension-specified">&#182;</a></h4><p>When a parameter is a file name but the file is yet to be created by a module instance, a <code>File()</code> operator can be used to ensure a file is properly generated without racing with other module instances. <code>File()</code> operator takes a <strong>file extensions</strong>, and DSC will automatically give it a unique basename. The file can either be a pipeline variable <code>output</code> that DSC will keep track of, or an intermediate file that will not be used in other modules. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">input</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">data</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$sim</span>
+          <span class="l l-Scalar l-Scalar-Plain">K</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1, 2, 3, 4, 5</span>
+          <span class="l l-Scalar l-Scalar-Plain">ped</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">File(ped)</span>
+          <span class="l l-Scalar l-Scalar-Plain">score</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">File(score)</span>
+<span class=" -Error">      </span><span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> 
+          <span class="l l-Scalar l-Scalar-Plain">$score</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score</span>
+</pre></div>
+<p>Here the output <code>score</code> is a file, generated by the module taking parameter <code>data</code> and parameter <code>K</code>. This will result in multiple <code>score</code> output files. Names of these <code>score</code> files will be automatically assigned so that users do not have to worry about naming them.</p>
+<p>Parameter <code>ped</code> is also a file, but it is not referred to in <code>output</code>. This will create a situation where a properly named file <code>*.ped</code> is generated to the output directory yet we do not keep track of it: this means deleting this file manually afterwards will not trigger rerun of the pipelines involved. The reason we do not make it a temp file via <code>File()</code> (no extension) is because we may want to look into it for debugging. DSC also offers <a href="./">command options --clean / purge</a> [FIXME: only <code>purge</code> is now implemented] to systematically remove these intermediate files later to free up disk space.</p>
+<p>One can also use the <code>dot</code> convention for file extensions to enhance readability, for example <code>File(.ped)</code> is equivalent to <code>File(ped)</code>.</p>
+<h3 id="List()-or-Dict()">List() or Dict()<a class="anchor-link" href="#List()-or-Dict()">&#182;</a></h3><p><em>FIXME: partial conversion is not yet implemented as of Jan 16, 2016.</em>.</p>
+<p>This is used in <code>.alias</code> entries to help construct variables for plugin executables. For example for an R plugin</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">args = List()</span>
+</pre></div>
+<p>will convert all variables in corresponding parameter space, say <code>x,y,z</code> to <code>args = list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
+<p>The operator has two names in order to indicate that in R it binds variables to <code>list</code> and in Python <code>dict</code>. However these two operators can be used interchangably. Using the one or another matching the executable type only helps with readability of the DSC configuration file.</p>
+<h3 id="Index-and-slicing">Index and slicing<a class="anchor-link" href="#Index-and-slicing">&#182;</a></h3><p>Index can be used in the following context:</p>
+<ul>
+<li>Index for parameters in <code>exec</code> entry, for example <code>exec: makeped.py $data $output[1]</code> where <code>output</code> parameter takes the form of <code>output: (1.ped, 1.map), (2.ped, 2.map)</code>. In this case <code>output[1]</code> will only use the first value of each parameter group.</li>
+<li>Index for <code>exec</code>. Each element corresponds to a computational routine in <code>exec</code>.</li>
+<li>Index for <code>params</code> values when appeared in <code>.logic</code> inside <code>params</code>; each element corresponds to a subset of the <code>params</code> value involved.</li>
+<li>Index for block names in <code>DSC::run</code> sequence; each element corresponds to a computational routine in <code>exec</code> for the block involved.</li>
+</ul>
+<p>Slicing syntax is allowed. For example, <code>n[1,2,4]</code> extracts the first, second and forth elements of <code>n</code>. <code>n[1:4]</code> extracts elements 1 though 4, and <code>n[1:9:2]</code> extracts elements 1, 3, 5, 7, 9.</p>
+<h2 id="Block-Inheritance">Block Inheritance<a class="anchor-link" href="#Block-Inheritance">&#182;</a></h2><p>When one want to write a new block similar in configuration to an existing block, block inheritance can be used to help new block definition become succinct. For example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">SVA</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">SVA.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">data</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$data</span>
+          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">List(args)</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">RUV(SVA)</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">RUV.R</span>
+  <span class="l l-Scalar l-Scalar-Plain">voom(SVA)</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">voom.R</span>
+</pre></div>
+<p>Here, the 3 blocks differ only in the executable name. With block inheritance, we can completely configure <code>SVA</code>, then inherit it to configure "RUV" and "voom" where only <code>exec</code> have to be re-defined.</p>
+<h2 id="Comment-string">Comment string<a class="anchor-link" href="#Comment-string">&#182;</a></h2><p>As with many scripting languages (R, Python, shell), <code>#</code> can be used to make human-readable explanation to the contents of DSC script.</p>
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=tutorialsArray;
+            var pos=tutorialsArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+<title>Dynamic Statistical Comparisons</title>
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+<!-- code folding -->
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+    <a href="http://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+    </a>
+    </li>
+    </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Working-in-Python">Working in Python<a class="anchor-link" href="#Working-in-Python">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-implementation-in-Python">DSC implementation in Python<a class="anchor-link" href="#DSC-implementation-in-Python">&#182;</a></h2><p>DSC2 can plug and run both R and Python codes. It also supports interaction between the two languages. Here we show a re-implementation of the <a href="quick_start.html">Quick Start example</a> in Python. Resource to run this example can be found <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location_python">here</a>.</p>
+<p>The DSC script is almost identical to the Quick Start example:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.py, rt.py</span>
+    <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+<span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.py, median.py</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.py</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+         <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
+         <span class="l l-Scalar l-Scalar-Plain">mse</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PY/scenarios, PY/methods, PY/scores</span>
+    <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>You may notice the only difference are the executables (and search path): the are now written in Python.</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">methods</span><span class="o">/</span><span class="n">mean</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">methods</span><span class="o">/</span><span class="n">median</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scores</span><span class="o">/</span><span class="n">MSE</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean_est</span><span class="o">-</span><span class="n">true_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">rnorm</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="c1"># produces n random numbers from normal with specified mean</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">x</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">rt</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="c1"># produces n random numbers from t with df=2 and  with specified mean</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">x</span><span class="o">=</span><span class="n">true_mean</span><span class="o">+</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+<p>To run the DSC,</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+DSC: 100%|██████████| 11/11 [00:49&lt;00:00,  1.70s/it]
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">51.680</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that time consumed for Python version is much longer than the Quick Start example. This is result of a compromise to R users. We anticipate the majority of DSC2 users program in R, and as a result we adopt RDS file as the standard format to cache output data. In order for Python to communicate with R, we have implemented interface for Python to read and write RDS files. The interface is less efficient than R's native RDS support, thus increasing the execution time.</p>
+<h2 id="Mixing-Python-and-R-codes">Mixing Python and R codes<a class="anchor-link" href="#Mixing-Python-and-R-codes">&#182;</a></h2><p>The example below shows mix-match style Python and R routines in the same DSC script:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.py, rt.R</span>
+    <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+<span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.py</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.py</span>
+    <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
+    <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+         <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
+         <span class="l l-Scalar l-Scalar-Plain">mse</span>
+    <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PY/scenarios, PY/methods, PY/scores,</span>
+               <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods</span>
+    <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>To execute:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_mix</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Checking R library <span class="ansi-green-fg">psych</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">settings_mix.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings_mix.dsc</span> ...
+DSC: 100%|██████████| 11/11 [00:33&lt;00:00,  1.61s/it]
+INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">35.833</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+</div>
+</div>
+</body>
+</html>

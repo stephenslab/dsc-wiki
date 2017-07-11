@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=tutorialsArray;
+            var pos=tutorialsArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+<title>Dynamic Statistical Comparisons</title>
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+<!-- code folding -->
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+    <a href="http://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+    </a>
+    </li>
+    </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Quick-start-tutorial">Quick start tutorial<a class="anchor-link" href="#Quick-start-tutorial">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this tutorial we will use DSC to compare methods implemented in <a href="https://cran.r-project.org/">R</a> for location parameter estimations, based on this DSCR example (<a href="https://github.com/stephens999/dscr/blob/master/vignettes/one_sample_location.rmd">R Markdown version</a> and <a href="dscr_one_sample_location.html">HTML version</a>). Material used in this document can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods via simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom; then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.R, rt.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
+      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+<p>All computational routines in this DSC are R scripts (each with one line of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
+  mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>median.R <span class="o">&lt;==</span>
+  mean <span class="o">=</span> median<span class="p">(</span>x<span class="p">)</span>
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scores<span class="o">/</span>MSE.R <span class="o">&lt;==</span>
+  mse <span class="o">=</span> <span class="p">(</span>mean_est<span class="o">-</span>true_mean<span class="p">)</span><span class="o">^</span><span class="m">2</span>
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rt.R <span class="o">&lt;==</span>
+  <span class="c1"># produces n random numbers from t with df=2 and  with specified mean</span>
+  x<span class="o">=</span>true_mean<span class="o">+</span>rt<span class="p">(</span>n<span class="p">,</span>df<span class="o">=</span><span class="m">2</span><span class="p">)</span>
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rnorm.R <span class="o">&lt;==</span>
+  <span class="c1"># produces n random numbers from normal with specified mean</span>
+  x<span class="o">=</span>rnorm<span class="p">(</span>n<span class="p">,</span>mean<span class="o">=</span>true_mean<span class="p">)</span>
+</pre></div>
+<p>It is important to ensure the parameter names and return variable names match between R script and DSC files. For example the <code>simulate</code> block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate a new variable <code>x</code> as return value (the other return variable <code>true_mean</code> already exists as an input parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses the input parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the return value of the <code>simulate</code> block. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>.</p>
+<p>The <code>DSC::run</code> entry reflects a typical DSC setup where <code>simulate</code> creates <em>scenarios</em> under various settings, <code>estimate</code> applies various <em>methods</em> to analyze data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. They are connected by <code>*</code> to allow for all possible combinations of computational steps from these 3 blocks.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2><p>To execute the DSC on a computer using 8 CPU threads,</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+DSC: 100%|██████████| 11/11 [00:04&lt;00:00,  2.43it/s]
+INFO: Writing output metadata ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">5.716</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example the results will be stored in <code>dsc_result.rds</code>. These files contain the same information only differing in format. We will discuss the output in detail in <a href="">a separate tutorial</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Re-run-DSC">Re-run DSC<a class="anchor-link" href="#Re-run-DSC">&#182;</a></h2><p>DSC keeps track of commands that has been executed before so that if you re-run the same DSC command it will skip computational steps if there is no change in DSC configuration file. For example if you rerun this command it will end quickly:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+DSC: 100%|██████████| 11/11 [00:00&lt;00:00, 17.11it/s]
+INFO: Writing output metadata ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">1.166</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice the last line of output records elapsed time of ~1 seconds, compared to ~6 seconds in the first run. If you want to ignore existing cache you can use the <code>-f</code> flag to force DSC start afresh:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">-</span><span class="n">f</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+DSC: 100%|██████████| 11/11 [00:04&lt;00:00,  2.32it/s]
+INFO: Writing output metadata ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">5.494</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h2><p>DSC commands generates a script browser in HTML format. In this example it is <code>settings.html</code> under your work directory. You can use a web browser to open it and browse DSC scripts as well as your source code involved.</p>
+<h2 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h2><p>Results of this DSC is stored in the folder <code>dsc_result</code>. It contains numerous intermediate or final data from all steps involved in the DSC procedure. Please continue on the <a href="Explore_Output.html">next tutorial</a> to extract and analyze the benchmark results.</p>
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+</div>
+</div>
+</body>
+</html>

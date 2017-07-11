@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["STIX","TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=tutorialsArray;
+            var pos=tutorialsArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+<title>Dynamic Statistical Comparisons</title>
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+<!-- code folding -->
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+    <a href="http://github.com/stephenslab/dsc2">
+    <span class="fa fa-github"></span>
+    </a>
+    </li>
+    </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Explore-DSC-output">Explore DSC output<a class="anchor-link" href="#Explore-DSC-output">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tutorial is a continuation of the <a href="Quick_Start.html">Quick Start</a>. As a reminder here is the DSC script we've executed:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.R, rt.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
+      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
+          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
+      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
+           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
+      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To explore the result from this benchmark, we first <strong>annotate</strong> the benchmark with customized <em>tags</em>, then we <strong>extract</strong> results for these tags of interest, and finally load it to external anlaysis tools (eg. <code>R</code>) to interpret the results.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Suppose we are interested in comparing <code>mean</code> method vs. <code>median</code> method for data generated under <em>t</em> distribution with mean equals zero. We thus create two tags, <code>mean_t</code> and <code>median_t</code> and save them in a text file called <code>settings.ann</code>:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mean_t</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R</span>
+<span class="l l-Scalar l-Scalar-Plain">median_t</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
+        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">median.R</span>
+<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We then apply the annotation with the <code>dsc</code> command:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: 
++----------------+--------------------------------------------------+
+|  Tag           |  No. unique obj.                                 |
++----------------+--------------------------------------------------+
+|  <span class="ansi-green-fg">mean_t</span>    |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">median_t</span>  |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
++----------------+--------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the annotation has been applied. A summary of the annotation executed is also displayed on the terminal.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-data-extraction">DSC data extraction<a class="anchor-link" href="#DSC-data-extraction">&#182;</a></h2><p>The ultimate result of the DSC benchmark is the <code>mse</code> variable and we want to compare the performance of the two scenarios that we have just tagged using the <code>mse</code> variable. We will extract these tags to a separate data file using the <code>dsc</code> command:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00, 10.93it/s]
+INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for all annotations for DSC result <span class="ansi-green-fg">mse</span>.
+INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The resulting <code>dsc_result.mse.rds</code> file contains the information of interest, which we are going to examine next.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Analyzing-DSC-results">Analyzing DSC results<a class="anchor-link" href="#Analyzing-DSC-results">&#182;</a></h2><p>We load <code>dsc_result.mse.rds</code> to <code>R</code> and generate plots to compare the two scenarios we are interested in:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">use</span> <span class="n">ir</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;dsc_result.mse.rds&#39;</span><span class="p">)</span>
+<span class="n">dat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea ">
+<dl>
+	<dt>$mean_t_mse_mse</dt>
+		<dd><ol>
+	<li>0.00199846387851795</li>
+	<li>0.000375966958457247</li>
+	<li>0.0253637489566151</li>
+	<li>0.0480915157268725</li>
+	<li>4.68434752387211e-05</li>
+	<li>0.000667209929174959</li>
+	<li>0.0207598925139324</li>
+	<li>0.0149624750787922</li>
+	<li>0.000222295205586497</li>
+	<li>0.00487296421360862</li>
+</ol>
+</dd>
+	<dt>$median_t_mse_mse</dt>
+		<dd><ol>
+	<li>0.00159731146402349</li>
+	<li>0.00198952016908845</li>
+	<li>0.0104148812308528</li>
+	<li>0.00403952323919894</li>
+	<li>0.00118967181916342</li>
+	<li>0.000354714586543617</li>
+	<li>0.001267905058322</li>
+	<li>4.00338221002128e-06</li>
+	<li>2.88309606529807e-05</li>
+	<li>0.00046901832920954</li>
+</ol>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t_mse_mse</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea ">
+0.0117361375936796
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t_mse_mse</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea ">
+0.00213553802392653
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We see the mean MSE is smaller for median based method. Now we graphically examine the results:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">cbind</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">,</span> <span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">),</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">))))</span>
+<span class="n">colnames</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;MSE&#39;</span><span class="p">,</span> <span class="s1">&#39;Method&#39;</span><span class="p">)</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+<span class="n">dat</span><span class="err">$</span><span class="n">MSE</span> <span class="o">&lt;-</span> <span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">MSE</span><span class="p">))</span>
+<span class="n">dat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>MSE</th><th scope=col>Method</th></tr></thead>
+<tbody>
+	<tr><td>1.998464e-03</td><td>mean        </td></tr>
+	<tr><td>3.759670e-04</td><td>mean        </td></tr>
+	<tr><td>2.536375e-02</td><td>mean        </td></tr>
+	<tr><td>4.809152e-02</td><td>mean        </td></tr>
+	<tr><td>4.684348e-05</td><td>mean        </td></tr>
+	<tr><td>6.672099e-04</td><td>mean        </td></tr>
+	<tr><td>2.075989e-02</td><td>mean        </td></tr>
+	<tr><td>1.496248e-02</td><td>mean        </td></tr>
+	<tr><td>2.222952e-04</td><td>mean        </td></tr>
+	<tr><td>4.872964e-03</td><td>mean        </td></tr>
+	<tr><td>1.597311e-03</td><td>median      </td></tr>
+	<tr><td>1.989520e-03</td><td>median      </td></tr>
+	<tr><td>1.041488e-02</td><td>median      </td></tr>
+	<tr><td>4.039523e-03</td><td>median      </td></tr>
+	<tr><td>1.189672e-03</td><td>median      </td></tr>
+	<tr><td>3.547146e-04</td><td>median      </td></tr>
+	<tr><td>1.267905e-03</td><td>median      </td></tr>
+	<tr><td>4.003382e-06</td><td>median      </td></tr>
+	<tr><td>2.883096e-05</td><td>median      </td></tr>
+	<tr><td>4.690183e-04</td><td>median      </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">dat</span><span class="p">),</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">Method</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">MSE</span><span class="p">))</span> <span class="o">+</span> 
+    <span class="n">geom_violin</span><span class="p">()</span> <span class="o">+</span>
+    <span class="n">geom_dotplot</span><span class="p">(</span><span class="n">binaxis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">stackdir</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">dotsize</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+kIS8pkJIEUIS8poKIUUISchrKoQUISQhr6kQUoSQhLymQkgRQhLymgohRQhJyGsqhBQhJCGv
+qRBShJCEvKZCSBFCEvKaCiFFCEnIayqEFCEkIa+pEFKEkIS8pkJIEUIS8poKIUUISchrKoQU
+ISQhr6kQUoSQhLymQkgRQhLymgohRQhJyGsqhBQhJCGvqRBShJCEvKZCSBFCEvKaCiFFCEnI
+ayqEFCEkIa+pEFKEkIS8pkJIEUIS8poKIUUISchrKoQUISQhr6kQUoSQhLymQkgRQhLymkr5
+kJyMIZ39MHAtvCK94xVJyGsqfGgXISQhr6kQUoSQhLymQkgRQhLymgohRQhJyGsqhBQhJCGv
+qRBShJCEvKZCSBFCEvKaCiFFCEnIayqEFCEkIa+pEFKEkIS8pkJIEUIS8poKIUUISchrKoQU
+ISQhr6kQUoSQhLymQkgRQhLymgohRQhJyGsqhBQhJCGvqRBShJCEvKZCSBFCEvKaCiFFCEnI
+ayqEFCEkIa+pEFKEkIS8pkJIkTEkSlLwmgohRYZfG5KQJLymQkgRQhLymgohBe6EJGQ1lY6Q
+AuOv+k1IElZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBI
+SlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6Qgp
+QEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPp
+CClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpW
+U+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCClASEpWU+kIKUBI
+SlZT6QgpQEhKVlPpCClASEpWU+kIKUBISlZT6QgpQEhKVlPpCCkwh0RJAlZT6b4O6fG/tzdX
+77IK6T6GxEuShNNUet+F9Jj/ML+5epdbSE9C0nGaSo+QcghJymkqvcMhPdd/drodQpJymkqv
+QEjTz5Hu9/mnFQ5WIZ36OHAxh1+RCAngQ7t3fGgn5TSV3uGQ+GQDfuE0ld5vIT0ICcc4TaX3
+XUjTV18fy5vGX5AlJCGnqfS+DOlPZ5+nHEKScppKj5ByCEnKaSo9QsohJCmnqfQIKYeQpJym
+0iOkHEKScppKj5ByCEnKaSo9QsohJCmnqfQIKYeQpJym0iOkHEKScppKj5ByCEnKaSo9Qsoh
+JCmnqfQIKYeQpJym0iOkHEKScppKj5ByCEnKaSo9QsohJCmnqfQIKYeQpJym0iOkHEKScppK
+j5ByCEnKaSo9QsohJCmnqfQIKYeQpJym0iOkHEKScppKj5ByCEnKaSo9QspZhURJ5TlNpUdI
+Ocsv+U1IAk5T6RFSxp2QpIym8kJIGavfg4KQBIym8kJIGYSkZTSVF0LKICQto6m8EFIGIWkZ
+TeWFkDIISctoKi+ElEFIWkZTeSGkDELSMprKCyFlEJKW0VReCCmDkLSMpvJCSBmEpGU0lRdC
+yiAkLaOpvBBSBiFpGU3lhZAyCEnLaCovhJRBSFpGU3khpAxC0jKaygshZRCSltFUXggpg5C0
+jKbyQkgZhKRlNJUXQsogJC2jqbwQUgYhaRlN5YWQMghJy2gqL4SUQUhaRlN5IaQMQtIymsoL
+IWUQkpbRVF4IKYOQtIym8kJIGYSkZTSVF0LKICQto6m8EFIGIWkZTeWFkDIISctoKi+ElEFI
+WkZTeSGkjFdItx4hKRhN5YWQMv4P6TYhpPKMpvJCSBn3++1GSTpGU3nJhHS7pd8mJJRhNJWX
+MKT1H/+xkDYd3W5nPxw/PlMZEFIaIYn5TGVASGmEJOYzlQEhpRGSmM9UBoSURkhiPlMZEFLa
++stIfNZOwGcqg2xIa4R09sPx4zOVQemQXPTfIbR0dP/7fwAM+M6GtaGd8V8jfLNdeT5TGRBS
+2uZFiJDK85nKIBvS9ImGLz+wO/s8pRCSmM9UBrmQhoC+/ynS2ecphZDEfKYyyIc0/ZGQCEnA
+ZyqDTEh8HYmQtHymMiCkNEIS85nKIAppLIiQCKk8n6kMCCmNkMR8pjIgpDRCEvOZyiATUl/P
+3BEhEVJxPlMZ5EO6zV+S/aIjm9shJDGfqQxyIc0B8Z0NhKTgM5VBNqQfnX2eUghJzGcqA0JK
+IyQxn6kMMiHxH/YRkpbPVAaElEZIYj5TGWRC+uE/oCAkfMFnKoNsSD+mdPZ5SiEkMZ+pDIKQ
+fkrp7POUQkhiPlMZhCHxX8gSkorPVAZ/hPTkW4QIScJnKgNCSiMkMZ+pDP4IiQ/tCEnDZyqD
+MCQ+2UBIKj5TGQQh8elvQtLxmcogGxJfkCUkJZ+pDDIh8S1ChKTlM5UBIaURkpjPVAaZkH52
+9nlKeQuJkkrzmcqAkNK2v5MLIRXnM5UBISXdCUnMZiojQkp6+63FCKk4m6mMCCmJkNRspjIi
+pCRCUrOZyoiQkghJzWYqI0JKIiQ1m6mMCCmJkNRspjIipCRCUrOZyoiQkghJzWYqI0JKIiQ1
+m6mMCCmJkNRspjIipCRCUrOZyoiQkghJzWYqI0JKIiQ1m6mMCCmJkNRspjIipCRCUrOZyoiQ
+kghJzWYqI0JKIiQ1m6mMCCmJkNRspjIipCRCUrOZyoiQkghJzWYqI0JKIiQ1m6mMCCmJkNRs
+pjIipKQxpOnXmSWk4mymMiKkpFdIyy/ZTEjF2UxlREhJfUirX/yckIqzmcqIkJIISc1mKiNC
+Svo/pM3vx0FIpdlMZURISYSkZjOVESElEZKazVRGhJRESGo2UxkRUhIhqdlMZURISXzWTs1m
+KiNCSiIkNZupjAgpie9sULOZyujLkB7/e3tz9S6zkPheOyGbqYy+C+kx/2F+c/Uuv5AmhFSc
+zVRGhJRESGo2UxkdDmnbkcvtEJKazVRGJUJ6TGu7v+3vunYhnfQ4cD0/hzS9HhES8HtIj80/
+cfYrbCF8aKdmM5XR4ZC2HbncDiGp2Uxl9FtID0LCMTZTGX0X0vTV18fqzcfmK7Jnn6cQQlKz
+mcroy5D+dPZ5CiEkNZupjAgpiZDUbKYyIqSkXUiUVJjNVEaElPT+hSNCKs1mKiNCSiIkNZup
+jAgpZfctGoRUmstUJoSUsvuWIEIqzWUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJ
+zmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORcpjIh
+pBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JKISQ5
+l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQ
+UghJzmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORc
+pjIhpBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JK
+ISQ5l6lMCCmFkORcpjIhpBRCknOZyoSQUghJzmUqE0JKISQ5l6lMCCmFkORcpjIhpBRCknOZ
+yoSQUhIhUVJZLlOZEFLKLiRekkpzmcqEkBLuhCRnMpUZISXsOyKk0kymMiOkBELSM5nKjJAS
+CEnPZCozQkogJD2TqcwIKYGQ9EymMiOkBELSM5nKjJASCEnPZCozQkogJD2TqcwIKWEO6dYj
+JAWTqcwIKWEM6TYhpPJMpjIjpIQhpNttVRIhFWYylRkhJRCSnslUZoSU8ArptkZIpZlMZUZI
+CYSkZzKVWemQLCRDOvtB4SJ4RZrxiqRnMpUZISUQkp7JVGaElMBn7fRMpjIjpARC0jOZyoyQ
+EvjOBj2TqcwIKYHvtdMzmcqMkBL47m89k6nMCCmBkPRMpjIjpARC0jOZyoyQEghJz2QqM0JK
+ICQ9k6nMCCmBkPRMpjIjpARC0jOZyoyQEghJz2QqM0JKICQ9k6nMCCmBkPRMpjIjpARC0jOZ
+yoyQEpIhUVJRJlOZEVJC6r8rJ6SyTKYyI6S9xO98SUileUxlQUh7yV/ohJDK8pjKgpD2CKkC
+j6ksCGmPkCrwmMqCkPYIqQKPqSwIaY+QKvCYyoKQ9gipAo+pLAhpj5Aq8JjKgpD2CKkCj6ks
+CGmPkCrwmMqCkPYIqQKPqSwIaY+QKvCYyoKQ9gipAo+pLAhpj5Aq8JjKgpD2CKkCj6ksCGmP
+kCrwmMqCkPYIqQKPqSwIaY+QKvCYyoKQ9gipAo+pLAhpj5Aq8JjKgpD2CKkCj6ksCGmPkCrw
+mMqCkPYIqQKPqSwIaY+QKvCYyoKQ9jIhUVJJHlNZENJeMiReksrymMqCkPYIqQKPqSwIaSf5
+KxYTUmEWU1khpJ10R4RUlsVUVghph5BqsJjKCiHtEFINFlNZIaQdQqrBYiorhLRDSDVYTGWF
+kHYIqQaLqawQ0g4h1WAxlRVC2iGkGiymskJIO4RUg8VUVghph5BqsJjKCiHtEFINFlNZIaQd
+Qqrg1jv7QZRESDuEJHebnP1AyiGkHUJSu938SiKkHUJSIyRCwnG3m2FJhLRDSEXcszYh5f+x
+sw/wHULaIaQS8oEQEiHhY5lbfC1tLfPPuIf0+N/uzcfqHzj7PAVkQ7rYU3uue+aXvvg4pLMP
+8KXvQnos3cxvLml5hJQdwOWe23N9VlK2o6td9vGQ3F6Rsk//5Z7bk+VL+iuk6/0MqWhI9+Df
+QRcShFT1cVxffhBhR1ffESENCKmY+x8pZf9Hygclx4d2Az60K+nLf7te8PPeI0J6R0hFBa9K
+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
+RU5ErkJggg=="
+>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Automatic-annotation">Automatic annotation<a class="anchor-link" href="#Automatic-annotation">&#182;</a></h2><p>For this very simple application, particularly when the value of <code>true_mean</code> does not matter for location parameter estimate, one should take advantage of automatic annotation DSC provides to create a tag for every executable. To activate automatic annotation, simply create an empty annotation file with only the DSC configuration file name specified:</p>
+<pre><code>DSC:
+    configuration: settings.dsc</code></pre>
+<p>and execute it:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_auto</span><span class="o">.</span><span class="n">ann</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">mse</span>
++--------------+--------------------------------------------------+
+|  Tag         |  No. unique obj.                                 |
++--------------+--------------------------------------------------+
+|  <span class="ansi-green-fg">rnorm</span>   |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">rt</span>      |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
+|  <span class="ansi-green-fg">mean</span>    |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
+|  <span class="ansi-green-fg">median</span>  |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
+|  <span class="ansi-green-fg">MSE</span>     |  <span class="ansi-green-fg">40</span> estimate &amp; <span class="ansi-green-fg">40</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
++--------------+--------------------------------------------------+
+INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to extract results for, for example samples from $t$ distribution using method <code>mean</code>, one can overlay the tags <code>rt</code> and <code>mean</code> to extract the MSE on this sequence. Multiple tag combinations is also allowed. Here we extract 4 cases:</p>
+<ul>
+<li>Case 1: simulated from <code>rt</code> and analyzed by <code>mean</code></li>
+<li>Case 2: simulated from <code>rnorm</code> and analyzed by <code>mean</code></li>
+<li>Case 3: simulated from <code>rt</code> and analyzed by <code>median</code></li>
+<li>Case 4: simulated from <code>rnorm</code> and analyzed by <code>median</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span> <span class="o">--</span><span class="n">tags</span> \
+    <span class="s2">&quot;case1 = rt&amp;&amp;mean&quot;</span> <span class="s2">&quot;case2 = rnorm&amp;&amp;mean&quot;</span> \
+    <span class="s2">&quot;case3 = rt&amp;&amp;median&quot;</span> <span class="s2">&quot;case4 = rnorm&amp;&amp;median&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.72it/s]
+INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for DSC result <span class="ansi-green-fg">mse</span> via annotations: 
+	<span class="ansi-green-fg">case1 = rt&amp;&amp;mean
+	case2 = rnorm&amp;&amp;mean
+	case3 = rt&amp;&amp;median
+	case4 = rnorm&amp;&amp;median</span>
+INFO: Elapsed time <span class="ansi-green-fg">0.656</span> seconds.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>mean_t</code> and <code>median_t</code> tags in the previous section is equivalent to <code>case1</code> and <code>case3</code> in this automatic annotation.</p>
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+</div>
+</div>
+</body>
+</html>
