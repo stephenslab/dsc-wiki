@@ -21,7 +21,7 @@ hide_navbar: []
 exclude_file: []
 
 # Notebook used to generate home page.
-homepage: "manual/index.ipynb"
+homepage: "manual/Overview.ipynb"
 
 # The name of the homepage link shown in the navigation bar.
 homepage_label: "Overview"
