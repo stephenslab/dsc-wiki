@@ -28,3 +28,5 @@ homepage_label: "Overview"
 
 # Set this variable to enable auto-commit.
 release_message: "Build website with jnbinder."
+
+add_commit_info: False
