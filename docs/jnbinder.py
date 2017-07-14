@@ -23,27 +23,34 @@ def get_commit_link(repo, cid):
     else:
         return repo
 
+def get_notebook_link(repo, cid, fn):
+    bits = os.path.split(repo)
+    if "github.com" or "gitlab.com" in bits:
+        link = "{}/blob/{}/{}".format(repo, cid, fn)
+        return '<a href=\\"{}\\"><code>{}</code></a>'.format(link, fn)
+    else:
+        return '<code>{}</code>'.format(fn)
+
 def get_commit_info(fn, conf):
-    res = []
-    if conf['author']:
-        res.append("<strong>author(s):</strong> {}".format(conf['author']))
+    out = ''
     if conf['add_commit_info']:
         try:
             long_fmt = get_output('git log -n 1 --pretty=format:%H -- {}'.format(fn))
             short_fmt = get_output('git log -n 1 --pretty=format:%h -- {}'.format(fn))
-            res.append('<strong>last commit:</strong> revision {}, <a href=\\"{}\\">{}</a> on {}'.\
-                       format(get_output('git rev-list --count {}'.format(long_fmt)),
-                              get_commit_link(conf['repo'], long_fmt), short_fmt,
-                              get_output('git show -s --format="%cd" --date=local {}'.format(long_fmt))))
+            rev_string = 'by {} on {} <a href=\\"{}\\">revision {}, {}</a>'.\
+                       format(get_output('git log -n 1 --format="%an" {}'.format(long_fmt)),
+                              get_output('git show -s --format="%cd" --date=local {}'.format(long_fmt)),
+                              get_commit_link(conf['repo'], long_fmt),
+                              get_output('git rev-list --count {}'.format(long_fmt)), short_fmt)
+            out = '<p><small>Exported from {} committed {} <a href=\\"{}\\">{}</a></small></p>'.\
+                  format(get_notebook_link(conf['repo'], long_fmt, fn), rev_string,
+                         conf['__about_commit__'], '<span class=\\"fa fa-question-circle\\"></span>')
         except:
+            raise
             # if git related command fails, indicating it is not a git repo
             # I'll just pass ...
             pass
-    if len(res):
-        out = '<p>' + '<br>'.join(res) + '</p>'
-        return out.replace('/', '\/')
-    else:
-        return ''
+    return out.replace('/', '\/')
 
 def get_nav(dirs, home_label, prefix = './'):
     out = '''
@@ -138,14 +145,13 @@ def get_index_tpl(conf, dirs):
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
+<meta name="ipynb_website:version" content="%s" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>%s</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/%s.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
@@ -354,7 +360,7 @@ $(document).ready(function () {
 </body>
 </html>
 {%% endblock %%}
-	''' % (conf['name'], conf['theme'], get_font(conf['font']), conf['name'],
+	''' % (conf['__version__'], conf['name'], conf['theme'], get_font(conf['font']), conf['name'],
            get_nav([x for x in dirs if not x in conf['hide_navbar']], conf['homepage_label']),
            conf['repo'], conf['source_label'], conf['footer'],
            get_disqus(conf['disqus']))
@@ -370,8 +376,8 @@ def get_notebook_tpl(conf, dirs, path):
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="ipynb_website:version" content="%s" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
@@ -500,7 +506,9 @@ body {
 </body>
 </html>
 {%% endblock %%}
-	''' % ('<link rel="stylesheet" type="text/css" href="../css/%s.css">' % conf['jt_theme'] if conf['jt_theme'] is not None else '',
+	''' % (conf['__version__'],
+           '<link rel="stylesheet" type="text/css" href="../css/%s.css">' % conf['jt_theme']
+           if conf['jt_theme'] is not None else '',
            conf['theme'], get_sidebar(path) if conf['notebook_toc'] else '',
            conf['name'], get_font(conf['font']), conf['name'],
            get_nav([x for x in dirs if not x in conf['hide_navbar']], conf['homepage_label'], '../'),
