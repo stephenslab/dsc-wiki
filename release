@@ -1,12 +1,16 @@
 #!/usr/bin/env sos-runner
 #fileformat=SOS1.0
 
-import sys
 sys.path.append('docs')
+try:
+  from jnbinder import compare_versions
+  fail_if(compare_versions(SOS_VERSION, '0.9.8.8') < 0, msg = "This script requires SoS version >= 0.9.8.8\nPlease update via `pip install sos --upgrade`.")
+except ImportError:
+  pass
 
 DEFAULT_CONF = {
            '__version__': '0.9.1',
-           '__about_commit__': None,
+           '__about_commit__': 'https://stephenslab.github.io/ipynb-website/notes.html#Note-about-commit-ids',
            'name': 'A Pet Project',
            'repo': 'http://github.com/gaow/jnbinder',
            'footer': "&copy 2016-2017 Gao Wang at Stephens Lab, University of Chicago",
@@ -22,11 +26,13 @@ DEFAULT_CONF = {
            'homepage': 'Overview.ipynb',
            'font': "Droid Sans",
            'notebook_toc': True,
-           'add_commit_info': True
+           'add_commit_info': True,
+           'long_autoindex': False,
+           'reverse_autoindex': False
            }
 CONFIG.update({k:v for k,v in DEFAULT_CONF.items() if k not in CONFIG})
 CONFIG['jt_theme'] = CONFIG['theme'] if os.path.isfile("docs/css/{}.css".format(CONFIG['theme'])) else None
-parameter: binders = CONFIG['include_dir']
+parameter: binders = [x for x in CONFIG['include_dir'] if os.path.isdir(x)]
 # parameter: binders = [x for x in next(os.walk('./'))[1] if x not in CONFIG['exclude_dir'] + ['docs'] and not x.startswith('.')]
 parameter: notebook_files = sum([[y for y in glob.glob("{}/*.ipynb".format(x)) if y not in ["{}/index.ipynb".format(x), "{}/_index.ipynb".format(x), CONFIG['homepage']] + CONFIG['exclude_file']] for x in binders], [])
 parameter: pipeline_files = sum([[y for y in glob.glob("{}/*.sos".format(x)) if y not in CONFIG['exclude_file']] for x in binders], [])
@@ -83,7 +89,7 @@ if flag:
 import os
 from jnbinder import make_index_nb, make_empty_nb
 for binder in binders:
-  data = make_index_nb(binder, CONFIG['exclude_file'] + [CONFIG['homepage']])
+  data = make_index_nb(binder, CONFIG['exclude_file'] + [CONFIG['homepage']], CONFIG['long_autoindex'], CONFIG['reverse_autoindex'])
   with open('{}/_index.ipynb'.format(binder), 'w') as f:
     f.write(data.strip())
 if not os.path.isfile(CONFIG['homepage']):
@@ -93,12 +99,12 @@ if not os.path.isfile(CONFIG['homepage']):
 [update-hp]
 # update homepages HTML
 input: ['{}/index.ipynb'.format(x) if os.path.isfile('{}/index.ipynb'.format(x)) else '{}/_index.ipynb'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + [CONFIG['homepage']], group_by = 1
-output: ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html']
-#task:
+output: ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html'], group_by = 1
+task:
 run:
-  sos convert ${_input!a} ${output[_index]!a} --template docs/index.tpl --log-level 0
-  # sed -i 's/<div class="prompt input_prompt">In&nbsp;\[[0-9]\]:<\/div>//g' ${output[_index]!a}
-  perl -i -ne 'print if /\S/' ${output[_index]!a}
+  sos convert ${_input!a} ${_output!a} --template docs/index.tpl --log-level 0
+  # sed -i 's/<div class="prompt input_prompt">In&nbsp;\[[0-9]\]:<\/div>//g' ${_output!a}
+  perl -i -ne 'print if /\S/' ${_output!a}
 
 [update-nb]
 # update notebook HTML
@@ -106,7 +112,7 @@ from jnbinder import get_commit_info
 parameter: nb_info = [get_commit_info(x, CONFIG) for x in notebook_files]
 input: notebook_files, group_by = 1, paired_with = ['nb_info']
 output: 'docs/' + _input[0].replace('.ipynb', '.html')
-#task:
+task:
 run:
   sos convert ${_input!a} ${_output!a} --template docs/${_input!d}.tpl --log-level 0
   num=`grep -n -Fx '''${CONFIG['footer']}''' ${_output!a} | tail -1 | sed 's/\([0-9]*\).*/\1/'`
@@ -117,7 +123,7 @@ run:
 # update pipeline HTML
 input: pipeline_files, group_by = 1
 output: 'docs/' + _input[0].replace('.sos', '.pipeline.html')
-#task:
+task:
 run:
   sos convert ${_input} ${_output}
 
@@ -129,18 +135,36 @@ with open('docs/js/docs.js', 'w') as f:
   f.write('\n'.join(['\n'.join(x) for x in out]))
 
 [release-website]
-# release website
-run:
-  cd docs && git add . && git commit --no-verify -m "${CONFIG['release_message']}" && git push --no-verify
-if CONFIG['post_release_actions']:
-   run(CONFIG['post_release_actions'])
+# git push website
+if CONFIG['release_message']:
+  try:
+    run('cd docs && git add . && git commit --no-verify -m "{}" && git push --no-verify'.format(CONFIG['release_message']))
+    run(CONFIG['post_release_actions'])
+  except:
+    pass
+
+[clean]
+# remove generated files
+to_remove = ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html'] + ['docs/' + x.replace('.ipynb', '.html') for x in notebook_files] + ['docs/' + x.replace('.sos', '.pipeline.html') for x in pipeline_files] + ['docs/js/docs.js', 'docs/index.tpl'] + ["docs/{}.tpl".format(x) for x in binders]
+run("rm -f ${to_remove}")
 
 [default_1]
-# compile everything
-if len(binders):
-  sos_run('update-tpl')
-  sos_run('update-index')
-  sos_run('update-hp')
+# build ipynb website ...
+parameter: err_msg1 = '''
+No valid path found in `include_dir`!
+Please properly set `include_dir` in `config.yml`.
+'''
+parameter: err_msg2 = '''
+To properly add git commit info, the working tree must be empty;
+that is, all changes must be committed via "git commit".
+Please commit all changes and run this command again. Or you may set
+`add_commit_info: False` in `config.yml` if you want to disable this feature.
+'''
+fail_if(len(binders) == 0, msg = err_msg1)
+fail_if(get_output('git status --untracked-files=no --porcelain').strip() and CONFIG['add_commit_info'] and os.path.isdir('.git'), msg = err_msg2)
+sos_run('update-tpl')
+sos_run('update-index')
+sos_run('update-hp')
 if len(notebook_files):
   sos_run('update-nb')
 if len(pipeline_files):
@@ -149,6 +173,4 @@ sos_run('update-toc')
 for binder in binders:
   if os.path.isfile("{}/_index.ipynb".format(binder)):
     os.remove("{}/_index.ipynb".format(binder))
-if CONFIG['release_message']:
-  if get_output('git status --untracked-files=no --porcelain').strip():
-    sos_run('release-website')
+sos_run('release-website')

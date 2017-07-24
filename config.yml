@@ -10,11 +10,11 @@ footer: '&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab<
 
 # These directories contain .ipynb notebooks that will be rendered
 # into webpages.
-include_dir: ["manual", "tutorials", "examples"]
+include_dir: ["manual", "tutorials", "examples", "development"]
 
 # Do not add links to the navigation bar for .ipynb notebooks in these
 # directories.
-hide_navbar: []
+hide_navbar: ["development"]
 
 # Any .ipynb notebooks listed here will not be rendered into webpages
 # (e.g., "analysis/temp.ipynb").
