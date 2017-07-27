@@ -54,11 +54,14 @@ def get_commit_info(fn, conf):
     return out.replace('/', '\/')
 
 def get_nav(dirs, home_label, prefix = './'):
-    out = '''
+    if home_label:
+        out = '''
 <li>
   <a href="{}index.html">{}</a>
 </li>
-    '''.format(prefix, home_label)
+        '''.format(prefix, home_label)
+    else:
+        out = ''
     for item in dirs:
         out += '''
 <li>
@@ -66,6 +69,18 @@ def get_nav(dirs, home_label, prefix = './'):
 </li>
         '''.format(prefix, item, item.capitalize())
     return out
+
+def get_right_nav(repo, source_label):
+    if source_label:
+        return '''
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="%s"> %s </a>
+</li>
+</ul>
+        ''' % (repo, source_label)
+    else:
+        return ''
 
 def get_font(font):
     if font is None:
@@ -194,7 +209,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         },
         "HTML-CSS": {
             preferredFont: "TeX",
-            availableFonts: ["STIX","TeX"],
+            availableFonts: ["TeX"],
             styles: {
                 scale: 110,
                 ".MathJax_Display": {
@@ -323,13 +338,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         %s
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-    <a href="%s">
     %s
-    </a>
-    </li>
-    </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -363,7 +372,7 @@ $(document).ready(function () {
 {%% endblock %%}
 	''' % (conf['__version__'], conf['name'], conf['theme'], get_font(conf['font']), conf['name'],
            get_nav([x for x in dirs if not x in conf['hide_navbar']], conf['homepage_label']),
-           conf['repo'], conf['source_label'], conf['footer'],
+           get_right_nav(conf['repo'], conf['source_label']), conf['footer'],
            get_disqus(conf['disqus']))
     return content
 
@@ -422,7 +431,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         },
         "HTML-CSS": {
             preferredFont: "TeX",
-            availableFonts: ["STIX","TeX"],
+            availableFonts: ["TeX"],
             styles: {
                 scale: 110,
                 ".MathJax_Display": {
@@ -488,14 +497,8 @@ body {
       <ul class="nav navbar-nav">
         %s
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-    <a href="%s">
-    %s
-    </a>
-    </li>
-    </ul>
-    </div><!--/.nav-collapse -->
+        %s
+      </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 {%%- endblock header -%%}
@@ -513,7 +516,7 @@ body {
            conf['theme'], get_sidebar(path) if conf['notebook_toc'] else '',
            conf['name'], get_font(conf['font']), conf['name'],
            get_nav([x for x in dirs if not x in conf['hide_navbar']], conf['homepage_label'], '../'),
-           conf['repo'], conf['source_label'], conf['footer'])
+           get_right_nav(conf['repo'], conf['source_label']), conf['footer'])
     return content
 
 def make_template(conf, dirs, outdir):
@@ -532,7 +535,7 @@ def get_notebook_toc(path, exclude):
         with open(fn) as f:
             data = json.load(f)
         try:
-            title = re.sub('[^0-9a-zA-Z-:]+', '-', data["cells"][0]["source"][0].strip()).strip('-') + "-1"
+            title = re.sub('[^0-9a-zA-Z-:&!?@.,]+', '-', data["cells"][0]["source"][0].strip()).strip('-') + "-1"
         except IndexError:
             continue
         out +='"' + title + '":"' + name + '",'
@@ -605,7 +608,7 @@ def make_index_nb(path, exclude, long_description = False, reverse_alphabet = Fa
             data = json.load(f)
         try:
             source = [x.strip() for x in data["cells"][0]["source"] if x.strip()]
-            if long_description and source[0].startswith('#') and len(source) >= 2:
+            if long_description and source[0].startswith('#') and len(source) >= 2 and not source[1].startswith('#'):
                 description = source[1]
             else:
                 description = source[0]

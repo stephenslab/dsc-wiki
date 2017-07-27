@@ -20,7 +20,7 @@ DEFAULT_CONF = {
            'disqus': None,
            'release_message': None,
            'post_release_actions': None,
-           'homepage_label': 'Overview',
+           'homepage_label': None,
            'source_label': '<span class="fa fa-github"></span>',
            'theme': 'cosmo',
            'homepage': 'Overview.ipynb',
@@ -28,7 +28,7 @@ DEFAULT_CONF = {
            'notebook_toc': True,
            'add_commit_info': True,
            'long_autoindex': False,
-           'reverse_autoindex': False
+           'reverse_autoindex': []
            }
 CONFIG.update({k:v for k,v in DEFAULT_CONF.items() if k not in CONFIG})
 CONFIG['jt_theme'] = CONFIG['theme'] if os.path.isfile("docs/css/{}.css".format(CONFIG['theme'])) else None
@@ -89,7 +89,7 @@ if flag:
 import os
 from jnbinder import make_index_nb, make_empty_nb
 for binder in binders:
-  data = make_index_nb(binder, CONFIG['exclude_file'] + [CONFIG['homepage']], CONFIG['long_autoindex'], CONFIG['reverse_autoindex'])
+  data = make_index_nb(binder, CONFIG['exclude_file'] + [CONFIG['homepage']], CONFIG['long_autoindex'], binder in CONFIG['reverse_autoindex'])
   with open('{}/_index.ipynb'.format(binder), 'w') as f:
     f.write(data.strip())
 if not os.path.isfile(CONFIG['homepage']):
@@ -102,11 +102,11 @@ input: ['{}/index.ipynb'.format(x) if os.path.isfile('{}/index.ipynb'.format(x))
 output: ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html'], group_by = 1
 task:
 run:
-  sos convert ${_input!a} ${_output!a} --template docs/index.tpl --log-level 0
-  # sed -i 's/<div class="prompt input_prompt">In&nbsp;\[[0-9]\]:<\/div>//g' ${_output!a}
-  perl -i -ne 'print if /\S/' ${_output!a}
+  sos convert ${_input!e} ${_output!e} --template docs/index.tpl --log-level 0
+  # sed -i 's/<div class="prompt input_prompt">In&nbsp;\[[0-9]\]:<\/div>//g' ${_output!e}
+  perl -i -ne 'print if /\S/' ${_output!e}
 
-[update-nb]
+[update-nb: skip = len(notebook_files) == 0]
 # update notebook HTML
 from jnbinder import get_commit_info
 parameter: nb_info = [get_commit_info(x, CONFIG) for x in notebook_files]
@@ -114,12 +114,12 @@ input: notebook_files, group_by = 1, paired_with = ['nb_info']
 output: 'docs/' + _input[0].replace('.ipynb', '.html')
 task:
 run:
-  sos convert ${_input!a} ${_output!a} --template docs/${_input!d}.tpl --log-level 0
-  num=`grep -n -Fx '''${CONFIG['footer']}''' ${_output!a} | tail -1 | sed 's/\([0-9]*\).*/\1/'`
-  perl -i -lpe 'print "${_nb_info}" if $. == '"$num"'+1' ${_output!a}
-  perl -i -ne 'print if /\S/' ${_output!a}
+  sos convert ${_input!e} ${_output!e} --template docs/${_input!d}.tpl --log-level 0
+  num=`grep -n -Fx '''${CONFIG['footer']}''' ${_output!e} | tail -1 | sed 's/\([0-9]*\).*/\1/'`
+  perl -i -lpe 'print "${_nb_info}" if $. == '"$num"'+1' ${_output!e}
+  perl -i -ne 'print if /\S/' ${_output!e}
 
-[update-sos]
+[update-sos: skip = len(pipeline_files) == 0]
 # update pipeline HTML
 input: pipeline_files, group_by = 1
 output: 'docs/' + _input[0].replace('.sos', '.pipeline.html')
@@ -134,14 +134,13 @@ out = [get_toc(x, CONFIG['exclude_file'] + [CONFIG['homepage']]) for x in binder
 with open('docs/js/docs.js', 'w') as f:
   f.write('\n'.join(['\n'.join(x) for x in out]))
 
-[release-website]
+[release-website: skip = CONFIG['release_message'] is None]
 # git push website
-if CONFIG['release_message']:
-  try:
-    run('cd docs && git add . && git commit --no-verify -m "{}" && git push --no-verify'.format(CONFIG['release_message']))
-    run(CONFIG['post_release_actions'])
-  except:
-    pass
+try:
+  run('cd docs && git add . && git commit --no-verify -m "{}" && git push --no-verify'.format(CONFIG['release_message']))
+  run(CONFIG['post_release_actions'])
+except:
+  pass
 
 [clean]
 # remove generated files
@@ -162,15 +161,7 @@ Please commit all changes and run this command again. Or you may set
 '''
 fail_if(len(binders) == 0, msg = err_msg1)
 fail_if(get_output('git status --untracked-files=no --porcelain').strip() and CONFIG['add_commit_info'] and os.path.isdir('.git'), msg = err_msg2)
-sos_run('update-tpl')
-sos_run('update-index')
-sos_run('update-hp')
-if len(notebook_files):
-  sos_run('update-nb')
-if len(pipeline_files):
-  sos_run('update-sos')
-sos_run('update-toc')
+sos_run('update-tpl + update-index + update-hp + update-nb + update-sos + update-toc + release-website')
 for binder in binders:
   if os.path.isfile("{}/_index.ipynb".format(binder)):
     os.remove("{}/_index.ipynb".format(binder))
-sos_run('release-website')

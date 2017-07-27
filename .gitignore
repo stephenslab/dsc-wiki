@@ -2,3 +2,4 @@ presentations/*.pdf
 **/.sos
 **/.ipynb_checkpoints
 **/.DS_store
+docs/__pycache__
