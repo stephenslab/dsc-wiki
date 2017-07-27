@@ -34,8 +34,9 @@ CONFIG.update({k:v for k,v in DEFAULT_CONF.items() if k not in CONFIG})
 CONFIG['jt_theme'] = CONFIG['theme'] if os.path.isfile("docs/css/{}.css".format(CONFIG['theme'])) else None
 parameter: binders = [x for x in CONFIG['include_dir'] if os.path.isdir(x)]
 # parameter: binders = [x for x in next(os.walk('./'))[1] if x not in CONFIG['exclude_dir'] + ['docs'] and not x.startswith('.')]
-parameter: notebook_files = sum([[y for y in glob.glob("{}/*.ipynb".format(x)) if y not in ["{}/index.ipynb".format(x), "{}/_index.ipynb".format(x), CONFIG['homepage']] + CONFIG['exclude_file']] for x in binders], [])
-parameter: pipeline_files = sum([[y for y in glob.glob("{}/*.sos".format(x)) if y not in CONFIG['exclude_file']] for x in binders], [])
+notebook_files = sum([[y for y in glob.glob("{}/*.ipynb".format(x)) if y not in ["{}/index.ipynb".format(x), "{}/_index.ipynb".format(x), CONFIG['homepage']] + CONFIG['exclude_file']] for x in binders], [])
+pipeline_files = sum([[y for y in glob.glob("{}/*.sos".format(x)) if y not in CONFIG['exclude_file']] for x in binders], [])
+html_files = ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html'] + ['docs/' + x.replace('.ipynb', '.html') for x in notebook_files] + ['docs/' + x.replace('.sos', '.pipeline.html') for x in pipeline_files] + ['docs/js/docs.js', 'docs/index.tpl'] + ["docs/{}.tpl".format(x) for x in binders]
 
 [download-jnbinder: provides = 'master.zip']
 download:
@@ -142,10 +143,18 @@ try:
 except:
   pass
 
+[remove-obsolete]
+# remove HTML files that are no longer needed
+if os.path.isfile('docs/MANIFEST'):
+  old_files = [x.strip() for x in open("docs/MANIFEST").readlines()]
+  rm_files = [x for x in old_files if not x in html_files]
+  run("rm -f ${rm_files}")
+with open('docs/MANIFEST', 'w') as f:
+  f.write('\n'.join(html_files))
+
 [clean]
 # remove generated files
-to_remove = ['docs/{}.html'.format(x) for x in binders if x not in CONFIG['hide_navbar']] + ['docs/index.html'] + ['docs/' + x.replace('.ipynb', '.html') for x in notebook_files] + ['docs/' + x.replace('.sos', '.pipeline.html') for x in pipeline_files] + ['docs/js/docs.js', 'docs/index.tpl'] + ["docs/{}.tpl".format(x) for x in binders]
-run("rm -f ${to_remove}")
+run("rm -f ${html_files}")
 
 [default_1]
 # build ipynb website ...
@@ -161,7 +170,7 @@ Please commit all changes and run this command again. Or you may set
 '''
 fail_if(len(binders) == 0, msg = err_msg1)
 fail_if(get_output('git status --untracked-files=no --porcelain').strip() and CONFIG['add_commit_info'] and os.path.isdir('.git'), msg = err_msg2)
-sos_run('update-tpl + update-index + update-hp + update-nb + update-sos + update-toc + release-website')
+sos_run('update-tpl + update-index + update-hp + update-nb + update-sos + update-toc + remove-obsolete + release-website')
 for binder in binders:
   if os.path.isfile("{}/_index.ipynb".format(binder)):
     os.remove("{}/_index.ipynb".format(binder))
