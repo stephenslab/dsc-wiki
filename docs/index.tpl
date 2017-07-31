@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.1" />
+<meta name="ipynb_website:version" content="0.9.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>Dynamic Statistical Comparisons</title>
@@ -54,7 +54,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         },
         "HTML-CSS": {
             preferredFont: "TeX",
-            availableFonts: ["STIX","TeX"],
+            availableFonts: ["TeX"],
             styles: {
                 scale: 110,
                 ".MathJax_Display": {
@@ -185,7 +185,7 @@ $(document).ready(function () {
 <li>
   <a href="./index.html">Overview</a>
 </li>
-    
+        
 <li>
   <a href="./manual.html">Manual</a>
 </li>
@@ -199,13 +199,13 @@ $(document).ready(function () {
 </li>
         
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-    <a href="http://github.com/stephenslab/dsc2">
-    <span class="fa fa-github"></span>
-    </a>
-    </li>
-    </ul>
+    
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="http://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
+</li>
+</ul>
+        
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
