@@ -2,6 +2,14 @@ import os
 import glob
 import re
 import json
+from dateutil.parser import parse
+
+def is_date(string):
+    try:
+        parse(string)
+        return True
+    except ValueError:
+        return False
 
 def get_output(cmd, show_command=False, prompt='$ '):
     import subprocess
@@ -535,7 +543,8 @@ def get_notebook_toc(path, exclude):
         with open(fn) as f:
             data = json.load(f)
         try:
-            title = re.sub('[^0-9a-zA-Z-:&!?@.,]+', '-', data["cells"][0]["source"][0].strip()).strip('-') + "-1"
+            # FIXME: this regex is to be continuously updated based on observed TOC generated
+            title = re.sub('[^0-9a-zA-Z-:&!?@.,()]+', '-', data["cells"][0]["source"][0].strip()).strip('-') + "-1"
         except IndexError:
             continue
         out +='"' + title + '":"' + name + '",'
@@ -600,10 +609,16 @@ def make_index_nb(path, exclude, long_description = False, reverse_alphabet = Fa
     "## Notebooks"
    ]
   },'''
+    date_section = None
+    add_date_section = False
     for fn in sorted(glob.glob(os.path.join(path, "*.ipynb")), reverse = reverse_alphabet):
         if os.path.basename(fn) in ['_index.ipynb', 'index.ipynb'] or fn in exclude:
             continue
         name = os.path.splitext(os.path.basename(fn))[0].replace('_', ' ')
+        tmp = "{}/{}".format(name[:4], name[4:6])
+        if is_date(tmp) and date_section != tmp:
+            date_section = tmp
+            add_date_section = True
         with open(fn) as f:
             data = json.load(f)
         try:
@@ -614,7 +629,19 @@ def make_index_nb(path, exclude, long_description = False, reverse_alphabet = Fa
                 description = source[0]
         except IndexError:
             continue
-        out += '''
+        if add_date_section:
+            add_date_section = False
+            out += '''
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### %s\\n"
+   ]
+  },''' % date_section
+        title = re.sub('[^\x00-\x7F]+', ' ', description.strip("#").replace('"', "'").replace("\\", '\\\\'))
+        if name.strip() != title.strip():
+            out += '''
   {
    "cell_type": "markdown",
    "metadata": {},
@@ -622,8 +649,16 @@ def make_index_nb(path, exclude, long_description = False, reverse_alphabet = Fa
     "[**%s**](%s/%s)<br>\\n",
     "&nbsp; &nbsp; %s"
    ]
-  },''' % (name, path, os.path.splitext(os.path.basename(fn))[0] + '.html',
-           re.sub('[^\x00-\x7F]+', ' ', description.strip("#").replace('"', "'")))
+  },''' % (name, path, os.path.splitext(os.path.basename(fn))[0] + '.html', title)
+        else:
+            out += '''
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "[**%s**](%s/%s)<br>"
+   ]
+  },''' % (name, path, os.path.splitext(os.path.basename(fn))[0] + '.html')
     if len(sos_files):
         out += '''
   {
@@ -667,7 +702,7 @@ def make_index_nb(path, exclude, long_description = False, reverse_alphabet = Fa
  "nbformat": 4,
  "nbformat_minor": 2
 }'''
-    return out
+    return out.strip()
 
 def make_empty_nb(name):
     return '''{
