@@ -70,7 +70,7 @@ run:
 [check-link (Broken link checker)]
 depends: executable('linkchecker')
 run:
-  linkchecker http://${CONFIG['repo']!db}.github.io/dsc-wiki
+  linkchecker http://${CONFIG['repo']!db}.github.io/${CONFIG['repo']!b}
 
 [update-tpl (Jupyter HTML template updater)]
 input: None
