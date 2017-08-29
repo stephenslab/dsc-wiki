@@ -3,7 +3,7 @@
 name: "Dynamic Statistical Comparisons"
 
 # Link to the source repository (e.g., on Github).
-repo: "http://github.com/stephenslab/dsc2"
+repo: "https://github.com/stephenslab/dsc2"
 
 # Footer added to the bottom of some webpages.
 footer: '&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).'
@@ -30,3 +30,5 @@ homepage_label: "Overview"
 release_message: "Build website with jnbinder."
 
 add_commit_info: False
+
+report_style: False
