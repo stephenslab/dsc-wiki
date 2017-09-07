@@ -169,7 +169,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <a href="quick_start.html">Quick Start</a> example contains 3 DSC blocks, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational routine for location estimate via the <em>Winsorized</em> mean. The routine is implemented as <code>winsor.R</code>:</p>
+<p>The <a href="tutorials/Quick_Start.html">Quick Start</a> example contains 3 DSC blocks, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational routine for location estimate via the <em>Winsorized</em> mean. The routine is implemented as <code>winsor.R</code>:</p>
 <div class="highlight"><pre><span></span>mean <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 <p>There are two ways to incorporate this new computational routine into DSC: either by adding it to the existing <code>estimate</code> block, or by adding a new block. For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>estimate</code>. We will show here two flavors to update, both involving minimal changes to the DSC file and result in the same outcome. In practice one should always try to adopt a flavor that is most logically clear and succinct.</p>
