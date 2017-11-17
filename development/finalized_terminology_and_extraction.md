@@ -210,11 +210,12 @@ Easy part:
 
 Hard part:
 * Interpolating long scripts with DSC variables for distributed execution:
-  * There is no shared `master` script
+  * There is no shared `master` script. All tasks have to be generated beforehand.
   * Line-by-line string interpolation via regex is slow
-  * Solution: use Python 3.6 `f-string` method: it has just been implemented in SoS, pending adoption to DSC
+  * Solution: rebuild wildcard system with Python 3.6 `f-string` method. It has just been implemented in SoS, pending adoption to DSC
 * Cross-platform file sync
-  * Not only file sync, but also signature sync ..
+  * Not only file sync, but also signature sync ...
   * To sync or not to? A deeper question is what's the model for DSC project bundling and sharing?
-  
   * Therefore only the user interface is changed, not the implementation
+* More robust data exchange model
+  * Maybe time to move away from rpy2
