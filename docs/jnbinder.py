@@ -434,12 +434,12 @@ table tr th :last-child, table tr td :last-child {
 .output_stderr {
     display: none;
 }
-
-div.input {
-    display: none;
-}
-
-.hidden_output {
+/*
+ div.input {
+     display: none;
+ }
+*/
+.hidden_content {
     display: none;
 }
 
@@ -483,25 +483,12 @@ div.cell {
 }
 
 .display_control_panel  {
-    padding: 10pt;
-    left: 5px;
-    top: 5px;
-    position: fixed;
+    position: inherit;
     z-index: 1000;
 }
 
-.display_control_panel:hover {
-    background: rgb(224, 234, 241);
-}
 .display_checkboxes {
     margin-top: 5pt;
-}
-.display_control_panel:hover .display_control {
-    display: block;
-    opacity: 100;
-}
-.display_control_panel .display_control {
-    opacity: 0;
 }
 
 {%- if nb['metadata'].get('sos',{}).get('kernels',none) is not none -%}
@@ -592,12 +579,12 @@ function toggle_source() {
     var btn = document.getElementById("show_cells");
     if (btn.checked) {
         $('div.input').css('display', 'flex');
-        $('.hidden_output').show();
+        $('.hidden_content').show();
         // this somehow does not work.
-        $('div.cell').css('padding', '5pt').css('border-width', '1pt');
+        $('div.cell').css('padding', '0pt').css('border-width', '0pt');
     } else {
         $('div.input').hide();
-        $('.hidden_output').hide();
+        $('.hidden_content').hide();
         $('div.cell').css('padding', '0pt').css('border-width', '0pt');
     }
 }
@@ -628,42 +615,47 @@ function toggle_messages() {
 
 </script>
 
-<div class='display_control_panel'>
-    <div class="display_control">
-Display content:<br>
-<div class="display_checkboxes">
-<input type="checkbox" id="show_cells" name="show_cells" onclick="toggle_source()">
-<label for="show_cells">All cells</label>
-<br>
-<input type="checkbox" id="show_prompt" name="show_prompt" onclick="toggle_prompt()">
-<label for="show_prompt">Prompt</label>
-<br>
-<input type="checkbox" id="show_messages" name="show_messages" onclick="toggle_messages()">
-<label for="show_messages">Messages</label>
-</div>
-   </div>
-
-</div>
-</script>
-
 {%- endif -%}
+    '''
+    elif option == "panel":
+        return '''
+<div class='display_control_panel'>
+        <div class="display_checkboxes">
+        Show:
+            &nbsp;
+            <input type="checkbox" id="show_cells" name="show_cells" onclick="toggle_source()">
+            <label for="show_cells">All cells</label>
+            &nbsp;
+            <input type="checkbox" id="show_prompt" name="show_prompt" onclick="toggle_prompt()">
+            <label for="show_prompt">Prompt</label>
+            &nbsp;
+            <input type="checkbox" id="show_messages" name="show_messages" onclick="toggle_messages()">
+            <label for="show_messages">Messages</label>
+    </div>
+</div>
     '''
     elif option == "body":
         return '''
 {%- block input -%}
 
     {%- if 'scratch' in cell.metadata.tags -%}
-    {%- else -%}
+	{%- elif 'report_cell' in cell.metadata.tags -%}
         {{ super() }}
+    {%- else -%}
+        <div class="hidden_content">
+        {{ super() }}
+        </div>
    {%- endif -%}
 {%- endblock input -%}
 
 {% block output %}
     {%- if 'report_output' in cell.metadata.tags -%}
         {{ super() }}
+    {%- elif 'report_cell' in cell.metadata.tags -%}
+        {{ super() }}
     {%- elif 'scratch' in cell.metadata.tags -%}
     {%- else -%}
-        <div class="hidden_output">
+        <div class="hidden_content">
         {{ super() }}
         </div>
    {%- endif -%}
@@ -671,7 +663,7 @@ Display content:<br>
 
 {% block markdowncell %}
     {%- if 'hide_output' in cell.metadata.tags -%}
-		<div class="hidden_output">
+		<div class="hidden_content">
         {{ super() }}
 		</div>
     {%- elif 'scratch' in cell.metadata.tags -%}
@@ -679,6 +671,7 @@ Display content:<br>
         {{ super() }}
    {%- endif -%}
 {%- endblock markdowncell -%}
+
 
 {% block codecell %}
 
@@ -822,6 +815,7 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+%s
 {%%- endblock header -%%}
 %s
 {%% block footer %%}
@@ -840,6 +834,7 @@ body {
            conf['name'], get_font(conf['font']), conf['name'],
            get_nav([x for x in dirs if not x in conf['hide_navbar']], conf['homepage_label'], '../'),
            get_right_nav(conf['repo'], conf['source_label']),
+           get_sos_tpl('panel' if conf['report_style'] is True else ''),
            get_sos_tpl('body' if conf['report_style'] is True else ''),
            conf['footer'])
     return content
