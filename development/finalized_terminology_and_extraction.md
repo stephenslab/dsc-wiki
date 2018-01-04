@@ -201,3 +201,21 @@ where datamaker1.n <= 1000 or datamaker2.n <= 1000
 Not for now, because pipeline variables are generated only at execution, and are passed along in DSC via files. They are basically "capsuled". However with additional work we can query on them, ie, make a first query without these conditions, then for each RDS file involved so far, we load it from disk, compare it with the condition, and drop the entire row (of pipeline instance) if it does not satisfy it. It would not need us to change our design to make it happen. Just some post-processing.
 
 When this is supported we have to use `$` to refer to pipeline variables in queries.
+
+# Challenges to new syntax and burden on workflow engine
+
+Easy part:
+* Syntax are changed, not execution logic: 
+  * For DSC executor, the concept of `block` / `step` helps consolidating tasks and preparing DAG
+
+Hard part:
+* Interpolating long scripts with DSC variables for distributed execution:
+  * There is no shared `master` script. All tasks have to be generated beforehand.
+  * Line-by-line string interpolation via regex is slow
+  * Solution: rebuild wildcard system with Python 3.6 `f-string` method. 
+* Cross-platform file sync
+  * Not only file sync, but also signature sync ...
+  * To sync or not to? A deeper question is what's the model for DSC project bundling and sharing?
+  * Therefore only the user interface is changed, not the implementation
+* More robust data exchange model
+  * Maybe time to move away from rpy2
