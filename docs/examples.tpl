@@ -184,6 +184,7 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
 {%- endblock header -%}
 
 {% block footer %}
