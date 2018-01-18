@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -170,6 +194,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-annotation-file">DSC annotation file<a class="anchor-link" href="#DSC-annotation-file">&#182;</a></h2><p>DSC annotation is a file that tags the DSC procedure with meaningful identifiers so that one can easily extract results for given computational step under given condition, from numerous combinations of computational setups. Readers may notice that in our introduction to <a href="DSC_Configuration.html">DSC configuration</a> we have not discussed how output from DSC is handled or interpreted. In fact DSC2 will generate intermediate output for each unique parameter combination of every computational step, along with a lookup data base that stores connection between these steps. However it is rather difficult, though still possible, to interact directly with these output. With <strong>DSC annotation</strong> file we can keep track of combinations we are interested in and can easily extract data for these combinations one at a time as it is desired.</p>
+
 </div>
 </div>
 </div>
@@ -188,6 +213,7 @@ body {
 <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
 </pre></div>
+
 </div>
 </div>
 </div>
@@ -206,6 +232,7 @@ body {
 </ul>
 <p>Query statement is the most flexible way to compose an annotation though one has to ensure the statement is valid; DSC will otherwise fail to annotate the result with bad queries.</p>
 <p>The section <code>DSC</code> is required that specifies the DSC script name, which will be used to parse annotation file, or to generate automatic annotations.</p>
+
 </div>
 </div>
 </div>
@@ -218,6 +245,7 @@ body {
 <li>When input <code>DSC::run</code> sequence are un-named DSC will create a tag for every computational step. Please see <a href="../tutorials/Explore_Output.html#Automatic-annotation">this example</a>.</li>
 <li>When input <code>DSC::run</code> are named, DSC will create a tag for every named sequence. Please see <a href="../tutorials/Intermediate_R_2.html#DSC-annotation-12">this example</a>.</li>
 </ol>
+
 </div>
 </div>
 </div>
@@ -227,11 +255,13 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It is possible to create as many tags as needed from one DSC annotation file. The results will be annotated with the <code>--annotation</code> switch to apply all tags, and one can extract data from specific tags or combination of tags with <code>--extract</code> switch. Please see documentation for these command line options <a href="Command_Options.html">here</a>. To see how DSC annotation works in action please follow through the <a href="../tutorials/Explore_Output.html">2nd part of the Quick Start tutorial</a>.</p>
 <h2 id="Comment-string">Comment string<a class="anchor-link" href="#Comment-string">&#182;</a></h2><p>As with many scripting languages (R, Python, shell), <code>#</code> can be used to make human-readable explanation to the contents of DSC annotation file.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

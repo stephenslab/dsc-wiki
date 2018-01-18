@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -171,6 +195,7 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.4+, because it takes advantage of some new features introduced since Python 3.4. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code> for Linux and <code>brew</code> for Mac. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
 <p>You can check if your system satisfies the requirement via:</p>
+
 <pre><code>python3 --version</code></pre>
 <p>If you do have Python 3.4+ you can skip the rest of this step.</p>
 <p>We will use <code>miniconda</code> (a lite version of <code>anaconda</code>), which contains Python 3 and <code>conda</code>, a package manager for Python like <code>cran</code> for R.</p>
@@ -180,27 +205,34 @@ bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
 <p>Follow the prompt to install it (use <code>ctrl+F</code> to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: say Yes unless you know what you are doing).</p>
 <p>After the program is installed, you have to reload your <code>bash</code> profile. If you do not know what this means, just exit the current terminal and open up a new one.</p>
 <h3 id="For-MacOS">For MacOS<a class="anchor-link" href="#For-MacOS">&#182;</a></h3><p>If you have <code>homebrew</code> you can type:</p>
+
 <pre><code>brew install pip3</code></pre>
 <p>to install Python 3 and <code>pip</code> which will be used to install DSC2. Alternatively you can also use <code>conda</code> package. <code>conda</code> for Mac can be download from <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh">here</a>. Installation is the same as for Linux.</p>
 <h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be installed via <code>pip3 install</code>:</p>
+
 <pre><code>pip3 install dsc</code></pre>
 <p><code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> may take a while to install. To upgrade the DSC2 you previously have installed:</p>
+
 <pre><code>pip3 install --upgrade dsc</code></pre>
 <blockquote><p>If you have a Mac and use <a href="cran.r-project.org">R</a> only from RStudio (not from command line), then you might experience an error message in DSC2 installation complaining that R command is not found. This is because the link to your R program from Mac terminal was accidentally wiped, most likely due to a major system update. In that case we suggest you download the same version of R from <a href="cran.r-project.org">cran</a> and re-install it. The command line link will be recovered after install.</p>
 </blockquote>
 <h2 id="Developmental-Version">Developmental Version<a class="anchor-link" href="#Developmental-Version">&#182;</a></h2><p>DSC2 co-evolves with the <a href="http://github.com/vatlab/sos">SoS library</a>. The developmental version (<code>master</code> branch on github) requires the developmental version of SoS. To install the latest SoS:</p>
+
 <pre><code>git clone https://github.com/vatlab/SOS.git
 cd SOS
 python3 setup.py install</code></pre>
 <p>Then the latest DSC2:</p>
+
 <pre><code>git clone https://github.com/stephenslab/dsc2.git
 cd dsc2
 python3 setup.py install</code></pre>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>
