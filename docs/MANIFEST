@@ -13,8 +13,13 @@ docs/manual/DSC_Configuration.html
 docs/manual/DSC_Execution.html
 docs/manual/Design_and_Features.html
 docs/manual/Implementation_Details.html
+docs/manual/New_Syntax_and_Query.html
 docs/manual/Terminology.html
 docs/manual/installation.html
+docs/playground.tpl
+docs/playground/Overview.html
+docs/playground/Q1.html
+docs/playground/Q2.html
 docs/tutorials.html
 docs/tutorials.tpl
 docs/tutorials/Debug_Tips.html
