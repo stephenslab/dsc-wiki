@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -178,11 +202,13 @@ body {
 <li>The DSC2 script follows from a customized <a href="http://www.yaml.org/">YAML</a> format. <code>pyyaml</code> is used for initial processing (although we may drop it in the future due to lack of flexibility to load DSC2 script safely).</li>
 </ul>
 <p>Data flow between computational routines via <a href="http://www.inside-r.org/r-doc/base/saverds">RDS files</a>, if those routines are implemented as R or Python plugins. Saving and loading RDS files can be costly in both execution time and disk space; as a result you may notice that it seems to take DSC2 rather long time to complete a job compared to directly running R or Python scripts involved to complete a job. On the other hand, archiving outcome of computational routines in the form of RDS files makes it possible to re-use existing results, thus beneficial in the long run, particularly for projects where computational steps are not trivial and there is a need to actively add new computational routines to existing DSC framework.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -177,17 +201,20 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
           <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+
 <span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
       <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
           <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+
   <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
       <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
           <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
           <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+
   <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
            <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
@@ -195,6 +222,7 @@ body {
       <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
       <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
 </pre></div>
+
 </div>
 </div>
 </div>
@@ -203,6 +231,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To explore the result from this benchmark, we first <strong>annotate</strong> the benchmark with customized <em>tags</em>, then we <strong>extract</strong> results for these tags of interest, and finally load it to external anlaysis tools (eg. <code>R</code>) to interpret the results.</p>
+
 </div>
 </div>
 </div>
@@ -225,15 +254,18 @@ body {
         <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
     <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
         <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R</span>
+
 <span class="l l-Scalar l-Scalar-Plain">median_t</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
         <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
         <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
     <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
         <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">median.R</span>
+
 <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
 </pre></div>
+
 </div>
 </div>
 </div>
@@ -242,6 +274,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We then apply the annotation with the <code>dsc</code> command:</p>
+
 </div>
 </div>
 </div>
@@ -252,13 +285,20 @@ body {
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: 
 +----------------+--------------------------------------------------+
@@ -271,14 +311,17 @@ INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now the annotation has been applied. A summary of the annotation executed is also displayed on the terminal.</p>
+
 </div>
 </div>
 </div>
@@ -287,6 +330,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-data-extraction">DSC data extraction<a class="anchor-link" href="#DSC-data-extraction">&#182;</a></h2><p>The ultimate result of the DSC benchmark is the <code>mse</code> variable and we want to compare the performance of the two scenarios that we have just tagged using the <code>mse</code> variable. We will extract these tags to a separate data file using the <code>dsc</code> command:</p>
+
 </div>
 </div>
 </div>
@@ -297,13 +341,20 @@ INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00, 10.93it/s]
 INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for all annotations for DSC result <span class="ansi-green-fg">mse</span>.
@@ -311,14 +362,17 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The resulting <code>dsc_result.mse.rds</code> file contains the information of interest, which we are going to examine next.</p>
+
 </div>
 </div>
 </div>
@@ -327,6 +381,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Analyzing-DSC-results">Analyzing DSC results<a class="anchor-link" href="#Analyzing-DSC-results">&#182;</a></h2><p>We load <code>dsc_result.mse.rds</code> to <code>R</code> and generate plots to compare the two scenarios we are interested in:</p>
+
 </div>
 </div>
 </div>
@@ -339,13 +394,21 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 <span class="n">dat</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="s1">&#39;dsc_result.mse.rds&#39;</span><span class="p">)</span>
 <span class="n">dat</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
 <div class="output_html rendered_html output_subarea ">
 <dl>
 	<dt>$mean_t_mse_mse</dt>
@@ -377,10 +440,14 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 </ol>
 </dd>
 </dl>
+
+</div>
+
+</div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -390,19 +457,30 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t_mse_mse</span><span class="p">)</span>
 <span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">mean_t</span><span class="p">)</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
 <div class="output_html rendered_html output_subarea ">
 0.0117361375936796
 </div>
+
+</div>
+
 </div>
 </div>
-</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -412,25 +490,37 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t_mse_mse</span><span class="p">)</span>
 <span class="n">mean</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">median_t</span><span class="p">)</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
 <div class="output_html rendered_html output_subarea ">
 0.00213553802392653
 </div>
+
+</div>
+
 </div>
 </div>
-</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see the mean MSE is smaller for median based method. Now we graphically examine the results:</p>
+
 </div>
 </div>
 </div>
@@ -445,13 +535,21 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 <span class="n">dat</span><span class="err">$</span><span class="n">MSE</span> <span class="o">&lt;-</span> <span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">MSE</span><span class="p">))</span>
 <span class="n">dat</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
 <div class="output_html rendered_html output_subarea ">
 <table>
 <thead><tr><th scope=col>MSE</th><th scope=col>Method</th></tr></thead>
@@ -478,10 +576,14 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
 	<tr><td>4.690183e-04</td><td>median      </td></tr>
 </tbody>
 </table>
+
+</div>
+
+</div>
+
 </div>
 </div>
-</div>
-</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -494,23 +596,43 @@ INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
     <span class="n">geom_dotplot</span><span class="p">(</span><span class="n">binaxis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">stackdir</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">dotsize</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">p</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>`stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.
 </pre>
 </div>
 </div>
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
+
+
 </div>
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
+
+
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAD1BMVEUAAAAzMzNNTU3r6+v/
 //+EK80uAAAACXBIWXMAABJ0AAASdAHeZh94AAAgAElEQVR4nO3djXrbNttsYUnU+R9zS/Ff
@@ -670,18 +792,23 @@ AYQEFEBIQAGEBBRASEABhAQUQEhAAYQEFEBIQAGEBBRASEABhAQU8B8GfTF5PV6C8wAAAABJ
 RU5ErkJggg=="
 >
 </div>
+
+</div>
+
 </div>
 </div>
-</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Automatic-annotation">Automatic annotation<a class="anchor-link" href="#Automatic-annotation">&#182;</a></h2><p>For this very simple application, particularly when the value of <code>true_mean</code> does not matter for location parameter estimate, one should take advantage of automatic annotation DSC provides to create a tag for every executable. To activate automatic annotation, simply create an empty annotation file with only the DSC configuration file name specified:</p>
+
 <pre><code>DSC:
     configuration: settings.dsc</code></pre>
 <p>and execute it:</p>
+
 </div>
 </div>
 </div>
@@ -692,13 +819,20 @@ RU5ErkJggg=="
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_auto</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">mse</span>
 +--------------+--------------------------------------------------+
@@ -714,8 +848,10 @@ INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -728,6 +864,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
 <li>Case 3: simulated from <code>rt</code> and analyzed by <code>median</code></li>
 <li>Case 4: simulated from <code>rnorm</code> and analyzed by <code>median</code></li>
 </ul>
+
 </div>
 </div>
 </div>
@@ -740,13 +877,20 @@ INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
     <span class="s2">&quot;case1 = rt&amp;&amp;mean&quot;</span> <span class="s2">&quot;case2 = rnorm&amp;&amp;mean&quot;</span> \
     <span class="s2">&quot;case3 = rt&amp;&amp;median&quot;</span> <span class="s2">&quot;case4 = rnorm&amp;&amp;median&quot;</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.72it/s]
 INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for DSC result <span class="ansi-green-fg">mse</span> via annotations: 
@@ -758,19 +902,23 @@ INFO: Elapsed time <span class="ansi-green-fg">0.656</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>mean_t</code> and <code>median_t</code> tags in the previous section is equivalent to <code>case1</code> and <code>case3</code> in this automatic annotation.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

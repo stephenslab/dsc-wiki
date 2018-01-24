@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -199,6 +223,7 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">args = List()</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data, true_beta = R(data$meta$beta),</span> 
               <span class="l l-Scalar l-Scalar-Plain">true_pi0 = R(data$meta$pi0)</span>
+
 <span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runash.R</span>
       <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
@@ -206,6 +231,7 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal, halfuniform</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ash_data, beta_est = R(ashr::get_pm(ash_data)),</span>
               <span class="l l-Scalar l-Scalar-Plain">pi0_est = R(ashr::get_pi0(ash_data))</span>
+
   <span class="l l-Scalar l-Scalar-Plain">beta_score</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
       <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_beta</span>
@@ -214,6 +240,7 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">beta_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$beta_est</span>
           <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = beta_est, truth = beta_true</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+
   <span class="l l-Scalar l-Scalar-Plain">pi0_score</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
       <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_pi0</span>
@@ -222,6 +249,7 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_pi0</span>
           <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = pi0_est, truth = pi0</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+
   <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
            <span class="l l-Scalar l-Scalar-Plain">shrink *</span>
@@ -260,19 +288,27 @@ body {
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph ...
 Running core_shrink_1 (runash) (00:02:00): 
+
 Running core_beta_score_1 (score_beta) (00:01:00): 
 Running core_pi0_score_1 (score_pi0) (00:01:00): 
 Running beta_score (00:01:00): 
@@ -284,8 +320,10 @@ INFO: Elapsed time <span class="ansi-green-fg">253.911</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -303,22 +341,28 @@ INFO: Elapsed time <span class="ansi-green-fg">253.911</span> seconds.
 <div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">An</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2)))</span>
+
 <span class="l l-Scalar l-Scalar-Plain">Bn</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7)))</span>
+
 <span class="l l-Scalar l-Scalar-Plain">Cn</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))</span>
+
 <span class="l l-Scalar l-Scalar-Plain">ash_n</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal</span>
+
 <span class="l l-Scalar l-Scalar-Plain">ash_hu</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">halfuniform</span> 
+
 <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
 </pre></div>
 <p>and we apply this annotation to our benchmark:</p>
+
 </div>
 </div>
 </div>
@@ -329,13 +373,20 @@ INFO: Elapsed time <span class="ansi-green-fg">253.911</span> seconds.
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">beta_score</span>
 +--------------+----------------------------------------------------------+
@@ -361,8 +412,10 @@ INFO: Elapsed time <span class="ansi-green-fg">0.149</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -370,6 +423,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.149</span> seconds.
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Result-extraction">Result extraction<a class="anchor-link" href="#Result-extraction">&#182;</a></h2><p><strong><em>FIXME: Introduce shinydcs interface for <code>--extract</code> when it is ready -- this section should no longer be needed by then.</em></strong></p>
 <h3 id="Obtain-final-score-for-methods-comparison">Obtain final score for methods comparison<a class="anchor-link" href="#Obtain-final-score-for-methods-comparison">&#182;</a></h3><p>Suppose we are interested in performance of methods <code>ash_n</code> and <code>ash_hu</code> in estimating $\pi_0$ under simulation setting <code>An</code>. We extract the data using tags created, and write to file <code>ashr_pi0_1.rds</code>:</p>
+
 </div>
 </div>
 </div>
@@ -381,13 +435,20 @@ INFO: Elapsed time <span class="ansi-green-fg">0.149</span> seconds.
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">pi0_score</span><span class="p">:</span><span class="n">result</span> <span class="o">--</span><span class="n">target</span> <span class="n">pi0_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_pi0_1</span><span class="o">.</span><span class="n">rds</span> \
     <span class="o">--</span><span class="kp">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.67it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_1.rds</span> for DSC result <span class="ansi-green-fg">pi0_score</span> via annotations: 
@@ -397,14 +458,17 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can examine the result in <code>R</code>, similar to what we have done in the <a href="Explore_Output.html">Quick Start example</a>:</p>
+
 </div>
 </div>
 </div>
@@ -419,9 +483,11 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <span class="n">case1</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case1_pi0_score_result</span><span class="p">)</span>
 <span class="n">case2</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">dat</span><span class="err">$</span><span class="n">case2_pi0_score_result</span><span class="p">)</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -435,15 +501,18 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;pi0_score.html&quot;</span><span class="p">)</span>
 <span class="c1"># IRdisplay::display_html(paste(readLines(&quot;pi0_score.html&quot;), collapse=&quot;\n&quot;))</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can view the output <a href="pi0_score.html">here</a>.</p>
+
 </div>
 </div>
 </div>
@@ -452,6 +521,7 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Obtain-intermediate-output">Obtain intermediate output<a class="anchor-link" href="#Obtain-intermediate-output">&#182;</a></h3><p>You can also extract quantities of interest in any steps in a DSC sequence. For example we want to compare MSE for posterior mean estimate, and at the same time we want to explore the distribution of posterior mean. We first extract both quantities:</p>
+
 </div>
 </div>
 </div>
@@ -463,13 +533,20 @@ INFO: Elapsed time <span class="ansi-green-fg">0.965</span> seconds.
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">beta_score</span><span class="p">:</span><span class="n">result</span> <span class="n">shrink</span><span class="p">:</span><span class="n">beta_est</span> <span class="o">--</span><span class="n">target</span> <span class="n">beta_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_beta_1</span><span class="o">.</span><span class="n">rds</span> \
     <span class="o">--</span><span class="kp">tags</span> <span class="s2">&quot;case1 = An &amp;&amp; ash_n&quot;</span> <span class="s2">&quot;case2 = An &amp;&amp; ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 5/5 [00:01&lt;00:00,  4.86it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_beta_1.rds</span> for DSC result <span class="ansi-green-fg">beta_score</span> via annotations: 
@@ -479,14 +556,17 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Then we plot them both:</p>
+
 </div>
 </div>
 </div>
@@ -509,15 +589,18 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_score.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta_score.html&quot;), collapse=&quot;\n&quot;))</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can view the output <a href="beta_score.html">here</a>.</p>
+
 </div>
 </div>
 </div>
@@ -532,15 +615,18 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta.html&quot;), collapse=&quot;\n&quot;))</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can view the output <a href="beta.html">here</a>.</p>
+
 </div>
 </div>
 </div>
@@ -549,6 +635,7 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Benchmarking-runtime">Benchmarking runtime<a class="anchor-link" href="#Benchmarking-runtime">&#182;</a></h3><p>You can also benchmark the time it takes to run a computational step. For example:</p>
+
 </div>
 </div>
 </div>
@@ -567,15 +654,18 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_time.html&quot;</span><span class="p">)</span>
 <span class="c1">#IRdisplay::display_html(paste(readLines(&quot;beta_time.html&quot;), collapse=&quot;\n&quot;))</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can view the output <a href="beta_time.html">here</a>.</p>
+
 </div>
 </div>
 </div>
@@ -584,11 +674,13 @@ INFO: Elapsed time <span class="ansi-green-fg">2.013</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Alternative-implementation-using-automatic-annotation">Alternative implementation using automatic annotation<a class="anchor-link" href="#Alternative-implementation-using-automatic-annotation">&#182;</a></h2><p>DSC provides automatic annotation. This feature is particularly useful if your DSC configuration <code>DSC::run</code> specifies named sequences. See <a href="Intermediate_R_2.html">this tutorial</a> for more details.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

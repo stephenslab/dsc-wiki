@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -175,6 +199,7 @@ body {
 <li>There is an inconsistency between DSC script interface and user provided computational routine.</li>
 </ul>
 <p>In case of errors DSC will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. Here we look at an example from <a href="https://github.com/stephenslab/dsc2-blm">a benchmark on application of Bayesian Linear Model in genomic prediction</a>.</p>
+
 </div>
 </div>
 </div>
@@ -185,20 +210,29 @@ body {
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>/bin/bash: dsc: command not found
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -206,6 +240,7 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The error message is a bit verbose but the part most relevant to debugging are highlighted in green color on your terminal. Towards the end of the error message you should see that the problematic script is saved to <code>.sos/core_score_1_1_6.R</code>. You can also see that a file called <code>dsc_blm.transcript.html</code> is generated.</p>
 <h2 id="Debug-with-the-problematic-script">Debug with the problematic script<a class="anchor-link" href="#Debug-with-the-problematic-script">&#182;</a></h2><p>As prompted in the error message, let's try to execute <code>.sos/core_score_1_1_6.R</code>:</p>
+
 </div>
 </div>
 </div>
@@ -237,37 +272,52 @@ body {
 <span class="n">saveRDS</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mse</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">mse</span><span class="p">,</span> <span class="n">pcor</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">pcor</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="n">output</span><span class="err">$</span><span class="n">slope</span><span class="p">),</span> <span class="s1">&#39;dsc_blm/datamaker.R_7_gemma_bslmm_1_score.R_1.rds&#39;</span><span class="p">)</span>
 <span class="c1">## END code by DSC2</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Warning message in file(filename, &#34;r&#34;, encoding = encoding):
 “cannot open file &#39;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#39;: No such file or directory”
 </pre>
 </div>
 </div>
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_text output_error">
 <pre>
 Error in file(filename, &#34;r&#34;, encoding = encoding): cannot open the connection
 Traceback:
+
 1. source(&#34;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#34;)
 2. file(filename, &#34;r&#34;, encoding = encoding)</pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You see that the script was propagated by DSC2 with variable assignment and input / output specifications. Also this script failed because of <code>incompatible dimensions</code> as indidcated by R. So what's going on? The function call takes two variables, <code>meta</code> and <code>prediction</code>. Let's examine what these variables look like, by copying chunk of the code that generated <code>meta</code> and <code>prediction</code> to an interactive analysis console and look at them:</p>
+
 </div>
 </div>
 </div>
@@ -287,31 +337,45 @@ Traceback:
 <span class="k">print</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;length prediction: &quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">(</span><span class="n">prediction</span><span class="p">)))</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Warning message in file(filename, &#34;r&#34;, encoding = encoding):
 “cannot open file &#39;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#39;: No such file or directory”
 </pre>
 </div>
 </div>
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_text output_error">
 <pre>
 Error in file(filename, &#34;r&#34;, encoding = encoding): cannot open the connection
 Traceback:
+
 1. source(&#34;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#34;)
 2. file(filename, &#34;r&#34;, encoding = encoding)</pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -319,6 +383,7 @@ Traceback:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It looks like <code>meta$true.value</code> has a lot more elements than <code>prediction</code>. Therefore the statement <code>mse = mean((true.value-prediction)^2)</code> must fail. We know from the <a href="https://github.com/stephenslab/dsc2-blm/blob/master/blm.dsc">DSC script</a> that since we have set <code>test_size = 100</code> we do expect both <code>prediction</code> and <code>true.value</code> to be of length 100. So there must be something wrong with <code>prediction</code>, that somehow it gets truncated. This variable comes from <code>dsc_blm/datamaker.R_7_gemma_bslmm_1.rds</code> so there is nothing we can do in this script to fix the problem.</p>
 <p>However in practice, perhaps you run into error in your DSC benchmark that can obviously be identified and fixed in this script. You should fix it, test it out interactively, and if it works, you should apply your patch to the original scripts that DSC calls because fixing these propagated intermediate scripts is not enough. In this example the <code>score</code> function seems fine so there is nothing to do to the <a href="https://github.com/stephenslab/dsc2-blm/blob/master/score.R"><code>score.R</code> script</a>.</p>
+
 </div>
 </div>
 </div>
@@ -334,6 +399,7 @@ Traceback:
 <div class="highlight"><pre><span></span>result <span class="o">&lt;-</span> <span class="s">&#39;gemma.out&#39;</span>
 </pre></div>
 <p>This is code automatically generated by DSC, based on your DSC script. In the DSC script the corresponding section is:</p>
+
 <pre><code>gemma_bslmm(bayeslasso):
   exec: gemma.bslmm.wrapper.R
   .alias: gemma_bslmm
@@ -342,6 +408,7 @@ Traceback:
     .alias: args = List(w = nIter, s = burnin, result = result)</code></pre>
 <p>However it turns out here <code>gemma.out</code> is used as temporary file prefix for intermediate results from <code>gemma</code>, a command line program. It is directly called from shell, see Line 27, 37 and 42 of the R code. In practice what happens is all parallel DSC instances all creates / writes on the <strong>same file</strong> <code>gemma.out</code>, creating I/O race conditions. Therefore the file would have been corrupted, leading to truncated files.</p>
 <p>To fix the problem one should use <code>File()</code> operator for such cases:</p>
+
 <pre><code>gemma_bslmm(bayeslasso):
   exec: gemma.bslmm.wrapper.R
   .alias: gemma_bslmm
@@ -349,6 +416,7 @@ Traceback:
     result: File()
     .alias: args = List(w = nIter, s = burnin, result = result)</code></pre>
 <p>This is the 2nd type of error listed in the beginning of this document, ie, an error in communication between DSC and your script. After fixing the error you can run DSC again:</p>
+
 </div>
 </div>
 </div>
@@ -359,20 +427,29 @@ Traceback:
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>/bin/bash: dsc: command not found
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -380,18 +457,22 @@ Traceback:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You see that all <code>gemma_bslmm</code> related codes are re-executed and the DSC benchmark completed without an issue.</p>
 <h2 id="Command-options---sequence-and---seed">Command options <code>--sequence</code> and <code>--seed</code><a class="anchor-link" href="#Command-options---sequence-and---seed">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seed 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
+
 <pre><code>DSC:
   run: simulate * test * score</code></pre>
 <p>When the benchmark is tested for the first time, one should run 3 commands each introducing a new block sequentially:</p>
+
 <pre><code>dcs -x file.dsc ... --sequence simulate --seed 1
 dcs -x file.dsc ... --sequence "simulate * test" --seed 1
 dcs -x file.dsc ... --sequence "simulate * test * score" --seed 1</code></pre>
 <h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

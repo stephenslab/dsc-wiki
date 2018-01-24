@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -175,6 +199,7 @@ body {
 <li>It requires using overlapping tags (<code>--tags An &amp;&amp; ash_n</code>) to extract results.</li>
 </ul>
 <p>In this tutorial we demonstrate another style of <code>ashr</code> benchmark execution: the configuration is not very much different, yet we use named run sequences and automatic annotation in DSC2.</p>
+
 </div>
 </div>
 </div>
@@ -203,6 +228,7 @@ body {
         .alias: args = List()
     return: data, true_beta = R(data$meta$beta), 
             true_pi0 = R(data$meta$pi0)
+
 shrink:
     exec: runash.R
     .alias: ash_n, ash_hu
@@ -214,6 +240,7 @@ shrink:
           mixcompdist: halfuniform
     return: ash_data, beta_est = R(ashr::get_pm(ash_data)),
             pi0_est = R(ashr::get_pi0(ash_data))
+
 beta_score:
     exec: score.R
     .alias: score_beta
@@ -222,12 +249,14 @@ beta_score:
         beta_est: $beta_est
         .alias: est = beta_est, truth = beta_true
     return: result
+
 pi0_score(beta_score):
     .alias: score_pi0
     params:
         pi0_est: $pi0_est
         pi0: $true_pi0
         .alias: est = pi0_est, truth = pi0
+
 DSC:
     run:
       An_ash_n: simulate[1] * shrink[1] * (beta_score, pi0_score)
@@ -239,6 +268,7 @@ DSC:
     R_libs: stephens999/ashr (2.0.0+)
     exec_path: bin
     output: dsc_result_auto</code></pre>
+
 </div>
 </div>
 </div>
@@ -252,6 +282,7 @@ DSC:
 <li>Similiarly in <code>shrink</code> there are two methods now.</li>
 <li>In <code>DSC::run</code>, instead of one sequence there are now multiple sub-sequences each with a name. Combined they are equivalent to the one sequence setup <code>simulate * shrink * (beta_score, pi0_score)</code>.</li>
 </ol>
+
 </div>
 </div>
 </div>
@@ -260,9 +291,11 @@ DSC:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2><p>The DSC annotation is now very simple:</p>
+
 <pre><code>DSC:
   configuration: settings_autotag.dsc</code></pre>
 <p>It only has one required section <code>DSC</code> where it specifies the configuration file name. When there is no other tags in an annotation file, DSC will attempt to automatically annotate the DSC based on how the benchmark is executed, ie, the <code>DSC::run</code> logic.</p>
+
 </div>
 </div>
 </div>
@@ -282,24 +315,37 @@ DSC:
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">--</span><span class="n">seeds</span> <span class="s2">&quot;R(1:50)&quot;</span> \
     <span class="o">-</span><span class="n">a</span> <span class="n">settings_autotag</span><span class="o">.</span><span class="n">ann</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result_auto.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_autotag.dsc</span> ...
 INFO: Building execution graph ...
 Running core_shrink_2 (ash_hu) (00:02:00): 
+
 DSC:  18%|█▊        | 4/22 [02:40&lt;08:45, 29.18s/it]
+
 DSC:  23%|██▎       | 5/22 [02:43&lt;05:59, 21.18s/it]
+
 DSC:  55%|█████▍    | 12/22 [03:46&lt;01:53, 11.35s/it]
+
 DSC:  59%|█████▉    | 13/22 [03:48&lt;01:17,  8.61s/it]
+
 DSC:  64%|██████▎   | 14/22 [03:50&lt;00:51,  6.46s/it]
+
 DSC: 100%|██████████| 22/22 [04:19&lt;00:00,  4.19s/it]
 INFO: Writing output metadata ...
 INFO: DSC complete!
@@ -329,14 +375,17 @@ INFO: Elapsed time <span class="ansi-green-fg">262.334</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here we execute and annotate the benchmark using one command. From the annotation summary table we see that tags created corresponds to the DSC sequences specified in <code>DSC::run</code> of DSC configuration file. Each sequence is annotated with 50 results in each block, corresponding to our seed setting <code>--seeds "R(1:50)"</code>.</p>
+
 </div>
 </div>
 </div>
@@ -358,13 +407,20 @@ INFO: Elapsed time <span class="ansi-green-fg">262.334</span> seconds.
 <span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">beta_score</span><span class="p">:</span><span class="n">result</span> <span class="n">shrink</span><span class="p">:</span><span class="n">beta_est</span> <span class="o">--</span><span class="n">target</span> <span class="n">beta_score</span> <span class="o">-</span><span class="n">o</span> <span class="n">ashr_beta_2</span><span class="o">.</span><span class="n">rds</span> \
     <span class="o">--</span><span class="kp">tags</span> <span class="s2">&quot;case1 = An_ash_n&quot;</span> <span class="s2">&quot;case2 = An_ash_hu&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result_auto</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 <div class="output_wrapper">
 <div class="output">
+
+
 <div class="output_area">
+
 <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00,  5.62it/s]
 INFO: Data extracted to <span class="ansi-green-fg">ashr_pi0_2.rds</span> for DSC result <span class="ansi-green-fg">pi0_score</span> via annotations: 
@@ -379,14 +435,17 @@ INFO: Elapsed time <span class="ansi-green-fg">1.292</span> seconds.
 </pre>
 </div>
 </div>
+
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>and the plots:</p>
+
 </div>
 </div>
 </div>
@@ -430,9 +489,11 @@ INFO: Elapsed time <span class="ansi-green-fg">1.292</span> seconds.
   <span class="n">layout</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Time elapsed for posterior mean estimation&quot;</span><span class="p">)</span>
 <span class="kn">htmlwidgets:</span><span class="p">:</span><span class="n">saveWidget</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&quot;beta_time_2.html&quot;</span><span class="p">)</span>
 </pre></div>
+
 </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -445,11 +506,13 @@ INFO: Elapsed time <span class="ansi-green-fg">1.292</span> seconds.
 <li><a href="beta_2.html">Posterior mean distribution</a></li>
 <li><a href="beta_time_2.html">Time elapsed for posterior mean estimation</a></li>
 </ul>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>

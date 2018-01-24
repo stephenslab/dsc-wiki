@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.2" />
+<meta name="ipynb_website:version" content="0.9.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
+
 <link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
 <link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
 <link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -14,9 +18,11 @@
 <script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
 <link rel="stylesheet"
       href="../site_libs/highlight/textmate.css"
       type="text/css" />
+
 <script src="../site_libs/highlight/highlight.js"></script>
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
@@ -25,8 +31,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
    }, 0);
 }
 </script>
+
 <script src="../js/toc2.js"></script>
 <script src="../js/docs.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -49,6 +57,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         }
     });
 </script>
+
 <script>
 $( document ).ready(function(){
             var cfg={'threshold':3,     // depth of toc (number of levels)
@@ -88,6 +97,7 @@ $( document ).ready(function(){
             $("#toc-header").hide();
     });
 </script>
+
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -111,7 +121,11 @@ $(document).ready(function () {
   window.buildTabsets("TOC");
 });
 </script>
+
+
+
 <title>Dynamic Statistical Comparisons</title>
+
 <style type = "text/css">
 body {
   font-family: "Droid Sans";
@@ -120,10 +134,13 @@ body {
 }
 </style>
 </head>
+
 <body>
 <div tabindex="-1" id="notebook" class="border-box-sizing">
 <div class="container" id="notebook-container">
+
 <!-- code folding -->
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -136,24 +153,31 @@ body {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        
 <li>
   <a href="../index.html">Overview</a>
 </li>
+        
 <li>
   <a href="../manual.html">Manual</a>
 </li>
+        
 <li>
   <a href="../tutorials.html">Tutorials</a>
 </li>
+        
 <li>
   <a href="../examples.html">Examples</a>
 </li>
+        
       </ul>
+        
 <ul class="nav navbar-nav navbar-right">
 <li>
    <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
 </li>
 </ul>
+        
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -234,6 +258,7 @@ body {
 </pre></div>
 <p>For plugin executables, return value should match a variable name in the corresponding script and thus may or may not be in <code>params</code>. For non-plugin executables, return value hae to be one of the <code>params</code> values as it is impossible to set other values to a non-plugin executable other than the <code>params</code> specification. If return value is a file name (via <a href="#File(">File()</a>) syntax), the corresponding file will be registered to DSC2 to track for possible changes further down the pipelines.</p>
 <p><code>return</code> is required parameter.</p>
+
 </div>
 </div>
 </div>
@@ -274,6 +299,7 @@ body {
 </pre></div>
 <p>Without <code>.logic</code>, DSC will exhaust all combinations of 5 values of <code>n</code>, 2 of <code>mu</code> and 2 of <code>sigma</code>, a total of 20 parallel jobs. The <code>.logic</code> here states that instead of 20 jobs, DSC will first run 3 values of <code>n</code> with <code>mu = 0</code> and 2 values of <code>sigma</code>, then run another 2 values of <code>n</code> with <code>mu = 1</code> and <code>sigma = 1</code>, which is a total of 8 jobs. Notice that parameter index slicing makes it possible to run a subset of parameter values.</p>
 <p>Alternatively you can use pythonic syntax, for example with <code>in</code>:</p>
+
 <pre><code>      .logic: (.n in [100,200,300] and .mu == 0) or (.n in [400, 500] and .mu == 1)</code></pre>
 <p>Note that to refer to variables in <code>.logic</code> the dot <code>.</code> prefix has to be added to variables. Failure to obey this rule will result in error complaining of invalid logic statement.</p>
 <h3 id=".alias">.alias<a class="anchor-link" href="#.alias">&#182;</a></h3><h4 id="For-parameters">For parameters<a class="anchor-link" href="#For-parameters">&#182;</a></h4><p><code>.alias</code> is often used to adjust parameter names for input to different executables. For example:</p>
@@ -320,6 +346,7 @@ body {
       <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">theta = mu</span>
 </pre></div>
 <p>Then for all <code>exec</code> except for <code>exec[2]</code>, the <code>theta</code> parameter will take the value of <code>beta</code>, whereas for <code>exec[2]</code> the <code>theta</code> parameter takes value of <code>mu</code>.</p>
+
 </div>
 </div>
 </div>
@@ -435,18 +462,22 @@ body {
           <span class="l l-Scalar l-Scalar-Plain">data</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$data</span>
           <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">List(args)</span>
       <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data</span>
+
 <span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">RUV(SVA)</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">RUV.R</span>
+
   <span class="l l-Scalar l-Scalar-Plain">voom(SVA)</span><span class="p p-Indicator">:</span>
       <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">voom.R</span>
 </pre></div>
 <p>Here, the 3 blocks differ only in the executable name. With block inheritance, we can completely configure <code>SVA</code>, then inherit it to configure "RUV" and "voom" where only <code>exec</code> have to be re-defined.</p>
 <h2 id="Comment-string">Comment string<a class="anchor-link" href="#Comment-string">&#182;</a></h2><p>As with many scripting languages (R, Python, shell), <code>#</code> can be used to make human-readable explanation to the contents of DSC script.</p>
+
 </div>
 </div>
 </div>
 <hr>
 &copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
 </div>
 </div>
 </body>
