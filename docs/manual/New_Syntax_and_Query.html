@@ -1,0 +1,919 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="ipynb_website:version" content="0.9.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=manualDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=manualArray;
+            var pos=manualArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+
+
+<title>Dynamic Statistical Comparisons</title>
+
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+
+<!-- code folding -->
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+        
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+        
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+        
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+        
+      </ul>
+        
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
+</li>
+</ul>
+        
+      </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="New-DSC-syntax-and-query-demo">New DSC syntax and query demo<a class="anchor-link" href="#New-DSC-syntax-and-query-demo">&#182;</a></h1><p>This demo is created for the purpose of discussing the new design of DSC syntax and query, along the lines of <a href="https://github.com/stephenslab/dsc-wiki/blob/master/development/finalized_terminology_and_extraction.md">this note</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-new-syntax">The new syntax<a class="anchor-link" href="#The-new-syntax">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The new syntax is no longer <code>yaml</code> compatible. We dropped the compatibility for more compact syntax.</p>
+<h3 id="Example-for-the-mean-estimation-problem">Example for the mean estimation problem<a class="anchor-link" href="#Example-for-the-mean-estimation-problem">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">Link</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> Module section (blocks not called <code>DSC</code>)</strong></p>
+<ul>
+<li>Removed <code>exec</code>, <code>input</code>, <code>output</code> tags</li>
+<li><code>@</code> decoration to configure DSC level module options<ul>
+<li><code>@RNG</code> for replicates</li>
+<li><code>@ALIAS</code> for swapping parameter names</li>
+<li><code>@FILTER</code> for parameter combination filtering</li>
+<li><code>@CONF</code> cluster configurations</li>
+<li><code>@{module}</code> for module specific parameters, for example
+<pre><code>  normal, t: rnorm.R, rt.R
+      n: 9
+      @normal:
+          true_mean: 0
+      @t:
+          true_mean: 1</code></pre>
+</li>
+</ul>
+</li>
+<li><code>$</code> symbol for pipeline variables (module output)</li>
+</ul>
+<p><strong> Pipeline section (block named <code>DSC</code>) </strong></p>
+<ul>
+<li><code>define</code>: where module essemble are defined<ul>
+<li><code>simulate: normal, t</code></li>
+<li><code>preprocess: (filter1, filter2) * normalize</code></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example-for-ash">Example for ash<a class="anchor-link" href="#Example-for-ash">&#182;</a></h2><p><a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/settings.dsc">link</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Command-interface">Command interface<a class="anchor-link" href="#Command-interface">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>usage: dsc [-h] [--version] [-o str] [--target str [str ...]]
+           [--seed values [values ...]] [--recover option] [--remove option]
+           [--host str] [-c N] [--ignore-errors] [-v {0,1,2,3,4}]
+           DSC script
+
+positional arguments:
+  DSC script            DSC script to execute.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program&#39;s version number and exit
+  -o str                Benchmark output. It overwrites &#34;DSC::run::output&#34;
+                        defined in configuration file. (default: None)
+  --target str [str ...]
+                        This argument can be used in two contexts: 1) When
+                        used without &#34;--remove&#34; it specifies DSC sequences to
+                        execute. It overwrites &#34;DSC::run&#34; defined in
+                        configuration file. Multiple sequences are allowed.
+                        Each input should be a quoted string defining a valid
+                        DSC sequence, or referring to the key of an existing
+                        sequence in the DSC script. Multiple such strings
+                        should be separated by space. 2) When used along with
+                        &#34;--remove&#34; it specifies one or more computational
+                        modules, separated by space, whose output are to be
+                        removed. They should be 1) valid DSC modules in the
+                        format of &#34;module[index]&#34;, or 2) &#34;module&#34; for all
+                        routines in the module, or 3) simply path to files
+                        that needs to be removed. (default: None)
+  --seed values [values ...]
+                        It overwrites any &#34;seed&#34; property in the DSC script.
+                        This feature is useful for running a quick test with
+                        small number of replicates. Example: `--seed 1`,
+                        `--seed 1 2 3 4`, `--seed {1..10}`, `--seed &#34;R(1:10)&#34;`
+                        (default: None)
+  --recover option      Behavior of how DSC is executed in the presence of
+                        existing files. &#34;default&#34; recover will check file
+                        signature and skip the ones that matches expected
+                        signature. &#34;no&#34; recover will run everything from
+                        scratch ignoring any existing file. &#34;full&#34; recover
+                        will reconstruct signature for existing files that
+                        matches expected input environment, and run jobs to
+                        generate non-existing files, to complete the
+                        benchmark. &#34;partial&#34; recover will use existing files
+                        directly to construct output metadata, making it
+                        possible to explore partial benchmark results without
+                        having to wait until completion of entire benchmark.
+                        (default: default)
+  --remove option       Behavior of how DSC removes files. &#34;purge&#34; deletes
+                        specified files or files generated by specified
+                        modules. &#34;replace&#34; replaces these files by dummy files
+                        with &#34;*.zapped&#34; extension, instead of removing them
+                        (useful to swap out large intermediate files). Files
+                        to operate on should be specified by &#34;--target&#34;.
+                        (default: None)
+  --host str            Name of host computer to send tasks to. (default:
+                        None)
+  -c N                  Number of maximum cpu threads. (default: 20)
+  --ignore-errors       Bypass all errors from computational programs. This
+                        will keep the benchmark running but all results will
+                        be set to missing values and the problematic script
+                        will be saved when possible. (default: False)
+  -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
+                        Output error (0), warning (1), info (2), debug (3) and
+                        trace (4) information. (default: 2)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We endeavor to keep command list short. And in most cases no additional arguments are needed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Command-in-action">Command in action<a class="anchor-link" href="#Command-in-action">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First run:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:26&lt;00:00,  3.40s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">34.336</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Second run:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:02&lt;00:00,  4.88it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">4.509</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>ash</code> example run:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">../</span><span class="n">ash</span>
+<span class="err">!</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ash example&quot;</span>
+<span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/ash
+INFO: Checking R library <span class="ansi-green-fg">stephens999/ashr</span> ...
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|████████████████████████████████████████| 5/5 [00:53&lt;00:00, 11.19s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">64.821</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|████████████████████████████████████████| 5/5 [00:01&lt;00:00,  2.26it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">4.518</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">../</span><span class="n">one_sample_location</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-new-query-design">The new query design<a class="anchor-link" href="#The-new-query-design">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Query syntax still mimics SQL but enhanced with dynamic grouping of tables</li>
+<li>Is not SQL compatible!<ul>
+<li>Supported operations:<ul>
+<li><code>=, ==, &gt;, &lt;, &gt;=, &lt;=, !=</code></li>
+</ul>
+</li>
+<li>Supported logic:<ul>
+<li><code>AND</code>, <code>OR</code></li>
+<li>Or derived compound logic, eg <code>(((a AND b) OR c) AND d)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>After deeper thinking into the problem, loading data into query result is disabled<ul>
+<li>Mainly due to R/Python data communication problems for complex objects</li>
+<li>Both for loading information (matters to developers) and writing information (matters to users)</li>
+</ul>
+</li>
+<li>Only a "meta" table is saved. Should be used as an internel command (or even never openly advertise it) for a companion R package.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Command-interface">Command interface<a class="anchor-link" href="#Command-interface">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
+                 [--description str [str ...]] [-t WHAT [WHAT ...]]
+                 [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]]
+                 [--language str] [--addon str [str ...]] [-v {0,1,2,3,4}]
+                 DSC output folder
+
+positional arguments:
+  DSC output folder     Path to DSC output.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program&#39;s version number and exit
+  -o str                Output notebook / data file name. In query
+                        applications if file name ends with &#34;.rds&#34; then only
+                        data file will be saved as result of query. Otherwise
+                        both data file and a notebook that displays the data
+                        will be saved. (default: None)
+  --limit N             Number of rows to display for tables. Default is to
+                        display it for all rows (will result in very large
+                        HTML output for large benchmarks). (default: -1)
+  --title str           Title for notebook file. (default: DSC summary &amp;
+                        query)
+  --description str [str ...]
+                        Text to add under notebook title. Each string is a
+                        standalone paragraph. (default: None)
+  -t WHAT [WHAT ...], --target WHAT [WHAT ...]
+                        Query targets. (default: None)
+  -c WHERE [WHERE ...], --condition WHERE [WHERE ...]
+                        Query conditions. (default: None)
+  -g G:A,B [G:A,B ...], --groups G:A,B [G:A,B ...]
+                        Definition of module groups. (default: None)
+  --language str        Language kernel to switch to for follow up analysis in
+                        notebook generated. (default: None)
+  --addon str [str ...]
+                        Scripts to load to the notebooks for follow up
+                        analysis. Only usable in conjunction with &#34;--
+                        language&#34;. (default: None)
+  -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
+                        Output error (0), warning (1), info (2), debug (3) and
+                        trace (4) information. (default: 2)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>-t</code>, <code>-c</code> and <code>-g</code> options are the core features.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Overview-of-executed-DSC">Overview of executed DSC<a class="anchor-link" href="#Overview-of-executed-DSC">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="n">dsc_result</span> <span class="o">-</span><span class="n">o</span> <span class="n">Overview</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: Loading database ...
+INFO: Exporting database ...
+INFO: Export complete. You can use <span class="ansi-green-fg">jupyter notebook Overview.ipynb</span> to open it and run all cells, or run it from command line with <span class="ansi-green-fg">jupyter nbconvert --to notebook --execute Overview.ipynb</span> first, then use <span class="ansi-green-fg">jupyter notebook Overview.nbconvert.ipynb</span> to open it.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">notebook</span> <span class="o">--</span><span class="n">execute</span> <span class="n">Overview</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[NbConvertApp] WARNING | Config option `template_path` not recognized by `NotebookExporter`.
+[NbConvertApp] Converting notebook Overview.ipynb to notebook
+[NbConvertApp] Executing notebook with kernel: sos
+[NbConvertApp] Writing 47851 bytes to Overview.nbconvert.ipynb
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The aim of <a href="../playground/Overview.html">this notebook</a> is to show the structure of what benchmark files are generated and how they are connected to each other.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Query-example:-ungrouped-tables">Query example: ungrouped tables<a class="anchor-link" href="#Query-example:-ungrouped-tables">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="n">dsc_result</span> <span class="o">-</span><span class="n">o</span> <span class="n">Q1</span> \
+    <span class="o">-</span><span class="n">t</span> <span class="n">normal</span><span class="o">.</span><span class="n">n</span> <span class="n">mean</span> <span class="n">mse</span><span class="o">.</span><span class="n">score</span> \
+    <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;normal.true_mean = 1&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: Loading database ...
+INFO: Running queries ...
+INFO: Query results saved to spread sheet <span class="ansi-green-fg">Q1.xlsx</span>
+INFO: Export complete. You can use <span class="ansi-green-fg">jupyter notebook Q1.ipynb</span> to open it and run all cells, or run it from command line with <span class="ansi-green-fg">jupyter nbconvert --to notebook --execute Q1.ipynb</span> first, then use <span class="ansi-green-fg">jupyter notebook Q1.nbconvert.ipynb</span> to open it.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The output is a <a href="../playground/Q1.xlsx">spreadsheet</a> of meta info (that can be loaded to <code>R</code> to process) as well as a <a href="../playground/Q1.html">notebook</a> that loads the data in the spreed sheet for Jupyter users to get engaged right away. The notebook additonally contains an SQL query to help checking what's going on under the hood.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Query-example:-grouped-tables">Query example: grouped tables<a class="anchor-link" href="#Query-example:-grouped-tables">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="n">dsc_result</span> <span class="o">-</span><span class="n">o</span> <span class="n">Q2</span> \
+    <span class="o">-</span><span class="n">t</span> <span class="n">simulate</span><span class="o">.</span><span class="n">n</span> <span class="n">method</span> <span class="n">mse</span><span class="o">.</span><span class="n">score</span> \
+    <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;simulate.true_mean = 1&quot;</span> \
+    <span class="o">-</span><span class="n">g</span> <span class="s2">&quot;simulate: normal, t&quot;</span> \
+       <span class="s2">&quot;method: mean, median&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: Loading database ...
+INFO: Running queries ...
+INFO: Query results saved to spread sheet <span class="ansi-green-fg">Q2.xlsx</span>
+INFO: Export complete. You can use <span class="ansi-green-fg">jupyter notebook Q2.ipynb</span> to open it and run all cells, or run it from command line with <span class="ansi-green-fg">jupyter nbconvert --to notebook --execute Q2.ipynb</span> first, then use <span class="ansi-green-fg">jupyter notebook Q2.nbconvert.ipynb</span> to open it.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here, <code>normal</code> and <code>t</code> are grouped to <code>simulate</code>; <code>mean</code> and <code>median</code> are grouped to <code>method</code>. Therefore the <a href="../playground/Q2.xlsx">output spreadsheet</a> is a bit different from the one generated above -- an additional column is needed to annotate the merged columns.</p>
+<p>Here is <a href="../playground/Q2.html">under the hood</a>.</p>
+
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2017 <a href="http://stephenslab.uchicago.edu">Stephens lab</a> at the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
+</div>
+</div>
+</body>
+</html>
