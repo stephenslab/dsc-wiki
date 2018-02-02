@@ -9,7 +9,7 @@ DEFAULT_CONF = {
            '__about_commit__': 'https://stephenslab.github.io/ipynb-website/notes.html#Note-about-commit-ids',
            'name': 'A Pet Project',
            'repo': 'http://github.com/vatlab/jnbinder',
-           'footer': "&copy 2016-2017 Gao Wang at Stephens Lab, University of Chicago",
+           'footer': "&copy 2016-2018 Gao Wang at Stephens Lab, University of Chicago",
            'include_dir': [],
            'exclude_file': [],
            'hide_navbar': [],
