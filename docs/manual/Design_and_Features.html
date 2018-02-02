@@ -193,10 +193,10 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Design-Overview">Design Overview<a class="anchor-link" href="#Design-Overview">&#182;</a></h2><p>DSC2 is designed to execute a sequence of computational steps for <em>Dynamic Statistical Comparisons</em>. Typically such comparisons involve generating (or gathering) data, performing statistical analyses and evaluating performance of statistical procedures applied. Each step takes some input data from previous step (unless it is the first step) and create some output to be passed to the next step, or to be interpreted as the outcome of the DSC. A DSC user thus has two jobs: define computational steps, and specify how the steps are connected into a sequence.</p>
+<h2 id="Design-Overview">Design Overview<a class="anchor-link" href="#Design-Overview">&#182;</a></h2><p>DSC2 is designed to manage and execute all computations required for <em>Dynamic Statistical Comparisons</em>. Typically such comparisons involve generating (or gathering) data, performing statistical analyses and evaluating performance of statistical procedures applied. Each step takes some input data from previous step (unless it is the first step) and create some output to be passed to the next step, or to be interpreted as the outcome of the DSC. A DSC user thus has two jobs: define computational steps (as <a href="Terminology.html">DSC modules</a>), and specify how the steps are connected to be executed (as <a href="Terminology.html">DSC pipelines</a>).</p>
 <p>As a first pass to illustrating the DSC design, let's consider a DSC sequence consists of 3 types of steps: <strong>scenarios</strong>, <strong>methods</strong> and <strong>scores</strong>, where</p>
 <ul>
-<li><strong>scenarios</strong>: provide input data and / or computational routines that generate input data.</li>
+<li><strong>scenarios</strong>: provide input data and / or configures computational routines that generate input data.</li>
 <li><strong>methods</strong>: defines statistical procedures that analyzes data.</li>
 <li><strong>scores</strong>: defines methods that evaluates the result of data analyses compared to the "truth" (model from which the data is generated) and calculates scores that measures performance of methods.</li>
 </ul>
@@ -210,6 +210,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The example below follows the aforementioned 3 steps paradigm but we will allow for combinations of computational steps as illustrated in pipelines below,</p>
+<p><strong>FIXME: to be replaced by an Adobe Illustrator figure</strong></p>
 
 <pre><code>  | scenario 1               |    | method 1 -&gt;                      |    | score 1 |
   | scenario 2               | -&gt; | method 2 -&gt; method 1             | -&gt; | score 2 |
@@ -226,51 +227,42 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="A-Case-Study">A Case Study<a class="anchor-link" href="#A-Case-Study">&#182;</a></h2><p>To understand the DSC design we review a simple example with (mostly) self-explanatory syntax. DSC syntax is completely documented <a href="manual/DSC_Configuration.html">elsewhere</a>; readers should not worry about learning the syntax at this point.</p>
 <p>In this example we compare methods of estimating location parameter from data. We use data generated from <em>t</em> distribution and Cauchy distribution, remove outliers (with two Winsorization methods) and estimate mean (via sample average or median), and evaluate performance of sequences of these steps by comparing the estimate with the "ground truth" in terms of mean squared error.</p>
-<h3 id="DSC-configuration">DSC configuration<a class="anchor-link" href="#DSC-configuration">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R, rcauchy.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:5)</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_loc</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_loc</span>
+<h3 id="DSC-script">DSC script<a class="anchor-link" href="#DSC-script">&#182;</a></h3>
+<pre><code>t, cauchy: rt.R, rcauchy.R
+ replicate: R(1:5)
+ n: 1000
+ true_loc: 0, 1
+ $x: x
+ $true_loc: true_loc
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">transform</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winsor1.R, winsor2.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-          <span class="l l-Scalar l-Scalar-Plain">exec[1]</span><span class="p p-Indicator">:</span>
-              <span class="l l-Scalar l-Scalar-Plain">fraction</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
-          <span class="l l-Scalar l-Scalar-Plain">exec[2]</span><span class="p p-Indicator">:</span>
-              <span class="l l-Scalar l-Scalar-Plain">multiple</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x</span>
+winsor1, winsor2: winsor1.R, winsor2.R
+ x: $x
+ @winsor1:
+     fraction: 0.05
+ @winsor2:
+     multiple: 3
+ $x: x
 
-  <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
+mean, median: mean.R, median.R
+  x: $x
+  $loc: loc
 
-  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$loc</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_loc</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+mse: mse.R
+  mean_est: $loc
+  true_mean: $true_loc
+  $mse: mse
 
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">(transform * estimate, estimate) *</span>
-           <span class="l l-Scalar l-Scalar-Plain">mse</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R</span>
-      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
-</pre></div>
-<p>Each section in the DSC configuration file, except for the last "DSC" section, is called a <em>DSC block</em>. Each DSC block defines</p>
-<ol>
-<li><strong>a family of</strong> computational routines (or steps, usually names of computer scripts or executables in the <code>exec</code> entries). For example <code>winsor1.R</code> and <code>winsor2.R</code> are routines in the <code>transform</code> family.</li>
-<li>Input data to these routines (<code>params</code>) and </li>
-<li>output data (<code>return</code>). </li>
-</ol>
-<p>The family of routines in the same block share similar (not necessarily the same) input parameters, and strictly the same return values. In this example, computational steps from the same block are logically concurrent to each other, consequently by default routines in a <code>exec</code> entry are independent to each other. The "DSC" section defines the sequence of steps to execute, via logical combinations of available DSC blocks.</p>
+DSC:
+  define: 
+      simulate: t, cauchy
+      transform: winsor1, winsor2
+      estimate: mean, median
+      score: mse
+  run: simulate *
+       (transform * estimate, estimate) *
+       score
+  exec_path: R
+  output: dsc_result</code></pre>
 
 </div>
 </div>
@@ -279,38 +271,46 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="DSC-execution">DSC execution<a class="anchor-link" href="#DSC-execution">&#182;</a></h3><p>The DSC sequences definition</p>
+<h3 id="DSC-execution">DSC execution<a class="anchor-link" href="#DSC-execution">&#182;</a></h3><p>The sequence to execute:</p>
 
 <pre><code>      run: simulate *
            (transform * estimate, estimate) *
-           mse</code></pre>
-<p>will be expanded to 2 sequences in terms of blocks:</p>
+           score</code></pre>
+<p>will be expanded to 2 sequences:</p>
 <ol>
-<li><code>simulate -&gt; transform -&gt; estimate -&gt; mse</code></li>
-<li><code>simulate -&gt; estimate -&gt; mse</code></li>
+<li><code>simulate -&gt; transform -&gt; estimate -&gt; score</code></li>
+<li><code>simulate -&gt; estimate -&gt; score</code></li>
 </ol>
-<p>Or 12 pipelines in terms of computational steps</p>
+<p>Or 12 sequences in terms of computational executables</p>
 <ol>
-<li><code>rt.R -&gt; winsor1.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rt.R -&gt; winsor1.R -&gt; median.R -&gt; mse</code></li>
-<li><code>rt.R -&gt; winsor2.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rt.R -&gt; winsor2.R -&gt; median.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; winsor1.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; winsor1.R -&gt; median.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; winsor2.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; winsor2.R -&gt; median.R -&gt; mse</code></li>
-<li><code>rt.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rt.R -&gt; median.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; mean.R -&gt; mse</code></li>
-<li><code>rcauchy.R -&gt; median.R -&gt; mse</code></li>
+<li><code>rt.R -&gt; winsor1.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rt.R -&gt; winsor1.R -&gt; median.R -&gt; mse.R</code></li>
+<li><code>rt.R -&gt; winsor2.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rt.R -&gt; winsor2.R -&gt; median.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; winsor1.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; winsor1.R -&gt; median.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; winsor2.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; winsor2.R -&gt; median.R -&gt; mse.R</code></li>
+<li><code>rt.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rt.R -&gt; median.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; mean.R -&gt; mse.R</code></li>
+<li><code>rcauchy.R -&gt; median.R -&gt; mse.R</code></li>
 </ol>
-<p>By allowing for different parameters to each step, more combinations are implicitly defined and consequently more unique pipelines.</p>
-<h3 id="More-details-on-DSC-blocks">More details on DSC blocks<a class="anchor-link" href="#More-details-on-DSC-blocks">&#182;</a></h3><p>The <strong>scenarios</strong> part of the DSC sequence is the <code>simulate</code> block, which has two computational routines <code>rcauchy.R</code> and <code>rt.R</code>. These routines generate <code>n</code> random samples under Cauchy distribution with location parameter <code>true_loc</code>, and <em>t</em> distribution with non-centrality parameter <code>true_loc</code>, respectively. There are 2 choices of computational routines, each routine has one choice of <code>n</code> (1000) and two choices of <code>true_loc</code> (0 and 1). 5 replicates are evaluated as defined by <code>seed</code>. As a result, the "simulate" block has 20 parallel computational steps.</p>
-<p>The <strong>methods</strong> part of the sequence consists of <code>transform</code> and <code>estimate</code> blocks. <code>transform</code> performs two types of winsorization on input data. <code>estimate</code> block defines two computational routines to estimate location parameter, via sample mean (<code>mean.R</code>) and median (<code>median.R</code>) respectively. There are two types of procedures for <strong>methods</strong>: the first is <code>transform + estimate</code> which runs the <code>transform</code> family of steps first, then run the <code>estimate</code> family after data has been transformed; the second is <code>estimate</code> which directly performs parameter estimation with the original data produced by its upstream computational steps, ie, from the <strong>scenarios</strong> part.</p>
-<p>The <strong>scores</strong> part of the sequence is the <code>mse</code> block, which has a single computational routine <code>MSE.R</code> to calculate the mean square error as a summary of comparison between the <em>true</em> (<code>true_mean</code>) and <em>estimated</em> (<code>mean_est</code>) location parameters, taking <code>$true_loc</code> and <code>$loc</code> respectively corresponding to the <code>return</code> values from previous computational steps in <code>simulate</code> and <code>estimate</code>.</p>
-<p>In this case study, the design of blocks logically follows the <strong>scenarios</strong>, <strong>methods</strong> (pre-processing via <code>transformation</code> and analysis via <code>estimate</code>), and <strong>scores</strong> paradigm. It does not have to be this way, though: one can even make separated blocks for each computational routine (in this case for every R script) and combine them in the <em>run</em> sequence in <em>DSC</em> section in a fashion simular to the 12 pipelines expanded from this DSC as shown in the previous section of this document. The style adopted here seems the most reasonable choice because computational routines sharing input and output are consolidated into single blocks, and logic between blocks reflecting the DSC design are clearly presented.</p>
-<h3 id="Variable-scope-and-sharing-in-DSC">Variable scope and sharing in DSC<a class="anchor-link" href="#Variable-scope-and-sharing-in-DSC">&#182;</a></h3><p>DSC2 configuration script implements an implicit rule for the scope of variables starting with <code>$</code> sigil. Within a DSC block, all parameter variables should be considered <em>local</em> to the block, not accessible from outside the block; all returned values should be considered <em>global</em> variable accessible from other DSC blocks via <code>$</code> sigil. It is legitimate and sometimes necessary that multiple blocks have the same variable name in their return entry, for example here both <code>simulate</code> and <code>transform</code> blocks return <code>x</code>. In such case, which block provides value <code>$x</code> depends on the context of the DSC sequence. The implicit rule here is that DSC2 will always search for the nearest upstream block that yields the variable it looks for. For example, In sequence <code>simulate * transform * estimate * mse</code>, <code>$x</code> in <code>estimate</code> comes from its direct upstream neighbor <code>transform</code>, while in sequence <code>simulate * estimate * mse</code> <code>$x</code> comes from <code>simulate</code>.</p>
-<h2 id="Executable-modes">Executable modes<a class="anchor-link" href="#Executable-modes">&#182;</a></h2><p>DSC2 will consider a computational routine a <em>plugin</em> when the <code>exec</code> is R or Python script, and the return value is not <a href="manual/DSC_Configuration.html#File("><code>File()</code></a>). Computational results and communications between blocks will be handled implicitly. In this mode users do not have to worry about file output; yet they have to make sure the variable names used to program the plugin scripts are defined in the DSC script and are not overwritten in the plugin scripts, and the return value for the DSC block should be a subset of variables avaiable from the plugin script. All the computational routines in the example above are plugins written in R. You can look at a concrete example in the <a href="tutorials/Quick_Start.html">Quick Start</a> tutorial.</p>
+<p>By allowing for different parameters to each executable, more combinations are implicitly defined and consequently more unique sequences executed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-brief-narrative-to-the-case-study">A brief narrative to the case study<a class="anchor-link" href="#A-brief-narrative-to-the-case-study">&#182;</a></h2><p>As has been previously motivated, there are 3 steps in this example: <strong>scenarios</strong>, <strong>methods</strong> and <strong>scores</strong>.</p>
+<p>The <strong>scenarios</strong> part is the first code block in the file, which has two computational executables <code>rcauchy.R</code> and <code>rt.R</code>. These routines generate <code>n</code> random samples under Cauchy distribution with location parameter <code>true_loc</code>, and <em>t</em> distribution with non-centrality parameter <code>true_loc</code>, respectively. There are 2 choices of computational routines, each routine has one choice of <code>n</code> (1000) and two choices of <code>true_loc</code> (0 and 1). 5 replicates are evaluated as defined by <code>replicate</code>. As a result, this code block will result in 20 parallel computations.</p>
+<p>The <strong>methods</strong> part consists of <code>transform</code> and <code>estimate</code>. <code>transform</code> performs two types of winsorization on input data. <code>estimate</code> has two computational routines to estimate location parameter, via sample mean (<code>mean.R</code>) and median (<code>median.R</code>) respectively. There are two types of procedures for <strong>methods</strong>: the first is <code>transform + estimate</code> which runs the <code>transform</code> family of steps first, then run the <code>estimate</code> family after data has been transformed; the second is <code>estimate</code> which directly performs parameter estimation with the original data produced by its upstream steps, ie, from the <strong>scenarios</strong> part.</p>
+<p>The <strong>scores</strong> part is <code>score</code>, which has a single computational routine <code>mse.R</code> to calculate the mean square error as a summary of comparison between the <em>true</em> (<code>true_mean</code>) and <em>estimated</em> (<code>mean_est</code>) location parameters, taking <code>$true_loc</code> and <code>$loc</code> respectively corresponding to the <em>output</em> values from previous steps in <strong>scenarios</strong> and <strong>methods</strong></p>
+<p>In this case study, the design of blocks logically follows the <strong>scenarios</strong>, <strong>methods</strong> (pre-processing via <code>transformation</code> and analysis via <code>estimate</code>), and <strong>scores</strong> paradigm. It does not have to be this way, though: one can even make separated blocks for each computational routine (in this case for every R script) and combine them in the <em>run</em> sequence in <em>DSC</em> section in a fashion simular to the 12 pipelines expanded from this DSC as shown in the previous section of this document -- it is a decision users has the liberty to make based on style preference and logic.</p>
+<h2 id="Output-files">Output files<a class="anchor-link" href="#Output-files">&#182;</a></h2><p>Computational results and communications throughout DSC will be handled implicitly. Users do not have to worry about file output. Yet users are responsible for matching variables specified in DSC script to what are in fact written in provided computational routines. This is a key feature of DSC</p>
 
 </div>
 </div>
