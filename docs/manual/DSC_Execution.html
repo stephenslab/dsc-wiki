@@ -185,7 +185,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Syntax:-DSC-execution">Syntax: DSC execution<a class="anchor-link" href="#Syntax:-DSC-execution">&#182;</a></h1>
+<h1 id="DSC-syntax:-basics-of-benchmark-execution">DSC syntax: basics of benchmark execution<a class="anchor-link" href="#DSC-syntax:-basics-of-benchmark-execution">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -193,86 +193,135 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Sequences">DSC Sequences<a class="anchor-link" href="#DSC-Sequences">&#182;</a></h2><p>Blocks are executed from the <strong>DSC section</strong> as <em>sequences</em>, defined by the <code>DSC::run</code> entry. Ways these blocks are connected can be specified via "*", "," and "()" operators:</p>
-<p><em>FIXME: give example for</em> <code>+</code></p>
+<p>This document is continuation of discussion in <a href="DSC_Configuration.html">DSC syntax: basics of modules</a>. We will use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) to introduce a special syntax block called <code>DSC</code> that defines benchmark pipelines and execution. This block has a reserved headline <code>DSC</code> and is required for all DSC scripts. In this document we refer to its contents by <code>DSC::&lt;key&gt;</code> where <code>&lt;key&gt;</code> is the identifier on the left side of <code>:</code> in each line of the <code>DSC</code> block.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pipeline-operators">Pipeline operators<a class="anchor-link" href="#Pipeline-operators">&#182;</a></h2><p>To put together modules into pipelines, two logic are available: "alternating" modules refers to groups of modules that achieve the same goal (able to take similar input and provide the same type of output) as if they are exchangable; "concatenating" modules refers to groups of modules that acts one after another as if concatenated into a chain of actions. These logic are implemented via <code>*</code>, <code>,</code> and <code>()</code> operators:</p>
 <ul>
-<li><code>*</code>: right hand side (RHS) is executed after the left hand side (LHS).</li>
-<li><code>+</code>: LHS and RHS are pair-wise combined first. <strong>In DSC, + operator has higher precedence than * operator</strong>.</li>
-<li><code>,</code>: RHS and LHS are concurrent.</li>
-<li><code>()</code>: allows for combinations of <code>*</code> and <code>,</code>.</li>
+<li><code>*</code>: connects concatenating modules, ie, right hand side (RHS) is executed after the left hand side (LHS).</li>
+<li><code>,</code>: connects alternating modules, ie, RHS and LHS are exchangable.</li>
+<li><code>()</code>: when alternating modules and concatenating modules are combined, it is used to re-define operator precedence (by default <code>*</code> has higher precedence than <code>,</code>).</li>
 </ul>
-<p>The <code>run</code> sequence can be a string of sequence, or can be a set of sub-sequences each with a name.</p>
-<h3 id="Example-1">Example 1<a class="anchor-link" href="#Example-1">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate) * score</span>
-</pre></div>
-<p>DSC will run "transform" first, followed by "estimate".</p>
-<h3 id="Example-2">Example 2<a class="anchor-link" href="#Example-2">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform * estimate, estimate) * score</span>
-</pre></div>
-<p>DSC will run 2 concurrent sequences of steps. The first involves "transform" followed by "estimate"; the second is "estimate" only.</p>
-<p>Slicing is supported, for example:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (transform[1:3] * estimate[1], transform[4:5] * estimate[2], estimate) * score</span>
-</pre></div>
-<h3 id="Example-3">Example 3<a class="anchor-link" href="#Example-3">&#182;</a></h3><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * (voom, sqrt, identity) * (RUV, SVA) * (DESeq, edgeRglm, ash) * score</span>
-</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-ensembles-and-pipelines">Module ensembles and pipelines<a class="anchor-link" href="#Module-ensembles-and-pipelines">&#182;</a></h2><p><code>DSC::define</code> defines module ensembles, that is, groups of "alternating" or "concatenating" modules. For example:</p>
+
+<pre><code>normal, t: rnorm.R, rt.R
+    ...
+mean, median: mean.R, median.R
+    ...
+
+DSC:
+    define:
+      simulate: normal, t
+      estimate: mean, median</code></pre>
+<p>Here 2 ensembles are defined: <code>simulate</code>, of alternating modules <code>normal</code> and <code>t</code> for data generation, and <code>estimate</code>, of alternating modules <code>mean</code> and <code>median</code> for parameter estimation.</p>
+<p>To illustrate concatenating modules and its combination with alternating modules we can add an additional <code>winsorize</code> module to <code>estimate</code>:</p>
+
+<pre><code>DSC:
+    define:
+      simulate: normal, t
+      winsorized_estimate: winsorize * (mean, median)</code></pre>
+<p>These ensembles, once defined, can be used as if they are modules, to define DSC benchmark as will be discussed next.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-benchmark">DSC benchmark<a class="anchor-link" href="#DSC-benchmark">&#182;</a></h2><p>DSC benchmark, defined by <code>DSC::run</code>, is one or multiple DSC pipelines each consisted of logically connected modules or module ensembles via pipeline operators. We will use a series of examples to illustrate how benchmarks are created.</p>
+<h4 id="Example-1:-ensembles-in-pipeline">Example 1: ensembles in pipeline<a class="anchor-link" href="#Example-1:-ensembles-in-pipeline">&#182;</a></h4>
+<pre><code>run: simulate * estimate * score</code></pre>
+<p>Here <code>simulate</code> and <code>estimate</code> are module ensembles (see <code>DSC::define</code> of previous section). This is equivalent to writing:</p>
+
+<pre><code>run: (normal, t) * (mean, median) * score</code></pre>
+<h4 id="Example-2:-combination-of-concatenating-and-alternating-modules">Example 2: combination of concatenating and alternating modules<a class="anchor-link" href="#Example-2:-combination-of-concatenating-and-alternating-modules">&#182;</a></h4>
+<pre><code>run: simulate * (winsorize * mean, mean) * score</code></pre>
+<p>DSC will run 2 types of pipelines: 1) that involves <code>winsorize</code> followed by <code>mean</code>, and 2) "mean" only.</p>
+<h4 id="Example-3:-expansion-of-pipeline-operators">Example 3: expansion of pipeline operators<a class="anchor-link" href="#Example-3:-expansion-of-pipeline-operators">&#182;</a></h4>
+<pre><code>run: simulate * (voom, sqrt, identity) * (RUV, SVA) * (DESeq, edgeRglm, ash) * score</code></pre>
 <p>will be expanded to:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * DESeq * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * RUV * edgeRglm * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * sqrt * SVA * edgeRglm * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * RUV * edgeRglm * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * RUV * edgeRglm * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * ash * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * identity * SVA * edgeRglm * score,</span>
-       <span class="l l-Scalar l-Scalar-Plain">simulate * voom * SVA * edgeRglm * score</span>
-</pre></div>
-<h3 id="Example-4">Example 4<a class="anchor-link" href="#Example-4">&#182;</a></h3><p>Named mini-sequences:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> 
-     <span class="l l-Scalar l-Scalar-Plain">seq1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * transform[1] * estimate[1] * score</span>
-     <span class="l l-Scalar l-Scalar-Plain">seq2</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate * estimate[1] * score</span>
-     <span class="l l-Scalar l-Scalar-Plain">...</span>
-</pre></div>
-<p>You can give these mini-sequences meaningful names.</p>
-<h2 id="Load-sequence-from-command-line">Load sequence from command line<a class="anchor-link" href="#Load-sequence-from-command-line">&#182;</a></h2><p>By default, DSC will execute all sequences in <code>DSC::run</code>, including all named and unnamed sequences. But one can overwrite sequence from <a href="Command_Options.html">command line</a>. For example to execute <code>Example 1</code></p>
 
-<pre><code>dsc -x file.dsc ... --sequence "simulate * transform * estimate * score"</code></pre>
-<p>and part of <code>Example 1</code>:</p>
+<pre><code>run: simulate * sqrt * RUV * DESeq * score,
+   simulate * sqrt * SVA * DESeq * score,
+   simulate * identity * RUV * DESeq * score,
+   simulate * voom * RUV * DESeq * score,
+   simulate * identity * SVA * DESeq * score,
+   simulate * voom * SVA * DESeq * score,
+   simulate * sqrt * RUV * ash * score,
+   simulate * sqrt * RUV * edgeRglm * score,
+   simulate * sqrt * SVA * ash * score,
+   simulate * sqrt * SVA * edgeRglm * score,
+   simulate * identity * RUV * ash * score,
+   simulate * voom * RUV * ash * score,
+   simulate * identity * RUV * edgeRglm * score,
+   simulate * voom * RUV * edgeRglm * score,
+   simulate * identity * SVA * ash * score,
+   simulate * voom * SVA * ash * score,
+   simulate * identity * SVA * edgeRglm * score,
+   simulate * voom * SVA * edgeRglm * score</code></pre>
 
-<pre><code>dsc -x file.dsc ... --sequence "simulate[1] * transform[1] * estimate[1]"</code></pre>
-<p>You can also execute a single block for debug purpose:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Command-interface-to-DSC-benchmark">Command interface to DSC benchmark<a class="anchor-link" href="#Command-interface-to-DSC-benchmark">&#182;</a></h2><p>By default, DSC will execute all pipelines defined in <code>DSC::run</code>. But one can overwrite sequence from <a href="Command_Options.html">command line</a>. For example to execute the complete <code>Example 1</code></p>
 
-<pre><code>dsc -x file.dsc ... --sequence "simulate[1]"</code></pre>
-<p>Also you can use sequences names to execute existing sequences, for <code>Example 4</code>,</p>
+<pre><code>dsc file.dsc ... --target "simulate * estimate * score"</code></pre>
+<p>or a subset of <code>Example 1</code>:</p>
 
-<pre><code>dsc -x file.dsc ... --sequence seq1 seq2</code></pre>
-<p>Or a combination of named / unnamed sequences</p>
+<pre><code>dsc file.dsc ... --target "norm * estimate * score"</code></pre>
+<p>You can also execute a single module / ensemble <strong>for debug purpose</strong>:</p>
 
-<pre><code>dsc -x file.dsc ... --sequence seq1 "simulate * sqrt * RUV"</code></pre>
-<h2 id="DSC-Section-Parameters">DSC Section Parameters<a class="anchor-link" href="#DSC-Section-Parameters">&#182;</a></h2><ul>
-<li><code>master</code>: Block names that will become one of the <em>master</em> tables in DSC output. By default the last block of a DSC sequence will be the master table. When a block becomes a master table, DSC will attempt to extract information from the block output and write them explicitly to the DSC output database.</li>
-</ul>
-<p><em>FIXME: we should no longer need master parameter once we have simple interface to extract intermediate output</em></p>
+<pre><code>dsc file.dsc ... --target "simulate"</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Benchmark-parameters">Benchmark parameters<a class="anchor-link" href="#Benchmark-parameters">&#182;</a></h2><p>These parameters are specified in the rest of <code>DSC</code> block:</p>
 <ul>
-<li><code>params</code>: Defines DSC variables which can be used anywhere in the DSC file through <code>$()</code> sigil.</li>
-<li><code>exec_path</code>: Search path for executable files.</li>
-<li><code>lib_path</code>: Search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed.</li>
-<li><code>R_libs</code>: Required R libraries, from cran, bioconductor or github:<ul>
-<li><code>package</code>: DSC will check / install <code>package</code> from cran or bioconductor.</li>
-<li><code>github_repo/package</code>: DSC will install <code>package</code> from <code>github_repo</code> on github.</li>
-<li><code>package (version[s])</code>: DSC will install <code>package</code> and check version as required. A warning message will be generated if version do not match. It is possible to specify several versions such as <code>edgeR (3.12.0, 3.12.1)</code> or simply <code>edgeR (3.12.0+)</code>.</li>
+<li><code>DSC::exec_path</code>: search path for executable files.</li>
+<li><code>DSC::lib_path</code>: search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed.</li>
+<li><code>DSC::R_libs</code>: check required R libraries and if not available, automatically install them from cran, bioconductor or github. 3 formats are accepted:<ul>
+<li><code>&lt;package&gt;</code>: DSC will check / install <code>package</code> from cran or bioconductor.</li>
+<li><code>&lt;github_repo/package&gt;</code>: DSC will install <code>package</code> from <code>github_repo</code> on github.</li>
+<li><code>&lt;package (version[s])&gt;</code>: DSC will install <code>package</code> and check version as required. A warning message will be generated if version do not match. It is possible to specify several versions such as <code>edgeR (3.12.0, 3.12.1)</code> or simply <code>edgeR (3.12.0+)</code>.</li>
 </ul>
 </li>
-<li><code>python_modules</code>: Required Python3 modules, from pip.</li>
-<li><code>work_dir</code>: work directory where DSC runs take place.</li>
+<li><code>python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
+<li><code>work_dir</code>: work directory where benchmarking will take place.</li>
+<li><code>global</code>: defines global variables which can be used in definition of modules through <a href="DSC_Configuration.html#Substitution-operator-131">substitution operator <code>$()</code></a>.</li>
 </ul>
-<h2 id="Running-DSC">Running DSC<a class="anchor-link" href="#Running-DSC">&#182;</a></h2><p>At this point we have covered everthing we need to compose a DSC file. To see how it works in practice with a simple example, please follow through this <a href="tutorials/Quick_Start.html">Quick Start tutorial</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Ready-to-indulge?">Ready to indulge?<a class="anchor-link" href="#Ready-to-indulge?">&#182;</a></h2><p>At this point we have covered the basics to compose a DSC benchmark. To see how it works in practice with a simple example, please follow through this <a href="tutorials/Quick_Start.html">Quick Start tutorial</a>.</p>
 
 </div>
 </div>
