@@ -195,10 +195,9 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is a more advanced application of DSC with R scripts. We demonstrate in this tutorial features of DSC2 including:</p>
 <ul>
-<li>Inline code as input parameters</li>
-<li>Alias: for executables, parameters and return values</li>
+<li>Inline code as parameters</li>
+<li><code>@ALIAS</code> decorator</li>
 <li>R library installation and version check</li>
-<li>Extracting results via combinations of tags</li>
 </ul>
 <h2 id="DSC-Problem">DSC Problem<a class="anchor-link" href="#DSC-Problem">&#182;</a></h2><p>The DSC problem is based on the ASH example of DSCR (<a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">R Markdown version</a> and <a href="dscr_dsc_shrink.html">HTML version</a>). Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/ash">DSC2 vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
 <blockquote><p>To illustrate we consider the problem of shrinkage, which is tackled by the <code>ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output "shrunk" estimates for $\beta$ (so output is a list with one element, called <code>beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code>beta_est</code> with beta.</p>
@@ -207,57 +206,61 @@ body {
 <p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code>ash</code>.</p>
 </blockquote>
 <h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC2 language below, following the structure of the original DSCR implementation:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">datamaker.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:5)</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">g</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),</span>
-             <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(rep(1/7,7),</span>
-             <span class="l l-Scalar l-Scalar-Plain">c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),</span>
-             <span class="l l-Scalar l-Scalar-Plain">Asis(ashr::normalmix(c(1/4,1/4,1/3,1/6),</span>
-             <span class="l l-Scalar l-Scalar-Plain">c(-2,-1,0,1),c(2,1.5,1,1)))</span>
-          <span class="l l-Scalar l-Scalar-Plain">min_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-          <span class="l l-Scalar l-Scalar-Plain">max_pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-          <span class="l l-Scalar l-Scalar-Plain">nsamp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-          <span class="l l-Scalar l-Scalar-Plain">betahatsd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">args = List()</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">data, true_beta = R(data$meta$beta),</span> 
-              <span class="l l-Scalar l-Scalar-Plain">true_pi0 = R(data$meta$pi0)</span>
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">shrink</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runash.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">input</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$data</span>
-          <span class="l l-Scalar l-Scalar-Plain">mixcompdist</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">normal, halfuniform</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ash_data, beta_est = R(ashr::get_pm(ash_data)),</span>
-              <span class="l l-Scalar l-Scalar-Plain">pi0_est = R(ashr::get_pi0(ash_data))</span>
+<pre><code># module alias and executables
+simulate: datamaker.R
+    # module input and variables
+    seed: R(1:5)
+    g: raw(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),
+       raw(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),
+       raw(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))
+    min_pi0: 0
+    max_pi0: 1
+    nsamp: 1000
+    betahatsd: 1
+    # module decoration
+    @ALIAS: args = list()
+    @CONF: queue = midway
+    # module output
+    $data: data
+    $true_beta: raw(data$meta$beta)
+    $true_pi0: raw(data$meta$pi0)
 
-  <span class="l l-Scalar l-Scalar-Plain">beta_score</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_beta</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">beta_true</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_beta</span>
-          <span class="l l-Scalar l-Scalar-Plain">beta_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$beta_est</span>
-          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = beta_est, truth = beta_true</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+shrink: runash.R
+    # module input and variables
+    input: $data
+    mixcompdist: normal, halfuniform
+    # module output
+    $ash_data: ash_data
+    $beta_est: raw(ashr::get_pm(ash_data))
+    $pi0_est: raw(ashr::get_pi0(ash_data))
 
-  <span class="l l-Scalar l-Scalar-Plain">pi0_score</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">score_pi0</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">pi0_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$pi0_est</span>
-          <span class="l l-Scalar l-Scalar-Plain">pi0</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_pi0</span>
-          <span class="l l-Scalar l-Scalar-Plain">.alias</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">est = pi0_est, truth = pi0</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">result</span>
+score_beta: score.R
+    # module input and variables
+    est: $true_beta
+    truth: $beta_est
+    # module output aka pipeline variable
+    $mse_beta: result
 
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">shrink *</span>
-           <span class="l l-Scalar l-Scalar-Plain">(beta_score, pi0_score)</span>
-      <span class="l l-Scalar l-Scalar-Plain">R_libs</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">stephens999/ashr (2.0.0+)</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bin</span>
-      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
-</pre></div>
+score_pi0: score.R
+    # module input and variables
+    est: $pi0_est
+    truth: $true_pi0
+    # module output
+    $mse_pi: result
+
+DSC:
+    # module ensembles
+    define:
+      score: score_beta, score_pi0
+    # pipelines
+    run: simulate * shrink * score
+    # runtime environments
+    R_libs: stephens999/ashr (2.0.0+)
+    exec_path: bin
+    output: dsc_result
+    # pipeline variables, will overwrite any module variables of the same name
+    # it is also place to config the global random number generator</code></pre>
 <p>This is a more complicated example. It is suggested that you walk through every DSC block, cross-referencing the corresponding R code for <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/datamaker.R">datamaker</a>, <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC2 communicates with your R program.</p>
 <p>Next we will walk though each DSC blocks and illustrate some highlights.</p>
 <h3 id="Block-simulate">Block <code>simulate</code><a class="anchor-link" href="#Block-simulate">&#182;</a></h3><h4 id="Inline-R-code-as-parameters">Inline R code as parameters<a class="anchor-link" href="#Inline-R-code-as-parameters">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which are R codes within <code>Asis()</code> function. Contents inside <code>Asis()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret it as <code>g &lt;- ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned output of R codes in <code>Asis()</code> for use with <code>datamaker.R</code>. Without <code>Asis</code>, this line will be interpreted as a string assigned to <code>g</code> which will cause troubles.</p>
