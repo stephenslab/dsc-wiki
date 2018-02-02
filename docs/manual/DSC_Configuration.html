@@ -193,7 +193,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this document we continue to break down this <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">toy DSC example</a> for detailed introduction on DSC syntax (please refer to <a href="Terminology.html">Terminology</a> and <a href="Design_and_Features.html">Design and Features</a> for a broader discussion on this example). We endeavor to maintain a simple syntax to configure a DSC -- we use one or more syntax blocks for module definitions and one block for benchmark specifications. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools and working with remote computers or HPC clusters.</p>
+<p>In this document we continue to use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) for detailed introduction on DSC syntax (please refer to <a href="Terminology.html">Terminology</a> and <a href="Design_and_Features.html">Design and Features</a> for a broader discussion on this example). We endeavor to maintain a simple syntax to configure a DSC. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools and working with remote computers or HPC clusters.</p>
+<p>A DSC file consists of one or more syntax blocks for module definitions, and one block for benchmark execution specifications. Here we focus on discussing module blocks. DSC benchmark execution will be discussed in <a href="DSC_Execution.html">a separate documentation page</a>.</p>
 
 </div>
 </div>
@@ -209,8 +210,8 @@ body {
 <li><code>parameters</code></li>
 <li><code>output</code></li>
 </ul>
-<p>and, optionally, "decorators" that provides customization to modules in the same block. Note that we do not use these exact terms as keywords in module syntax yet these components distinguish from each other syntactically.</p>
-<h3 id="Module-headline">Module headline<a class="anchor-link" href="#Module-headline">&#182;</a></h3><p>Modules, the building blocks of DSC, can be specified as follows:</p>
+<p>and, optionally, <code>decorators</code> that provide customization to modules in the same block. Note that we do not use these exact terms as keywords in module syntax, yet as will be illustrated soon, these components distinguish from each other syntactically.</p>
+<h3 id="Module-headline">Module headline<a class="anchor-link" href="#Module-headline">&#182;</a></h3><p>Modules, the building blocks of DSC, can be minimally specified as follows:</p>
 
 <pre><code>normal, t: rnorm.R, rt.R
     n: 1000
@@ -218,7 +219,7 @@ body {
 <p>Here we focus on the first line (aka the "headline"):</p>
 
 <pre><code>normal, t: rnorm.R, rt.R</code></pre>
-<p>The two elements separated by <code>:</code> are module names and executables. The module named <code>normal</code> corresponds to <code>rnorm.R</code>, <code>t</code> corresponds to <code>rt.R</code>. When there are multiple module names on the left of <code>:</code> yet only one executable on the right, eg:</p>
+<p>The two elements separated by <code>:</code> are module names and executables. The module named <code>normal</code> corresponds to <code>rnorm.R</code>, <code>t</code> corresponds to <code>rt.R</code>. For cases when there are multiple module names on the left of <code>:</code> yet only one executable on the right, eg:</p>
 
 <pre><code>normal, t: simulate.R</code></pre>
 <p>then the two modules will share the same executable (yet, to be discussed later, different module parameters).</p>
@@ -238,13 +239,13 @@ body {
 
 shifted_normal(normal): 
     mu: 1</code></pre>
-<p><code>shifted_normal</code> is a derived module from <code>normal</code>. The complete definition of <code>shifted_normal</code> is in fact:</p>
+<p><code>shifted_normal</code> is a derived module from <code>normal</code>. The complete definition of <code>shifted_normal</code>, after expanding with the derived contents, is in fact:</p>
 
 <pre><code>shifted_normal: rnorm.R
     n: 1000
     mu: 1
     $x: x</code></pre>
-<p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is basically <code>normal</code> with additional parameters.</p>
+<p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is essentially <code>normal</code> with additional parameters.</p>
 
 </div>
 </div>
@@ -253,7 +254,7 @@ shifted_normal(normal):
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Module parameters are variables to be used with module executables. Each parameter is a indented entry under module headline with parameter names corresponding to variable names or command-line arguments for module executables.</p>
+<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Module parameters are variables to be used with module executables. Each parameter is a indented entry under module headline with parameter names corresponding to variable names, or command-line arguments, for module executables.</p>
 <p>In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
 <ul>
 <li>module 1: <code>rnorm.R</code> with <code>n</code> set to 100</li>
@@ -265,7 +266,7 @@ shifted_normal(normal):
 
 <pre><code>    n: 10, 20
     p: 0.1, 0.2</code></pre>
-<p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <code>@FILTER</code> decorator. In the example above each module will take 4 sets of parameters : <code>(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
+<p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <a href="#Decorator-FILTER-123"><code>@FILTER</code></a> decorator. In the example above each module will take 4 sets of parameters : <code>(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
 
 </div>
 </div>
@@ -279,9 +280,10 @@ shifted_normal(normal):
 <pre><code>normal, t: rnorm.R, rt.R
     n: 1000
     $x: x</code></pre>
-<p><code>$x</code> on the left of the <code>:</code> is a module output. Under the hood, the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R"><code>rnorm.R</code></a> script generates a variable <code>x</code>, which is an <code>n</code> vector of normally distributed numbers. By specifying <code>$x: x</code>, other downstream steps will be able to use <code>$x</code> as their input.</p>
+<p><code>$x</code> on the left hand side of <code>:</code> is a module output. Under the hood, the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R"><code>rnorm.R</code></a> script generates a variable <code>x</code>, which is an <code>n</code> vector of normally distributed numbers. By specifying <code>$x: x</code>, <code>x</code> becomes a "module output". That is, other downstream steps will be able to use it via <code>$x</code> as their input, as will be discussed later in detail.</p>
 <p>Language specific syntax can be used to extract specific data from objects for use as module output. For example <code>beta = R(data$meta_info$beta)</code> extracts <code>beta</code> from an <code>R</code> nested list that stores meta information, and use the data extracted as module output <code>beta</code>.</p>
-<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. For example in the above code block <code>x</code> is not a module parameter. For command-line executables, module output will have to be one of the module parameters. (FIXME: give a tutorial on executables in DSC)</p>
+<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. For example in the above code block <code>x</code> is not a module parameter. For command-line executables, module output will have to be one of the module parameters.</p>
+<p><strong> FIXME: give a tutorial on using command-line tools with DSC </strong></p>
 
 </div>
 </div>
@@ -307,7 +309,7 @@ shrink: method.R
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Decorators">Decorators<a class="anchor-link" href="#Decorators">&#182;</a></h2><p>The word "decorator" is borrowed from the term "decorator pattern" in object-oriented programming (a design pattern that allows behavior to be added to an individual object without affecting the behavior of other objects from the same class). A DSC decorator, when applied, will modify execution behavior of given modules without impacting others. Available decorators are:</p>
+<h2 id="Decorators">Decorators<a class="anchor-link" href="#Decorators">&#182;</a></h2><p>The word "decorator" is borrowed from the term "decorator pattern" in object-oriented programming (a design pattern that allows behavior to be added to an individual object without affecting the behavior of other objects from the same class). A DSC decorator, when applied, will modify behavior of modules specified. Available decorators are:</p>
 <ul>
 <li>@ALIAS</li>
 <li>@FILTER</li>
@@ -329,7 +331,15 @@ shrink: method.R
     @t:
         df: 5, 10
 ...</code></pre>
-<p>where <code>n</code> is shared by both modules but parameter <code>df</code> is only used by module <code>t</code>. Module decorator always took precedence over parameters / inputs shared by modules when assigning new variables or modify existing ones. However to ensure output from all modules are the same, module decorators cannot be used to configure module output variables.</p>
+<p>where <code>n</code> is shared by both modules but parameter <code>df</code> is only used by module <code>t</code>. Module decorator always took precedence over parameters / inputs shared by modules when assigning new variables or modify existing ones, that is:</p>
+
+<pre><code>normal, t: rnorm.R, rt.R
+    n: 1000
+    @t:
+        n: 200
+...</code></pre>
+<p>will set <code>n = 200</code> for <code>t</code>, rather than using <code>n = 1000</code>.</p>
+<p>Note that to ensure output from all modules are the same, module decorators cannot be used to configure module output variables.</p>
 
 </div>
 </div>
@@ -338,7 +348,8 @@ shrink: method.R
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Decorator-ALIAS">Decorator ALIAS<a class="anchor-link" href="#Decorator-ALIAS">&#182;</a></h3><p><code>@ALIAS</code> is used to adjust the way inputs and parameters are passed to modules. DSC module parameter are of "simple" types (single elements or an array of single elements). In practice parameters specification may get complicated. For example an R script <code>method.R</code> accepts one "List" variable <code>args</code> that contains <code>var_a</code> and <code>var_b</code>:</p>
+<h3 id="Decorator-ALIAS">Decorator ALIAS<a class="anchor-link" href="#Decorator-ALIAS">&#182;</a></h3><p><code>@ALIAS</code> is used to adjust the way inputs and parameters are passed to modules. DSC module parameter are of "simple" types (single elements or an array of single elements). In practice parameters specification may get complicated. <code>@ALIAS</code> can be used to compose a commonly used parameter input theme: all parameters are nested inside a "key-value" system.</p>
+<p>For example an R script <code>method.R</code> accepts one "List" variable <code>args</code> that contains <code>var_a</code> and <code>var_b</code>:</p>
 
 <pre><code>f1 = function(x) { ... }
 f2 = function(x) { ... }
@@ -365,7 +376,8 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Decorator-FILTER">Decorator FILTER<a class="anchor-link" href="#Decorator-FILTER">&#182;</a></h3><p><code>@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code>@FILTER</code> syntax is the same as the <code>condition</code> statement and is documented elsewhere (FIXME: add link). Here is an example:</p>
+<h3 id="Decorator-FILTER">Decorator FILTER<a class="anchor-link" href="#Decorator-FILTER">&#182;</a></h3><p><strong> FIXME: add link to syntax documentation for condition statements </strong></p>
+<p><code>@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code>@FILTER</code> syntax is the same as the <code>condition</code> statement and is documented elsewhere. Here is an example:</p>
 
 <pre><code>normal, t: normal.R, t.R
     n: 100, 200, 300, 400, 500
@@ -375,7 +387,7 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 <p>Without <code>@FILTER</code> DSC will exhaust all combinations of 5 values of <code>n</code> and 2 of <code>k</code> for both modules, creating a total of 20 parallel jobs. The <code>@FILTER</code> here states that instead of running all 20 jobs, DSC will run for <code>t</code> 3 values from <code>n</code> with <code>k = 0</code>, then run the rest 2 values of <code>n</code> with <code>k = 1</code>, which is a total of 5 jobs for <code>t</code>. Then it runs for <code>normal</code> with <code>n = 500</code> combined with 2 values from <code>k</code>, a total of 2 jobs. Therefore only 7 jobs will be executed after applying the <code>@FILTER</code>.</p>
 <p>When no module name is specified, eg. <code>.n</code>, then all modules will subject to the filter:</p>
 
-<pre><code>    @FILTER: (.n in (100,200,300) and .k == 0) or (.n in (400,500) and .k == 1)</code></pre>
+<pre><code>    @FILTER: (.n in (100,200,300) and .k = 0)</code></pre>
 
 </div>
 </div>
@@ -385,7 +397,7 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Decorator-CONF">Decorator CONF<a class="anchor-link" href="#Decorator-CONF">&#182;</a></h3><p><code>@CONF</code> provides interface to configuring how the modules in the current block should be executed. Most <code>@CONF</code> options are related to running on remote computational environment such as a single workstation server or HPC clusers.</p>
-<p><strong>FIXME: termed <code>.option</code> in version 0.2.2, the feature is currently removed due to active changes on SoS task models. It will be added back in the next DSC release</strong></p>
+<p><strong>FIXME: termed <code>.option</code> in version 0.2.2, the feature is currently removed due to active changes on SoS task models. It will be added back in DSC release 0.2.5</strong></p>
 
 </div>
 </div>
@@ -404,17 +416,17 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Substitution-operator">Substitution operator<a class="anchor-link" href="#Substitution-operator">&#182;</a></h3><p>The substitution parameter <code>$()</code> refers to variables defined in <code>DSC::globals</code>.</p>
 
-<pre><code>simulate: simulate.R
-    methods: $(data_functions)
+<pre><code>simulate_cosine: cosine.R
+    types: $(data_functions)
 ...
 
 DSC:
     globals: 
-        data_functions: mvngenotypes, discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
+        data_functions: discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
 <p>is equivalent to</p>
 
-<pre><code>simulate: simulate.R
-    methods: mvngenotypes, discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
+<pre><code>simulate_cosine: cosine.R
+    types: discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
 
 </div>
 </div>
@@ -427,7 +439,7 @@ DSC:
 
 <pre><code>method: method.R
     K: (1,2,3), (4,5,6)</code></pre>
-<p>With <code>()</code>, <code>(1,2,3)</code> will be translated as a group to vector assignment <code>c(1, 2, 3)</code> in <code>R</code>, tuple <code>(1,2,3)</code> in <code>Python</code>, or space separated argument sequence <code>1 2 3</code> for command-line tools. Values will be assigned in groups defined by <code>()</code> instead of separately.</p>
+<p>With <code>()</code>, <code>(1,2,3)</code> will be translated as a group to <code>c(1, 2, 3)</code> in <code>R</code>, <code>(1,2,3)</code> in <code>Python</code>, or space separated argument sequence <code>1 2 3</code> for command-line tools. Values will be assigned in groups defined by <code>()</code> instead of separately.</p>
 
 </div>
 </div>
@@ -437,7 +449,7 @@ DSC:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Language-interpreters">Language interpreters<a class="anchor-link" href="#Language-interpreters">&#182;</a></h3><p>Currently <code>R()</code>, <code>Python()</code>, and <code>Shell()</code> are supported. These operators run codes inside parenthesis using corresponding interpreters and evaluate the output. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
-<p><strong> FIXME: advanced behavor of these interpreters are yet to be implemented. </strong></p>
+<p><strong> FIXME: advanced behavor of <code>R()</code> is yet to be implemented, via the companion package. </strong></p>
 
 </div>
 </div>
@@ -474,9 +486,8 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h3><p><em>FIXME: partial conversion is yet to be implemented for version 0.2.5.</em></p>
-<p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>.</p>
-<p>This is used in <code>.alias</code> entries to help construct variables for plugin executables. For example for a R modules:</p>
+<h3 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h3><p><strong> FIXME: partial conversion will be available in version 0.2.5.</strong></p>
+<p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
 
 <pre><code>@ALIAS: args = List()</code></pre>
 <p>will convert all input / parameters the module has available, say <code>x,y,z</code> to <code>args &lt;- list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
@@ -488,25 +499,25 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Raw-string-indicator">Raw string indicator<a class="anchor-link" href="#Raw-string-indicator">&#182;</a></h3><p>In DSC file, numeric vs. string data-types are automatically determined and there is no need to add quotes (<code>'</code> or <code>"</code>) to strings. This is convenient in most cases but can be problematic when the input are automatically converted to quoted strings yet in fact they should not. For example, in cases when we want to input a chunk of R codes that will be executed only at runtime not when constructing DSC. <code>raw()</code> indicator will protect them from having quotes added. For example,</p>
+<h3 id="Raw-string-indicator">Raw string indicator<a class="anchor-link" href="#Raw-string-indicator">&#182;</a></h3><p>In DSC file, numeric vs. string data-types are automatically determined and there is no need to add quotes (<code>'</code> or <code>"</code>) to strings. This is convenient in most cases but can be problematic when the input are automatically converted to quoted strings when in fact they should not -- such as cases when we want to input a chunk of R codes that will be executed only at runtime not when constructing DSC. <code>raw()</code> indicator will protect them from having quotes added. For example,</p>
 
-<pre><code>  g: raw(normalmix(c(2/3,1/3),c(0,0),c(1,2)))</code></pre>
-<p>will result in</p>
+<pre><code>g: raw(normalmix(c(2/3,1/3),c(0,0),c(1,2)))</code></pre>
+<p>will result in the <code>R</code> code</p>
 <div class="highlight"><pre><span></span>g <span class="o">=</span> normalmix<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
 </pre></div>
-<p>But without <code>raw()</code> it will result in</p>
+<p>which is what we'd expect. But without <code>raw()</code> it will result in <code>R</code> code</p>
 <div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="s">&quot;normalmix(c(2/3,1/3),c(0,0),c(1,2))&quot;</span>
 </pre></div>
 <p>which is problematic.</p>
 <p>Since <code>raw()</code> protects its input from any type of conversions, it can be used to pass in <em>strings</em> verbatim, for example:</p>
 
-<pre><code>  g: (1, 2, 3)
-  k: ('1', '2', '3')
-  l: (raw('1', '2', '3'))</code></pre>
+<pre><code>g: (1, 2, 3)
+k: ('1', '2', '3')
+l: (raw('1', '2', '3'))</code></pre>
 <p>will result in</p>
 <div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
-  k <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">)</span>
-  l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&#39;1&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;2&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;3&#39;&quot;</span><span class="p">)</span>
+k <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">)</span>
+l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&#39;1&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;2&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;3&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>

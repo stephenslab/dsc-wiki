@@ -185,7 +185,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Test-/-documentation-TODO">Test / documentation TODO<a class="anchor-link" href="#Test-/-documentation-TODO">&#182;</a></h1>
+<h1 id="DSC-Version-1.0-roadmap">DSC Version 1.0 roadmap<a class="anchor-link" href="#DSC-Version-1.0-roadmap">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -203,6 +203,8 @@ body {
 <li>[] module inherit omitting exec</li>
 <li>[] no multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
 <li>[] @module should not have output</li>
+<li>[] no nested <code>@</code></li>
+<li>[] what is the deal with <code>+</code> in <code>DSC::run</code>??</li>
 </ul>
 <h3 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h3><ul>
 <li>[] identical tasks will result in complaint. check for identical jobs ie same parameter twice </li>
@@ -224,7 +226,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h2><h3 id="Best-practices">Best practices<a class="anchor-link" href="#Best-practices">&#182;</a></h3><ul>
-<li>[] add a line of best practice: do not use <code>library()</code></li>
+<li>[] add a line of best practice RE namespace clarity and stdout control, e.g. do not use <code>library()</code> (??)</li>
 <li>[] RE seeds</li>
 </ul>
 <h3 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h3><ul>
@@ -253,7 +255,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many are to be brought back in and test due to new syntax and SoS advances etc</p>
+<h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many were existing features removed due to due to new syntax and SoS advances etc. We need to bring them back in.</p>
 <ul>
 <li>[] a more self-contained way to load DSC related functions: a companion R package eventually?</li>
 <li>[] performance (<code>SoS</code> tasks)</li>
@@ -295,10 +297,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Bugs">Bugs<a class="anchor-link" href="#Bugs">&#182;</a></h2><ul>
-<li>[] recover full does not work</li>
-</ul>
-
+<h2 id="Known-bugs-to-be-fixed">Known bugs to be fixed<a class="anchor-link" href="#Known-bugs-to-be-fixed">&#182;</a></h2>
 </div>
 </div>
 </div>
