@@ -254,7 +254,7 @@ shifted_normal(normal):
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Module parameters are variables to be used with module executables. Each parameter is a indented entry under module headline with parameter names corresponding to variable names, or command-line arguments, for module executables.</p>
+<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Module parameters are variables to be used with module executables. Each parameter is an indented property under module headline with parameter names corresponding to variable names, or command-line arguments, for module executables.</p>
 <p>In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
 <ul>
 <li>module 1: <code>rnorm.R</code> with <code>n</code> set to 100</li>

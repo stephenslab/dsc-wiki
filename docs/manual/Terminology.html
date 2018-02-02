@@ -193,7 +193,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is a list of terms defined for elements in DSC. We will use these terms throughout the DSC documentation.</p>
+<p>This document defines a list of DSC jargons. We will use these terms throughout the DSC documentation. Here we focus on fundamental concepts. Other jargons, particularly a whole class of various <em>operators</em>, will be defined and explained at the same time in <a href="DSC_Configuration.html">DSC modules</a> and <a href="DSC_Execution.html">DSC benchmark</a> documentations.</p>
 
 </div>
 </div>
@@ -202,37 +202,103 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-file-(or-DSC-script)">DSC file (or DSC script)<a class="anchor-link" href="#DSC-file-(or-DSC-script)">&#182;</a></h2><p>A <a href="http://yaml.org">YAML</a> flavored text file (yet not YAML compatible!) that configures DSC <strong>modules</strong> and <strong>benchmark</strong>.</p>
+<h3 id="Code-block-(or-block)">Code block (or block)<a class="anchor-link" href="#Code-block-(or-block)">&#182;</a></h3><p>A piece of code that starts at (and includes) a line where there is no indentation and ends at (and excludes) another line where there is no indentation.</p>
+<h3 id="Property">Property<a class="anchor-link" href="#Property">&#182;</a></h3><p>A line of code that has a "key: value" syntax: the name of the property is on the left side of <code>:</code>, followed by the contents of the property on the right side.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-definition">Module definition<a class="anchor-link" href="#Module-definition">&#182;</a></h2><p>A module definition is a block that takes <em>input</em> and produces <em>output</em>, and otherwise has no side effects. It is defined by an executable (or inline code), and (optionally) a set of <em>parameters</em> and <em>decorators</em> that determine the behavior of the code.  Each module definition must have a unique name, which will be useful for referring to that module later. We use a $ prefix to distinguish variables that are inputs and outputs from a module, vs parameters.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-specification-(module)">Module specification (module)<a class="anchor-link" href="#Module-specification-(module)">&#182;</a></h2><p><em>parameters</em> and <em>decorators</em> are considered to be part of a module specification, not an addendum to it. That is, the same executable with different parameters is a different module. <em>Module definition</em> is a succint way to specify a number of syntactically exchangable modules. Each module takes a unique set of parameter combination:</p>
 <ul>
-<li><strong>DSC script</strong> or <strong>DSC configuration</strong>: A <a href="http://yaml.org">YAML</a> flavored text file that configures the entire DSC procedure.<ul>
-<li>DSC script is YAML flavored but not standard YAML file. It is based on YAML parser yet it is capable of handling block operators and DSC variables as it loads the script.</li>
+<li><em>parameters</em>: a set of fixed values that distinguishes modules from each other in a module definition.</li>
+<li><em>decorators</em>: a mechanism to modify how parameters are passed to the computer executable programs involved in the module</li>
 </ul>
-</li>
-<li><strong>DSC block</strong>: Sections in DSC script that defines a family of computational routines.</li>
-<li><strong>DSC step</strong>: A computational routine defined in a DSC block.</li>
-<li><strong>Block properties</strong>: <ul>
-<li>Main properties: <code>exec</code>, <code>params</code>, <code>seed</code>, <code>return</code></li>
-<li>Optional properties: <code>.alias</code>, <code>.logic</code>, <code>.options</code></li>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-instance">Module instance<a class="anchor-link" href="#Module-instance">&#182;</a></h2><p>A module instance is what is created when a module is executed in practice. It is module with specific:</p>
+<ul>
+<li><em>module input</em>: the set of inputs to the module</li>
+<li><em>module output</em>: the set of outputs produced by executing the module</li>
 </ul>
-</li>
-<li><strong>DSC entry</strong>: Lines in DSC blocks, labeled by block parameters or options and separated by comma (","), to allow for a range of values be assigned to multiple computational routines.</li>
-<li><strong>Block operators</strong>: Special functions to help DSC specification, including:<ul>
-<li><code>$, $(), (), R(), Python(), Shell(), Combo(), Pairs(), Asis(), File(), Pack()</code></li>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-ensemble-and-pipeline-definition">Module ensemble and pipeline definition<a class="anchor-link" href="#Module-ensemble-and-pipeline-definition">&#182;</a></h2><p>A module ensemble is a sequence of module definitions. A pipeline definition is a special case of module ensemble that represents a complete and meaningful computational procedure DSC aims to investigate.</p>
+<h3 id="Valid-pipeline-definition">Valid pipeline definition<a class="anchor-link" href="#Valid-pipeline-definition">&#182;</a></h3><p>A pipeline definition is valid if, for each module in the pipeline, the <em>input</em> are <em>output</em> of (at least one) previous module definition in the sequence.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pipeline-instance">Pipeline instance<a class="anchor-link" href="#Pipeline-instance">&#182;</a></h2><p>Pipeline instance is a sequence of Module instances. It results from actually executing an instance of a pipeline on data.</p>
+<ul>
+<li><em>pipeline input</em>: the input to the first module instance in a pipeline instance.</li>
+<li><em>pipeline output</em>: the set of all outputs produced by all module instances in a pipeline instance (not just the final module instance).</li>
 </ul>
-</li>
-<li><strong>The DSC Section</strong>: A special section called <code>DSC</code>, consisting of a <a href="Design_and_Features.html#Design-Overview"><strong>DSC sequence</strong></a>, plus various miscellaneous parameters to configure DSC runs.<ul>
-<li>For example, required R libraries, path to executables / libraries, global variables for the DSC script, output file name and work directory.</li>
-</ul>
-</li>
-<li><strong>DSC sequence</strong> &amp; <strong>DSC sequence operators</strong>: A sequence of logical expression that defines how the DSC blocks should be connected to each other.</li>
-<li><strong>DSC variables</strong>: The <code>params</code> entry in the <code>DSC</code> section that defines variables to be accessed by DSC blocks (via <code>$()</code> sigil).</li>
-<li><strong>DSC annotation</strong>: A <a href="http://yaml.org">YAML</a> text file that annotates DSC with tags.<ul>
-<li>DSC annotation file is a strict YAML file. Only limited block operators are supported.</li>
-</ul>
-</li>
-<li><strong>Annotation statement</strong>: entries in DSC annotation file.</li>
-<li><code>block::entry::value</code> is the notation to refer to an entry in a DSC block. For example <code>simulate::params::K</code> refers to the parameter <code>K</code> in <code>simulate</code> block.</li>
-</ul>
-<p>You may glance over some <a href="tutorials.html#Intermediate-examples">sample DSC scripts</a> to have an idea of DSC2 syntax. It is also recommended that you read the <a href="Design_and_Features">DSC design concept</a> before diving into the details throughout the rest of the document.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pipeline-variable">Pipeline variable<a class="anchor-link" href="#Pipeline-variable">&#182;</a></h2><p>Any output variable from any module in the pipeline (will often also be an <em>input</em> to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Note: "Module" may be used as a synonym for "Module definition" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for either "pipeline definition" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "valid pipeline" must mean "valid pipeline definition"; and "pipeline input/output" must mean "pipeline instance input/output".</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-benchmark-definition-and-instance">DSC benchmark definition and instance<a class="anchor-link" href="#DSC-benchmark-definition-and-instance">&#182;</a></h2><p>DSC benchmark is a collective term for all pipelines (definition and instance) specified in a DSC file (or via <code>dsc</code> command line interface).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may glance over some <a href="tutorials.html#Intermediate-examples">sample DSC scripts</a> to have an idea of DSC2 syntax. It is also recommended that you read the <a href="Design_and_Features">DSC design concept</a> before diving into the details throughout the rest of the documentation on this site.</p>
 
 </div>
 </div>
