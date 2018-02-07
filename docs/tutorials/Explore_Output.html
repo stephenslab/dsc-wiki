@@ -194,34 +194,30 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This tutorial is a continuation of the <a href="Quick_Start.html">Quick Start</a>. As a reminder here is the DSC script we've executed:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.R, rt.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<pre><code>normal, t: rnorm.R, rt.R
+    seed: R(1:10)
+    n: 1000
+    true_mean: 0, 1
+    $x: x
+    $true_mean: true_mean
 
-  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+mean, median: mean.R, median.R
+    x: $x
+    $mean: mean
 
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">mse</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
-      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
-</pre></div>
+mse: MSE.R
+    mean_est: $mean
+    true_mean: $true_mean
+    $mse: mse
+
+DSC:
+    define:
+      simulate: normal, t
+      estimate: mean, median
+    run: simulate * estimate * mse
+    exec_path: R/scenarios, R/methods, R/scores
+    output: dsc_result</code></pre>
 
 </div>
 </div>
@@ -230,7 +226,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To explore the result from this benchmark, we first <strong>annotate</strong> the benchmark with customized <em>tags</em>, then we <strong>extract</strong> results for these tags of interest, and finally load it to external anlaysis tools (eg. <code>R</code>) to interpret the results.</p>
+<p><strong> FIXME: this page is obsolete We will discuss the R package for results extraction</strong>.</p>
 
 </div>
 </div>
@@ -239,139 +235,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-annotation">DSC annotation<a class="anchor-link" href="#DSC-annotation">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Suppose we are interested in comparing <code>mean</code> method vs. <code>median</code> method for data generated under <em>t</em> distribution with mean equals zero. We thus create two tags, <code>mean_t</code> and <code>median_t</code> and save them in a text file called <code>settings.ann</code>:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mean_t</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
-        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
-        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-    <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R</span>
-
-<span class="l l-Scalar l-Scalar-Plain">median_t</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span> 
-        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rt.R</span>
-        <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-    <span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">median.R</span>
-
-<span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">configuration</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">settings.dsc</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We then apply the annotation with the <code>dsc</code> command:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings</span><span class="o">.</span><span class="n">ann</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: 
-+----------------+--------------------------------------------------+
-|  Tag           |  No. unique obj.                                 |
-+----------------+--------------------------------------------------+
-|  <span class="ansi-green-fg">mean_t</span>    |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
-|  <span class="ansi-green-fg">median_t</span>  |  <span class="ansi-green-fg">10</span> estimate &amp; <span class="ansi-green-fg">10</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
-+----------------+--------------------------------------------------+
-INFO: Elapsed time <span class="ansi-green-fg">0.053</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now the annotation has been applied. A summary of the annotation executed is also displayed on the terminal.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-data-extraction">DSC data extraction<a class="anchor-link" href="#DSC-data-extraction">&#182;</a></h2><p>The ultimate result of the DSC benchmark is the <code>mse</code> variable and we want to compare the performance of the two scenarios that we have just tagged using the <code>mse</code> variable. We will extract these tags to a separate data file using the <code>dsc</code> command:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Extracting: 100%|██████████| 3/3 [00:00&lt;00:00, 10.93it/s]
-INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for all annotations for DSC result <span class="ansi-green-fg">mse</span>.
-INFO: Elapsed time <span class="ansi-green-fg">0.594</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The resulting <code>dsc_result.mse.rds</code> file contains the information of interest, which we are going to examine next.</p>
+<p>In order to extract results for, for example samples from $t$ distribution using method <code>mean</code>, one can overlay the tags <code>rt</code> and <code>mean</code> to extract the MSE on this sequence. Multiple tag combinations is also allowed. Here we extract 4 cases:</p>
+<ul>
+<li>Case 1: simulated from <code>rt</code> and analyzed by <code>mean</code></li>
+<li>Case 2: simulated from <code>rnorm</code> and analyzed by <code>mean</code></li>
+<li>Case 3: simulated from <code>rt</code> and analyzed by <code>median</code></li>
+<li>Case 4: simulated from <code>rnorm</code> and analyzed by <code>median</code></li>
+</ul>
 
 </div>
 </div>
@@ -798,123 +668,6 @@ RU5ErkJggg=="
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Automatic-annotation">Automatic annotation<a class="anchor-link" href="#Automatic-annotation">&#182;</a></h2><p>For this very simple application, particularly when the value of <code>true_mean</code> does not matter for location parameter estimate, one should take advantage of automatic annotation DSC provides to create a tag for every executable. To activate automatic annotation, simply create an empty annotation file with only the DSC configuration file name specified:</p>
-
-<pre><code>DSC:
-    configuration: settings.dsc</code></pre>
-<p>and execute it:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">a</span> <span class="n">settings_auto</span><span class="o">.</span><span class="n">ann</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: Annotation summary for sequence ending with <span class="ansi-green-fg">mse</span>
-+--------------+--------------------------------------------------+
-|  Tag         |  No. unique obj.                                 |
-+--------------+--------------------------------------------------+
-|  <span class="ansi-green-fg">rnorm</span>   |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
-|  <span class="ansi-green-fg">rt</span>      |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">10</span> simulate  |
-|  <span class="ansi-green-fg">mean</span>    |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
-|  <span class="ansi-green-fg">median</span>  |  <span class="ansi-green-fg">20</span> estimate &amp; <span class="ansi-green-fg">20</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
-|  <span class="ansi-green-fg">MSE</span>     |  <span class="ansi-green-fg">40</span> estimate &amp; <span class="ansi-green-fg">40</span> mse &amp; <span class="ansi-green-fg">20</span> simulate  |
-+--------------+--------------------------------------------------+
-INFO: Elapsed time <span class="ansi-green-fg">0.076</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to extract results for, for example samples from $t$ distribution using method <code>mean</code>, one can overlay the tags <code>rt</code> and <code>mean</code> to extract the MSE on this sequence. Multiple tag combinations is also allowed. Here we extract 4 cases:</p>
-<ul>
-<li>Case 1: simulated from <code>rt</code> and analyzed by <code>mean</code></li>
-<li>Case 2: simulated from <code>rnorm</code> and analyzed by <code>mean</code></li>
-<li>Case 3: simulated from <code>rt</code> and analyzed by <code>median</code></li>
-<li>Case 4: simulated from <code>rnorm</code> and analyzed by <code>median</code></li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">e</span> <span class="n">mse</span><span class="p">:</span><span class="n">mse</span> <span class="o">-</span><span class="n">b</span> <span class="n">dsc_result</span> <span class="o">--</span><span class="kp">tags</span> \
-    <span class="s2">&quot;case1 = rt&amp;&amp;mean&quot;</span> <span class="s2">&quot;case2 = rnorm&amp;&amp;mean&quot;</span> \
-    <span class="s2">&quot;case3 = rt&amp;&amp;median&quot;</span> <span class="s2">&quot;case4 = rnorm&amp;&amp;median&quot;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Extracting: 100%|██████████| 5/5 [00:00&lt;00:00, 12.72it/s]
-INFO: Data extracted to <span class="ansi-green-fg">dsc_result.mse.rds</span> for DSC result <span class="ansi-green-fg">mse</span> via annotations: 
-	<span class="ansi-green-fg">case1 = rt&amp;&amp;mean
-	case2 = rnorm&amp;&amp;mean
-	case3 = rt&amp;&amp;median
-	case4 = rnorm&amp;&amp;median</span>
-INFO: Elapsed time <span class="ansi-green-fg">0.656</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The <code>mean_t</code> and <code>median_t</code> tags in the previous section is equivalent to <code>case1</code> and <code>case3</code> in this automatic annotation.</p>
-
-</div>
-</div>
 </div>
 <hr>
 &copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
