@@ -202,35 +202,31 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods via simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom; then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rnorm.R, rt.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">seed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R(1:10)</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">n</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0, 1</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">x, true_mean</span>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods via simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom (fixed parameter); then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<pre><code>normal, t: rnorm.R, rt.R
+    seed: R(1:10)
+    n: 1000
+    true_mean: 0, 1
+    $x: x
+    $true_mean: true_mean
 
-  <span class="l l-Scalar l-Scalar-Plain">mse</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MSE.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">mean_est</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$mean</span>
-          <span class="l l-Scalar l-Scalar-Plain">true_mean</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$true_mean</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mse</span>
+mean, median: mean.R, median.R
+    x: $x
+    $mean: mean
 
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">estimate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">mse</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">R/scenarios, R/methods, R/scores</span>
-      <span class="l l-Scalar l-Scalar-Plain">output</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsc_result</span>
-</pre></div>
+mse: MSE.R
+    mean_est: $mean
+    true_mean: $true_mean
+    $mse: mse
+
+DSC:
+    define:
+      simulate: normal, t
+      estimate: mean, median
+    run: simulate * estimate * mse
+    exec_path: R/scenarios, R/methods, R/scores
+    output: dsc_result</code></pre>
 <p>All computational routines in this DSC are R scripts (each with one line of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
   mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
@@ -249,8 +245,8 @@ body {
   <span class="c1"># produces n random numbers from normal with specified mean</span>
   x<span class="o">=</span>rnorm<span class="p">(</span>n<span class="p">,</span>mean<span class="o">=</span>true_mean<span class="p">)</span>
 </pre></div>
-<p>It is important to ensure the parameter names and return variable names match between R script and DSC files. For example the <code>simulate</code> block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate a new variable <code>x</code> as return value (the other return variable <code>true_mean</code> already exists as an input parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses the input parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the return value of the <code>simulate</code> block. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>.</p>
-<p>The <code>DSC::run</code> entry reflects a typical DSC setup where <code>simulate</code> creates <em>scenarios</em> under various settings, <code>estimate</code> applies various <em>methods</em> to analyze data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. They are connected by <code>*</code> to allow for all possible combinations of computational steps from these 3 blocks.</p>
+<p>It is important to ensure the variable names match between R script and DSC files. For example the first syntax block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate module output <code>x</code> (the other output variable <code>true_mean</code> already exists as a parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the output for module <code>normal</code>. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>. These module outputs are both <code>x</code> due to the way <code>rt.R</code> and <code>rnorm.R</code> is written so there is no need to create special aliases.</p>
+<p>The <code>DSC::run</code> entry reflects a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>estimate</em>, that can be applied to simulated data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. Therefore ensembles are created using <code>DSC::define</code> and are used to build a benchmark with <code>*</code> logic so that all possible combinations of modules can be expanded to various pipelines.</p>
 
 </div>
 </div>
@@ -259,17 +255,17 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2><p>To execute the DSC on a computer using 8 CPU threads,</p>
+<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2><p>To execute the DSC on a computer using 30 CPU threads,</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
 </pre></div>
 
 </div>
@@ -285,14 +281,15 @@ body {
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph ...
-DSC: 100%|██████████| 11/11 [00:04&lt;00:00,  2.43it/s]
-INFO: Writing output metadata ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.83it/s]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">5.716</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">12.813</span> seconds.
 </pre>
 </div>
 </div>
@@ -321,10 +318,10 @@ INFO: Elapsed time <span class="ansi-green-fg">5.716</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
 </pre></div>
 
 </div>
@@ -340,14 +337,15 @@ INFO: Elapsed time <span class="ansi-green-fg">5.716</span> seconds.
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph ...
-DSC: 100%|██████████| 11/11 [00:00&lt;00:00, 17.11it/s]
-INFO: Writing output metadata ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:02&lt;00:00,  6.04it/s]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">1.166</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.483</span> seconds.
 </pre>
 </div>
 </div>
@@ -360,17 +358,17 @@ INFO: Elapsed time <span class="ansi-green-fg">1.166</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice the last line of output records elapsed time of ~1 seconds, compared to ~6 seconds in the first run. If you want to ignore existing cache you can use the <code>-f</code> flag to force DSC start afresh:</p>
+<p>Notice the last line of output records elapsed time of ~4.4 seconds, compared to ~12.8 seconds in the first run. If you want to ignore existing result you can use the <code>--skip none</code> flag to force DSC rerun existing results. Under the hood it will remove existing output and rerun the benchmark.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span> <span class="o">-</span><span class="n">f</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span> <span class="o">--</span><span class="kp">skip</span> <span class="n">none</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
 </pre></div>
 
 </div>
@@ -386,14 +384,15 @@ INFO: Elapsed time <span class="ansi-green-fg">1.166</span> seconds.
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph ...
-DSC: 100%|██████████| 11/11 [00:04&lt;00:00,  2.32it/s]
-INFO: Writing output metadata ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:06&lt;00:00,  2.56it/s]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">5.494</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">13.293</span> seconds.
 </pre>
 </div>
 </div>
@@ -406,8 +405,8 @@ INFO: Elapsed time <span class="ansi-green-fg">5.494</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h2><p>DSC commands generates a script browser in HTML format. In this example it is <code>settings.html</code> under your work directory. You can use a web browser to open it and browse DSC scripts as well as your source code involved.</p>
-<h2 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h2><p>Results of this DSC is stored in the folder <code>dsc_result</code>. It contains numerous intermediate or final data from all steps involved in the DSC procedure. Please continue on the <a href="Explore_Output.html">next tutorial</a> to extract and analyze the benchmark results.</p>
+<h2 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h2><p>DSC commands generates a script browser in HTML format. In this example it is <a href="dsc_result.html"><code>dsc_result.html</code></a> under your work directory. You can use a web browser to open it and browse DSC scripts as well as your source code for the benchmark.</p>
+<h2 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h2><p>Results of this DSC is stored in the folder <code>dsc_result</code>. It has numerous file containing parameters and pipeline variables from all pipeline instances in the DSC benchmark. Please continue on the <a href="Explore_Output.html">next tutorial</a> to extract and analyze the benchmark results.</p>
 
 </div>
 </div>
