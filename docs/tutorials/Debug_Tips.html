@@ -185,7 +185,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Debugging-in-DSC2">Debugging in DSC2<a class="anchor-link" href="#Debugging-in-DSC2">&#182;</a></h1>
+<h1 id="Debugging-in-DSC2">Debugging in DSC2<a class="anchor-link" href="#Debugging-in-DSC2">&#182;</a></h1><p><strong>FIXME: need to update it with better examples</strong></p>
+
 </div>
 </div>
 </div>
@@ -193,43 +194,25 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines provided in <code>exec</code> entries and executes these scripts to complete the computational tasks. There are often roughly two types of errors that may occur:</p>
+<h2 id="Intermediate-scripts">Intermediate scripts<a class="anchor-link" href="#Intermediate-scripts">&#182;</a></h2><p>Under the hood, DSC2 generates R, Python or Shell scripts based on computational routines specified in module headline, adding to the generated scripts specification of input and output variables, then executes the complete script. In this processes there are typically two types of possible errors:</p>
 <ul>
-<li>There is an error from user provided computational routine</li>
-<li>There is an inconsistency between DSC script interface and user provided computational routine.</li>
+<li>There is an error from user provided routines</li>
+<li>There is an inconsistency between DSC script interface and user provided routines</li>
 </ul>
-<p>In case of errors DSC will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can debug interactively. Here we look at an example from <a href="https://github.com/stephenslab/dsc2-blm">a benchmark on application of Bayesian Linear Model in genomic prediction</a>.</p>
+<p>In the presence of errors DSC will fail. However the automatically generated script will be saved to disk and DSC2 will point you to the script in question so that you can reproduce and fix the bugs. Here we look at an example from <a href="https://github.com/stephenslab/dsc2-blm">a benchmark on application of Bayesian Linear Model in genomic prediction</a>.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/bin/bash: dsc: command not found
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -246,7 +229,7 @@ body {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="c1">## r script UUID: dcfc55ef9ae7c9eab6397eefe425afc0</span>
@@ -277,40 +260,6 @@ body {
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Warning message in file(filename, &#34;r&#34;, encoding = encoding):
-“cannot open file &#39;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#39;: No such file or directory”
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-Error in file(filename, &#34;r&#34;, encoding = encoding): cannot open the connection
-Traceback:
-
-1. source(&#34;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#34;)
-2. file(filename, &#34;r&#34;, encoding = encoding)</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -323,7 +272,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">source</span><span class="p">(</span><span class="s2">&quot;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&quot;</span><span class="p">)</span>
@@ -339,40 +288,6 @@ Traceback:
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Warning message in file(filename, &#34;r&#34;, encoding = encoding):
-“cannot open file &#39;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#39;: No such file or directory”
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-Error in file(filename, &#34;r&#34;, encoding = encoding): cannot open the connection
-Traceback:
-
-1. source(&#34;/home/gaow/GIT/lab-dsc/dsc2-blm/.sos/.dsc/utils.R&#34;)
-2. file(filename, &#34;r&#34;, encoding = encoding)</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -422,31 +337,13 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">blm</span><span class="o">.</span><span class="n">dsc</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/bin/bash: dsc: command not found
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -456,16 +353,16 @@ Traceback:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You see that all <code>gemma_bslmm</code> related codes are re-executed and the DSC benchmark completed without an issue.</p>
-<h2 id="Command-options---sequence-and---seed">Command options <code>--sequence</code> and <code>--seed</code><a class="anchor-link" href="#Command-options---sequence-and---seed">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seed 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
+<h2 id="Command-options---target-and---seed">Command options <code>--target</code> and <code>--seed</code><a class="anchor-link" href="#Command-options---target-and---seed">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC setup and codes, before running the entire benchmark. For example <code>--seed 1 2</code> will reset all <code>seed</code> properties to only using two seeds 1 and 2, thus performing 2 replicates when in fact the DSC specification would involve hundreds. This can make the benchmark run through relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed block by block: the next block is only attempted when there is no obvious problem with the previous block. For example for a DSC with sequence:</p>
 
 <pre><code>DSC:
   run: simulate * test * score</code></pre>
 <p>When the benchmark is tested for the first time, one should run 3 commands each introducing a new block sequentially:</p>
 
-<pre><code>dcs -x file.dsc ... --sequence simulate --seed 1
-dcs -x file.dsc ... --sequence "simulate * test" --seed 1
-dcs -x file.dsc ... --sequence "simulate * test * score" --seed 1</code></pre>
-<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file. For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
+<pre><code>dcs file.dsc ... --target simulate --seed 1
+dcs file.dsc ... --target "simulate * test" --seed 1
+dcs file.dsc ... --target "simulate * test * score" --seed 1</code></pre>
+<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file, when used with verbosity level greater than <code>2</code> (eg. <code>-v 3</code>). For the example above you should see <code>dsc_blm.log</code> generated for the DSC run. You can look into the log file for more run-time information to help performing diagnostics.</p>
 
 </div>
 </div>
