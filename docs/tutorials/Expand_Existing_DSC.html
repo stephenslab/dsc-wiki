@@ -193,20 +193,25 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <a href="tutorials/Quick_Start.html">Quick Start</a> example contains 3 DSC blocks, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational routine for location estimate via the <em>Winsorized</em> mean. The routine is implemented as <code>winsor.R</code>:</p>
+<p>The <a href="Quick_Start.html">Quick Start</a> example contains 3 ensembles of modules, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational approach for location estimate via the <em>Winsorized</em> mean. This can be implemented as <code>winsor.R</code>:</p>
 <div class="highlight"><pre><span></span>mean <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
-<p>There are two ways to incorporate this new computational routine into DSC: either by adding it to the existing <code>estimate</code> block, or by adding a new block. For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>estimate</code>. We will show here two flavors to update, both involving minimal changes to the DSC file and result in the same outcome. In practice one should always try to adopt a flavor that is most logically clear and succinct.</p>
-<h2 id="Add-Steps-to-Existing-Block">Add Steps to Existing Block<a class="anchor-link" href="#Add-Steps-to-Existing-Block">&#182;</a></h2><p>We change the <code>estimate</code> block to the following:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R, winsor.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-          <span class="l l-Scalar l-Scalar-Plain">exec[3]</span><span class="p p-Indicator">:</span>
-              <span class="l l-Scalar l-Scalar-Plain">trim</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1, 0.2</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
-</pre></div>
-<p>where we appended the new executable <code>winsor.R</code> to the <code>exec</code> entry, along with an executable specific parameter specification in the <code>params</code> section to assign two possible values to <code>trim</code> which essentially provides two versions of Winsorization for comparison.</p>
+<p>and be incoroperated to DSC as a module.</p>
+<p>For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>mean</code> or <code>median</code>. Syntactically are two ways to proceed: either by adding it to the existing group of modules, or by adding a new block that configures this module. We will show here two flavors to update, both involving minimal changes to the DSC file and result in the same outcome. In practice one should always adopt flavor that is most logically clear and succinct.</p>
+<h2 id="Add-module-to-Existing-Block">Add module to Existing Block<a class="anchor-link" href="#Add-module-to-Existing-Block">&#182;</a></h2><p>We change the existing block to the following:</p>
+
+<pre><code>mean, median, winsor: mean.R, median.R, winsor.R
+    x: $x
+    @winsor:
+      trim: 0.1, 0.2
+    $mean: mean</code></pre>
+<p>where we added in a new module <code>winsor</code> with executable <code>winsor.R</code>, along with an executable specific parameter specification via <code>@winsor</code> to assign two possible values to <code>trim</code> which essentially provides two versions of Winsorization for comparison.</p>
+<p>We also added <code>winsor</code> to the <code>estimate</code> ensemble:</p>
+
+<pre><code>DSC:
+    define:
+      simulate: normal, t
+      estimate: mean, median, winsor</code></pre>
 <p>To run the new DSC,</p>
 
 </div>
@@ -214,10 +219,10 @@ body {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
 </pre></div>
 
 </div>
@@ -233,14 +238,15 @@ body {
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: Checking R library <span class="ansi-green-fg">psych</span> ...
-INFO: DSC script exported to <span class="ansi-green-fg">settings_add_method_v1.html</span>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v1.dsc</span> ...
-DSC: 100%|██████████| 15/15 [00:07&lt;00:00,  2.30it/s]
-INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:07&lt;00:00,  2.09it/s]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">11.485</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">13.237</span> seconds.
 </pre>
 </div>
 </div>
@@ -253,30 +259,25 @@ INFO: Elapsed time <span class="ansi-green-fg">11.485</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice that compared to using <code>-f</code> flag the computation time above is shorter (~11 seconds vs. otherwise ~18 seconds). This is because after running the Quick Start tutorial DSC2 has cached steps in that DSC script along with their outcome; thus here only newly added steps are executed.</p>
-<h2 id="Add-a-New-Block">Add a New Block<a class="anchor-link" href="#Add-a-New-Block">&#182;</a></h2><p>Here we show an alternative flavor to update the existing DSC file: we keep the <code>estimate</code> block as is but add a new block <code>estimate_winsor</code>, and modify the <strong>run</strong> sequence in the DSC section to include this new block:</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">estimate</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean.R, median.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+<p>Notice that compared to the run in <a href="Quick_Start.html">Quick Start</a> which took ~12 seconds, running additional two flavors of the <code>winsor</code> module took ~13 seconds. This is because results from <code>mean</code> and <code>median</code> were skipped in this run; only newly added modules are executed.</p>
 
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">estimate_winsor</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">exec</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winsor.R</span>
-      <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
-          <span class="l l-Scalar l-Scalar-Plain">x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$x</span>
-          <span class="l l-Scalar l-Scalar-Plain">trim</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1, 0.2</span>
-      <span class="l l-Scalar l-Scalar-Plain">return</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mean</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Add-a-New-Block">Add a New Block<a class="anchor-link" href="#Add-a-New-Block">&#182;</a></h2><p>Here we show an alternative style to update the existing DSC file: we use a new syntax block for <code>winsor</code> method:</p>
 
-  <span class="l l-Scalar l-Scalar-Plain">...</span>
-  <span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">run</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">simulate *</span>
-           <span class="l l-Scalar l-Scalar-Plain">(estimate, estimate_winsor) *</span>
-           <span class="l l-Scalar l-Scalar-Plain">mse</span>
+<pre><code>mean, median: mean.R, median.R
+    x: $x
+    $mean: mean
 
-  <span class="l l-Scalar l-Scalar-Plain">...</span>
-</pre></div>
-<p>In the <strong>run</strong> sequence, the previous <code>estimate</code> and the new <code>estimate_winsor</code> blocks will be executed in parallel to each other, both taking input from <code>simulate</code> block and generating output for <code>mse</code> block.</p>
+winsor: winsor.R
+    x: $x
+    trim: 0.1, 0.2
+    $mean: mean</code></pre>
 <p>To run this version,</p>
 
 </div>
@@ -284,10 +285,10 @@ INFO: Elapsed time <span class="ansi-green-fg">11.485</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">x</span> <span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">j</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
 </pre></div>
 
 </div>
@@ -303,13 +304,15 @@ INFO: Elapsed time <span class="ansi-green-fg">11.485</span> seconds.
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">settings_add_method_v2.html</span>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v2.dsc</span> ...
-DSC: 100%|██████████| 15/15 [00:02&lt;00:00,  6.10it/s]
-INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+INFO: Building execution graph ...
+INFO: DSC in progress ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:03&lt;00:00,  6.51it/s]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">5.083</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">5.282</span> seconds.
 </pre>
 </div>
 </div>
@@ -322,7 +325,7 @@ INFO: Elapsed time <span class="ansi-green-fg">5.083</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The benchmark is identical to that from previous section albeit different syntax style. Therefore using 5 seconds to check &amp; match file caches, DSC2 has skipped all the actual computations.</p>
+<p>The benchmark is identical to that from previous section albeit different syntax style. Therefore using 5 seconds to check &amp; match file status, DSC2 has skipped all the actual computations.</p>
 
 </div>
 </div>
