@@ -305,7 +305,7 @@ DSC:
 <li><code>DSC::lib_path</code>: search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed.</li>
 <li><code>DSC::R_libs</code>: check required R libraries and if not available, automatically install them from cran, bioconductor or github. 3 formats are accepted:<ul>
 <li><code>&lt;package&gt;</code>: DSC will check / install <code>package</code> from cran or bioconductor.</li>
-<li><code>&lt;github_repo/package&gt;</code>: DSC will install <code>package</code> from <code>github_repo</code> on github.</li>
+<li><code>&lt;package@github_repo/subdir&gt;</code>: DSC will install <code>package</code> from <code>github_repo</code> on github. <code>/subdir</code> is optional -- only applicable when the package is not in the root of the repository.</li>
 <li><code>&lt;package (version[s])&gt;</code>: DSC will install <code>package</code> and check version as required. A warning message will be generated if version do not match. It is possible to specify several versions such as <code>edgeR (3.12.0, 3.12.1)</code> or simply <code>edgeR (3.12.0+)</code>.</li>
 </ul>
 </li>
