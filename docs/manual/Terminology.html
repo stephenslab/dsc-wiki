@@ -213,7 +213,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-definition">Module definition<a class="anchor-link" href="#Module-definition">&#182;</a></h2><p>A module definition is a block that takes <em>input</em> and produces <em>output</em>, and otherwise has no side effects. It is defined by an executable (or inline code), and (optionally) a set of <em>parameters</em> and <em>decorators</em> that determine the behavior of the code.  Each module definition must have a unique name, which will be useful for referring to that module later. We use a $ prefix to distinguish variables that are inputs and outputs from a module, vs parameters.</p>
+<h2 id="Module">Module<a class="anchor-link" href="#Module">&#182;</a></h2><p>A module is a block that takes <em>input</em> and produces <em>output</em>, and otherwise has no side effects. It is defined by an executable (or inline code), and (optionally) a set of <em>parameters</em> and <em>decorators</em> that determine the behavior of the code. Each module must have a unique name, which will be useful for referring to that module later. We use a $ prefix to distinguish variables that are inputs and outputs from a module, vs parameters.</p>
 
 </div>
 </div>
@@ -222,10 +222,10 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-specification-(module)">Module specification (module)<a class="anchor-link" href="#Module-specification-(module)">&#182;</a></h2><p><em>parameters</em> and <em>decorators</em> are considered to be part of a module specification, not an addendum to it. That is, the same executable with different parameters is a different module. <em>Module definition</em> is a succint way to specify a number of syntactically exchangable modules. Each module takes a unique set of parameter combination:</p>
+<h2 id="Module-flavors">Module flavors<a class="anchor-link" href="#Module-flavors">&#182;</a></h2><p><em>parameters</em> and <em>decorators</em> characterize the <em>flavor</em> of a module. That is, the same module with different parameters is a different module flavor. <em>Module</em> is a succint way to specify a number of syntactically exchangable modules of different flavors. Each module flavor has a unique set of parameter combination:</p>
 <ul>
-<li><em>parameters</em>: a set of fixed values that distinguishes modules from each other in a module definition.</li>
-<li><em>decorators</em>: a mechanism to modify how parameters are passed to the computer executable programs involved in the module</li>
+<li><em>parameters</em>: a set of fixed values that distinguishes flavors of modules from each other in a module.</li>
+<li><em>decorators</em>: a mechanism to modify how parameters are passed to the module</li>
 </ul>
 
 </div>
@@ -248,8 +248,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-ensemble-and-pipeline-definition">Module ensemble and pipeline definition<a class="anchor-link" href="#Module-ensemble-and-pipeline-definition">&#182;</a></h2><p>A module ensemble is a sequence of module definitions. A pipeline definition is a special case of module ensemble that represents a complete and meaningful computational procedure DSC aims to investigate.</p>
-<h3 id="Valid-pipeline-definition">Valid pipeline definition<a class="anchor-link" href="#Valid-pipeline-definition">&#182;</a></h3><p>A pipeline definition is valid if, for each module in the pipeline, the <em>input</em> are <em>output</em> of (at least one) previous module definition in the sequence.</p>
+<h2 id="Module-ensemble-and-pipeline">Module ensemble and pipeline<a class="anchor-link" href="#Module-ensemble-and-pipeline">&#182;</a></h2><p>A module ensemble is a sequence of module. A pipeline is a special case of module ensemble that represents a complete and meaningful computational procedure DSC aims to investigate.</p>
+<h3 id="Valid-pipeline">Valid pipeline<a class="anchor-link" href="#Valid-pipeline">&#182;</a></h3><p>A pipeline is valid if, for each module in the pipeline, the <em>input</em> are <em>output</em> of (at least one) previous module in the sequence.</p>
 
 </div>
 </div>
@@ -280,7 +280,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note: "Module" may be used as a synonym for "Module definition" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for either "pipeline definition" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "valid pipeline" must mean "valid pipeline definition"; and "pipeline input/output" must mean "pipeline instance input/output".</strong></p>
+<p><strong>Note: "Module" may be used as a synonym for "Module flavor" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for either "pipeline" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "pipeline input/output" must mean "pipeline instance input/output".</strong></p>
 
 </div>
 </div>
@@ -289,7 +289,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-benchmark-definition-and-instance">DSC benchmark definition and instance<a class="anchor-link" href="#DSC-benchmark-definition-and-instance">&#182;</a></h2><p>DSC benchmark is a collective term for all pipelines (definition and instance) specified in a DSC file (or via <code>dsc</code> command line interface).</p>
+<h2 id="DSC-benchmark">DSC benchmark<a class="anchor-link" href="#DSC-benchmark">&#182;</a></h2><p>DSC benchmark is a collective term for all pipelines specified in a DSC file (or via <code>dsc</code> command line interface).</p>
 
 </div>
 </div>
