@@ -80,11 +80,11 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=developmentDict[$("h1:first").attr("id")];
+            var file=manualDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=developmentArray;
-            var pos=developmentArray.indexOf(file);
+            var docs=manualArray;
+            var pos=manualArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   var name=docs[a]
                   $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
@@ -185,7 +185,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Version-1.0-roadmap">DSC Version 1.0 roadmap<a class="anchor-link" href="#DSC-Version-1.0-roadmap">&#182;</a></h1>
+<h1 id="Release-1.0-roadmap">Release 1.0 roadmap<a class="anchor-link" href="#Release-1.0-roadmap">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -202,13 +202,11 @@ body {
 <li>[] all decorations test</li>
 <li>[] module inherit omitting exec</li>
 <li>[] no multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
-<li>[] @module should not have output</li>
-<li>[] no nested <code>@</code></li>
-<li>[] what is the deal with <code>+</code> in <code>DSC::run</code>??</li>
+<li>[] all module output in the same block should have same name (a required good practice)</li>
+<li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
 </ul>
 <h3 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h3><ul>
 <li>[] identical tasks will result in complaint. check for identical jobs ie same parameter twice </li>
-<li>[] different steps in squence give the same output variable name: warning?</li>
 <li>[] both in <code>DSC::run</code> and in <code>--target</code>: what if the first module has upstream dependency? Should catch and repor that.</li>
 </ul>
 <h3 id="Query">Query<a class="anchor-link" href="#Query">&#182;</a></h3><ul>
@@ -226,7 +224,6 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h2><h3 id="Best-practices">Best practices<a class="anchor-link" href="#Best-practices">&#182;</a></h3><ul>
-<li>[] add a line of best practice RE namespace clarity and stdout control, e.g. do not use <code>library()</code> (??)</li>
 <li>[] RE seeds</li>
 </ul>
 <h3 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h3><ul>
@@ -245,7 +242,7 @@ body {
 <li>[x] create a switch / or --debug switch to generate mock run file</li>
 <li>[] pipeline seed batch has to be used / tested; based on total number of jobs distribute it smartly.</li>
 <li>[x] remove old Rlib info files</li>
-<li>[] fix eg <code>pcarbo/varbvs/R</code>; for SoS</li>
+<li>[x] fix github R package arbitary paths</li>
 </ul>
 
 </div>
@@ -257,22 +254,17 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many were existing features removed due to due to new syntax and SoS advances etc. We need to bring them back in.</p>
 <ul>
-<li>[] a more self-contained way to load DSC related functions: a companion R package eventually?</li>
-<li>[] performance (<code>SoS</code> tasks)</li>
-<li><p>[] index slicing</p>
-
-<pre><code>  Index can be used in the following context:
-
-  *  Index for parameters in `exec` entry, for example `exec: makeped.py $data $output[1]` where `output` parameter takes the form of `output: (1.ped, 1.map), (2.ped, 2.map)`. In this case `output[1]` will only use the first value of each parameter group.</code></pre>
+<li>[x] a more self-contained way to load DSC related functions: a companion R package eventually?</li>
+<li>[x] performance (<code>SoS</code> tasks)</li>
+<li>[] index slicing
+<pre><code>  *  Index for parameters, for example `exec: makeped.py $data $output[1]` where `output` parameter takes the form of `output: (1.ped, 1.map), (2.ped, 2.map)`. In this case `output[1]` will only use the first value of each parameter group.</code></pre>
 </li>
 <li>[] CONF <code>merge</code> feature:
 <pre><code> `inline`: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply `runif(500000)` it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.</code></pre>
 </li>
-<li><p>[] <code>--host</code> feature bind with SoS</p>
+<li><p>[] <code>--host</code> feature bind with SoS: is now broken due to new SoS task model</p>
 
-<pre><code>  *FIXME: this feature is not yet implemented as of Jan 16, 2017. With the cluster support we may end up using a separate cluster job configuration file for it to keep DSC configuration file concise.*
-
-  `.options` include parameters that controls behavior of the corresponding `exec` as it executes, for example:
+<pre><code>  `.options` include parameters that controls behavior of the corresponding `exec` as it executes, for example:
 
 .options: ncpu = 2, mem = 4G
 
@@ -281,13 +273,15 @@ body {
   *  `ncpu`: Number of required CPUs.
   *  `mem`: Required memory.</code></pre>
 </li>
-<li><p>executable command options</p>
+<li><p>[] executable command options</p>
 
 <pre><code>  `exec` specifies the names of executable computational routines as well as their command line arguments if applicable. For example an `exec` entry reads:
 
    exec: datamaker.R, ms $nsam $nreps -t $theta -seed $seed</code></pre>
 </li>
-<li><code>inline</code> executables</li>
+<li>[] <code>inline</code> executables</li>
+<li>[] Multiple output files</li>
+<li>New data exchange format</li>
 </ul>
 
 </div>

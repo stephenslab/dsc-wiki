@@ -1,5 +1,3 @@
-docs/development.tpl
-docs/development/Status.html
 docs/examples.html
 docs/examples.tpl
 docs/index.html
@@ -14,6 +12,7 @@ docs/manual/DSC_Filtering.html
 docs/manual/Design_and_Features.html
 docs/manual/Implementation_Details.html
 docs/manual/New_Syntax_and_Query.html
+docs/manual/Road_Map.html
 docs/manual/Terminology.html
 docs/manual/installation.html
 docs/playground.tpl
