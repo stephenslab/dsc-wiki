@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="noindex">
+<meta name="ipynb_website:version" content="0.9.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="stylesheet"
+      href="../site_libs/highlight/textmate.css"
+      type="text/css" />
+
+<script src="../site_libs/highlight/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+<script src="../js/toc2.js"></script>
+<script src="../js/docs.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=manualDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=manualArray;
+            var pos=manualArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            $("#toc-header").hide();
+    });
+</script>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+
+
+<title>Dynamic Statistical Comparisons</title>
+
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+
+<!-- code folding -->
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+        
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+        
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+        
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+        
+      </ul>
+        
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
+</li>
+</ul>
+        
+      </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Release-1.0-roadmap">Release 1.0 roadmap<a class="anchor-link" href="#Release-1.0-roadmap">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Unit-tests">Unit tests<a class="anchor-link" href="#Unit-tests">&#182;</a></h2><h3 id="Module-names">Module names<a class="anchor-link" href="#Module-names">&#182;</a></h3><ul>
+<li>[] module name cannot start with <code>pipeline_</code></li>
+<li>[] module names have to be SQL compatible</li>
+<li>[] modules that are identical in every way except names</li>
+</ul>
+<h3 id="Parser">Parser<a class="anchor-link" href="#Parser">&#182;</a></h3><ul>
+<li>[] all decorations test</li>
+<li>[] module inherit omitting exec</li>
+<li>[] no multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
+<li>[] all module output in the same block should have same name (a required good practice)</li>
+<li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
+</ul>
+<h3 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h3><ul>
+<li>[] identical tasks will result in complaint. check for identical jobs ie same parameter twice </li>
+<li>[] both in <code>DSC::run</code> and in <code>--target</code>: what if the first module has upstream dependency? Should catch and repor that.</li>
+</ul>
+<h3 id="Query">Query<a class="anchor-link" href="#Query">&#182;</a></h3><ul>
+<li>[] dsc-query strip path for dsc_output argument</li>
+</ul>
+<h3 id="Misc">Misc<a class="anchor-link" href="#Misc">&#182;</a></h3><ul>
+<li>[] do not write library installed files if installation fails</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h2><h3 id="Best-practices">Best practices<a class="anchor-link" href="#Best-practices">&#182;</a></h3><ul>
+<li>[] RE seeds</li>
+</ul>
+<h3 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h3><ul>
+<li>[] make sure all previous examples are converted to new syntax</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Small-features">Small features<a class="anchor-link" href="#Small-features">&#182;</a></h2><ul>
+<li>[] add exec <code>depend</code> property to track source files</li>
+<li>[x] create a switch / or --debug switch to generate mock run file</li>
+<li>[] pipeline seed batch has to be used / tested; based on total number of jobs distribute it smartly.</li>
+<li>[x] remove old Rlib info files</li>
+<li>[x] fix github R package arbitary paths</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many were existing features removed due to due to new syntax and SoS advances etc. We need to bring them back in.</p>
+<ul>
+<li>[x] a more self-contained way to load DSC related functions: a companion R package eventually?</li>
+<li>[x] performance (<code>SoS</code> tasks)</li>
+<li>[] index slicing
+<pre><code>  *  Index for parameters, for example `exec: makeped.py $data $output[1]` where `output` parameter takes the form of `output: (1.ped, 1.map), (2.ped, 2.map)`. In this case `output[1]` will only use the first value of each parameter group.</code></pre>
+</li>
+<li>[] CONF <code>merge</code> feature:
+<pre><code> `inline`: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply `runif(500000)` it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.</code></pre>
+</li>
+<li><p>[] <code>--host</code> feature bind with SoS: is now broken due to new SoS task model</p>
+
+<pre><code>  `.options` include parameters that controls behavior of the corresponding `exec` as it executes, for example:
+
+.options: ncpu = 2, mem = 4G
+
+  Supported options are:
+
+  *  `ncpu`: Number of required CPUs.
+  *  `mem`: Required memory.</code></pre>
+</li>
+<li><p>[] executable command options</p>
+
+<pre><code>  `exec` specifies the names of executable computational routines as well as their command line arguments if applicable. For example an `exec` entry reads:
+
+   exec: datamaker.R, ms $nsam $nreps -t $theta -seed $seed</code></pre>
+</li>
+<li>[] <code>inline</code> executables</li>
+<li>[] Multiple output files</li>
+<li>New data exchange format</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Known-bugs-to-be-fixed">Known bugs to be fixed<a class="anchor-link" href="#Known-bugs-to-be-fixed">&#182;</a></h2>
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
+</div>
+</div>
+</body>
+</html>
