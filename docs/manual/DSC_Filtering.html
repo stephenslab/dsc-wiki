@@ -195,18 +195,27 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>DSC filtering syntax, when applied in <code>@FILTER</code>, selects parameter combinations to allow for only a subset of modules can stem from a module definition. When applied in <code>-c</code> with <code>dsc-query</code> command it allows users to decide which pipeline instance to extract and explore. The syntax in both scenarios are the same.</p>
-<p>The basic structure for a filtering statement is</p>
+<p>The basic structure for a filtering statement <code>@FILTER</code> is</p>
 
-<pre><code>C_i = {module.parameter}_i {condition operator} {value}
+<pre><code>C_i = {parameter}_i {condition operator} {value}
 C = C_1 {logic operator} C_2 {logic operator} ...</code></pre>
+<p>For <code>dsc-query</code> condition,</p>
+
+<pre><code>C_i = {module.parameter}_i {condition operator} {value}</code></pre>
 <p>Where we support</p>
 <ul>
 <li>condition operators: <code>=, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in</code></li>
-<li>logic operators: <code>AND</code>, <code>OR</code>, or derived compound logic, eg <code>(((a AND b) OR c) AND d)</code></li>
+<li>logic operators: <code>AND</code>, <code>OR</code>, <code>NOT</code>, or derived compound logic, eg <code>((NOT (a AND b) OR c) AND d)</code></li>
 </ul>
-<p>For example:</p>
+<p>For example in <code>dsc-query</code></p>
 
-<pre><code>simulate.n &gt; 100 AND (method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)</code></pre>
+<pre><code>-c "simulate.n &gt; 100" "(method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)"</code></pre>
+<p>for <code>@FILTER</code>:</p>
+
+<pre><code>simulate: sim.R
+    @FILTER: n &gt; 100
+method: method.R
+    @FILTER: p1 &lt; 0.5 or p2 &lt; 0.5</code></pre>
 
 </div>
 </div>
