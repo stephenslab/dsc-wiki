@@ -112,7 +112,7 @@ bash:
 [check-link (Broken link checker)]
 depends: executable('linkchecker'), sos_variable('conf')
 bash: expand = "${ }"
-  linkchecker http://${path(conf['repo']):db}.github.io/${path(conf['repo']):b}
+  linkchecker http://${path(conf['repo']):db}.github.io/dsc-wiki
 
 [update-tpl (Jupyter HTML template updater)]
 input: None
