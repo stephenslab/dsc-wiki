@@ -194,26 +194,77 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Unit-tests">Unit tests<a class="anchor-link" href="#Unit-tests">&#182;</a></h2><h3 id="Module-names">Module names<a class="anchor-link" href="#Module-names">&#182;</a></h3><ul>
+<h2 id="Unit-tests">Unit tests<a class="anchor-link" href="#Unit-tests">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Module-names">Module names<a class="anchor-link" href="#Module-names">&#182;</a></h3><ul>
 <li>[] module name cannot start with <code>pipeline_</code></li>
 <li>[] module names have to be SQL friendly</li>
 <li>[] modules that are identical in every way except names</li>
+<li>[] module names match number of executables</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Parser">Parser<a class="anchor-link" href="#Parser">&#182;</a></h3><ul>
 <li>[x] all but @CONF decoration tests</li>
 <li>[] module inherit omitting exec</li>
 <li>[] no multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
 <li>[] all module output in the same block should have same name (a required good practice)</li>
 <li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
-<li>[] parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
+<li>[] module names / parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
+<li>[] duplicate module / parameter names</li>
+<li>[] Different length of params in different exec. e.g. mybeta = 1,2,3 vs. mybeta = (4,5,6) will lead to file lock fail. </li>
+<li>[] strings ending with <code>,</code> intentionally</li>
+<li>[] Check if @ALIAS in the parameter list (or is a number or str?)</li>
+<li><code>@FILTER</code> cannot have pipeline variables <code>$</code></li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h3><ul>
 <li>[] identical tasks will result in complaint. check for identical jobs ie same parameter twice </li>
 <li>[] both in <code>DSC::run</code> and in <code>--target</code>: what if the first module has upstream dependency? Should catch and report an error.</li>
+<li>[] Unsupported keywords in <code>DSC</code> block</li>
+<li>[] Bad pipeline logic specification (resulting in failure as said in #22 )</li>
+<li>[] Looped steps. Actually this should be a feature when desired ...</li>
+<li>[] Downstream pipeline did not use any of upstream variables</li>
+<li>[] all modules are valid (defined)</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Query">Query<a class="anchor-link" href="#Query">&#182;</a></h3><ul>
 <li>[] dsc-query strip path for dsc_output argument</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Misc">Misc<a class="anchor-link" href="#Misc">&#182;</a></h3><ul>
 <li>[] do not write library installed files if installation fails</li>
 </ul>
