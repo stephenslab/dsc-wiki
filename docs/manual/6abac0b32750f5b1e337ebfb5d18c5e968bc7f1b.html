@@ -196,19 +196,20 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Unit-tests">Unit tests<a class="anchor-link" href="#Unit-tests">&#182;</a></h2><h3 id="Module-names">Module names<a class="anchor-link" href="#Module-names">&#182;</a></h3><ul>
 <li>[] module name cannot start with <code>pipeline_</code></li>
-<li>[] module names have to be SQL compatible</li>
+<li>[] module names have to be SQL friendly</li>
 <li>[] modules that are identical in every way except names</li>
 </ul>
 <h3 id="Parser">Parser<a class="anchor-link" href="#Parser">&#182;</a></h3><ul>
-<li>[] all decorations test</li>
+<li>[x] all but @CONF decoration tests</li>
 <li>[] module inherit omitting exec</li>
 <li>[] no multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
 <li>[] all module output in the same block should have same name (a required good practice)</li>
 <li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
+<li>[] parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
 </ul>
 <h3 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h3><ul>
 <li>[] identical tasks will result in complaint. check for identical jobs ie same parameter twice </li>
-<li>[] both in <code>DSC::run</code> and in <code>--target</code>: what if the first module has upstream dependency? Should catch and repor that.</li>
+<li>[] both in <code>DSC::run</code> and in <code>--target</code>: what if the first module has upstream dependency? Should catch and report an error.</li>
 </ul>
 <h3 id="Query">Query<a class="anchor-link" href="#Query">&#182;</a></h3><ul>
 <li>[] dsc-query strip path for dsc_output argument</li>
@@ -225,10 +226,10 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h2><h3 id="Best-practices">Best practices<a class="anchor-link" href="#Best-practices">&#182;</a></h3><ul>
-<li>[] RE seeds</li>
+<li>[] RE seeds -- users should ensure seeds for modules are always the same, when applicable.</li>
 </ul>
 <h3 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h3><ul>
-<li>[] make sure all previous examples are converted to new syntax</li>
+<li>[x] convert all previous examples to new syntax</li>
 </ul>
 
 </div>
@@ -241,11 +242,12 @@ body {
 <h2 id="Small-features">Small features<a class="anchor-link" href="#Small-features">&#182;</a></h2><ul>
 <li>[] add exec <code>depend</code> property to track source files</li>
 <li>[x] create a switch / or --debug switch to generate mock run file</li>
-<li>[] pipeline seed batch has to be used / tested; based on total number of jobs distribute it smartly.</li>
+<li>[!] pipeline seed batch has to be used / tested; based on total number of jobs distribute it smartly.</li>
 <li>[x] remove old Rlib info files</li>
 <li>[x] fix github R package arbitary paths</li>
-<li>[] add tags for queries</li>
+<li>[!] add tags for queries</li>
 <li>[] Properly handle grouped input eg <code>g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P)</li>
+<li>[] <code>file()</code> / <code>file(ext)</code> behavior is reversed ... need to fix</li>
 </ul>
 
 </div>
@@ -284,7 +286,7 @@ body {
 </li>
 <li>[] <code>inline</code> executables</li>
 <li>[] Multiple output files</li>
-<li>New data exchange format</li>
+<li>[] New data exchange format</li>
 </ul>
 
 </div>
@@ -294,7 +296,21 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Known-bugs-to-be-fixed">Known bugs to be fixed<a class="anchor-link" href="#Known-bugs-to-be-fixed">&#182;</a></h2>
+<h2 id="Known-issues">Known issues<a class="anchor-link" href="#Known-issues">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>SoS issues:</p>
+<ul>
+<li>[] Multiple loads of I/O data for each task distribution (SoS global section repeated executions)</li>
+<li>[] <code>-c</code> option not honored for non-task</li>
+<li>[] Hang on dead-lock</li>
+</ul>
+
 </div>
 </div>
 </div>
