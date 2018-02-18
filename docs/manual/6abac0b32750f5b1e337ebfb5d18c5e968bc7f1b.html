@@ -340,16 +340,14 @@ body {
   ```</li>
 </ul>
 <h3 id="Large-scale-computations">Large scale computations<a class="anchor-link" href="#Large-scale-computations">&#182;</a></h3><ul>
-<li><p>[] <code>--host</code> feature bind with SoS: is now broken due to new SoS task model</p>
-
-<pre><code>  `.options` include parameters that controls behavior of the corresponding `exec` as it executes, for example:
-
-.options: ncpu = 2, mem = 4G
-
-  Supported options are:
-
-  *  `ncpu`: Number of required CPUs.
-  *  `mem`: Required memory.</code></pre>
+<li>[] <code>--host</code> feature bind with SoS: is now broken due to new SoS task model<ul>
+<li>To check: <code>scp</code>, <code>ssh</code> commands are available</li>
+<li>To sync by DSC: <ul>
+<li>the output folder</li>
+<li>Not the host config file (?)</li>
+</ul>
+</li>
+</ul>
 </li>
 <li>[] CONF <code>merge</code> feature:
 <pre><code> `inline`: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply `runif(500000)` it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.</code></pre>
