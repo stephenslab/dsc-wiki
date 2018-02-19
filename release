@@ -106,8 +106,10 @@ bash:
 
 [upgrade-sos (SoS upgrader)]
 # using latest pip release
-bash:
-  pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir --user sos
+try:
+  get_output('pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir sos')
+except:
+  get_output('pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir --user sos')
 
 [check-link (Broken link checker)]
 depends: executable('linkchecker'), sos_variable('conf')
