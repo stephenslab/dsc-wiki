@@ -162,6 +162,10 @@ body {
 </li>
         
 <li>
+  <a href="../installation.html">Installation</a>
+</li>
+        
+<li>
   <a href="../manual.html">Manual</a>
 </li>
         
