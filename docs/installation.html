@@ -209,7 +209,47 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h1>
+<h1 id="Download-and-Installation">Download and Installation<a class="anchor-link" href="#Download-and-Installation">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.6+. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code> for Linux and <code>brew</code> for Mac. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install a new version of Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
+<p>You can check if your system satisfies the requirement via:</p>
+
+<pre><code>python3 --version</code></pre>
+<p>If you do have Python 3.6+ you can skip the rest of this step.</p>
+<p>We will use <code>miniconda</code> (a lite version of <code>anaconda</code>), which contains Python 3 and <code>conda</code>, a package manager for Python like <code>cran</code> for R.</p>
+<h3 id="For-Linux">For Linux<a class="anchor-link" href="#For-Linux">&#182;</a></h3>
+<pre><code>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
+<p>Follow the prompt to install it (use <code>ctrl+F</code> to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: say Yes unless you know what you are doing).</p>
+<p>After the program is installed, you have to reload your <code>bash</code> profile. If you do not know what this means, just exit the current terminal and open up a new one.</p>
+<h3 id="For-MacOS">For MacOS<a class="anchor-link" href="#For-MacOS">&#182;</a></h3><p><strong>FIXME: need to verify if this instructions still works.</strong></p>
+<p>If you have <code>homebrew</code> you can type:</p>
+
+<pre><code>brew install pip3</code></pre>
+<p>to install Python 3 and <code>pip</code> which will be used to install DSC2. Alternatively you can also use <code>conda</code> package. <code>conda</code> for Mac can be download from <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh">here</a>. Installation is the same as for Linux.</p>
+<h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be installed via <code>pip install</code>:</p>
+
+<pre><code>pip install dsc</code></pre>
+<p><code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> may take a while to install. To upgrade the DSC2 you previously have installed:</p>
+
+<pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir --user dsc</code></pre>
+<h2 id="Development-Version">Development Version<a class="anchor-link" href="#Development-Version">&#182;</a></h2><p>DSC2 co-develops with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on github) typically requires the development version of SoS. To install the latest SoS:</p>
+
+<pre><code>git clone https://github.com/vatlab/SoS.git
+cd SoS
+python3 setup.py install</code></pre>
+<p>Then the latest DSC2:</p>
+
+<pre><code>git clone https://github.com/stephenslab/dsc2.git
+cd dsc2
+python3 setup.py install</code></pre>
+
 </div>
 </div>
 </div>
