@@ -197,28 +197,119 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.6+. If you do not have Python 3 on your system it is strongly recommended that you install Python 3 from <code>conda</code> for Linux and <code>brew</code> for Mac. If you have an older version of Python 3, please do not worry. You can still follow instructions below to install a new version of Python 3. The installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
-<p>You can check if your system satisfies the requirement via:</p>
+<h2 id="Requirement">Requirement<a class="anchor-link" href="#Requirement">&#182;</a></h2><p>DSC2 requires Python 3.6+. If you do not have this version of Python 3 on your system it is strongly recommended that you install it from <a href="https://conda.io/docs/"><code>conda</code></a>, a package manager for <code>Python</code>. This is the "cleanest" way to install, especially when there are multiple versions of Python in your system paths that you are worried about breaking or removing -- <code>conda</code> installer will also guide you to make it your default Python 3 so you do not have to remove your old installation.</p>
+<p>You can check the status on your system by typing the <code>python3</code> command in terminal:</p>
 
-<pre><code>python3 --version</code></pre>
-<p>If you do have Python 3.6+ you can skip the rest of this step.</p>
-<p>We will use <code>miniconda</code> (a lite version of <code>anaconda</code>), which contains Python 3 and <code>conda</code>, a package manager for Python like <code>cran</code> for R.</p>
-<h3 id="For-Linux">For Linux<a class="anchor-link" href="#For-Linux">&#182;</a></h3>
-<pre><code>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
-<p>Follow the prompt to install it (use <code>ctrl+F</code> to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: say Yes unless you know what you are doing).</p>
+<pre><code>$ python3
+
+Python 3.6.1 |Continuum Analytics, Inc.| (default, May 11 2017, 13:09:58) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt;</code></pre>
+<p>You should see not only if Python 3 is available and is 3.6+, but also see if it comes from <code>conda</code> -- indicated by the phrase <code>Continuum Analytics, Inc.</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="If-you-already-have-conda-but-not-3.6+">If you already have <code>conda</code> but not 3.6+<a class="anchor-link" href="#If-you-already-have-conda-but-not-3.6+">&#182;</a></h3><p>Then you have 2 options: upgrade your <code>conda</code> to the latest, or remove / install a new <code>conda</code>.</p>
+<p>We recommand a fresh installation, if possible. To remove your existing installation, first figure out where it is installed. For example:</p>
+
+<pre><code>$ which python3
+
+/home/osboxes/miniconda3/bin/python3</code></pre>
+<p>Now we will need to remove <code>/home/osboxes/miniconda3</code>:</p>
+
+<pre><code>rm -rf /home/osboxes/miniconda3</code></pre>
+<p>Then follow instructions in the next section to install Python 3.6.</p>
+<p>If you actively use older versions of <code>conda</code> for different purposes, you can either <a href="https://conda.io/docs/user-guide/tasks/manage-environments.html">create a separate <code>env</code></a> for this installation, or, if deemed safe, to update your <code>conda</code> default to the latest (here it refers to Python 3.6):</p>
+
+<pre><code>conda install python=3.6</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="If-you-do-not-have-conda-and-want-to-use-conda-version-of-Python-3.6">If you do not have <code>conda</code> and want to use <code>conda</code> version of Python 3.6<a class="anchor-link" href="#If-you-do-not-have-conda-and-want-to-use-conda-version-of-Python-3.6">&#182;</a></h3><p>We will first install <code>miniconda</code>, a lite version of <code>anaconda</code>; and run a few additional commands to install other required packages as instructed in the next section.</p>
+<p>For 64 bit Linux, please download at <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh">https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh</a>. For Mac, at <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh">https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh</a>.</p>
+<p>Then in the terminal, take Mac version for example:</p>
+
+<pre><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
+./Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
+<p>Follow the prompt to install it (use <code>ctrl+F</code> a couple of times to quickly jump to the end of the Licenses if you have read them before). Be sure to add the installation path to your shell environment (the installation script will ask if you'd like this be configured automatically: type <code>Yes</code>, unless you know what you are doing).</p>
 <p>After the program is installed, you have to reload your <code>bash</code> profile. If you do not know what this means, just exit the current terminal and open up a new one.</p>
-<h3 id="For-MacOS">For MacOS<a class="anchor-link" href="#For-MacOS">&#182;</a></h3><p><strong>FIXME: need to verify if this instructions still works.</strong></p>
-<p>If you have <code>homebrew</code> you can type:</p>
 
-<pre><code>brew install pip3</code></pre>
-<p>to install Python 3 and <code>pip</code> which will be used to install DSC2. Alternatively you can also use <code>conda</code> package. <code>conda</code> for Mac can be download from <a href="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh">here</a>. Installation is the same as for Linux.</p>
-<h2 id="Released-Versions">Released Versions<a class="anchor-link" href="#Released-Versions">&#182;</a></h2><p>Versioned release can be installed via <code>pip install</code>:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Now-that-you-have-Python-3.6-from-conda">Now that you have Python 3.6 from <code>conda</code><a class="anchor-link" href="#Now-that-you-have-Python-3.6-from-conda">&#182;</a></h3><p>If it is a fresh installation of <code>miniconda</code>, please use the following commands to install additional required packages:</p>
+
+<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
+conda install mkl numpy pandas sqlalchemy msgpack-python sympy numexpr psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<p>Otherwise, it is recommanded that you also update these required packages to the latest version:</p>
+
+<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
+conda update mkl numpy pandas sqlalchemy msgpack-python sympy psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="If-your-Python-3.6-is-not-conda-based">If your Python 3.6 is not <code>conda</code> based<a class="anchor-link" href="#If-your-Python-3.6-is-not-conda-based">&#182;</a></h3><p>You can still install <code>dsc</code> in this scenario. There is not need to install required packages beforehand, since the <code>dsc</code> installation (see next sections) will automatically take care of dependencies. However, notice that:</p>
+<ul>
+<li>Installation may take a while because dependent packages will have to be compile from source</li>
+<li>There are chances that automatic installation of dependent packages fail, in which case you will have to figure out how to manually install them, <strong>although sometimes running the installation command twice fixes the problem.</strong></li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Released-Version">Released Version<a class="anchor-link" href="#Released-Version">&#182;</a></h2><p>Versioned release can be installed via <code>pip</code>. First, check if you <code>pip</code> comes from <code>conda</code> -- this will ensure that you use the same environment we have just configured:</p>
+
+<pre><code>$ which pip
+
+/home/osboxes/miniconda3/bin/pip</code></pre>
+<p>Then,</p>
 
 <pre><code>pip install dsc</code></pre>
-<p><code>DCS2</code> will automatically download and compile its dependent packages, among which <code>numpy</code> and <code>pandas</code> may take a while to install. To upgrade the DSC2 you previously have installed:</p>
+<p>If your <code>pip</code> is not from <code>conda</code>, it is possible that <code>pip install dsc</code> fails because the <code>pip</code> version is for Python 2 by default, in which case you will have to use</p>
+
+<pre><code>pip3 install dsc</code></pre>
+<p>If you do not use <code>conda</code> you may run into permission issues in a cluster environment. To fix, you need to add <code>--user</code> switch:</p>
+
+<pre><code>pip install --user dsc</code></pre>
+<p>To upgrade the DSC2 you previously have installed:</p>
+
+<pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
+<p>Or with <code>--user</code> switch:</p>
 
 <pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir --user dsc</code></pre>
+<p><strong>Note that <code>--user</code> switch will install packages to <code>~/.local</code> folder outside the default <code>conda</code> environment. This will cause problems when later <code>dsc</code> is upgraded without <code>--user</code> switch because the system will still load obsolete packages from <code>~/.local</code>. So please only use <code>--user</code> switch if you have permission problems; and please remove <code>~/.local/lib/python3.6/site-packages</code> when you no longer have permission issues (eg after installing and using your own copy Python from <code>conda</code>.)</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Development-Version">Development Version<a class="anchor-link" href="#Development-Version">&#182;</a></h2><p>DSC2 co-develops with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on github) typically requires the development version of SoS. To install the latest SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SoS.git
