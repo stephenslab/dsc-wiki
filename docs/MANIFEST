@@ -20,6 +20,8 @@ docs/playground.tpl
 docs/playground/Overview.html
 docs/playground/Q1.html
 docs/playground/Q2.html
+docs/quick_start.html
+docs/quick_start.tpl
 docs/tutorials.html
 docs/tutorials.tpl
 docs/tutorials/Debug_Tips.html

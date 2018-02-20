@@ -1,3 +1,5 @@
+var quick_startArray = []
+var quick_startDict = {}
 var manualArray = []
 var manualDict = {"Command-interface-1":"Command_Options","DSC-syntax:-basics-of-modules-1":"DSC_Configuration","DSC-syntax:-basics-of-benchmark-execution-1":"DSC_Execution","DSC-Filtering-Syntax-1":"DSC_Filtering","Design-and-Features-1":"Design_and_Features","Implementation-details-1":"Implementation_Details","New-DSC-syntax-and-query-demo-1":"New_Syntax_and_Query","Release-1.0-roadmap-1":"Road_Map","Terminology-1":"Terminology","Quick-Start-1":"installation"}
 var tutorialsArray = []

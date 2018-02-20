@@ -1,3 +1,6 @@
+{%- extends 'basic.tpl' -%}
+
+{%- block header -%}
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107286198-1"></script>
 <script>
@@ -6,7 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'UA-107286198-1');
 </script>
-
+{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -129,7 +132,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':3,     // depth of toc (number of levels)
+            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -149,11 +152,11 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=manualDict[$("h1:first").attr("id")];
+            var file=quick_startDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=manualArray;
-            var pos=manualArray.indexOf(file);
+            var docs=quick_startArray;
+            var pos=quick_startArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   var name=docs[a]
                   $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
@@ -254,132 +257,14 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Terminology">Terminology<a class="anchor-link" href="#Terminology">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This document defines a list of DSC jargons. We will use these terms throughout the DSC documentation. Here we focus on fundamental concepts. Other jargons, particularly a whole class of various <em>operators</em>, will be defined and explained at the same time in <a href="DSC_Configuration.html">DSC modules</a> and <a href="DSC_Execution.html">DSC benchmark</a> documentations.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-file-(or-DSC-script)">DSC file (or DSC script)<a class="anchor-link" href="#DSC-file-(or-DSC-script)">&#182;</a></h2><p>A <a href="http://yaml.org">YAML</a> flavored text file (yet not YAML compatible!) that configures DSC <strong>modules</strong> and <strong>benchmark</strong>.</p>
-<h3 id="Code-block-(or-block)">Code block (or block)<a class="anchor-link" href="#Code-block-(or-block)">&#182;</a></h3><p>A piece of code that starts at (and includes) a line where there is no indentation and ends at (and excludes) another line where there is no indentation.</p>
-<h3 id="Property">Property<a class="anchor-link" href="#Property">&#182;</a></h3><p>A line of code that has a "key: value" syntax: the name of the property is on the left side of <code>:</code>, followed by the contents of the property on the right side.</p>
+{%- endblock header -%}
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module">Module<a class="anchor-link" href="#Module">&#182;</a></h2><p>A module is a block that takes <em>input</em> and produces <em>output</em>, and otherwise has no side effects. It is defined by an executable (or inline code), and (optionally) a set of <em>parameters</em> and <em>decorators</em> that determine the behavior of the code. Each module must have a unique name, which will be useful for referring to that module later. We use a $ prefix to distinguish variables that are inputs and outputs from a module, vs parameters.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-flavors">Module flavors<a class="anchor-link" href="#Module-flavors">&#182;</a></h2><p><em>parameters</em> and <em>decorators</em> characterize the <em>flavor</em> of a module. That is, the same module with different parameters is a different module flavor. <em>Module</em> is a succint way to specify a number of syntactically exchangable modules of different flavors. Each module flavor has a unique set of parameter combination:</p>
-<ul>
-<li><em>parameters</em>: a set of fixed values that distinguishes flavors of modules from each other in a module.</li>
-<li><em>decorators</em>: a mechanism to modify how parameters are passed to the module</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-instance">Module instance<a class="anchor-link" href="#Module-instance">&#182;</a></h2><p>A module instance is what is created when a module is executed in practice. It is module with specific:</p>
-<ul>
-<li><em>module input</em>: the set of inputs to the module</li>
-<li><em>module output</em>: the set of outputs produced by executing the module</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-ensemble-and-pipeline">Module ensemble and pipeline<a class="anchor-link" href="#Module-ensemble-and-pipeline">&#182;</a></h2><p>A module ensemble is a sequence of module. A pipeline is a special case of module ensemble that represents a complete and meaningful computational procedure DSC aims to investigate.</p>
-<h3 id="Valid-pipeline">Valid pipeline<a class="anchor-link" href="#Valid-pipeline">&#182;</a></h3><p>A pipeline is valid if, for each module in the pipeline, the <em>input</em> are <em>output</em> of (at least one) previous module in the sequence.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Pipeline-instance">Pipeline instance<a class="anchor-link" href="#Pipeline-instance">&#182;</a></h2><p>Pipeline instance is a sequence of Module instances. It results from actually executing an instance of a pipeline on data.</p>
-<ul>
-<li><em>pipeline input</em>: the input to the first module instance in a pipeline instance.</li>
-<li><em>pipeline output</em>: the set of all outputs produced by all module instances in a pipeline instance (not just the final module instance).</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Pipeline-variable">Pipeline variable<a class="anchor-link" href="#Pipeline-variable">&#182;</a></h2><p>Any output variable from any module in the pipeline (will often also be an <em>input</em> to another module). Pipeline variables are passed through the pipeline to be available to other modules, and a key feature of DSC is that it facilitates this process. A pipeline variable is created for each output variable of each module. These variables are then available as potential input variables to subsequent modules in the pipeline. They are also saved, and so are available at the end of pipeline execution for inspection (and also potentially for input into other pipelines to be run).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note: "Module" may be used as a synonym for "Module flavor" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for either "pipeline" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "pipeline input/output" must mean "pipeline instance input/output".</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-benchmark">DSC benchmark<a class="anchor-link" href="#DSC-benchmark">&#182;</a></h2><p>DSC benchmark is a collective term for all pipelines specified in a DSC file (or via <code>dsc</code> command line interface).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>You may glance over some <a href="../tutorials.html#Intermediate-examples">sample DSC scripts</a> to have an idea of DSC2 syntax. It is also recommended that you read the <a href="Design_and_Features.html">DSC design concept</a> before diving into the details throughout the rest of the documentation on this site.</p>
-
-</div>
-</div>
-</div>
+{% block footer %}
 <hr>
 &copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
-
 </div>
 </div>
 </body>
 </html>
+{% endblock %}
