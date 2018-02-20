@@ -1,6 +1,14 @@
 {%- extends 'basic.tpl' -%}
 
 {%- block header -%}
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107286198-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+  gtag('config', 'UA-107286198-1');
+</script>
 {{ super() }}
 
 <!DOCTYPE html>
@@ -179,10 +187,6 @@ $(document).ready(function () {
         
 <li>
   <a href="./index.html">Overview</a>
-</li>
-        
-<li>
-  <a href="./installation.html">Installation</a>
 </li>
         
 <li>
