@@ -290,16 +290,16 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Parser">Parser<a class="anchor-link" href="#Parser">&#182;</a></h3><ul>
 <li>[x] All but @CONF decoration tests</li>
-<li>[] Module inherit omitting exec</li>
+<li>[x] Module inherit omitting exec</li>
 <li>[] No multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
 <li>[] All module output in the same block should have same name (a required good practice)</li>
 <li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
-<li>[] Module names / parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
+<li>[x] Module names / parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
 <li>[] Duplicate module / parameter names</li>
 <li>[] Different length of params in different exec. e.g. mybeta = 1,2,3 vs. mybeta = (4,5,6) will lead to file lock fail. </li>
 <li>[] Strings ending with <code>,</code> intentionally</li>
 <li>[] Check if @ALIAS in the parameter list (or is a number or str?)</li>
-<li><code>@FILTER</code> cannot have pipeline variables <code>$</code></li>
+<li>[] <code>@FILTER</code> cannot have pipeline variables <code>$</code></li>
 </ul>
 
 </div>
@@ -389,12 +389,13 @@ body {
 <li>[] <code>inline</code> executables</li>
 </ul>
 <h3 id="R-interface">R interface<a class="anchor-link" href="#R-interface">&#182;</a></h3><ul>
-<li>[] New data exchange format</li>
-<li>[] New data extraction interface / basic data exploration features in R</li>
+<li>[] Make operator <code>R()</code> smarter: <strong>basically make a <code>dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</strong></li>
+<li>[] <strong>New data exchange format in HDF5</strong></li>
+<li>[x] New data extraction interface / basic data exploration features in R</li>
 <li>[x] A more self-contained way to load DSC related functions: a companion R package eventually?</li>
 </ul>
 <h3 id="Python-interface">Python interface<a class="anchor-link" href="#Python-interface">&#182;</a></h3><ul>
-<li>[] Switch from RDS/rpy2 to HDF5</li>
+<li>[x] Switch from RDS/rpy2 to HDF5</li>
 </ul>
 <h3 id="Shell-command-executable-related-issues">Shell command executable related issues<a class="anchor-link" href="#Shell-command-executable-related-issues">&#182;</a></h3><ul>
 <li>[] Multiple output files</li>
