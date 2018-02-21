@@ -259,13 +259,13 @@ $(document).ready(function () {
 <h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC2:</p>
 
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
-conda install mkl numpy pandas sqlalchemy msgpack-python sympy numexpr 
+conda install numpy scipy pandas sqlalchemy msgpack-python sympy numexpr pytables
 conda install psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
 
 <pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
-conda update mkl numpy pandas sqlalchemy msgpack-python sympy psutil 
-conda update networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+conda update numpy scipy pandas sqlalchemy msgpack-python sympy numexpr pytables
+conda update psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>If you encounter errors, see the troubleshooting tips below.</p>
 
 </div>
@@ -289,7 +289,7 @@ conda update networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 
 <pre><code>pip3 --version</code></pre>
 <p><strong>Important:</strong> <em>In the instructions below, we assume your pip 3.6+ executable is <code>pip</code>. However, you may need to replace <code>pip</code> with <code>pip3</code>.</em></p>
-<p>Now, you may run this command to install DSC2 and all the Python dependencies from source:</p>
+<h3 id="3c.-Install-DSC2-via-pip">3c. Install DSC2 via <code>pip</code><a class="anchor-link" href="#3c.-Install-DSC2-via-pip">&#182;</a></h3><p>Now, you may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
 
 <pre><code>pip install dsc</code></pre>
 <p>If you encounter errors, see the troubleshooting tips below.</p>
