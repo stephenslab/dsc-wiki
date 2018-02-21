@@ -1967,7 +1967,7 @@ h3:hover .anchor-link,
 h4:hover .anchor-link,
 h5:hover .anchor-link,
 h6:hover .anchor-link {
-  visibility: visible;
+  visibility: hidden;
 }
 .text_cell.rendered .input_area {
   display: none;
@@ -3691,11 +3691,11 @@ body > #header .header-bar {
  content: "\f040";
 }
 .item_icon {
- color: #126dce;
+ color: #4e5d6c;
 }
 .item_buttons .kernel-name {
  font-size: 12pt;
- color: #126dce;
+ color: #4e5d6c;
  line-height: 22px;
 }
 .running_notebook_icon:before {
@@ -3707,7 +3707,7 @@ body > #header .header-bar {
 }
 #modal_indicator {
  float: right !important;
- color: #126dce;
+ color: #4e5d6c;
  background: #ffffff;
  background-color: #ffffff;
 }
@@ -3742,7 +3742,7 @@ div.notification_widget.info,
 div#notification_notebook.notification_widget.btn.btn-xs.navbar-btn,
 div#notification_notebook.notification_widget.btn.btn-xs.navbar-btn:hover,
 div#notification_notebook.notification_widget.btn.btn-xs.navbar-btn:focus {
- color: #126dce;
+ color: #4e5d6c;
  background-color: #ffffff;
  border-color: #ffffff;
 }
@@ -4376,7 +4376,7 @@ div.text_cell_render {
 div.cell.text_cell.rendered.selected {
  /* font-family: "Droid Sans", sans-serif; */
  font-family: inherit;
- border: medium solid #126dce;
+ border: medium solid #4e5d6c;
  line-height: 170% !important;
  background: #ffffff;
  background-color: #ffffff;
@@ -4388,14 +4388,14 @@ div.cell.text_cell.unrendered.selected {
  line-height: 170% !important;
  background: #ffffff;
  background-color: #ffffff;
- border: medium solid #126dce;
+ border: medium solid #4e5d6c;
  border-radius: 2px;
 }
 div.cell.text_cell.selected {
  /* font-family: "Droid Sans", sans-serif; */
  font-family: inherit;
  line-height: 170% !important;
- border: medium solid #126dce;
+ border: medium solid #4e5d6c;
  background: #ffffff;
  background-color: #ffffff;
  border-radius: 2px;
@@ -4520,7 +4520,7 @@ div.rendered_html h5 {
 }
 .rendered_html h1,
 .text_cell_render h1 {
- color: #126dce;
+ color: #4e5d6c;
  font-size: 220%;
  text-align: center;
  font-weight: lighter;
@@ -4529,14 +4529,14 @@ div.rendered_html h5 {
 .text_cell_render h2 {
  text-align: left;
  font-size: 170%;
- color: #126dce;
+ color: #4e5d6c;
  font-style: normal;
  font-weight: lighter;
 }
 .rendered_html h3,
 .text_cell_render h3 {
  font-size: 150%;
- color: #126dce;
+ color: #4e5d6c;
  font-weight: lighter;
  /* text-decoration: italic; */
  font-style: normal;
@@ -4544,7 +4544,7 @@ div.rendered_html h5 {
 .rendered_html h4,
 .text_cell_render h4 {
  font-size: 120%;
- color: #126dce;
+ color: #4e5d6c;
  /* font-weight: underline; */
  font-style: normal;
 }
@@ -4690,7 +4690,7 @@ a.anchor-link:link {
  text-decoration: none;
  padding: 0px 20px;
  visibility: none;
- color: #126dce;
+ color: #4e5d6c;
 }
 div#nbextensions-configurator-container.container {
  width: 980px;
@@ -4814,7 +4814,7 @@ label#Keyword-Filter {
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
  color: #ffffff;
- background-color: #126dce;
+ background-color: #4e5d6c;
 }
 .input-group .nbext-list-btn-add,
 .input-group-btn:last-child > .btn-group > .btn {
@@ -5194,7 +5194,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
  background: rgba(191,97,106,.40) !important;
 }
 div.cell.text_cell .cm-s-default .cm-header {
- color: #126dce;
+ color: #4e5d6c;
 }
 div.cell.text_cell .cm-s-default span.cm-variable-2 {
  color: #353535;
