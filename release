@@ -188,6 +188,8 @@ input: generated_files
 output: 'docs/site_libs/tipuesearch/tipuesearch_content.js'
 from jnbinder import generate_tipue_content
 generate_tipue_content(generated_files, f"http://{path(conf['repo']):db}.github.io/{path(conf['repo']):b}", 'docs/')
+with open('docs/search.html', 'w') as f:
+  f.write(open('docs/site_libs/tipuesearch/search.html').read())
 
 [remove-obsolete (Obsolete files remover)]
 output: 'docs/MANIFEST'
