@@ -5,6 +5,7 @@ import json
 import subprocess
 from hashlib import sha1
 from dateutil.parser import parse
+from bs4 import BeautifulSoup
 
 def is_date(string):
     try:
@@ -155,7 +156,7 @@ $( document ).ready(function(){
                   var name=docs[a]
                   $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
             }
-            $("#toc-header").hide();
+            // $("#toc-header").hide(); // comment out because it prevents search bar from displaying
     });
 </script>
 ''' % (path, path, path)
@@ -558,7 +559,7 @@ function filterDataFrame(id) {
             }
             if (!matched)
                 tr[i].style.display = "none";
-        } 
+        }
     }
 }
 
@@ -809,7 +810,7 @@ function filterDataFrame(id) {
             }
             if (!matched)
                 tr[i].style.display = "none";
-        } 
+        }
     }
 }
 function sortDataFrame(id, n, dtype) {
@@ -975,7 +976,7 @@ def get_notebook_toc(path, exclude):
     return out
 
 def get_index_toc(path):
-    out = 'var {}Array = '.format(os.path.basename(path))
+    out = f'var {os.path.basename(path)}Array = '
     # Reference index
     fr = os.path.join(path, '_index.ipynb')
     if not os.path.isfile(fr):
@@ -990,7 +991,7 @@ def get_index_toc(path):
         data = json.load(f)
     for cell in data['cells']:
         for sentence in cell["source"]:
-            doc = re.search('^<p>.*\/(.+?).html', sentence)
+            doc = re.search('^.*\/(.+?).html', sentence)
             if doc:
                 res.append(doc.group(1))
     # Filter by reference index
@@ -1000,7 +1001,7 @@ def get_index_toc(path):
             data = json.load(f)
         for cell in data['cells']:
             for sentence in cell["source"]:
-                doc = re.search('^<p>.*\/(.+?).html', sentence)
+                doc = re.search('^.*\/(.+?).html', sentence)
                 if doc:
                     ref.append(doc.group(1))
         res = [x for x in res if x in ref]
@@ -1182,3 +1183,70 @@ def get_sha1_files(index_files, notebook_files, passwords, write = False):
     res = [protect_page(fn[1], 'docs/site_libs/jnbinder_password.html', p, write)[1]
            for fn, p in zip(index_files + notebook_files, password) if p]
     return res
+
+def parse_html(url, html):
+    '''
+    A simple script to create tipue content by searching for documentation
+    files under given folders.
+
+    Copyright (C) 2016 Bo Peng (bpeng@mdanderson.org) under GNU General Public License
+    '''
+    with open(html, 'rb') as content:
+        soup = BeautifulSoup(content, "html.parser", from_encoding='utf-8')
+        #
+        # try to get the title of the page from h1, h2, or title, and
+        # uses filename if none of them exists.
+        #
+        title = soup.find('h1')
+        if title is None:
+            title = soup.find('h2')
+        if title is None:
+            title = soup.find('title')
+        if title is None:
+            title = os.path.basename(html).rsplit('.')[0]
+        else:
+            title = title.get_text()
+        maintitle = soup.find('h1')
+        if maintitle is None:
+            maintitle = soup.find('h2')
+        if maintitle is None:
+            maintitle = soup.find('title')
+        if maintitle is None:
+            maintitle = os.path.basename(html).rsplit('.')[0]
+        else:
+            maintitle = maintitle.get_text()
+
+        # remove special characters which might mess up js file
+        title = re.sub(r'[¶^a-zA-Z0-9_\.\-]', ' ', title)
+        #
+        # sear
+        all_text = []
+        for header in soup.find_all(re.compile('^h[1-6]$')):
+            # remove special character
+            part = re.sub(r'[^a-zA-Z0-9_\-=\'".,\\]', ' ', header.get_text()).replace('"', "'").strip() + "\n"
+            part = re.sub(r'\s+', ' ', part)
+            ids = [x for x in header.findAll('a') if x.get('id')]
+            if ids:
+                tag = '#' + ids[0].get('id')
+            else:
+                hrefs = header.findAll('a', {'class': 'anchor-link'})
+                if hrefs:
+                    tag = hrefs[0].get('href')
+                else:
+                    tag = ''
+            part = '{{"mainTitle": "{}", "title": "{}", "text": "{}", "tags": "", "mainUrl": "{}", "url": "{}"}}'.format(
+                    re.sub('¶', '', maintitle), re.sub('¶', '', header.get_text()), part, url, url + tag)
+            all_text.append(part)
+    return all_text
+
+def generate_tipue_content(html_files, base_url, docs_dir):
+    # input is a list of html files and their url
+    n = len(docs_dir)
+    text = [parse_html(url, html) for (url, html) in [(os.path.join(base_url, item[len(docs_dir):]), item) for item in html_files]]
+    # write the output to file.
+    with open(os.path.join(docs_dir, 'site_libs/tipuesearch', 'tipuesearch_content.js'), 'w') as out:
+        out.write('''\
+var tipuesearch = {{"pages": [
+{}
+]}};
+'''.format(',\n'.join(sum(text, []))))

@@ -85,7 +85,7 @@ function filterDataFrame(id) {
             }
             if (!matched)
                 tr[i].style.display = "none";
-        } 
+        }
     }
 }
 function sortDataFrame(id, n, dtype) {
@@ -165,7 +165,7 @@ $( document ).ready(function(){
                   var name=docs[a]
                   $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
             }
-            $("#toc-header").hide();
+            // $("#toc-header").hide(); // comment out because it prevents search bar from displaying
     });
 </script>
 

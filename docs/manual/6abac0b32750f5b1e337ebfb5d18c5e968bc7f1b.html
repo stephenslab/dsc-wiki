@@ -83,7 +83,7 @@ function filterDataFrame(id) {
             }
             if (!matched)
                 tr[i].style.display = "none";
-        } 
+        }
     }
 }
 function sortDataFrame(id, n, dtype) {
@@ -163,7 +163,7 @@ $( document ).ready(function(){
                   var name=docs[a]
                   $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
             }
-            $("#toc-header").hide();
+            // $("#toc-header").hide(); // comment out because it prevents search bar from displaying
     });
 </script>
 
@@ -356,7 +356,8 @@ body {
 <li>[x] Convert all previous examples to new syntax</li>
 <li>[] Add a tutorial that compares computation time / speed between modules</li>
 <li>[] Add a tutorial for benchmark output managing, eg, remove / rerun specified steps and moving project from one computer to another</li>
-<li>[] <strong>Add a tutorial on data extraction</strong></li>
+<li>[] Add a documentation page on remote execution, and a tutorial for it (<code>ash</code> example)</li>
+<li>[] <strong>Add a doucmentation for <code>dscrutils</code>, and a tutorial on data extraction using <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Explore_Output.html"><code>one_sample_location</code> example</a>; and update <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Intermediate_R_1.html"><code>ash</code> example</a> to include result exploration (maybe call it <code>Intermediate_R_2.html</code>)</strong></li>
 </ul>
 
 </div>
