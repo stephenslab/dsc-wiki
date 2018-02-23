@@ -249,7 +249,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Filtering-Syntax">DSC Filtering Syntax<a class="anchor-link" href="#DSC-Filtering-Syntax">&#182;</a></h1><p>This document specifically focus on the syntax of <code>@FILTER</code> in <code>dsc</code> and <code>-c</code> in <code>dsc-query</code>.</p>
+<h1 id="DSC-Filter-Syntax">DSC Filter Syntax<a class="anchor-link" href="#DSC-Filter-Syntax">&#182;</a></h1><p>This document specifically focus on the syntax of <code>@FILTER</code> in <code>dsc</code> (for users) and <code>-c</code> option in <code>dsc-query</code> (for developers).</p>
 
 </div>
 </div>
@@ -258,28 +258,28 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC filtering syntax, when applied in <code>@FILTER</code>, selects parameter combinations to allow for only a subset of modules can stem from a module definition. When applied in <code>-c</code> with <code>dsc-query</code> command it allows users to decide which pipeline instance to extract and explore. The syntax in both scenarios are the same.</p>
+<h2 id="For-users">For users<a class="anchor-link" href="#For-users">&#182;</a></h2><p>DSC filtering syntax, when applied in <code>@FILTER</code>, selects parameter combinations to allow for only a subset of modules can stem from a module definition.</p>
 <p>The basic structure for a filtering statement <code>@FILTER</code> is</p>
 
 <pre><code>C_i = {parameter}_i {condition operator} {value}
 C = C_1 {logic operator} C_2 {logic operator} ...</code></pre>
-<p>For <code>dsc-query</code> condition,</p>
-
-<pre><code>C_i = {module.parameter}_i {condition operator} {value}</code></pre>
 <p>Where we support</p>
 <ul>
 <li>condition operators: <code>=, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in</code></li>
 <li>logic operators: <code>AND</code>, <code>OR</code>, <code>NOT</code>, or derived compound logic, eg <code>((NOT (a AND b) OR c) AND d)</code></li>
 </ul>
-<p>For example in <code>dsc-query</code></p>
-
-<pre><code>-c "simulate.n &gt; 100" "(method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)"</code></pre>
-<p>for <code>@FILTER</code>:</p>
+<p>For example:</p>
 
 <pre><code>simulate: sim.R
+    n: 10, 20, 150, 200
     @FILTER: n &gt; 100
 method: method.R
+    p1: 0.1, 0.9
+    p2: 0.2, 0.8
     @FILTER: p1 &lt; 0.5 or p2 &lt; 0.5</code></pre>
+<h2 id="For-developers">For developers<a class="anchor-link" href="#For-developers">&#182;</a></h2><p><code>dsc-query</code> command can serve as the core to writing extension packages to explore DSC benchmark results. The command option is <code>dsc-query -c</code>, which allows users to decide which specific pipeline instance to extract and explore. The syntax is similar to in <code>@FILTER</code> except instead of <code>{parameter}_i</code>, here we need to specify <code>{module.parameter}_i</code> or <code>{group.parameter}_i</code>. For example,</p>
+
+<pre><code>dsc_query ... -c "simulate.n &gt; 100" "(method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)"</code></pre>
 
 </div>
 </div>

@@ -312,8 +312,10 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-ensemble-and-pipeline">Module ensemble and pipeline<a class="anchor-link" href="#Module-ensemble-and-pipeline">&#182;</a></h2><p>A module ensemble is a sequence of module. A pipeline is a special case of module ensemble that represents a complete and meaningful computational procedure DSC aims to investigate.</p>
+<h2 id="Module-ensemble-and-pipeline">Module ensemble and pipeline<a class="anchor-link" href="#Module-ensemble-and-pipeline">&#182;</a></h2><p>A module ensemble is a collection of alternating modules that solves the same problem (analogous to machine learning ensemble). A pipeline is a sequence of concatenating modules to perform a series of computational tasks. A pipeline, in its simplest form, is a module.</p>
 <h3 id="Valid-pipeline">Valid pipeline<a class="anchor-link" href="#Valid-pipeline">&#182;</a></h3><p>A pipeline is valid if, for each module in the pipeline, the <em>input</em> are <em>output</em> of (at least one) previous module in the sequence.</p>
+<h3 id="Pipeline-ensemble">Pipeline ensemble<a class="anchor-link" href="#Pipeline-ensemble">&#182;</a></h3><p>Similar to module ensembles, a pipeline ensemble is a collection of alternating pipelines that solves the same problem. For example if a module ensemble <code>M</code> contains modules <code>M1</code> and <code>M2</code>, then a pipeline ensemble can be created as <code>M -&gt; N</code>, which in fact is ensemble of 2 pipelines <code>M1 -&gt; N</code> and <code>M2 -&gt; N</code>.</p>
+<h3 id="Full-pipeline">Full pipeline<a class="anchor-link" href="#Full-pipeline">&#182;</a></h3><p>A pipeline whose first module does not require <em>output</em> from another module, thus can be executed as is.</p>
 
 </div>
 </div>
@@ -344,7 +346,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note: "Module" may be used as a synonym for "Module flavor" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for either "pipeline" or "pipeline instance" when the potential ambiguity is clear from the context. For example, "pipeline input/output" must mean "pipeline instance input/output".</strong></p>
+<p><em>Note: "Module" may be used as a synonym for "Module flavor" or "Module instance" when the potential ambiguity is clear from the context; "Pipeline" may be used as synonym for one of "pipeline", "full pipeline", or "pipeline instance" when the potential ambiguity is clear from the context. For example, "pipeline input/output" must mean "pipeline instance input/output". "Ensemble" may mean either "module ensemble" or "pipeline ensemble".</em></p>
 
 </div>
 </div>
