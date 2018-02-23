@@ -313,7 +313,8 @@ conda update psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Installing-the-latest-development-version-of-DSC2">Installing the latest development version of DSC2<a class="anchor-link" href="#Installing-the-latest-development-version-of-DSC2">&#182;</a></h2><p>DSC2 is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
+<h2 id="Installing-the-latest-development-version-of-DSC2">Installing the latest development version of DSC2<a class="anchor-link" href="#Installing-the-latest-development-version-of-DSC2">&#182;</a></h2><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
+<p>DSC2 is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
 <p>First install the latest version of SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SoS.git
@@ -324,6 +325,10 @@ python setup.py install</code></pre>
 <pre><code>git clone https://github.com/stephenslab/dsc2.git
 cd dsc2
 python setup.py install</code></pre>
+<p>If you are running R code within your DSC project, you may also want the latest development version of the <strong>dscrutils</strong> R package. This can be installed from GitHub by running the following code in R:</p>
+<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
+install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc2&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
 
 </div>
 </div>
@@ -332,7 +337,9 @@ python setup.py install</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Troubleshooting">Troubleshooting<a class="anchor-link" href="#Troubleshooting">&#182;</a></h2><h3 id="I-am-novice-to-conda.-How-to-properly-configure-it?">I am novice to <code>conda</code>. How to properly configure it?<a class="anchor-link" href="#I-am-novice-to-conda.-How-to-properly-configure-it?">&#182;</a></h3><p>To install Python 3 provided by <a href="https://conda.io/miniconda.html">Miniconda</a>, first download the version for your operating system. Then take Mac version for example: open up a terminal and type,</p>
+<h2 id="Troubleshooting">Troubleshooting<a class="anchor-link" href="#Troubleshooting">&#182;</a></h2><h3 id="I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">I am new to <code>conda</code>. Do you have advice for setting it up?<a class="anchor-link" href="#I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">&#182;</a></h3><p>Here we provide some suggestions for installing <a href="https://conda.io/miniconda.html">Miniconda</a> with Python 3. (The instructions below worked for Miniconda X.X---future versions may have a different 
+installation procedure.)</p>
+<p>First, download the version Miniconda built for your operating system. On a Mac computer, for example, open up a terminal and run these commands:</p>
 
 <pre><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
 ./Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
@@ -344,14 +351,12 @@ to PATH in your /home/&lt;user_name&gt;/.bashrc ? [yes|no]
 <p>If you are not familiar with <code>conda</code>, our recommendation is to type <code>no</code> for now. Then the installer would say something like:</p>
 
 <pre><code>You may wish to edit your .bashrc to prepend the Miniconda3 install location to PATH:
-
 export PATH=/&lt;path_to_conda&gt;/bin:$PATH
-
 Thank you for installing Miniconda3!</code></pre>
-<p>Now what happens is very important: open an empty text file <code>~/.bash_conda</code>, copy the line <code>export PATH=...</code> <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type:</p>
+<p>The next step is important: open an empty text file <code>~/.bash_conda</code>, copy the "<code>export PATH=...</code>" line <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type</p>
 
 <pre><code>source ~/.bash_conda</code></pre>
-<p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to <code>source</code> this file</strong>.</p>
+<p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code>source</code> with this file</strong>. If you do this often, you may want to add this line to your <code>.bashrc</code> file.</p>
 
 </div>
 </div>
@@ -360,7 +365,7 @@ Thank you for installing Miniconda3!</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-to-do-if-you-already-have-conda-but-not-python-&gt;=-3.6">What to do if you already have <code>conda</code> but not python &gt;= 3.6<a class="anchor-link" href="#What-to-do-if-you-already-have-conda-but-not-python-&gt;=-3.6">&#182;</a></h3><p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
+<h3 id="What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">What do I do if I already have <code>conda</code>, but not python &gt;= 3.6?<a class="anchor-link" href="#What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">&#182;</a></h3><p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
 <p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
 
 <pre><code>$ which python
@@ -380,7 +385,7 @@ Thank you for installing Miniconda3!</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="How-to-upgrade-a-previously-installed-version-of-DSC2">How to upgrade a previously installed version of DSC2<a class="anchor-link" href="#How-to-upgrade-a-previously-installed-version-of-DSC2">&#182;</a></h3><p>To upgrade the DSC2 you previously have installed, run the following command:</p>
+<h3 id="How-do-I-upgrade-a-previously-installed-version-of-DSC2?">How do I upgrade a previously installed version of DSC2?<a class="anchor-link" href="#How-do-I-upgrade-a-previously-installed-version-of-DSC2?">&#182;</a></h3><p>To upgrade the DSC2 you previously have installed, run the following command:</p>
 
 <pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
 
@@ -391,7 +396,7 @@ Thank you for installing Miniconda3!</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-do-you-if-you-do-not-have-permission-to-install-Python-packages">What do you if you do not have permission to install Python packages<a class="anchor-link" href="#What-do-you-if-you-do-not-have-permission-to-install-Python-packages">&#182;</a></h3><p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code>--user</code> switch to the <code>pip</code> command:</p>
+<h3 id="What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">What do I do when I do not have permission to install Python packages?<a class="anchor-link" href="#What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">&#182;</a></h3><p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code>--user</code> switch to the <code>pip</code> command:</p>
 
 <pre><code>pip install --user dsc</code></pre>
 <p><strong>Important note:</strong> The <code>--user</code> switch will install packages to the <code>~/.local</code> hidden directory. This may cause problems if <code>dsc</code> is upgraded at a later date without the <code>--user</code> switch.</p>
