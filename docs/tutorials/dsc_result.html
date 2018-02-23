@@ -2741,7 +2741,7 @@ Prism.languages.yaml={scalar:{pattern:/([\-:]\s*(![^\s]+)?[ \t]*[|>])[ \t]*(?:((
 </script></head><body><h3>DSC <a class="various" href="#dsc_conf">configuration script</a></h3>
 <div style="display:none"><div id="dsc_conf"><pre><code class="language-yaml; line-numbers; left-trim; right-trim;">
 normal, t: rnorm.R, rt.R
-    seedn: R(1:10)
+    seed: R(1:5)
     n: 1000
     true_mean: 0, 1
     $x: x
@@ -2778,6 +2778,7 @@ DSC:
 <div id="normal-mean-mse_rnormr" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 # produces n random numbers from normal with specified mean
+set.seed(seed)
 x=rnorm(n,mean=true_mean)
 
 </code></pre></div>
@@ -2805,6 +2806,7 @@ mse = (mean_est-true_mean)^2
 <div id="normal-median-mse_rnormr" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 # produces n random numbers from normal with specified mean
+set.seed(seed)
 x=rnorm(n,mean=true_mean)
 
 </code></pre></div>
@@ -2832,6 +2834,7 @@ mse = (mean_est-true_mean)^2
 <div id="t-mean-mse_rtr" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 # produces n random numbers from t with df=2 and  with specified mean
+set.seed(seed)
 x=true_mean+rt(n,df=2)
 
 </code></pre></div>
@@ -2859,6 +2862,7 @@ mse = (mean_est-true_mean)^2
 <div id="t-median-mse_rtr" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 # produces n random numbers from t with df=2 and  with specified mean
+set.seed(seed)
 x=true_mean+rt(n,df=2)
 
 </code></pre></div>
