@@ -257,8 +257,9 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this document we mainly use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) for detailed introduction on basic DSC syntax (please refer to <a href="Terminology.html">Terminology</a> and <a href="Design_and_Features.html">Design and Features</a> for a broader discussion on this example). We endeavor to maintain a simple syntax to configure a DSC. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools and working with remote computers or HPC clusters.</p>
-<p>A DSC file consists of one or more syntax blocks for module definitions, and one block for benchmark execution specifications. Here we focus on discussing module blocks. DSC benchmark execution will be discussed in <a href="DSC_Execution.html">a separate documentation page</a>.</p>
+<p>In this document we mainly use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) to introduce basic DSC syntax. Before indulging, please refer to <a href="Design_and_Features.html">Design and Features</a> and <a href="Terminology.html">Terminology</a> for high-level discussions that will help better understanding DSC syntax.</p>
+<p>We endeavor to maintain DSC syntax simple and intuitive. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools, using DSC in exploratory phase of research projects, and working with remote computers or HPC clusters for large scale computation. (<strong>FIXME: create these tutorials and add links to them</strong>)</p>
+<p>A DSC file consists of one or more syntax blocks to configure <em>modules</em>, and one block to configure <em>pipelines</em> and <em>benchmark</em>. Here we focus on discussing modules. DSC pipelines and benchmark execution will be discussed in <a href="DSC_Execution.html">a separate document</a>.</p>
 
 </div>
 </div>
@@ -267,14 +268,14 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Modules">Modules<a class="anchor-link" href="#Modules">&#182;</a></h2><p>A module block consists of:</p>
+<h2 id="Modules">Modules<a class="anchor-link" href="#Modules">&#182;</a></h2><p>A module block is conceptually consisted of:</p>
 <ul>
 <li><code>headline</code></li>
 <li><code>input</code></li>
 <li><code>parameters</code></li>
 <li><code>output</code></li>
 </ul>
-<p>and, optionally, <code>decorators</code> that provide customization to modules in the same block. Note that we do not use these exact terms as keywords in module syntax, yet as will be illustrated soon, these components distinguish from each other syntactically.</p>
+<p>and, optionally, <code>decorators</code> that provide customization to flavors of modules. Note that we do not use these exact terms as keywords in module syntax, yet as will be illustrated soon, these components distinguish from each other syntactically.</p>
 <h3 id="Module-headline">Module headline<a class="anchor-link" href="#Module-headline">&#182;</a></h3><p>Modules, the building blocks of DSC, can be minimally specified as follows:</p>
 
 <pre><code>normal, t: rnorm.R, rt.R
@@ -295,9 +296,9 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-Inheritance">Module Inheritance<a class="anchor-link" href="#Module-Inheritance">&#182;</a></h3><p>Modules can be inherited on the headline as a shorthand to define new modules based on existing ones. For example:</p>
+<h3 id="Module-Inheritance">Module Inheritance<a class="anchor-link" href="#Module-Inheritance">&#182;</a></h3><p>Modules can be <em>inherited</em> at block level, as a shorthand to define new modules based on existing ones. For example:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
+<pre><code>normal: rnorm.R
     n: 1000
     $x: x
 
@@ -310,6 +311,29 @@ shifted_normal(normal):
     mu: 1
     $x: x</code></pre>
 <p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is essentially <code>normal</code> with additional parameters.</p>
+<p>Caution that for modules to be successfully inherited:</p>
+<ol>
+<li>the base block headline has to match with one of existing block headlines.</li>
+<li>the derived block should have the same length of executables as the base block</li>
+</ol>
+<p>Violation of Rule 1: syntax</p>
+
+<pre><code>normal, t: rnorm.R, rt.R
+    n: 1000
+    $x: x
+
+shifted_normal(normal): 
+    mu: 1</code></pre>
+<p>will not work because the based block <code>normal</code> is not in any existing block headline.</p>
+<p>Violation of Rule 2: syntax</p>
+
+<pre><code>normal, t: rnorm.R, rt.R
+    n: 1000
+    $x: x
+
+shifted_normal(normal, t): 
+    mu: 1</code></pre>
+<p>will not work because derived block expects one executable for module <code>shifted_normal</code>, yet the base block has 2: <code>rnorm.R</code> and <code>rt.R</code>.</p>
 
 </div>
 </div>
