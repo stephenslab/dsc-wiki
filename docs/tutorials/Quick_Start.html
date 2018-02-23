@@ -266,7 +266,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods via simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom (fixed parameter); then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods using simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom (fixed parameter); then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
 
 <pre><code>normal, t: rnorm.R, rt.R
     seed: R(1:10)
@@ -291,7 +291,7 @@ DSC:
     run: simulate * estimate * mse
     exec_path: R/scenarios, R/methods, R/scores
     output: dsc_result</code></pre>
-<p>All computational routines in this DSC are R scripts (each with one line of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
+<p>All computational routines in this DSC are R scripts (each with 1 or 2 lines of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
   mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
 
@@ -303,10 +303,12 @@ DSC:
 
   <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rt.R <span class="o">&lt;==</span>
   <span class="c1"># produces n random numbers from t with df=2 and  with specified mean</span>
+  <span class="kp">set.seed</span><span class="p">(</span>seed<span class="p">)</span>
   x<span class="o">=</span>true_mean<span class="o">+</span>rt<span class="p">(</span>n<span class="p">,</span>df<span class="o">=</span><span class="m">2</span><span class="p">)</span>
 
   <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rnorm.R <span class="o">&lt;==</span>
   <span class="c1"># produces n random numbers from normal with specified mean</span>
+  <span class="kp">set.seed</span><span class="p">(</span>seed<span class="p">)</span>
   x<span class="o">=</span>rnorm<span class="p">(</span>n<span class="p">,</span>mean<span class="o">=</span>true_mean<span class="p">)</span>
 </pre></div>
 <p>It is important to ensure the variable names match between R script and DSC files. For example the first syntax block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate module output <code>x</code> (the other output variable <code>true_mean</code> already exists as a parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the output for module <code>normal</code>. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>. These module outputs are both <code>x</code> due to the way <code>rt.R</code> and <code>rnorm.R</code> is written so there is no need to create special aliases.</p>
@@ -314,6 +316,36 @@ DSC:
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -326,7 +358,63 @@ DSC:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.24it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">11.643</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example the results will be stored in folder <code>dsc_result/</code>. We will discuss these results later.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Re-run-DSC">Re-run DSC<a class="anchor-link" href="#Re-run-DSC">&#182;</a></h2><p>DSC keeps track of completed tasks so that if the same module instance is re-executed it will skip the computation. For example if you rerun this command it will end quickly, because all computations are skipped:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
@@ -348,12 +436,11 @@ DSC:
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.83it/s]
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:02&lt;00:00,  5.02it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">12.813</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.423</span> seconds.
 </pre>
 </div>
 </div>
@@ -366,26 +453,17 @@ INFO: Elapsed time <span class="ansi-green-fg">12.813</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this example the results will be stored in <code>dsc_result.rds</code>. These files contain the same information only differing in format. We will discuss the output in detail in <a href="">a separate tutorial</a>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Re-run-DSC">Re-run DSC<a class="anchor-link" href="#Re-run-DSC">&#182;</a></h2><p>DSC keeps track of commands that has been executed before so that if you re-run the same DSC command it will skip computational steps if there is no change in DSC configuration file. For example if you rerun this command it will end quickly:</p>
+<p>Notice the last line of output records elapsed time of ~4.4 seconds, compared to ~11 seconds in the first run. If you want to ignore existing result you can use the <code>--skip none</code> flag to force DSC rerun existing results.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span> <span class="o">--</span><span class="kp">skip</span> <span class="n">none</span>
 </pre></div>
 
 </div>
@@ -404,12 +482,11 @@ INFO: Elapsed time <span class="ansi-green-fg">12.813</span> seconds.
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:02&lt;00:00,  6.04it/s]
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.22it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">4.483</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">10.546</span> seconds.
 </pre>
 </div>
 </div>
@@ -422,55 +499,8 @@ INFO: Elapsed time <span class="ansi-green-fg">4.483</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice the last line of output records elapsed time of ~4.4 seconds, compared to ~12.8 seconds in the first run. If you want to ignore existing result you can use the <code>--skip none</code> flag to force DSC rerun existing results. Under the hood it will remove existing output and rerun the benchmark.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span> <span class="o">--</span><span class="kp">skip</span> <span class="n">none</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:06&lt;00:00,  2.56it/s]
-INFO: Building DSC database ...
-INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">13.293</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h2><p>DSC commands generates a script browser in HTML format. In this example it is <a href="dsc_result.html"><code>dsc_result.html</code></a> under your work directory. You can use a web browser to open it and browse DSC scripts as well as your source code for the benchmark.</p>
-<h2 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h2><p>Results of this DSC is stored in the folder <code>dsc_result</code>. It has numerous file containing parameters and pipeline variables from all pipeline instances in the DSC benchmark. Please continue on the <a href="Explore_Output.html">next tutorial</a> to extract and analyze the benchmark results.</p>
+<h2 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h2><p>DSC commands generates a script browser in HTML format. In this example it is <a href="dsc_result.html"><code>dsc_result.html</code></a> under your work directory. You can use a web browser to open it. This file contains the DSC configuration, executed pipelines as well as source code for each pipeline in the benchmark.</p>
+<h2 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h2><p>Results of this DSC is stored in the folder <code>dsc_result/</code>. It has numerous files for each module instance involved in the DSC benchmark. Please continue on the <a href="Explore_Output.html">next tutorial</a> to extract and analyze the benchmark results.</p>
 
 </div>
 </div>
