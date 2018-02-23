@@ -296,44 +296,21 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-Inheritance">Module Inheritance<a class="anchor-link" href="#Module-Inheritance">&#182;</a></h3><p>Modules can be <em>inherited</em> at block level, as a shorthand to define new modules based on existing ones. For example:</p>
+<h3 id="Module-Inheritance">Module Inheritance<a class="anchor-link" href="#Module-Inheritance">&#182;</a></h3><p>Modules can be <em>inherited</em> as follows, a shorthand to define new modules based on existing ones:</p>
 
-<pre><code>normal: rnorm.R
+<pre><code>normal, t: rnorm.R, rt.R
     n: 1000
     $x: x
 
 shifted_normal(normal): 
     mu: 1</code></pre>
-<p><code>shifted_normal</code> is a derived module from <code>normal</code>. The complete definition of <code>shifted_normal</code>, after expanding with the derived contents, is in fact:</p>
+<p><code>shifted_normal</code> is a derived module from <code>normal</code>. The complete definition of <code>shifted_normal</code>, after expanding the derived contents, is in fact:</p>
 
 <pre><code>shifted_normal: rnorm.R
     n: 1000
     mu: 1
     $x: x</code></pre>
 <p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is essentially <code>normal</code> with additional parameters.</p>
-<p>Caution that for modules to be successfully inherited:</p>
-<ol>
-<li>the base block headline has to match with one of existing block headlines.</li>
-<li>the derived block should have the same length of executables as the base block</li>
-</ol>
-<p>Violation of Rule 1: syntax</p>
-
-<pre><code>normal, t: rnorm.R, rt.R
-    n: 1000
-    $x: x
-
-shifted_normal(normal): 
-    mu: 1</code></pre>
-<p>will not work because the based block <code>normal</code> is not in any existing block headline.</p>
-<p>Violation of Rule 2: syntax</p>
-
-<pre><code>normal, t: rnorm.R, rt.R
-    n: 1000
-    $x: x
-
-shifted_normal(normal, t): 
-    mu: 1</code></pre>
-<p>will not work because derived block expects one executable for module <code>shifted_normal</code>, yet the base block has 2: <code>rnorm.R</code> and <code>rt.R</code>.</p>
 
 </div>
 </div>
@@ -342,8 +319,7 @@ shifted_normal(normal, t):
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Module parameters are variables to be used with module executables. Each parameter is an indented property under module headline with parameter names corresponding to variable names, or command-line arguments, for module executables.</p>
-<p>In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
+<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Each module parameter is an indented property under module headline. In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
 <ul>
 <li>module 1: <code>rnorm.R</code> with <code>n</code> set to 100</li>
 <li>module 2: <code>rnorm.R</code> with <code>n</code> set to 500</li>
@@ -355,6 +331,7 @@ shifted_normal(normal, t):
 <pre><code>    n: 10, 20
     p: 0.1, 0.2</code></pre>
 <p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <a href="#Decorator-FILTER-123"><code>@FILTER</code></a> decorator. In the example above each module will take 4 sets of parameters : <code>(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
+<p>Caution that module parameter names must match with variable names, or command-line arguments, for module executables. For example, module parameter <code>n</code> is specified at DSC level and passed to <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> -- neither of these executables has definition for <code>n</code> because they rely on DSC to provide it. It is the user's responsibility to ensure that they match.</p>
 
 </div>
 </div>
@@ -369,9 +346,8 @@ shifted_normal(normal, t):
     n: 1000
     $x: x</code></pre>
 <p><code>$x</code> on the left hand side of <code>:</code> is a module output. Under the hood, the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R"><code>rnorm.R</code></a> script generates a variable <code>x</code>, which is an <code>n</code> vector of normally distributed numbers. By specifying <code>$x: x</code>, <code>x</code> becomes a "module output". That is, other downstream steps will be able to use it via <code>$x</code> as their input, as will be discussed later in detail.</p>
-<p>Language specific syntax can be used to extract specific data from objects for use as module output. For example <code>beta = R(data$meta_info$beta)</code> extracts <code>beta</code> from an <code>R</code> nested list that stores meta information, and use the data extracted as module output <code>beta</code>.</p>
-<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. For example in the above code block <code>x</code> is not a module parameter. For command-line executables, module output will have to be one of the module parameters.</p>
-<p><strong> FIXME: give a tutorial on using command-line tools with DSC </strong></p>
+<p>Language specific syntax can be used to extract specific data from objects for use as module output. For example <code>$beta: data$meta_info$beta</code> extracts <code>beta</code> from an <code>R</code> nested list and save it directly as module output <code>beta</code>.</p>
+<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. In the above example, <code>x</code> is not a module parameter. For command-line executables module output will have to be files (see <a href="#File-generator"><code>file()</code> operator</a> below).</p>
 
 </div>
 </div>
@@ -380,7 +356,7 @@ shifted_normal(normal, t):
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-input">Module input<a class="anchor-link" href="#Module-input">&#182;</a></h3><p>Module input are pipeline variables generated by other upstream modules in the pipeline. Same as module output, module input has the pipeline variable syntax <code>$</code> followed by variable names. What distinguishes module input and output is whether they appear on the left side of <code>:</code> or the right side. For example:</p>
+<h3 id="Module-input">Module input<a class="anchor-link" href="#Module-input">&#182;</a></h3><p>Module input are pipeline variables generated by other upstream modules in the pipeline. Same as module output, module input has the pipeline variable syntax <code>$</code> followed by variable names. What distinguishes module input and output syntactically is whether they appear on the left side or the right side of <code>:</code>. For example:</p>
 
 <pre><code>normal, t: rnorm.R, rt.R
     n: 1000
@@ -397,13 +373,14 @@ shrink: method.R
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Decorators">Decorators<a class="anchor-link" href="#Decorators">&#182;</a></h2><p>The word "decorator" is borrowed from the term "decorator pattern" in object-oriented programming (a design pattern that allows behavior to be added to an individual object without affecting the behavior of other objects from the same class). A DSC decorator, when applied, will modify behavior of modules specified. Available decorators are:</p>
+<h2 id="Decorators">Decorators<a class="anchor-link" href="#Decorators">&#182;</a></h2><p>The word "decorator" is borrowed from the term "decorator pattern" in object-oriented programming (a design pattern that allows behavior to be added to an individual object without affecting the behavior of other objects from the same class). A DSC decorator, when applied, will modify behavior of modules specified without impacting other modules in the same syntax block. Available decorators are:</p>
 <ul>
+<li>@<module></li>
 <li>@ALIAS</li>
 <li>@FILTER</li>
 <li>@CONF</li>
 </ul>
-<p>Additionally when a module name is used as decorator it indicates the specifications underneath will only impact the module in question.</p>
+<p><code>@&lt;module&gt;</code> is specifically used to adjust settings for one module, when multiple modules are specified in the same code block. The other 3 decorators can also be used even when only single module is present in a code block -- this typically applies to derived modules whose behavior is adjusted by decorators to distinguish from the module they inherited.</p>
 
 </div>
 </div>
@@ -427,7 +404,13 @@ shrink: method.R
         n: 200
 ...</code></pre>
 <p>will set <code>n = 200</code> for <code>t</code>, rather than using <code>n = 1000</code>.</p>
-<p>Note that to ensure output from all modules are the same, module decorators cannot be used to configure module output variables.</p>
+<p>Bulk syntax is supported:</p>
+
+<pre><code>normal, t, cauchy: rnorm.R, rt.R, rcauchy.R
+    n: 1000
+    @t,cauchy:
+        n: 200</code></pre>
+<p>Caution that module decorators cannot be used to configure module output variables, because module output are required to be the same for all modules specified in the same syntax block.</p>
 
 </div>
 </div>
@@ -456,6 +439,21 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
     @ALIAS:
         t: n_samples = n</code></pre>
 <p>Then <code>n</code> is renamed to <code>n_samples</code> for input to module <code>t</code>.</p>
+<p>When both module specific <code>@ALIAS</code> and global <code>@ALIAS</code> are to be specified, one can either use module decorator in combination with <code>@ALIAS</code>, or use wildcard <code>*</code> in addition to module specific adjustment. For example the following two code blocks are equivalent:</p>
+
+<pre><code>normal, t, rcauchy: rnorm.R, rt.R, rcauchy.R
+    n: 1000
+    mu: 5
+    @ALIAS:
+        *: args = List(mu)
+        t: args = List(mu), n_samples = n</code></pre>
+
+<pre><code>normal, t, rcauchy: rnorm.R, rt.R, rcauchy.R
+    n: 1000
+    mu: 5
+    @ALIAS: args = List(mu)
+    @t:
+        @ALIAS: args = List(mu), n_samples = n</code></pre>
 
 </div>
 </div>
@@ -464,18 +462,24 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Decorator-FILTER">Decorator FILTER<a class="anchor-link" href="#Decorator-FILTER">&#182;</a></h3><p><strong> FIXME: add link to syntax documentation for condition statements </strong></p>
-<p><code>@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code>@FILTER</code> syntax is the same as the <code>condition</code> statement and is documented elsewhere. Here is an example:</p>
+<h3 id="Decorator-FILTER">Decorator FILTER<a class="anchor-link" href="#Decorator-FILTER">&#182;</a></h3><p><code>@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code>@FILTER</code> syntax is the same as the <code>condition</code> statement in <code>dsc-query</code> command; both <a href="DSC_Filtering.html">documented elsewhere</a>. Here we elaborate on some examples:</p>
 
 <pre><code>normal, t: normal.R, t.R
     n: 100, 200, 300, 400, 500
     k: 0, 1
-    @FILTER: (t.n &lt;= 300 and t.k = 0) or (t.n &gt; 300 and t.k = 1),
-             (norm.n = 500)</code></pre>
+    @FILTER:
+        t: (n &lt;= 300 and k = 0) or (n &gt; 300 and k = 1)
+        normal: n = 500</code></pre>
 <p>Without <code>@FILTER</code> DSC will exhaust all combinations of 5 values of <code>n</code> and 2 of <code>k</code> for both modules, creating a total of 20 parallel jobs. The <code>@FILTER</code> here states that instead of running all 20 jobs, DSC will run for <code>t</code> 3 values from <code>n</code> with <code>k = 0</code>, then run the rest 2 values of <code>n</code> with <code>k = 1</code>, which is a total of 5 jobs for <code>t</code>. Then it runs for <code>normal</code> with <code>n = 500</code> combined with 2 values from <code>k</code>, a total of 2 jobs. Therefore only 7 jobs will be executed after applying the <code>@FILTER</code>.</p>
-<p>When no module name is specified, eg. <code>.n</code>, then all modules will subject to the filter:</p>
+<p>When no module name is specified, eg. <code>n</code>, then all modules will subject to the filter:</p>
 
-<pre><code>    @FILTER: (.n in (100,200,300) and .k = 0)</code></pre>
+<pre><code>    @FILTER: (n in (100,200,300) and k = 0)</code></pre>
+<p>Wildcard <code>*</code> is also supported,</p>
+
+<pre><code>    @FILTER: 
+        *: n in (100,200,300)
+        t: n = 300</code></pre>
+<p>then for <code>t</code> we restrict <code>n</code> to <code>300</code>, and for all other modules we set <code>n</code> to loop over <code>100,200,300</code>.</p>
 
 </div>
 </div>
@@ -484,8 +488,7 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Decorator-CONF">Decorator CONF<a class="anchor-link" href="#Decorator-CONF">&#182;</a></h3><p><code>@CONF</code> provides interface to configuring how the modules in the current block should be executed. Most <code>@CONF</code> options are related to running on remote computational environment such as a single workstation server or HPC clusers.</p>
-<p><strong>FIXME: termed <code>.option</code> in version 0.2.2, the feature is currently removed due to active changes on SoS task models. It will be added back in DSC release 0.2.5</strong></p>
+<h3 id="Decorator-CONF">Decorator CONF<a class="anchor-link" href="#Decorator-CONF">&#182;</a></h3><p><code>@CONF</code> provides interface to override certain properties in benchmark configuration section (<code>DSC</code> section), including <code>work_dir</code>, <code>exec_path</code>, <code>lib_path</code>. See <a href="DSC_Execution.html">this document</a> for more details.</p>
 
 </div>
 </div>
@@ -502,14 +505,14 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Substitution-operator">Substitution operator<a class="anchor-link" href="#Substitution-operator">&#182;</a></h3><p>The substitution parameter <code>$()</code> refers to variables defined in <code>DSC::globals</code>.</p>
+<h3 id="Global-variable-wildcard">Global variable wildcard<a class="anchor-link" href="#Global-variable-wildcard">&#182;</a></h3><p>The global variable wildcard <code>$()</code> refers to variables defined in <code>DSC::global</code>.</p>
 
 <pre><code>simulate_cosine: cosine.R
     types: $(data_functions)
 ...
 
 DSC:
-    globals: 
+    global: 
         data_functions: discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
 <p>is equivalent to</p>
 
@@ -537,7 +540,7 @@ DSC:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Language-interpreters">Language interpreters<a class="anchor-link" href="#Language-interpreters">&#182;</a></h3><p>Currently <code>R()</code>, <code>Python()</code>, and <code>Shell()</code> are supported. These operators run codes inside parenthesis using corresponding interpreters and evaluate the output. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
-<p><strong> FIXME: advanced behavor of <code>R()</code> is yet to be implemented, via the companion package. </strong></p>
+<p><strong> FIXME: advanced behavor of <code>R()</code> is yet to be implemented, via the <code>dscrutils</code> R package. </strong></p>
 
 </div>
 </div>
@@ -574,8 +577,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h3><p><strong> FIXME: partial conversion will be available in version 0.2.5.</strong></p>
-<p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
+<h3 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h3><p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
 
 <pre><code>@ALIAS: args = List()</code></pre>
 <p>will convert all input / parameters the module has available, say <code>x,y,z</code> to <code>args &lt;- list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
@@ -615,13 +617,13 @@ l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><spa
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="File-generator">File generator<a class="anchor-link" href="#File-generator">&#182;</a></h3><p><strong>FIXME: multiple output file generator objects are not yet allowed in 0.2.5.</strong></p>
+<h3 id="File-generator">File generator<a class="anchor-link" href="#File-generator">&#182;</a></h3><p><strong>FIXME: multiple output file generator objects are not yet allowed, and will not be available until DSC 0.3.x.</strong></p>
 <p>File generator <code>file()</code> will generate two types of files:</p>
 <ol>
 <li>With an extension specified, eg. <code>file(txt)</code> or equivalently <code>file(.txt)</code> it generates files with unique names in DSC output folder.</li>
 <li>Without an extension it generates a temporary file.</li>
 </ol>
-<h4 id="Extension-specified">Extension specified<a class="anchor-link" href="#Extension-specified">&#182;</a></h4><p>When a parameter specifies a filename yet to be created by a module instance, <code>file()</code> can be used to ensure a file is properly generated without racing with other module instances. This is achieved by properly name the file for each module instance. <code>file()</code> takes a <strong>file extensions</strong>, and DSC will automatically give it a unique and informative basename. The file can either be a module output that DSC will keep track of as pipeline variable, or an intermediate file that will not be used in other modules. For example:</p>
+<h4 id="Extension-specified">Extension specified<a class="anchor-link" href="#Extension-specified">&#182;</a></h4><p>When a parameter specifies a filename yet to be created by a module instance, <code>file()</code> can be used to ensure a file is properly generated without racing with other module instances. This is achieved by properly name the file for each module instance. <code>file()</code> takes a <em>file extension</em> string, and DSC will automatically give it a unique and informative basename. The file can either be a module output that DSC will keep track of as pipeline variable, or an intermediate file that will not be used in other modules. For example:</p>
 
 <pre><code>kinship: kinship.sh ...
     data: $sim
