@@ -257,7 +257,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a more comprehensive benchmark of the DSC problem described in <a href="Quick_Start.html">the Quick Start tutorial</a>, to demonstrate the use of multiple pipelines in DSC. Material used in this document can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location_winsor">DSC2 vignettes repo</a>.</p>
+<p>In this tutorial we further expand benchmark of the DSC problem described in <a href="Quick_Start.html">the Quick Start tutorial</a>, to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location_winsor">DSC2 vignettes repo</a>.</p>
 
 </div>
 </div>
@@ -266,7 +266,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification-and-Execution">DSC Specification and Execution<a class="anchor-link" href="#DSC-Specification-and-Execution">&#182;</a></h2><p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code>transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two possible DSC pipelines:</p>
+<h2 id="Configuration">Configuration<a class="anchor-link" href="#Configuration">&#182;</a></h2><p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code>transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two DSC pipelines:</p>
 <ul>
 <li>simulate -&gt; estimate -&gt; score</li>
 <li>simulate -&gt; transform -&gt; estimate -&gt; score</li>
@@ -307,7 +307,7 @@ DSC:
          mse
     exec_path: R
     output: dsc_result</code></pre>
-<p>where <em>Winsorization</em> modules are:</p>
+<p>where <code>transform</code> module ensemble contains:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location_winsor<span class="o">/</span>R<span class="o">/</span>winsor1.R <span class="o">&lt;==</span>
   <span class="c1">##  replace the extreme values with limits</span>
   winsor1 <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span>x<span class="p">,</span> fraction<span class="o">=</span><span class="m">.05</span><span class="p">)</span>
@@ -339,14 +339,53 @@ DSC:
   <span class="p">}</span>
   x <span class="o">=</span> winsor2<span class="p">(</span>x<span class="p">,</span> multiple<span class="p">)</span>
 </pre></div>
-<p>To execute the DSC,</p>
+<p>As a result, the previous <code>estimate</code> step is now a pipeline ensemble of <code>(transform * estimate, estimate)</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h2><p>To run the benchmark</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_winsor</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location_winsor</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
@@ -366,14 +405,14 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 31/31 [00:10&lt;00:00,  5.10it/s]
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 31/31 [00:15&lt;00:00,  1.51it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">13.007</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">19.693</span> seconds.
 </pre>
 </div>
 </div>

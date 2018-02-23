@@ -257,7 +257,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <a href="Quick_Start.html">Quick Start</a> example contains 3 ensembles of modules, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational approach for location estimate via the <em>Winsorized</em> mean. This can be implemented as <code>winsor.R</code>:</p>
+<p>The <a href="Quick_Start.html">Quick Start</a> example contains 3 module / module ensembles, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational approach for location estimate via the <em>Winsorized</em> mean. This can be implemented as <code>winsor.R</code>:</p>
 <div class="highlight"><pre><span></span>mean <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 <p>and be incoroperated to DSC as a module.</p>
@@ -283,7 +283,37 @@ body {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
@@ -303,14 +333,15 @@ body {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library psych ...</span>
+<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v1.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:07&lt;00:00,  2.09it/s]
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:05&lt;00:00,  2.20it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">13.237</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">9.648</span> seconds.
 </pre>
 </div>
 </div>
@@ -323,7 +354,8 @@ INFO: Elapsed time <span class="ansi-green-fg">13.237</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice that compared to the run in <a href="Quick_Start.html">Quick Start</a> which took ~12 seconds, running additional two flavors of the <code>winsor</code> module took ~13 seconds. This is because results from <code>mean</code> and <code>median</code> were skipped in this run; only newly added modules are executed.</p>
+<p>Notice that compared to the run in <a href="Quick_Start.html">Quick Start</a> which took ~11 seconds, running additional two flavors of the <code>winsor</code> module took ~9 seconds. This is because results from <code>mean</code> and <code>median</code> were skipped in this run; only newly added modules are executed.</p>
+<p>Also notice that DSC checks and ensures required package <code>psych</code> is available. The package will be installed if it cannot be found on the system.</p>
 
 </div>
 </div>
@@ -349,7 +381,7 @@ winsor: winsor.R
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
@@ -371,12 +403,11 @@ winsor: winsor.R
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v2.dsc</span> ...
-INFO: Building execution graph ...
-INFO: DSC in progress ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:03&lt;00:00,  6.51it/s]
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:02&lt;00:00,  5.38it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">5.282</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.885</span> seconds.
 </pre>
 </div>
 </div>
