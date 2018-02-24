@@ -376,7 +376,7 @@ INFO: Elapsed time <span class="ansi-green-fg">5.065</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The error message is a bit wordy but the part most relevant to debugging are highlighted in green color on your terminal. In this case multiple generated scripts have failed, but the cause is likely the same. You can try to resolve the problem starting from the last error message and see if the fix will help with other errors.</p>
-<p>You can also see that a file called <code>dsc_result.scripts.html</code> is generated. It bundles generated scripts from all module instances involved in the benchmark.</p>
+<p>You can also see that a file called <code>dsc_result.scripts.html</code> is generated. It bundles generated scripts from all module instances involved in the benchmark up to the point the errors occur.</p>
 
 </div>
 </div>
@@ -690,10 +690,10 @@ Traceback:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Debugging-with-the-entire-transcript-profile">Debugging with the entire transcript profile<a class="anchor-link" href="#Debugging-with-the-entire-transcript-profile">&#182;</a></h3><p>Now we want to find out what has this set of problematic <code>mean_est</code> data. That is, we want to find the module instance that generated <code>'dsc_result/t_1_mean_1.rds'</code> from which <code>mean_est</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examining the scripts of the part of DSC benchmark that leads to the error, in <a href="dsc_result.scripts.html"><code>dsc_result.scripts.html</code></a></p>
-<p>You can open up this file in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/t_1_mean_1.rds</code>. This leads you to the following (this is a screenshot of a chunk of <code>dsc_result.scripts.html</code>):</p>
+<h3 id="Debugging-with-upstream-scripts">Debugging with upstream scripts<a class="anchor-link" href="#Debugging-with-upstream-scripts">&#182;</a></h3><p>Now we want to find out what has produced the problematic <code>mean_est</code> variable. That is, we want to find the module instance that generated <code>'dsc_result/t_1_mean_1.rds'</code> from which <code>mean_est</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="dsc_result.scripts.html"><code>dsc_result.scripts.html</code></a>.</p>
+<p>You can open up <a href="dsc_result.scripts.html">this file</a> in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/t_1_mean_1.rds</code>. This leads you to the following:</p>
 <p><img src="../img/debug-tips-1.png" alt="debug-1"></p>
-<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow (&#128049;) replaced the code for location parameter estimation, and fix it easily. In practice, one would want to load both this code chunk and the previous <code>.sos/mse_0_0_93b09896.R</code> to an interactive session, fix the code until <code>.sos/mse_0_0_93b09896.R</code> works, and apply the knowledge learned to the original module <code>R/method/mean.R</code>.</p>
+<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/mse_0_0_93b09896.R</code> to an interactive session, fix the code until <code>.sos/mse_0_0_93b09896.R</code> works, and apply the knowledge learned to the original module <code>R/method/mean.R</code>.</p>
 
 </div>
 </div>
