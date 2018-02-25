@@ -249,7 +249,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Quick-Start-tutorial-in-R-and-Python">Quick Start tutorial in R and Python<a class="anchor-link" href="#Quick-Start-tutorial-in-R-and-Python">&#182;</a></h1>
+<h1 id="Quick-start-tutorial-in-Python">Quick start tutorial in Python<a class="anchor-link" href="#Quick-start-tutorial-in-Python">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -257,16 +257,17 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The example below shows mixed Python and R modules in the same DSC:</p>
+<p>This tutorials shows re-implementation of the <a href="tutorials/Quick_Start.html">Quick Start example</a> in Python. Source code to run this example can be found <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location_python">here</a>.</p>
+<p>The DSC script mostly the same as the Quick Start example:</p>
 
-<pre><code>rnorm, rt: rnorm.py, rt.R
+<pre><code>rnorm, rt: rnorm.py, rt.py
     seed: R(1:10)
     n: 1000
     true_mean: 0, 1
     $x: x
     $true_mean: true_mean
 
-mean, median: mean.R, median.py
+mean, median: mean.py, median.py
     x: $x
     $mean: mean
 
@@ -280,21 +281,51 @@ DSC:
       simulate: rnorm, rt
       estimate: mean, median
     run: simulate * estimate * mse
-    R_libs: psych
-    exec_path: PY/scenarios, PY/methods, PY/scores,
-               R/scenarios, R/methods
+    exec_path: PY/scenarios, PY/methods, PY/scores
     output: dsc_result</code></pre>
-<p>To execute:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may notice the only difference are the executables (and search path) -- now implemented in Python:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">methods</span><span class="o">/</span><span class="n">mean</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">methods</span><span class="o">/</span><span class="n">median</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scores</span><span class="o">/</span><span class="n">MSE</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean_est</span><span class="o">-</span><span class="n">true_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">rnorm</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="c1"># produces n random numbers from normal with specified mean</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="o">../</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span><span class="o">/</span><span class="n">PY</span><span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">rt</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="c1"># produces n random numbers from t with df=2 and  with specified mean</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">x</span><span class="o">=</span><span class="n">true_mean</span><span class="o">+</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+<p>To run the DSC,</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_mix</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span>
 </pre></div>
 
 </div>
@@ -310,14 +341,44 @@ DSC:
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>INFO: Checking R library <span class="ansi-green-fg">psych</span> ...
-INFO: DSC script exported to <span class="ansi-green-fg">settings_mix.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings_mix.dsc</span> ...
-DSC: 100%|██████████| 11/11 [00:33&lt;00:00,  1.61s/it]
-INFO: Building output database <span class="ansi-green-fg">dsc_result.rds</span> ...
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location_python</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 11/11 [00:28&lt;00:00,  2.06s/it]
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">35.833</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">32.118</span> seconds.
 </pre>
 </div>
 </div>
@@ -325,6 +386,15 @@ INFO: Elapsed time <span class="ansi-green-fg">35.833</span> seconds.
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that time consumed for this Python version is longer than example that contains pure R module (the Quick Start example). This is because overhead of running Python standalone scripts is bigger, and unlike in R wehre results are saved to language specific format, ie, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS format</a>, results here are saved to / loaded from a more universial format, ie. <a href="https://support.hdfgroup.org/HDF5/">HDF5 format</a>.</p>
+
+</div>
+</div>
 </div>
 <hr>
 &copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
