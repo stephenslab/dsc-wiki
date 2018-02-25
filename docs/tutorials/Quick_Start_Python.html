@@ -391,7 +391,7 @@ INFO: Elapsed time <span class="ansi-green-fg">32.118</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice that time consumed for this Python version is longer than example that contains pure R module (the Quick Start example). This is because overhead of running Python standalone scripts is bigger, and unlike in R wehre results are saved to language specific format, ie, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS format</a>, results here are saved to / loaded from a more universial format, ie. <a href="https://support.hdfgroup.org/HDF5/">HDF5 format</a>.</p>
+<p>Notice that time consumed for this Python version is longer than example that contains pure R module (the Quick Start example). This is because unlike in R where results are saved to language specific format, ie, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS format</a>, results here are saved to / loaded from a more universial format, ie. <a href="https://support.hdfgroup.org/HDF5/">HDF5 format</a>. Overhead of running Python scripts is therefore also bigger because of having to load HDF5 and type conversion related libraries including <code>scipy</code> and <code>pandas</code>.</p>
 
 </div>
 </div>
