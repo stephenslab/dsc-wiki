@@ -291,7 +291,7 @@ DSC:
     run: simulate * estimate * mse
     exec_path: R/scenarios, R/methods, R/scores
     output: dsc_result</code></pre>
-<p>All computational routines in this DSC are R scripts (each with 1 or 2 lines of code!), located in directories as specified in the <code>DSC::exec_path</code> entry of the configuration file. Contents of these R scripts are:</p>
+<p>All computational routines in this DSC are R scripts (each with 1 or 2 lines of code!), located in directories as specified in the <code>DSC::exec_path</code> property of the configuration file. Contents of these R scripts are:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
   mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
 
@@ -312,7 +312,7 @@ DSC:
   x<span class="o">=</span>rnorm<span class="p">(</span>n<span class="p">,</span>mean<span class="o">=</span>true_mean<span class="p">)</span>
 </pre></div>
 <p>It is important to ensure the variable names match between R script and DSC files. For example the first syntax block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate module output <code>x</code> (the other output variable <code>true_mean</code> already exists as a parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the output for module <code>normal</code>. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>. These module outputs are both <code>x</code> due to the way <code>rt.R</code> and <code>rnorm.R</code> is written so there is no need to create special aliases.</p>
-<p>The <code>DSC::run</code> entry reflects a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>estimate</em>, that can be applied to simulated data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. Therefore ensembles are created using <code>DSC::define</code> and are used to build a benchmark with <code>*</code> logic so that all possible combinations of modules can be expanded to various pipelines.</p>
+<p>The <code>DSC::run</code> property reflects a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>estimate</em>, that can be applied to simulated data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. Therefore ensembles are created using <code>DSC::define</code> and are used to build a benchmark with <code>*</code> logic so that all possible combinations of modules can be expanded to various pipelines.</p>
 
 </div>
 </div>
