@@ -267,7 +267,8 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2>
-<pre><code>normal, t: R(set.seed(seed); x=rnorm(n,mean=true_mean)), R(set.seed(seed); x=true_mean+rt(n,df=2))
+<pre><code>normal, t: R(set.seed(seed); x=rnorm(n,mean=true_mean)), 
+            R(set.seed(seed); x=true_mean+rt(n,df=2))
     seed: R(1:5)
     n: 1000
     true_mean: 0, 1
