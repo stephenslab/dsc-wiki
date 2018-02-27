@@ -366,8 +366,8 @@ dsc file.dsc --target simulate</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Benchmark-parameters">Benchmark parameters<a class="anchor-link" href="#Benchmark-parameters">&#182;</a></h2><p>These parameters are specified in the rest of <code>DSC</code> block:</p>
 <ul>
-<li><code>DSC::exec_path</code>: search path for executable files.</li>
-<li><code>DSC::lib_path</code>: search path for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed from.</li>
+<li><code>DSC::exec_path</code>: search path (or paths) for executable files</li>
+<li><code>DSC::lib_path</code>: search path (or paths) for library files, such as R script to be <code>source</code>-ed or Python scripts to be <code>import</code>-ed from</li>
 <li><code>DSC::R_libs</code>: check required R libraries and if not available, automatically install them from cran, bioconductor or github. 3 formats are accepted:<ul>
 <li><code>&lt;package&gt;</code>: DSC will check / install <code>package</code> from cran or bioconductor.</li>
 <li><code>&lt;package@github_repo/subdir&gt;</code>: DSC will install <code>package</code> from <code>github_repo</code> on github. <code>/subdir</code> is optional -- only applicable when the package is not in the root of the repository. eg <code>ashr@stephenslab/ashr</code>, <code>varbvs@pcarbo/varbvs/varbvs-r</code>.</li>

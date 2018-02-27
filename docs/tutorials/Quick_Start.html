@@ -266,53 +266,66 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods using simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom (fixed parameter); then estimate the location parameter using mean and median, and finally compare the performance of estimators by computing the difference between the estimate and the underlying parameter. The problem is fully specified in DSC2 language below:</p>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The DSC problem is to assess location parameter estimation methods using simulation studies. We will simulate data under normal distribution and <em>t</em> distribution with 2 degrees of freedom; then estimate the location parameter using mean and median, and finally compare the performance of estimators using 2 loss functions: squared mean error and absolute mean error. The problem is fully specified in DSC2 language below:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
-    seed: R(1:10)
-    n: 1000
-    true_mean: 0, 1
-    $x: x
-    $true_mean: true_mean
+<pre><code>normal: normal.R
+  n: 100
+  $data: x
+  $true_mean: 0
 
-mean, median: mean.R, median.R
-    x: $x
-    $mean: mean
+t: t.R
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
 
-mse: MSE.R
-    mean_est: $mean
-    true_mean: $true_mean
-    $mse: mse
+mean: mean.R
+  x: $data
+  $est_mean: y
+
+median: median.R
+  x: $data
+  $est_mean: y
+
+sq_err: sq.R
+  a: $est_mean
+  b: $true_mean
+  $error: e
+
+abs_err: abs.R
+  a: $est_mean
+  b: $true_mean
+  $error: e 
 
 DSC:
     define:
       simulate: normal, t
-      estimate: mean, median
-    run: simulate * estimate * mse
-    exec_path: R/scenarios, R/methods, R/scores
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * analyze * score
+    exec_path: R
     output: dsc_result</code></pre>
-<p>All computational routines in this DSC are R scripts (each with 1 or 2 lines of code!), located in directories as specified in the <code>DSC::exec_path</code> property of the configuration file. Contents of these R scripts are:</p>
-<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>mean.R <span class="o">&lt;==</span>
-  mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
+<p>All computational routines in this DSC are R scripts, located in directories as specified in the <code>DSC::exec_path</code> property of the configuration file. Contents of these R scripts are:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> normal.R <span class="o">&lt;==</span>
+x <span class="o">=</span> rnorm<span class="p">(</span>n<span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">)</span>
 
-  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>methods<span class="o">/</span>median.R <span class="o">&lt;==</span>
-  mean <span class="o">=</span> median<span class="p">(</span>x<span class="p">)</span>
+<span class="o">==&gt;</span> t.R <span class="o">&lt;==</span>
+x <span class="o">=</span> <span class="m">3</span><span class="o">+</span>rt<span class="p">(</span>n<span class="p">,</span>df<span class="p">)</span>
 
-  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scores<span class="o">/</span>MSE.R <span class="o">&lt;==</span>
-  mse <span class="o">=</span> <span class="p">(</span>mean_est<span class="o">-</span>true_mean<span class="p">)</span><span class="o">^</span><span class="m">2</span>
+<span class="o">==&gt;</span> mean.R <span class="o">&lt;==</span>
+y <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
 
-  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rt.R <span class="o">&lt;==</span>
-  <span class="c1"># produces n random numbers from t with df=2 and  with specified mean</span>
-  <span class="kp">set.seed</span><span class="p">(</span>seed<span class="p">)</span>
-  x<span class="o">=</span>true_mean<span class="o">+</span>rt<span class="p">(</span>n<span class="p">,</span>df<span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="o">==&gt;</span> median.R <span class="o">&lt;==</span>
+y <span class="o">=</span> median<span class="p">(</span>x<span class="p">)</span>
 
-  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location<span class="o">/</span>R<span class="o">/</span>scenarios<span class="o">/</span>rnorm.R <span class="o">&lt;==</span>
-  <span class="c1"># produces n random numbers from normal with specified mean</span>
-  <span class="kp">set.seed</span><span class="p">(</span>seed<span class="p">)</span>
-  x<span class="o">=</span>rnorm<span class="p">(</span>n<span class="p">,</span>mean<span class="o">=</span>true_mean<span class="p">)</span>
+<span class="o">==&gt;</span> sq.R <span class="o">&lt;==</span>
+e <span class="o">=</span> <span class="p">(</span>a<span class="o">-</span>b<span class="p">)</span><span class="o">^</span><span class="m">2</span>
+
+<span class="o">==&gt;</span> abs.R <span class="o">&lt;==</span>
+e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<span class="o">-</span>b<span class="p">)</span>
 </pre></div>
-<p>It is important to ensure the variable names match between R script and DSC files. For example the first syntax block involves computational routines <code>rnorm.R</code> and <code>rt.R</code>, both take parameters <code>n</code> and <code>true_mean</code> and generate module output <code>x</code> (the other output variable <code>true_mean</code> already exists as a parameter). The R script, <code>rnorm.R</code>, is <code>x = rnorm(n, mean = true_mean)</code>, which uses parameters <code>n</code> and <code>true_mean</code> on the right hand side to produce <code>x</code> on the left hand side, as the output for module <code>normal</code>. The same holds for <code>rt.R</code> which is <code>x = true_mean + rt(n, df = 2)</code>. These module outputs are both <code>x</code> due to the way <code>rt.R</code> and <code>rnorm.R</code> is written so there is no need to create special aliases.</p>
-<p>The <code>DSC::run</code> property reflects a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>estimate</em>, that can be applied to simulated data and <code>mse</code> is a <em>score</em> that measures the performance of different methods. Therefore ensembles are created using <code>DSC::define</code> and are used to build a benchmark with <code>*</code> logic so that all possible combinations of modules can be expanded to various pipelines.</p>
+<p>It is important to ensure the variable names match between R script and DSC files. For example the first syntax block involves computational routine <code>normal.R</code>, which takes parameter <code>n</code> and generate output <code>x</code>. The R script, <code>normal.R</code>, is <code>x = rnorm(n,0,1)</code>, which uses parameters <code>n</code> on the right hand side to produce <code>x</code> on the left hand side, consistent with output specified for module <code>normal</code>. The same holds for all other modules.</p>
+<p>The <code>DSC::run</code> property reflects a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>analyze</em>, and <code>sq_err</code> and <code>abs_err</code> are <em>score</em>s that evaluate for performance. Therefore ensembles <code>simulate</code>, <code>analyze</code> and <code>score</code> are created using <code>DSC::define</code> and are used to build a benchmark with <code>*</code> logic to create various pipelines via combinations of modules.</p>
 
 </div>
 </div>
@@ -382,10 +395,10 @@ DSC:
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.24it/s]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:03&lt;00:00,  3.94it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">11.643</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">6.928</span> seconds.
 </pre>
 </div>
 </div>
@@ -437,10 +450,10 @@ INFO: Elapsed time <span class="ansi-green-fg">11.643</span> seconds.
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:02&lt;00:00,  5.02it/s]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:02&lt;00:00,  7.09it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">4.423</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.010</span> seconds.
 </pre>
 </div>
 </div>
@@ -483,10 +496,10 @@ INFO: Elapsed time <span class="ansi-green-fg">4.423</span> seconds.
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.22it/s]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:03&lt;00:00,  4.40it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">10.546</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">5.787</span> seconds.
 </pre>
 </div>
 </div>
