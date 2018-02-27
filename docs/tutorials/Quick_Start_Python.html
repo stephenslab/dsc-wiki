@@ -375,10 +375,10 @@ DSC:
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:28&lt;00:00,  2.06s/it]
+DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  2.09it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">32.118</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">10.571</span> seconds.
 </pre>
 </div>
 </div>
@@ -386,15 +386,6 @@ INFO: Elapsed time <span class="ansi-green-fg">32.118</span> seconds.
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice that time consumed for this Python version is longer than example that contains pure R module (the Quick Start example). This is because unlike in R where results are saved to language specific format, ie, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS format</a>, results here are saved to / loaded from a more universial format, ie. <a href="https://support.hdfgroup.org/HDF5/">HDF5 format</a>. Overhead of running Python scripts is therefore also bigger because of having to load HDF5 and type conversion related libraries including <code>scipy</code> and <code>pandas</code>.</p>
-
-</div>
-</div>
 </div>
 <hr>
 &copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
