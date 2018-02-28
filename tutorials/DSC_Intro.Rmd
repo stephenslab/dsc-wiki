@@ -1,0 +1,231 @@
+---
+title: "dsc_intro.rmd"
+author: "Matthew Stephens"
+date: "2/26/2018"
+output: html_document
+---
+
+# Dynamic Statistical Comparisons (DSC)
+
+DSC provides a framework for managing computational benchmarking
+experiments that compare several competing statistical methods
+for a task across datasets or simulation scenarios. 
+DSC helps execute such comparisons in an organized and reproducible
+way, and provides convenient ways to query the results.
+DSC is designed to help make these comparisons
+"dynamic" - that is, easy to extend by adding new methods or simulation scenarios. Hence the name: "Dynamic Statistical Comparisons".
+
+## Overview
+
+Suppose we want to compare many methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".
+
+To compare methods to perform $I$ we could conduct a benchmarking experiment, by repeating the following three steps:
+
+  1. Simulate some data suitable for performing $I$.
+  2. Analyze the data with a method designed to perform $I$.
+  3. Score how well the method performed $I$ (e.g. by comparison with the simulation ground truth).
+
+DSC can handle more complex
+settings than this, but this basic structure suffices to illustrate 
+the key concepts. We will call this the `simulate`-`analyze`-`score` structure.
+
+#### Modules, groups, and pipelines
+
+Typically we will want to consider multiple ways
+to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
+how well a method performed. 
+In DSC this is accomplished by defining groups of
+"modules" that can accomplish each step. For example, we could define a group of `simulate` modules, each of which can perform step 1; a group of
+`analyze` modules, each of which can perform step 2; and a group of `score` modules, each of which can perform step 3. Running the benchmark would then consist of running lots of "pipelines"
+-- sequences of modules -- each of which involves running one module from the `simulate` group, followed by one module from the `analyze` group, followed by one module from the `score` group.
+
+
+The DSC software helps manage and run benchmarks like these (as well as more complex ones). The user specifies modules,
+groups, and pipelines. DSC then runs all pipelines, saving results in a structured way that makes them
+easy to query. The modular design 
+makes it easy to extend
+benchmarks (e.g. adding a new method simply by defining a new `analyze` module). And DSC helps with parallelization: for example, once a `simulate` module has created a dataset, DSC can apply multiple `analyze` modules in parallel on a suitable compute cluster. 
+
+
+## The DSC file
+
+To manage a benchmark using DSC the user must create a "DSC file", which is a text file written using a custom-built syntax illustrated below. The job of the DSC file is to
+define the modules, the groups of modules, and the pipelines (sequences of modules) to be executed. 
+In so-doing the DSC file also specifies the way that information flows through the pipelines. 
+
+Here we introduce the syntax of the DSC file through
+a simple example: we will benchmark methods
+to estimate the expectation of a distribution, given a random sample from the distribution. We will compare two methods: the sample mean and the sample median. We will do simulations
+under two different distributions: a t distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.
+
+#### Planning: module input/output and pipeline variables
+
+As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
+identifying the *types of module* and the *quantities that are going to be passed from module to module*. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variabes should be given an informative name which must begin with a `$`. 
+
+Here we follow the simple three-step
+`simulate`-`analyze`-`score` design mentioned
+above. We thus have three different types of module:
+
++ a `simulate` module will output a vector of simulated data (`$data`),  and the value of the true distribution mean used to simulate it (`$true_mean`). 
++ an `analyze` module will input `$data` and output an estimate (`$est_mean`) of the true distribution mean.
++ a `score` module will input `$est_mean` and `$true_mean` and output a measure of the error (`$error`).
+
+##### Notes on pipeline variables
+
+Some details of this plan may seem unclear until
+you better understand the way DSC works. However the following notes about pipeline variables may help understanding.
+
+1. The pipeline variables output by a module are exactly the
+parts of the module output that are saved (in a file) for future use. So `$error` is here considered a pipeline variable because we want it saved at the end of the pipeline. 
+
+2. The pipeline variables are the only way that modules can communicate with one another. So if a module requires access to a piece of information generated by a previous module then this must be a pipeline variable. For example, a `score` module  naturally requires access to the true mean used to generate the data, so here this is output, as a pipeline variable, from a `simulate` module. 
+
+If you are familiar with
+file-based workflows (e.g. make or Snakemake) then 
+it may help to think of the pipeline variables as files (which is indeed how they are implemented).
+
+
+<!-- Here the pipeline variables are: -->
+
+<!-- - `$data`: a vector of data sampled from a distribution -->
+<!-- - `$true_mean`: the true mean of the distribution from which the data were sampled -->
+<!-- - `$est_mean`: an estimate of the  mean of the distribution (each method will output some such estimate) -->
+<!-- - `$error`: a measure of the error in the estimate compared with the truth -->
+
+<!-- We might summarize this schematically as: -->
+<!-- (maybe a picture here) -->
+
+<!-- + `simulate: . -> $data, $true_mean` -->
+<!-- + `analyze: $data -> $est_mean` -->
+<!-- + `score: $est_mean,$true_mean -> $error` -->
+
+
+#### A `simulate` module
+
+Suppose we have the following one-line of R code in a file `normal.R`:
+
+```x = rnorm(n,0,1)```
+
+This code generates a vector containing `n` random sammples from an $N(0,1)$ distribution, and assigns it to a variable called `x`. We will refer to code like this as a "script", and variables used within the script as "script variables".
+So here `x` and `n` are script variables.
+
+Here we will use this script to specify a DSC module (a `simulate` module). To do this we need to tell DSC four things:
+
+- a name for the module (here `normal`) 
+- the name of the file containing the script (`normal.R`) 
+- what value to use for the script variable `n` (let's say 100 for now)
+- how to determine the values of the pipeline variables `$data` and `$true_mean` after running this code. Here we want `$data` to take the value of the script variable `x`, and `$true_mean` is 0.
+
+Here is all this information in DSC syntax:
+```
+normal: normal.R
+  n: 100
+  $data: x
+  $true_mean: 0
+```
+
+#### Another simulate module
+
+Suppose we have the following script in a file `t.R`:
+
+```x = 3+rt(n,df)```
+
+to generate `n` observations from a t distribution with mean 3 and `df` degrees of freedom.
+
+We can use this to specify another `simulate` module called `t`.
+Here is the DSC syntax:
+```
+t: t.R
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
+```
+
+
+#### Two `analyze` module
+
+Similarly we can create analyze modules. Recall we will 
+have one module (which we will call `mean`) that estimates the distribution mean by the sample mean; and another module (`median`) to  estimate the distribution mean by the sample median.
+
+Supposing the files `mean.R` and `median.R` contain the scripts
+```
+y = mean(x)
+```
+and
+```
+y = median(x)
+```
+respectively, we can define the modules in the DSC file:
+```
+mean: mean.R
+  x: $data
+  $mean_est: y
+  
+median: median.R
+  x: $data
+  $mean_est: y
+```
+
+This syntax tells DSC two key things: 
+
+1. before running the script in `mean.R` (or `median.R`) it should set the script variable `x` to the value of the pipeline variable `$data`; and 
+2. after running the script in `mean.R` (or `median.R`) it should set the value of the pipeline variable `$mean_est` to the value of the script variable `y`.
+
+Notice how we use DSC 
+to pass information from one script to another (through the use of modules and pipeline variables). 
+
+
+#### Two `score` modules
+
+Finally we create two `score` modules, one based on squared error (`sq_err`) and one based on absolute error (`abs_err`).
+Suppose the files `sq.R` and `abs.R` contain the scripts
+```
+e = (a-b)^2
+```
+and
+```
+e = abs(a-b)
+```
+respectively. Then we can define modules:
+```
+sq_err: sq.R
+  a: $est_mean
+  b: $true_mean
+  $error: e
+ 
+abs_err: abs.R
+  a: $est_mean
+  b: $true_mean
+  $error: e 
+```
+  
+### Defining groups and pipelines
+
+The final stage is to tell DSC how to combine these
+six modules into pipelines. We do this by
+first defining the "groups" of similar modules, and then
+defining pipelines in terms of these groups. 
+
+```
+DSC:
+    define:
+      simulate: normal, t
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * estimate * score
+    exec_path: R/scenarios, R/methods, R/scores
+    output: dsc_result
+```
+
+Here:
+
+- `DSC` is a keyword to indicate that here we are defining groups and pipelines (not a module definition).
+- `define` is a keyword to indicate we are defining groups
+(here `simulate`, `analyze` and `score`).
+- `run` is a keyword to indicate that we are defining the pipelines to be run. The `A * B` notation means to create all possible sequences of modules from groups `A` and `B`. That is, all sequences of the form `a`-`b` where `a` is a module in group `A` and `b` is a module in a group `B`.
+- 'exec_path' tells DSC where to look for the script files
+- 'output' tells DSC where to save results
+
+

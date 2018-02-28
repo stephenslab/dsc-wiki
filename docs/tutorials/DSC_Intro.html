@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="ipynb_website:version" content="0.9.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="stylesheet"
+      href="../site_libs/highlightjs-1.1/textmate.css"
+      type="text/css" />
+
+<script src="../site_libs/highlightjs-1.1/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+<script src="../js/doc_toc.js"></script>
+<script src="../js/docs.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+function filterDataFrame(id) {
+    var input = document.getElementById("search_" + id);
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("dataframe_" + id);
+    var tr = table.getElementsByTagName("tr");
+    // Loop through all table rows, and hide those who don't match the search query
+    for (var i = 1; i < tr.length; i++) {
+        for (var j = 0; j < tr[i].cells.length; ++j) {
+            var matched = false;
+            if (tr[i].cells[j].innerHTML.toUpperCase().indexOf(filter) != -1) {
+                tr[i].style.display = "";
+                matched = true
+                break;
+            }
+            if (!matched)
+                tr[i].style.display = "none";
+        }
+    }
+}
+function sortDataFrame(id, n, dtype) {
+    var table = document.getElementById("dataframe_" + id);
+    var tb = table.tBodies[0]; // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+    var tr = Array.prototype.slice.call(tb.rows, 0); // put rows into array
+    if (dtype === 'numeric') {
+        var fn = function(a, b) { 
+            return parseFloat(a.cells[n].textContent) <= parseFloat(b.cells[n].textContent) ? -1 : 1;
+        }
+    } else {
+        var fn = function(a, b) {
+            var c = a.cells[n].textContent.trim().localeCompare(b.cells[n].textContent.trim()); 
+            return c > 0 ? 1 : (c < 0 ? -1 : 0) }
+    }
+    var isSorted = function(array, fn) {
+        if (array.length < 2)
+            return 1;
+        var direction = fn(array[0], array[1]); 
+        for (var i = 1; i < array.length - 1; ++i) {
+            var d = fn(array[i], array[i+1]);
+            if (d == 0)
+                continue;
+            else if (direction == 0)
+                direction = d;
+            else if (direction != d)
+                return 0;
+            }
+        return direction;
+    }
+    var sorted = isSorted(tr, fn);
+    if (sorted == 1 || sorted == -1) {
+        // if sorted already, reverse it
+        for(var i = tr.length - 1; i >= 0; --i)
+            tb.appendChild(tr[i]); // append each row in order
+    } else {
+        tr = tr.sort(fn);
+        for(var i = 0; i < tr.length; ++i)
+            tb.appendChild(tr[i]); // append each row in order
+    }
+}
+</script>
+
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=tutorialsDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=tutorialsArray;
+            var pos=tutorialsArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  var name=docs[a]
+                  $('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  var name=docs[a]
+                  $(".toc #toc-level0").append('<li><a href="'+name+'.html"><font color="#073642"><b>'+name.replace(/_/g," ")+'</b></font></a></li>');
+            }
+            // $("#toc-header").hide(); // comment out because it prevents search bar from displaying
+    });
+</script>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+
+
+<title>Dynamic Statistical Comparisons</title>
+
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+
+<!-- code folding -->
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+<li>
+  <a href="../index.html">Overview</a>
+</li>
+        
+<li>
+  <a href="../quick_start.html">Quick Start</a>
+</li>
+        
+<li>
+  <a href="../manual.html">Manual</a>
+</li>
+        
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+        
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+        
+      </ul>
+        
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="https://github.com/stephenslab/dsc2"> <span class="fa fa-github"></span> </a>
+</li>
+</ul>
+        
+      </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dynamic-Statistical-Comparisons-(DSC)">Dynamic Statistical Comparisons (DSC)<a class="anchor-link" href="#Dynamic-Statistical-Comparisons-(DSC)">&#182;</a></h1><p>DSC provides a framework for managing computational benchmarking
+experiments that compare several competing statistical methods
+for a task across datasets or simulation scenarios.
+DSC helps execute such comparisons in an organized and reproducible
+way, and provides convenient ways to query the results.
+DSC is designed to help make these comparisons
+"dynamic" - that is, easy to extend by adding new methods or simulation scenarios. Hence the name: "Dynamic Statistical Comparisons".</p>
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare many methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".</p>
+<p>To compare methods to perform $I$ we could conduct a benchmarking experiment, by repeating the following three steps:</p>
+<ol>
+<li>Simulate some data suitable for performing $I$.</li>
+<li>Analyze the data with a method designed to perform $I$.</li>
+<li>Score how well the method performed $I$ (e.g. by comparison with the simulation ground truth).</li>
+</ol>
+<p>DSC can handle more complex
+settings than this, but this basic structure suffices to illustrate
+the key concepts. We will call this the <code>simulate</code>-<code>analyze</code>-<code>score</code> structure.</p>
+<h4 id="Modules,-groups,-and-pipelines">Modules, groups, and pipelines<a class="anchor-link" href="#Modules,-groups,-and-pipelines">&#182;</a></h4><p>Typically we will want to consider multiple ways
+to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
+how well a method performed.
+In DSC this is accomplished by defining groups of
+"modules" that can accomplish each step. For example, we could define a group of <code>simulate</code> modules, each of which can perform step 1; a group of
+<code>analyze</code> modules, each of which can perform step 2; and a group of <code>score</code> modules, each of which can perform step 3. Running the benchmark would then consist of running lots of "pipelines"
+-- sequences of modules -- each of which involves running one module from the <code>simulate</code> group, followed by one module from the <code>analyze</code> group, followed by one module from the <code>score</code> group.</p>
+<p>The DSC software helps manage and run benchmarks like these (as well as more complex ones). The user specifies modules,
+groups, and pipelines. DSC then runs all pipelines, saving results in a structured way that makes them
+easy to query. The modular design
+makes it easy to extend
+benchmarks (e.g. adding a new method simply by defining a new <code>analyze</code> module). And DSC helps with parallelization: for example, once a <code>simulate</code> module has created a dataset, DSC can apply multiple <code>analyze</code> modules in parallel on a suitable compute cluster.</p>
+<h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>To manage a benchmark using DSC the user must create a "DSC file", which is a text file written using a custom-built syntax illustrated below. The job of the DSC file is to
+define the modules, the groups of modules, and the pipelines (sequences of modules) to be executed.
+In so-doing the DSC file also specifies the way that information flows through the pipelines.</p>
+<p>Here we introduce the syntax of the DSC file through
+a simple example: we will benchmark methods
+to estimate the expectation of a distribution, given a random sample from the distribution. We will compare two methods: the sample mean and the sample median. We will do simulations
+under two different distributions: a t distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
+<h4 id="Planning:-module-input/output-and-pipeline-variables">Planning: module input/output and pipeline variables<a class="anchor-link" href="#Planning:-module-input/output-and-pipeline-variables">&#182;</a></h4><p>As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
+identifying the <em>types of module</em> and the <em>quantities that are going to be passed from module to module</em>. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variabes should be given an informative name which must begin with a <code>$</code>.</p>
+<p>Here we follow the simple three-step
+<code>simulate</code>-<code>analyze</code>-<code>score</code> design mentioned
+above. We thus have three different types of module:</p>
+<ul>
+<li>a <code>simulate</code> module will output a vector of simulated data (<code>$data</code>),  and the value of the true distribution mean used to simulate it (<code>$true_mean</code>).</li>
+<li>an <code>analyze</code> module will input <code>$data</code> and output an estimate (<code>$est_mean</code>) of the true distribution mean.</li>
+<li>a <code>score</code> module will input <code>$est_mean</code> and <code>$true_mean</code> and output a measure of the error (<code>$error</code>).</li>
+</ul>
+<h5 id="Notes-on-pipeline-variables">Notes on pipeline variables<a class="anchor-link" href="#Notes-on-pipeline-variables">&#182;</a></h5><p>Some details of this plan may seem unclear until
+you better understand the way DSC works. However the following notes about pipeline variables may help understanding.</p>
+<ol>
+<li><p>The pipeline variables output by a module are exactly the
+parts of the module output that are saved (in a file) for future use. So <code>$error</code> is here considered a pipeline variable because we want it saved at the end of the pipeline.</p>
+</li>
+<li><p>The pipeline variables are the only way that modules can communicate with one another. So if a module requires access to a piece of information generated by a previous module then this must be a pipeline variable. For example, a <code>score</code> module  naturally requires access to the true mean used to generate the data, so here this is output, as a pipeline variable, from a <code>simulate</code> module.</p>
+</li>
+</ol>
+<p>If you are familiar with
+file-based workflows (e.g. make or Snakemake) then
+it may help to think of the pipeline variables as files (which is indeed how they are implemented).</p>
+<!-- Here the pipeline variables are: -->
+
+<!-- - `$data`: a vector of data sampled from a distribution -->
+<!-- - `$true_mean`: the true mean of the distribution from which the data were sampled -->
+<!-- - `$est_mean`: an estimate of the  mean of the distribution (each method will output some such estimate) -->
+<!-- - `$error`: a measure of the error in the estimate compared with the truth -->
+
+<!-- We might summarize this schematically as: -->
+<!-- (maybe a picture here) -->
+
+<!-- + `simulate: . -> $data, $true_mean` -->
+<!-- + `analyze: $data -> $est_mean` -->
+<!-- + `score: $est_mean,$true_mean -> $error` -->
+
+
+<h4 id="A-simulate-module">A <code>simulate</code> module<a class="anchor-link" href="#A-simulate-module">&#182;</a></h4><p>Suppose we have the following one-line of R code in a file <code>normal.R</code>:</p>
+<p><code>x = rnorm(n,0,1)</code></p>
+<p>This code generates a vector containing <code>n</code> random sammples from an $N(0,1)$ distribution, and assigns it to a variable called <code>x</code>. We will refer to code like this as a "script", and variables used within the script as "script variables".
+So here <code>x</code> and <code>n</code> are script variables.</p>
+<p>Here we will use this script to specify a DSC module (a <code>simulate</code> module). To do this we need to tell DSC four things:</p>
+<ul>
+<li>a name for the module (here <code>normal</code>)</li>
+<li>the name of the file containing the script (<code>normal.R</code>)</li>
+<li>what value to use for the script variable <code>n</code> (let's say 100 for now)</li>
+<li>how to determine the values of the pipeline variables <code>$data</code> and <code>$true_mean</code> after running this code. Here we want <code>$data</code> to take the value of the script variable <code>x</code>, and <code>$true_mean</code> is 0.</li>
+</ul>
+<p>Here is all this information in DSC syntax:</p>
+
+<pre><code>normal: normal.R
+  n: 100
+  $data: x
+  $true_mean: 0</code></pre>
+<h4 id="Another-simulate-module">Another simulate module<a class="anchor-link" href="#Another-simulate-module">&#182;</a></h4><p>Suppose we have the following script in a file <code>t.R</code>:</p>
+<p><code>x = 3+rt(n,df)</code></p>
+<p>to generate <code>n</code> observations from a t distribution with mean 3 and <code>df</code> degrees of freedom.</p>
+<p>We can use this to specify another <code>simulate</code> module called <code>t</code>.
+Here is the DSC syntax:</p>
+
+<pre><code>t: t.R
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3</code></pre>
+<h4 id="Two-analyze-module">Two <code>analyze</code> module<a class="anchor-link" href="#Two-analyze-module">&#182;</a></h4><p>Similarly we can create analyze modules. Recall we will
+have one module (which we will call <code>mean</code>) that estimates the distribution mean by the sample mean; and another module (<code>median</code>) to  estimate the distribution mean by the sample median.</p>
+<p>Supposing the files <code>mean.R</code> and <code>median.R</code> contain the scripts</p>
+
+<pre><code>y = mean(x)</code></pre>
+<p>and</p>
+
+<pre><code>y = median(x)</code></pre>
+<p>respectively, we can define the modules in the DSC file:</p>
+
+<pre><code>mean: mean.R
+  x: $data
+  $mean_est: y
+
+median: median.R
+  x: $data
+  $mean_est: y</code></pre>
+<p>This syntax tells DSC two key things:</p>
+<ol>
+<li>before running the script in <code>mean.R</code> (or <code>median.R</code>) it should set the script variable <code>x</code> to the value of the pipeline variable <code>$data</code>; and</li>
+<li>after running the script in <code>mean.R</code> (or <code>median.R</code>) it should set the value of the pipeline variable <code>$mean_est</code> to the value of the script variable <code>y</code>.</li>
+</ol>
+<p>Notice how we use DSC
+to pass information from one script to another (through the use of modules and pipeline variables).</p>
+<h4 id="Two-score-modules">Two <code>score</code> modules<a class="anchor-link" href="#Two-score-modules">&#182;</a></h4><p>Finally we create two <code>score</code> modules, one based on squared error (<code>sq_err</code>) and one based on absolute error (<code>abs_err</code>).
+Suppose the files <code>sq.R</code> and <code>abs.R</code> contain the scripts</p>
+
+<pre><code>e = (a-b)^2</code></pre>
+<p>and</p>
+
+<pre><code>e = abs(a-b)</code></pre>
+<p>respectively. Then we can define modules:</p>
+
+<pre><code>sq_err: sq.R
+  a: $est_mean
+  b: $true_mean
+  $error: e
+
+abs_err: abs.R
+  a: $est_mean
+  b: $true_mean
+  $error: e</code></pre>
+<h3 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h3><p>The final stage is to tell DSC how to combine these
+six modules into pipelines. We do this by
+first defining the "groups" of similar modules, and then
+defining pipelines in terms of these groups.</p>
+
+<pre><code>DSC:
+    define:
+      simulate: normal, t
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * estimate * score
+    exec_path: R/scenarios, R/methods, R/scores
+    output: dsc_result</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>DSC</code> is a keyword to indicate that here we are defining groups and pipelines (not a module definition).</li>
+<li><code>define</code> is a keyword to indicate we are defining groups
+(here <code>simulate</code>, <code>analyze</code> and <code>score</code>).</li>
+<li><code>run</code> is a keyword to indicate that we are defining the pipelines to be run. The <code>A * B</code> notation means to create all possible sequences of modules from groups <code>A</code> and <code>B</code>. That is, all sequences of the form <code>a</code>-<code>b</code> where <code>a</code> is a module in group <code>A</code> and <code>b</code> is a module in a group <code>B</code>.</li>
+<li>'exec_path' tells DSC where to look for the script files</li>
+<li>'output' tells DSC where to save results</li>
+</ul>
+
+</div>
+</div>
+</div>
+<hr>
+&copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, the University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+
+</div>
+</div>
+</body>
+</html>
