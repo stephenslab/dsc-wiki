@@ -24,8 +24,8 @@ docs/quick_start.html
 docs/quick_start.tpl
 docs/tutorials.html
 docs/tutorials.tpl
-docs/tutorials/DSC_Intro.html
-docs/tutorials/DSC_Intro.html
+docs/tutorials/DSC_Introduction.html
+docs/tutorials/DSC_Introduction.html
 docs/tutorials/Debug_Tips.html
 docs/tutorials/Expand_Existing_DSC.html
 docs/tutorials/Explore_Output.html
