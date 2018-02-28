@@ -61,7 +61,7 @@ under two different distributions: a t distribution and a normal distribution. A
 #### Planning: module input/output and pipeline variables
 
 As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
-identifying the *types of module* and the *quantities that are going to be passed from module to module*. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variabes should be given an informative name which must begin with a `$`. 
+identifying the *types of module* and the *quantities that are going to be passed from module to module*. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variables should be given an informative name which must begin with a `$`. (Note: variable names in DSC cannot contain a `.`, because this is reserved for another use; we suggest using `_` instead.)
 
 Here we follow the simple three-step
 `simulate`-`analyze`-`score` design mentioned
@@ -161,17 +161,17 @@ respectively, we can define the modules in the DSC file:
 ```
 mean: mean.R
   x: $data
-  $mean_est: y
+  $est_mean: y
   
 median: median.R
   x: $data
-  $mean_est: y
+  $est_mean: y
 ```
 
 This syntax tells DSC two key things: 
 
 1. before running the script in `mean.R` (or `median.R`) it should set the script variable `x` to the value of the pipeline variable `$data`; and 
-2. after running the script in `mean.R` (or `median.R`) it should set the value of the pipeline variable `$mean_est` to the value of the script variable `y`.
+2. after running the script in `mean.R` (or `median.R`) it should set the value of the pipeline variable `$est_mean` to the value of the script variable `y`.
 
 Notice how we use DSC 
 to pass information from one script to another (through the use of modules and pipeline variables). 
