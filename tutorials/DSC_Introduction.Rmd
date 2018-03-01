@@ -29,7 +29,7 @@ DSC can handle more complex
 settings than this, but this basic structure suffices to illustrate 
 the key concepts. We will call this the `simulate`-`analyze`-`score` structure.
 
-#### Modules, groups, and pipelines
+### Modules, groups, and pipelines
 
 Typically we will want to consider multiple ways
 to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
@@ -58,7 +58,7 @@ a simple example: we will benchmark methods
 to estimate the expectation of a distribution, given a random sample from the distribution. We will compare two methods: the sample mean and the sample median. We will do simulations
 under two different distributions: a t distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.
 
-#### Planning: module input/output and pipeline variables
+### Planning: module input/output and pipeline variables
 
 As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
 identifying the *types of module* and the *quantities that are going to be passed from module to module*. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variables should be given an informative name which must begin with a `$`. (Note: variable names in DSC cannot contain a `.`, because this is reserved for another use; we suggest using `_` instead.)
@@ -71,7 +71,7 @@ above. We thus have three different types of module:
 + an `analyze` module will input `$data` and output an estimate (`$est_mean`) of the true distribution mean.
 + a `score` module will input `$est_mean` and `$true_mean` and output a measure of the error (`$error`).
 
-##### Notes on pipeline variables
+#### Notes on pipeline variables
 
 Some details of this plan may seem unclear until
 you better understand the way DSC works. However the following notes about pipeline variables may help understanding.
@@ -101,7 +101,7 @@ it may help to think of the pipeline variables as files (which is indeed how the
 <!-- + `score: $est_mean,$true_mean -> $error` -->
 
 
-#### A `simulate` module
+### A `simulate` module
 
 Suppose we have the following one-line of R code in a file `normal.R`:
 
@@ -125,7 +125,7 @@ normal: normal.R
   $true_mean: 0
 ```
 
-#### Another simulate module
+### Another simulate module
 
 Suppose we have the following script in a file `t.R`:
 
@@ -144,7 +144,7 @@ t: t.R
 ```
 
 
-#### Two `analyze` module
+### Two `analyze` module
 
 Similarly we can create analyze modules. Recall we will 
 have one module (which we will call `mean`) that estimates the distribution mean by the sample mean; and another module (`median`) to  estimate the distribution mean by the sample median.
@@ -177,7 +177,7 @@ Notice how we use DSC
 to pass information from one script to another (through the use of modules and pipeline variables). 
 
 
-#### Two `score` modules
+### Two `score` modules
 
 Finally we create two `score` modules, one based on squared error (`sq_err`) and one based on absolute error (`abs_err`).
 Suppose the files `sq.R` and `abs.R` contain the scripts
@@ -227,5 +227,3 @@ Here:
 - `run` is a keyword to indicate that we are defining the pipelines to be run. The `A * B` notation means to create all possible sequences of modules from groups `A` and `B`. That is, all sequences of the form `a`-`b` where `a` is a module in group `A` and `b` is a module in a group `B`.
 - 'exec_path' tells DSC where to look for the script files
 - 'output' tells DSC where to save results
-
-
