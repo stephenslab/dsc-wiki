@@ -248,19 +248,18 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Install-latest-release-of-DSC2">3. Install latest release of DSC2<a class="anchor-link" href="#3.-Install-latest-release-of-DSC2">&#182;</a></h2><p>We provide two sets of installation instructions: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
-<p>If you would like install the latest (possibly unstable) development version of DSC2 instead, please see the instructions below.</p>
+<h2 id="3.-Install-dependencies">3. Install dependencies<a class="anchor-link" href="#3.-Install-dependencies">&#182;</a></h2><p>We provide two sets of installation instructions: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
 <h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC2:</p>
 
-<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
-conda install numpy scipy pandas sqlalchemy msgpack-python sympy numexpr pytables
-conda install psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml</code></pre>
+
+<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr pytables psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
 
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml
-conda update numpy scipy pandas sqlalchemy msgpack-python sympy numexpr pytables
-conda update psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
-<p>If you encounter errors, see the troubleshooting tips below.</p>
+<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml numpy pandas sqlalchemy msgpack-python sympy numexpr pytables</code></pre>
+
+<pre><code>conda update psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 
 </div>
 </div>
@@ -269,51 +268,36 @@ conda update psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3b.-If-Python-is-not-installed-by-conda">3b. If Python is not installed by <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-by-conda">&#182;</a></h3><p>The Python installer <code>pip</code> will automatically take care of installing the required packages. However, we caution that:</p>
+<h3 id="3b.-If-Python-is-not-installed-by-conda">3b. If Python is not installed by <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-by-conda">&#182;</a></h3><p>Then you can skip this step, because the Python installer <code>pip</code> will automatically take care of installing the required packages. However, we caution that:</p>
 <ul>
 <li><p>Installation <em>will take some time</em> because many required packages will involve source compile. Also your system has to be equipped with <code>C</code> and <code>Fortan</code> compilers and libraries.</p>
 </li>
 <li><p>Installation of some packages may fail. In this case, please try running the command again -- <em>sometimes running the installation command twice fixes the problem.</em></p>
 </li>
 </ul>
-<p><a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Install-DSC2">4. Install DSC2<a class="anchor-link" href="#4.-Install-DSC2">&#182;</a></h2><p>DSC2 is frequently release to <a href="https://pypi.python.org/pypi/dsc/0.2.6.4">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
 
 <pre><code>pip --version</code></pre>
 <p>or</p>
 
 <pre><code>pip3 --version</code></pre>
 <p><strong>Important:</strong> <em>In the instructions below, we assume your pip 3.6+ executable is <code>pip</code>. However, you may need to replace <code>pip</code> with <code>pip3</code>.</em></p>
-<h3 id="3c.-Install-DSC2-via-pip">3c. Install DSC2 via <code>pip</code><a class="anchor-link" href="#3c.-Install-DSC2-via-pip">&#182;</a></h3><p>Now, you may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
+<h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>Now, you may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
 
 <pre><code>pip install dsc</code></pre>
+<p>To upgrade the DSC2 you previously have installed, run the following command:</p>
+
+<pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
 <p>If you encounter errors, see the troubleshooting tips below.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Understand-how-benchmarks-are-implemented">4. Understand how benchmarks are implemented<a class="anchor-link" href="#4.-Understand-how-benchmarks-are-implemented">&#182;</a></h2><p>See <a href="https://stephenslab.github.io/dsc-wiki/manual/Design_and_Features.html">this tutorial</a>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Walk-through-DSC-tutorials">5. Walk through DSC tutorials<a class="anchor-link" href="#5.-Walk-through-DSC-tutorials">&#182;</a></h2><p>Start from <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Quick_Start.html">here</a> for a concrete example, your very first DSC2 project!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Installing-the-latest-development-version-of-DSC2">Installing the latest development version of DSC2<a class="anchor-link" href="#Installing-the-latest-development-version-of-DSC2">&#182;</a></h2><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
+<h3 id="4b.-Install-development-version">4b. Install development version<a class="anchor-link" href="#4b.-Install-development-version">&#182;</a></h3><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
 <p>DSC2 is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
 <p>First install the latest version of SoS:</p>
 
@@ -329,6 +313,15 @@ python setup.py install</code></pre>
 <div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
 install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc2&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Start-your-first-DSC2-project">5. Start your first DSC2 project<a class="anchor-link" href="#5.-Start-your-first-DSC2-project">&#182;</a></h2><p>Start from <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Quick_Start.html">here</a> for a 5 min example of a DSC project, and <a href="https://stephenslab.github.io/dsc-wiki/tutorials/DSC_Introduction.html">here</a> an elaborated version of it.</p>
 
 </div>
 </div>
@@ -377,17 +370,6 @@ Thank you for installing Miniconda3!</code></pre>
 <p>Alternatively, update Python to the latest version (currently version 3.6):</p>
 
 <pre><code>conda install python=3.6</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="How-do-I-upgrade-a-previously-installed-version-of-DSC2?">How do I upgrade a previously installed version of DSC2?<a class="anchor-link" href="#How-do-I-upgrade-a-previously-installed-version-of-DSC2?">&#182;</a></h3><p>To upgrade the DSC2 you previously have installed, run the following command:</p>
-
-<pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
 
 </div>
 </div>
