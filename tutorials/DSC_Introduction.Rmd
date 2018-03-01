@@ -214,8 +214,8 @@ DSC:
       simulate: normal, t
       analyze: mean, median
       score: abs_err, sq_err
-    run: simulate * estimate * score
-    exec_path: R/scenarios, R/methods, R/scores
+    run: simulate * analyze * score
+    exec_path: R
     output: dsc_result
 ```
 
