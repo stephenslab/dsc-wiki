@@ -269,15 +269,17 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>Check that Python &gt;= 3.6 is active in your computing environment. To check, run</p>
+<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC2 is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
 
-<pre><code>python --version</code></pre>
+<pre><code>python --version
+pip --version</code></pre>
 <p>or</p>
 
-<pre><code>python3 --version</code></pre>
-<p>If the reported version is or greater than 3.6.0, then you are ready for the next step.</p>
+<pre><code>python3 --version
+pip3 --version</code></pre>
+<p>If the reported Python version is or greater than 3.6.0 and <code>pip</code> is reported to come from that version (eg. <code>pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
+<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code>python</code>, your pip (python 3.6+) executable is <code>pip</code>. However, you might need to replace <code>python</code> with <code>python3</code> and <code>pip</code> with <code>pip3</code> if they otherwise point to other versions</em></p>
 <p>If you already have some old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see instructions <a href="#Troubleshooting">here</a> for what to do.</p>
-<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code>python</code>. However, you might need to replace <code>python</code> with <code>python3</code> if <code>python</code> points to some Python 2 versions.</em></p>
 
 </div>
 </div>
@@ -321,14 +323,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Install-DSC2">4. Install DSC2<a class="anchor-link" href="#4.-Install-DSC2">&#182;</a></h2><p>DSC2 is frequently release to <a href="https://pypi.python.org/pypi/dsc/0.2.6.4">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
-
-<pre><code>pip --version</code></pre>
-<p>or</p>
-
-<pre><code>pip3 --version</code></pre>
-<p><strong>Important:</strong> <em>In the instructions below, we assume your pip 3.6+ executable is <code>pip</code>. However, you may need to replace <code>pip</code> with <code>pip3</code>.</em></p>
-<h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>Now, you may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
+<h2 id="4.-Install-DSC2">4. Install DSC2<a class="anchor-link" href="#4.-Install-DSC2">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>You may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
 
 <pre><code>pip install dsc</code></pre>
 <p>To upgrade the DSC2 you previously have installed, run the following command:</p>
