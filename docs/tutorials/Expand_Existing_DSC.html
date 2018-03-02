@@ -256,25 +256,22 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <a href="Quick_Start.html">Quick Start</a> example contains 3 module / module ensembles, <code>simulate</code>, <code>estimate</code> and <code>mse</code>. Suppose we now have a new computational approach for location estimate via the <em>Winsorized</em> mean. This can be implemented as <code>winsor.R</code>:</p>
-<div class="highlight"><pre><span></span>mean <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<p>The <a href="5_Minutes.html">5 minutes Quick Start</a> example contains 3 module ensembles, <code>simulate</code>, <code>analyze</code> and <code>score</code>. Suppose we now have a new computational approach for location estimate via the <em>Winsorized</em> mean. This can be implemented as <code>winsor.R</code>:</p>
+<div class="highlight"><pre><span></span>y <span class="o">=</span> psych<span class="o">::</span>winsor.mean<span class="p">(</span>x<span class="p">,</span> trim <span class="o">=</span> trim<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 <p>and be incoroperated to DSC as a module.</p>
-<p>For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>mean</code> or <code>median</code>. Syntactically are two ways to proceed: either by adding it to the existing group of modules, or by adding a new block that configures this module. We will show here two flavors to update, both involving minimal changes to the DSC file and result in the same outcome. In practice one should always adopt flavor that is most logically clear and succinct.</p>
-<h2 id="Add-module-to-Existing-Block">Add module to Existing Block<a class="anchor-link" href="#Add-module-to-Existing-Block">&#182;</a></h2><p>We change the existing block to the following:</p>
+<h2 id="Add-full-specification">Add full specification<a class="anchor-link" href="#Add-full-specification">&#182;</a></h2><p>For <code>winsor.R</code> there is an additional parameter <code>trim</code> which does not exist in <code>mean</code> or <code>median</code>. Here we add in a new module <code>winsor</code> with executable <code>winsor.R</code>:</p>
 
-<pre><code>mean, median, winsor: mean.R, median.R, winsor.R
-    x: $x
-    @winsor:
-      trim: 0.1, 0.2
-    $mean: mean</code></pre>
-<p>where we added in a new module <code>winsor</code> with executable <code>winsor.R</code>, along with an executable specific parameter specification via <code>@winsor</code> to assign two possible values to <code>trim</code> which essentially provides two versions of Winsorization for comparison.</p>
-<p>We also added <code>winsor</code> to the <code>estimate</code> ensemble:</p>
+<pre><code>winsor: winsor.R
+    x: $data
+    trim: 0.1, 0.2
+    $est_mean: y</code></pre>
+<p>We also added <code>winsor</code> to the <code>analyze</code> ensemble:</p>
 
 <pre><code>DSC:
     define:
       simulate: normal, t
-      estimate: mean, median, winsor</code></pre>
+      analyze: mean, median, winsor</code></pre>
 <p>To run the new DSC,</p>
 
 </div>
@@ -302,7 +299,7 @@ body {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+<pre>/home/gaow/Documents/GIT/software/dsc2/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -315,75 +312,7 @@ body {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library psych ...</span>
-<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
-INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v1.dsc</span> ...
-INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:05&lt;00:00,  2.20it/s]
-INFO: Building DSC database ...
-INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">9.648</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice that compared to the run in <a href="Quick_Start.html">Quick Start</a> which took ~11 seconds, running additional two flavors of the <code>winsor</code> module took ~9 seconds. This is because results from <code>mean</code> and <code>median</code> were skipped in this run; only newly added modules are executed.</p>
-<p>Also notice that DSC checks and ensures required package <code>psych</code> is available. The package will be installed if it cannot be found on the system.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Add-a-New-Block">Add a New Block<a class="anchor-link" href="#Add-a-New-Block">&#182;</a></h2><p>Here we show an alternative style to update the existing DSC file: we use a new syntax block for <code>winsor</code> method:</p>
-
-<pre><code>mean, median: mean.R, median.R
-    x: $x
-    $mean: mean
-
-winsor: winsor.R
-    x: $x
-    trim: 0.1, 0.2
-    $mean: mean</code></pre>
-<p>To run this version,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="o">./</span><span class="n">settings_add_method_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
 </pre></div>
 
 </div>
@@ -401,12 +330,12 @@ winsor: winsor.R
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings_add_method_v2.dsc</span> ...
-INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:02&lt;00:00,  5.38it/s]
+INFO: Constructing DSC from <span class="ansi-green-fg">./settings_add_method_v1.dsc</span> ...
+INFO: Building execution graph &amp; Running DSC ...
+DSC: 100%|██████████████████████████████████████| 21/21 [00:02&lt;00:00,  6.21it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">4.885</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.412</span> seconds.
 </pre>
 </div>
 </div>
@@ -419,7 +348,67 @@ INFO: Elapsed time <span class="ansi-green-fg">4.885</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The benchmark is identical to that from previous section albeit different syntax style. Therefore using 5 seconds to check &amp; match file status, DSC2 has skipped all the actual computations.</p>
+<p>Notice that compared to the run in <a href="5_Minutes.html">5 Minutes Quick Start</a>, Even though there are additional two flavors of the <code>winsor</code> module to execute in this example, the total elapsed time is less. This is because results from <code>mean</code> and <code>median</code> were skipped in this run; only newly added modules are executed.</p>
+<p>Also notice that DSC checks and ensures required package <code>psych</code> is available. The package will be installed if it cannot be found on the system.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Add-via-derivation">Add via derivation<a class="anchor-link" href="#Add-via-derivation">&#182;</a></h2><p>Here we show an alternative style to update the existing DSC file: we "derive" <code>winsor</code> from an existing module:</p>
+
+<pre><code>winsor(mean): winsor.R
+    trim: 0.1, 0.2</code></pre>
+<p>In this case only what is "new" compared to <code>mean</code> module need to be specified: the executable <code>winsor.R</code> and parameter <code>trim</code>. Other properties are inherited <code>mean</code>. To run this version,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="o">./</span><span class="n">settings_add_method_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">./settings_add_method_v2.dsc</span> ...
+INFO: Building execution graph &amp; Running DSC ...
+DSC: 100%|██████████████████████████████████████| 21/21 [00:02&lt;00:00,  9.99it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">3.480</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The benchmark is identical to that from previous section albeit different syntax style. Therefore using a few seconds to check &amp; match file status, DSC2 has skipped all the actual computations.</p>
 
 </div>
 </div>

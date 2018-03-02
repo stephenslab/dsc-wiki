@@ -256,7 +256,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this tutorial we provide a "one-liner" implementation of the <a href="Quick_Start.html">Quick Start</a> tutorial using inline executables -- that is, instead of specifying scripts for module executables we use merely language operators to pass codes to DSC.</p>
+<p>In this tutorial we provide a "one-liner" implementation of the <a href="5_Minutes">5 Minutes</a> tutorial using inline executables -- that is, instead of specifying scripts for module executables we use merely language operators to pass codes to DSC.</p>
 
 </div>
 </div>
@@ -266,27 +266,39 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2>
-<pre><code>normal, t: R(set.seed(seed); x=rnorm(n,mean=true_mean)), 
-            R(set.seed(seed); x=true_mean+rt(n,df=2))
-    seed: R(1:5)
-    n: 1000
-    true_mean: 0, 1
-    $x: x
-    $true_mean: true_mean
+<pre><code>#!/usr/bin/env dsc
 
-mean, median: R(mean = mean($(x))), R(mean = median($(x))) 
-    $mean: mean
+normal: R(x = rnorm(n,0,1))
+  n: 100
+  $data: x
+  $true_mean: 0
 
-mse: R(mse = ($(mean)-$(true_mean))^2)
-    $mse: mse
+t: R(x = 3+rt(n,df))
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
+
+mean: R(y = mean($(data))) 
+  $est_mean: y
+
+median: R(y = median($(data)))
+  $est_mean: y
+
+sq_err: R(e = ($(est_mean) - $(true_mean))^2)
+  $error: e
+
+abs_err: R(e = abs($(est_mean) - $(true_mean)))
+  $error: e 
 
 DSC:
     define:
       simulate: normal, t
-      estimate: mean, median
-    run: simulate * estimate * mse
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * analyze * score
     output: dsc_result</code></pre>
-<p>Notice the use of <code>$()</code> in inline module executables. It specifies the required pipeline variables. Therefore for modules <code>mean</code>, <code>median</code> and <code>mse</code> only module output needs to be specified -- module input are defined already in this inline module executable style.</p>
+<p>Notice the use of <code>$()</code> in inline module executables. It specifies the required pipeline variables. Therefore for modules <code>mean</code>, <code>median</code> and <code>sq_err</code> and <code>abs_err</code> only module output needs to be specified -- module input are defined already in this inline module executable style.</p>
 
 </div>
 </div>
@@ -313,7 +325,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+<pre>/home/gaow/Documents/GIT/software/dsc2/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -356,10 +368,10 @@ DSC:
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_inline.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 11/11 [00:07&lt;00:00,  1.36it/s]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:02&lt;00:00,  3.70it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">11.585</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.700</span> seconds.
 </pre>
 </div>
 </div>
@@ -372,7 +384,7 @@ INFO: Elapsed time <span class="ansi-green-fg">11.585</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The outcome should be exact the same as the <a href="Quick_Start.html">Quick Start</a> tutorial. But for this simple case the benchmark is more self-contained and the DSC configuration more concise.</p>
+<p>The outcome should be exact the same as the <a href="5_Minutes">5 Minutes</a> tutorial. But for this simple case the benchmark is more self-contained and the DSC configuration more concise.</p>
 
 </div>
 </div>

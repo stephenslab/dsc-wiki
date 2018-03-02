@@ -256,30 +256,45 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This tutorial is a continuation of the <a href="Quick_Start.html">Quick Start</a>. As a reminder here is the DSC script we've executed:</p>
+<p><strong>FIXME: temporarily broken due to unresolved <code>seed</code> problem.</strong></p>
+<p>This tutorial is a continuation of the <a href="5_Minutes.html">5 Minutes Quick Start</a>. As a reminder here is the DSC script we've executed:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
-    seed: R(1:5)
-    n: 1000
-    true_mean: 0, 1
-    $x: x
-    $true_mean: true_mean
+<pre><code>normal: normal.R
+  n: 100
+  $data: x
+  $true_mean: 0
 
-mean, median: mean.R, median.R
-    x: $x
-    $mean: mean
+t: t.R
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
 
-mse: MSE.R
-    mean_est: $mean
-    true_mean: $true_mean
-    $mse: mse
+mean: mean.R
+  x: $data
+  $est_mean: y
+
+median: median.R
+  x: $data
+  $est_mean: y
+
+sq_err: sq.R
+  a: $est_mean
+  b: $true_mean
+  $error: e
+
+abs_err: abs.R
+  a: $est_mean
+  b: $true_mean
+  $error: e 
 
 DSC:
     define:
       simulate: normal, t
-      estimate: mean, median
-    run: simulate * estimate * mse
-    exec_path: R/scenarios, R/methods, R/scores
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * analyze * score
+    exec_path: R
     output: dsc_result</code></pre>
 
 </div>
@@ -331,7 +346,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc2/vignettes/one_sample_location</pre>
+<pre>/home/gaow/Documents/GIT/software/dsc2/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -346,8 +361,8 @@ DSC:
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc_dir</span> <span class="o">=</span> <span class="s2">&quot;dsc_result&quot;</span>
 <span class="n">dat</span> <span class="o">=</span> <span class="n">dscrutils</span><span class="p">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span>
-                          <span class="n">targets</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;simulate&quot;</span><span class="p">,</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="s2">&quot;seed&quot;</span><span class="p">,</span><span class="s2">&quot;true_mean&quot;</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">),</span>
-                                      <span class="s2">&quot;estimate&quot;</span><span class="p">,</span> <span class="s2">&quot;mse.mse&quot;</span><span class="p">))</span>
+                          <span class="n">targets</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s2">&quot;simulate&quot;</span><span class="p">,</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span><span class="s2">&quot;seed&quot;</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">),</span>
+                                      <span class="s2">&quot;analyze&quot;</span><span class="p">,</span> <span class="s2">&quot;score.error&quot;</span><span class="p">))</span>
 </pre></div>
 
 </div>
