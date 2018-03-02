@@ -288,13 +288,14 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC2 syntax below, following the structure of the original <code>DSCR</code> implementation:</p>
 
-<pre><code># module alias and executables
+<pre><code>#!/usr/bin/env dsc
 simulate: datamaker.R
     # module input and variables
     seed: R(1:5)
-    g: raw(ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))),
-       raw(ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))),
-       raw(ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1)))
+    mixcompdist: raw(normalmix)
+    g: (raw(c(2/3,1/3)),raw(c(0,0)),raw(c(1,2))),
+       (raw(rep(1/7,7)),raw(c(-1.5,-1,-0.5,0,0.5,1,1.5)),raw(rep(0.5,7))),
+       (raw(c(1/4,1/4,1/3,1/6)),raw(c(-2,-1,0,1)),raw(c(2,1.5,1,1)))
     min_pi0: 0
     max_pi0: 1
     nsamp: 1000
@@ -360,7 +361,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-simulate">Module <code>simulate</code><a class="anchor-link" href="#Module-simulate">&#182;</a></h3><h4 id="Inline-code-as-parameters-and-output-values">Inline code as parameters and output values<a class="anchor-link" href="#Inline-code-as-parameters-and-output-values">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which are R codes inside <code>raw()</code> function. Contents inside <code>raw()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret it as <code>g &lt;- ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned <strong>at runtime</strong> output of R codes in <code>raw()</code> for use with <code>datamaker.R</code>. Without <code>raw</code>, this line will be interpreted as a string assigned to <code>g</code> which apparently is problematic. Similarly, <code>$true_beta: raw(data$meta$beta)</code> extracts data at runtime and assign it to output variable.</p>
+<h3 id="Module-simulate">Module <code>simulate</code><a class="anchor-link" href="#Module-simulate">&#182;</a></h3><h4 id="Inline-code-as-parameters-and-output-values">Inline code as parameters and output values<a class="anchor-link" href="#Inline-code-as-parameters-and-output-values">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which have used <code>raw()</code> operator to configure. Contents inside <code>raw()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret each as, eg, <code>g &lt;- list(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned <strong>at runtime</strong> the output of R codes in <code>raw()</code> for use with <code>datamaker.R</code>. Without <code>raw()</code>, this line will be interpreted as strings assigned to <code>g</code> which apparently is problematic, ie, <code>g &lt;- c("c(2/3,1/3)","c(0,0)","c(1,2)")</code>. Similarly, <code>mixcompdist: raw(normalmix)</code> will be interpreted as <code>mixcompdist &lt;- normalmix</code> -- this statement is valid as long as <code>datamaker.R</code> has loaded <code>ashr</code> library, because <code>normalmix</code> is function from <code>ashr</code> library.</p>
 
 </div>
 </div>
@@ -516,7 +517,7 @@ dsc_dir <span class="o">=</span> <span class="s">&#39;dsc_result&#39;</span>
                                               <span class="s">&quot;shrink.beta_est&quot;</span><span class="p">,</span>
                                               <span class="s">&quot;shrink.pi0_est&quot;</span><span class="p">,</span>
                                               <span class="s">&quot;score.mse&quot;</span><span class="p">),</span>
-                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;&quot;</span><span class="p">)</span>
+                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;list(c(2/3,1/3),c(0,0),c(1,2))&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -534,7 +535,7 @@ dsc_dir <span class="o">=</span> <span class="s">&#39;dsc_result&#39;</span>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;&#34; 
+dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;list(c(2/3,1/3),c(0,0),c(1,2))&#39;&#34; 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
@@ -559,7 +560,7 @@ Reading DSC outputs:
                                               <span class="s">&quot;shrink.beta_est&quot;</span><span class="p">,</span>
                                               <span class="s">&quot;shrink.pi0_est&quot;</span><span class="p">,</span> 
                                               <span class="s">&quot;score.mse&quot;</span><span class="p">),</span>
-                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;&quot;</span><span class="p">)</span>
+                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;list(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -577,7 +578,7 @@ Reading DSC outputs:
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;ashr::normalmix(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;&#34; 
+dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;list(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))&#39;&#34; 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
@@ -602,7 +603,7 @@ Reading DSC outputs:
                                               <span class="s">&quot;shrink.beta_est&quot;</span><span class="p">,</span>
                                               <span class="s">&quot;shrink.pi0_est&quot;</span><span class="p">,</span> 
                                               <span class="s">&quot;score.mse&quot;</span><span class="p">),</span>
-                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;&quot;</span><span class="p">)</span>
+                         condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;list(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -620,7 +621,7 @@ Reading DSC outputs:
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;ashr::normalmix(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;&#34; 
+dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_pi0 shrink.mixcompdist shrink.beta_est shrink.pi0_est score.mse --condition &#34;simulate.g = &#39;list(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))&#39;&#34; 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
@@ -1423,7 +1424,7 @@ htmlwidgets<span class="o">::</span>saveWidget<span class="p">(</span>as_widget<
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>dat2 <span class="o">=</span> dscrutils<span class="o">::</span>dscquery<span class="p">(</span>dsc_dir<span class="p">,</span>
                            targets <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;simulate.true_beta&quot;</span><span class="p">,</span> <span class="s">&quot;shrink.mixcompdist&quot;</span><span class="p">,</span> <span class="s">&quot;shrink.beta_est&quot;</span><span class="p">),</span>
-                           condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;&quot;</span><span class="p">,</span>
+                           condition <span class="o">=</span> <span class="s">&quot;simulate.g = &#39;list(c(2/3,1/3),c(0,0),c(1,2))&#39;&quot;</span><span class="p">,</span>
                            max.extract.vector <span class="o">=</span> <span class="m">1000</span><span class="p">)</span>
 </pre></div>
 
@@ -1442,7 +1443,7 @@ htmlwidgets<span class="o">::</span>saveWidget<span class="p">(</span>as_widget<
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_beta shrink.mixcompdist shrink.beta_est --condition &#34;simulate.g = &#39;ashr::normalmix(c(2/3,1/3),c(0,0),c(1,2))&#39;&#34; 
+dsc-query dsc_result -o /tmp/Rtmp6UsXos/dsc/query.csv --target simulate.true_beta shrink.mixcompdist shrink.beta_est --condition &#34;simulate.g = &#39;list(c(2/3,1/3),c(0,0),c(1,2))&#39;&#34; 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_beta: extracted vector values
