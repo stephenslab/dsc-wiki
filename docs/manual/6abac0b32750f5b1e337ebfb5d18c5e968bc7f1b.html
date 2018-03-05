@@ -381,14 +381,14 @@ body {
 <li>[x] Remove old Rlib info files</li>
 <li>[x] Fix github R package arbitary paths</li>
 <li>[!] Add tags for queries</li>
-<li>[] Support <code>(N,P):(100,1000)</code></li>
+<li>[x] Support <code>(N,P):(100,1000)</code></li>
 <li>[] Unsupport nested tuples <code>((100,200),(300,400)), ((9,8))</code></li>
 <li>[] Properly handle grouped input eg <code>g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P)</li>
 <li>[x] <code>file()</code> / <code>file(ext)</code> behavior is reversed ... need to fix</li>
-<li>[] Replace eg <code>simulate_n</code> with <code>simulate:n</code> in the column names</li>
+<li>[x] Replace eg <code>simulate_n</code> with <code>simulate:n</code> in the column names</li>
 <li>[] Reimplement the underlying <code>args</code> and <code>sys.argv</code> for plugins -- make them more general</li>
 <li>[x] Support <code>Rmd</code> file as executable</li>
-<li>[x] Rmd file DSC ignored code line</li>
+<li>[x] Rmd file chunk name</li>
 </ul>
 
 </div>
@@ -398,14 +398,14 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many were existing features removed due to due to new syntax and SoS advances etc. We need to bring them back in.</p>
+<h2 id="Major-features">Major features<a class="anchor-link" href="#Major-features">&#182;</a></h2><p>Many were existing features removed due to new syntax and SoS advances etc. We need to bring them back in.</p>
 <h3 id="Enhanced-interface-syntax">Enhanced interface syntax<a class="anchor-link" href="#Enhanced-interface-syntax">&#182;</a></h3><ul>
 <li>[x] <code>inline</code> executables</li>
 </ul>
 <h3 id="R-interface">R interface<a class="anchor-link" href="#R-interface">&#182;</a></h3><ul>
 <li>[] Make operator <code>R()</code> smarter: <strong>basically make a <code>dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</strong></li>
 <li>[!] <strong>New data exchange format in HDF5</strong><ul>
-<li>Might stick to <code>rpy2</code> until we need to support Matlab</li>
+<li>[x] Might stick to <code>rpy2</code> until we need to support Matlab</li>
 </ul>
 </li>
 <li>[x] New data extraction interface / basic data exploration features in R</li>
