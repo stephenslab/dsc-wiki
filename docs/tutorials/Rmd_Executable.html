@@ -265,7 +265,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Caution that running DSC with source code provided from Rmarkdown files is meant ease DSC development, but is more error prone because users may make more variable or code chunk matching mistakes between DSC interface and the Rmarkdown file. This feature is intended to prototype a benchmark. Users are not recommanded to use Rmd files in the finalized benchmark.</p>
+<p>Caution that running DSC with source code provided from Rmarkdown files is meant to ease DSC development, but is more error prone because users may make more mistakes matching variables or code chunks between DSC interface and Rmarkdown documents. This feature is therefore intended to only prototyping a benchmark. Users will be discouraged with a DSC warning message to use Rmd files in finalized benchmark.</p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The Rmarkdown file is part of the <a href="https://stephenslab.github.io/mashr/docs/intro_mash.html"><code>mashr</code> package intro vigenette</a>. Here we run in DSC the steps of simulating data, compute covariance matrices (prior), and fit the <code>mash</code> model. The DSC file is specified as:</p>
+<p>The Rmarkdown file comes from the <a href="https://stephenslab.github.io/mashr/docs/intro_mash.html"><code>mashr</code> package intro vigenette</a>. Here we run in DSC the steps of simulating data, compute covariance matrices (prior), and fit the <code>mash</code> model. The DSC file is specified as:</p>
 
 <pre><code>#!/usr/bin/env dsc
 
@@ -298,7 +298,7 @@ DSC:
   R_libs: mashr@stephenslab/mashr (0.2.5+)
   output: mash_result</code></pre>
 <p>Take <code>simulate_*@intro_mash.Rmd</code> for example: it means the module executable comes from code chunks matching <code>simulate_*</code> pattern in file <code>intro_mash.Rmd</code>. The code chunk matching pattern follows from <a href="http://www.robelle.com/smugbook/wildcard.html">UNIX wildcard</a> convention. When only the Rmarkdown filename (the part after <code>@</code>) is specified, all code chunks in the Rmarkdown file will be loaded.</p>
-<p>The extracted code along with this DSC script can be found in DSC code browswer <a href="mash_result.html"><code>mash_result.html</code></a>. To run the DSC:</p>
+<p>The extracted code can be found in DSC code browser <a href="mash_result.html"><code>mash_result.html</code></a>. To run the benchmark:</p>
 
 </div>
 </div>
