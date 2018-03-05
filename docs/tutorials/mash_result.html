@@ -2759,6 +2759,7 @@ fit: R(library(mashr)) + fit*@intro_mash.Rmd
  
 DSC:
   run: simulate * get_cov * fit
+  R_libs: mashr@stephenslab/mashr (0.2.5+)
   output: mash_result
 
 </code></pre></div></div><div class="accordion">
@@ -2767,24 +2768,24 @@ DSC:
 <div id=simulate-get_cov-fit class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#simulate-get_cov-fit_intro_mashrmd-dcddbfaf">intro_mash.Rmd (dcddbfaf)</a></li>
-<li><a href="#simulate-get_cov-fit_intro_mashrmd-0a9ddecb">intro_mash.Rmd (0a9ddecb)</a></li>
-<li><a href="#simulate-get_cov-fit_intro_mashrmd-a986a62c">intro_mash.Rmd (a986a62c)</a></li>
+<li class="active"><a href="#simulate-get_cov-fit_simulate_intro_mashrmd-dcddbfaf">simulate_*@intro_mash.Rmd (dcddbfaf)</a></li>
+<li><a href="#simulate-get_cov-fit_covintro_mashrmd-0a9ddecb">cov*@intro_mash.Rmd (0a9ddecb)</a></li>
+<li><a href="#simulate-get_cov-fit_fitintro_mashrmd-a986a62c">fit*@intro_mash.Rmd (a986a62c)</a></li>
 </ul>
 <div class="tab-content">
-<div id="simulate-get_cov-fit_intro_mashrmd-dcddbfaf" class="tab active">
+<div id="simulate-get_cov-fit_simulate_intro_mashrmd-dcddbfaf" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 library(mashr)
 simdata = simple_sims(n_effects,n_cond,1)
 data = mash_set_data(simdata$Bhat, simdata$Shat)
 </code></pre></div>
-<div id="simulate-get_cov-fit_intro_mashrmd-0a9ddecb" class="tab">
+<div id="simulate-get_cov-fit_covintro_mashrmd-0a9ddecb" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 library(mashr)
 U.c = cov_canonical(data)
 print(names(U.c))
 </code></pre></div>
-<div id="simulate-get_cov-fit_intro_mashrmd-a986a62c" class="tab">
+<div id="simulate-get_cov-fit_fitintro_mashrmd-a986a62c" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
 library(mashr)
 m.c = mash(data, U.c)
