@@ -287,7 +287,7 @@ body {
 
 <pre><code>normal, t: simulate.R</code></pre>
 <p>then the two modules will share the same executable (yet, to be discussed later, possibly different module parameters).</p>
-<h4 id="Compound-module-executables">Compound module executables<a class="anchor-link" href="#Compound-module-executables">&#182;</a></h4><p>Multiple scripts can be connected with <code>+</code> (or <code>*</code>) for one module to allow them be loaded sequentially as if they are concatenated to one script. For example:</p>
+<h4 id="Compound-module-executables">Compound module executables<a class="anchor-link" href="#Compound-module-executables">&#182;</a></h4><p>Multiple scripts can be connected with <code>+</code> for one module to allow them be loaded sequentially as if they are concatenated to one script. For example:</p>
 
 <pre><code>method: utils.R + main.R</code></pre>
 <p>will load <code>utils.R</code> followed by <code>main.R</code>.</p>
@@ -307,6 +307,7 @@ body {
 
 <pre><code>method1, method2: (utils1.R, utils2.R) + R(res = main(...))</code></pre>
 <p><a href="#Variable-wildcard-131">Variable wild-card</a> <code>$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Please read <a href="../tutorials/Inline_Executable.html">this tutorial</a> for a concrete example.</p>
+<h4 id="Rmarkdown-based-modules">Rmarkdown based modules<a class="anchor-link" href="#Rmarkdown-based-modules">&#182;</a></h4><p>See <a href="../tutorials/Rmd_Executable.html">this tutorial</a> for detailed introduction with an example.</p>
 
 </div>
 </div>
