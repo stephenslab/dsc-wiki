@@ -248,43 +248,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Dynamic-Statistical-Comparisons-(DSC)">Dynamic Statistical Comparisons (DSC)<a class="anchor-link" href="#Dynamic-Statistical-Comparisons-(DSC)">&#182;</a></h1><p>DSC provides a framework for managing computational benchmarking
-experiments that compare several competing statistical methods
-for a task across datasets or simulation scenarios.
-DSC helps execute such comparisons in an organized and reproducible
-way, and provides convenient ways to query the results.
-DSC is designed to help make these comparisons
-"dynamic" - that is, easy to extend by adding new methods or simulation scenarios. Hence the name: "Dynamic Statistical Comparisons".</p>
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare many methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".</p>
-<p>To compare methods to perform $I$ we could conduct a benchmarking experiment, by repeating the following three steps:</p>
-<ol>
-<li>Simulate some data suitable for performing $I$.</li>
-<li>Analyze the data with a method designed to perform $I$.</li>
-<li>Score how well the method performed $I$ (e.g. by comparison with the simulation ground truth).</li>
-</ol>
-<p>DSC can handle more complex
-settings than this, but this basic structure suffices to illustrate
-the key concepts. We will call this the <code>simulate</code>-<code>analyze</code>-<code>score</code> structure.</p>
-<h3 id="Modules,-groups,-and-pipelines">Modules, groups, and pipelines<a class="anchor-link" href="#Modules,-groups,-and-pipelines">&#182;</a></h3><p>Typically we will want to consider multiple ways
-to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
-how well a method performed.
-In DSC this is accomplished by defining groups of
-"modules" that can accomplish each step. For example, we could define a group of <code>simulate</code> modules, each of which can perform step 1; a group of
-<code>analyze</code> modules, each of which can perform step 2; and a group of <code>score</code> modules, each of which can perform step 3. Running the benchmark would then consist of running lots of "pipelines"
--- sequences of modules -- each of which involves running one module from the <code>simulate</code> group, followed by one module from the <code>analyze</code> group, followed by one module from the <code>score</code> group.</p>
-<p>The DSC software helps manage and run benchmarks like these (as well as more complex ones). The user specifies modules,
-groups, and pipelines. DSC then runs all pipelines, saving results in a structured way that makes them
-easy to query. The modular design
-makes it easy to extend
-benchmarks (e.g. adding a new method simply by defining a new <code>analyze</code> module). And DSC helps with parallelization: for example, once a <code>simulate</code> module has created a dataset, DSC can apply multiple <code>analyze</code> modules in parallel on a suitable compute cluster.</p>
-<h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>To manage a benchmark using DSC the user must create a "DSC file", which is a text file written using a custom-built syntax illustrated below. The job of the DSC file is to
-define the modules, the groups of modules, and the pipelines (sequences of modules) to be executed.
-In so-doing the DSC file also specifies the way that information flows through the pipelines.</p>
-<p>Here we introduce the syntax of the DSC file through
-a simple example: we will benchmark methods
-to estimate the expectation of a distribution, given a random sample from the distribution. We will compare two methods: the sample mean and the sample median. We will do simulations
-under two different distributions: a t distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
-<h3 id="Planning:-module-input/output-and-pipeline-variables">Planning: module input/output and pipeline variables<a class="anchor-link" href="#Planning:-module-input/output-and-pipeline-variables">&#182;</a></h3><p>As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
+<h1 id="First-Course-Explained">First Course Explained<a class="anchor-link" href="#First-Course-Explained">&#182;</a></h1><p>This is a continuation of the <a href="First_Course.html">First Course to DSC</a>. We elaborate on the design and syntax for DSC First Course example.</p>
+<h2 id="Planning:-module-input/output-and-pipeline-variables">Planning: module input/output and pipeline variables<a class="anchor-link" href="#Planning:-module-input/output-and-pipeline-variables">&#182;</a></h2><p>As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
 identifying the <em>types of module</em> and the <em>quantities that are going to be passed from module to module</em>. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variables should be given an informative name which must begin with a <code>$</code>. (Note: variable names in DSC cannot contain a <code>.</code>, because this is reserved for another use; we suggest using <code>_</code> instead.)</p>
 <p>Here we follow the simple three-step
 <code>simulate</code>-<code>analyze</code>-<code>score</code> design mentioned
@@ -294,7 +259,7 @@ above. We thus have three different types of module:</p>
 <li>an <code>analyze</code> module will input <code>$data</code> and output an estimate (<code>$est_mean</code>) of the true distribution mean.</li>
 <li>a <code>score</code> module will input <code>$est_mean</code> and <code>$true_mean</code> and output a measure of the error (<code>$error</code>).</li>
 </ul>
-<h4 id="Notes-on-pipeline-variables">Notes on pipeline variables<a class="anchor-link" href="#Notes-on-pipeline-variables">&#182;</a></h4><p>Some details of this plan may seem unclear until
+<h3 id="Notes-on-pipeline-variables">Notes on pipeline variables<a class="anchor-link" href="#Notes-on-pipeline-variables">&#182;</a></h3><p>Some details of this plan may seem unclear until
 you better understand the way DSC works. However the following notes about pipeline variables may help understanding.</p>
 <ol>
 <li><p>The pipeline variables output by a module are exactly the
@@ -321,7 +286,7 @@ it may help to think of the pipeline variables as files (which is indeed how the
 <!-- + `score: $est_mean,$true_mean -> $error` -->
 
 
-<h3 id="A-simulate-module">A <code>simulate</code> module<a class="anchor-link" href="#A-simulate-module">&#182;</a></h3><p>Suppose we have the following one-line of R code in a file <code>normal.R</code>:</p>
+<h2 id="A-simulate-module">A <code>simulate</code> module<a class="anchor-link" href="#A-simulate-module">&#182;</a></h2><p>Suppose we have the following one-line of R code in a file <code>normal.R</code>:</p>
 <p><code>x = rnorm(n,0,1)</code></p>
 <p>This code generates a vector containing <code>n</code> random sammples from an $N(0,1)$ distribution, and assigns it to a variable called <code>x</code>. We will refer to code like this as a "script", and variables used within the script as "script variables".
 So here <code>x</code> and <code>n</code> are script variables.</p>
@@ -338,7 +303,8 @@ So here <code>x</code> and <code>n</code> are script variables.</p>
   n: 100
   $data: x
   $true_mean: 0</code></pre>
-<h3 id="Another-simulate-module">Another simulate module<a class="anchor-link" href="#Another-simulate-module">&#182;</a></h3><p>Suppose we have the following script in a file <code>t.R</code>:</p>
+<p>It is important to ensure the variable names match between R script and DSC files. The DSC code block above interacts with <code>normal.R</code>, a one-liner R script <code>x = rnorm(n,0,1)</code>, which uses parameters <code>n</code> on the right hand side to produce <code>x</code> on the left hand side, consistent with input <code>n: 100</code> and output <code>$data: x</code> specified for DSC module <code>normal</code>.</p>
+<h2 id="Another-simulate-module">Another <code>simulate</code> module<a class="anchor-link" href="#Another-simulate-module">&#182;</a></h2><p>Suppose we have the following script in a file <code>t.R</code>:</p>
 <p><code>x = 3+rt(n,df)</code></p>
 <p>to generate <code>n</code> observations from a t distribution with mean 3 and <code>df</code> degrees of freedom.</p>
 <p>We can use this to specify another <code>simulate</code> module called <code>t</code>.
@@ -349,7 +315,7 @@ Here is the DSC syntax:</p>
   df: 2
   $data: x
   $true_mean: 3</code></pre>
-<h3 id="Two-analyze-module">Two <code>analyze</code> module<a class="anchor-link" href="#Two-analyze-module">&#182;</a></h3><p>Similarly we can create analyze modules. Recall we will
+<h2 id="Two-analyze-module">Two <code>analyze</code> module<a class="anchor-link" href="#Two-analyze-module">&#182;</a></h2><p>Similarly we can create analyze modules. Recall we will
 have one module (which we will call <code>mean</code>) that estimates the distribution mean by the sample mean; and another module (<code>median</code>) to  estimate the distribution mean by the sample median.</p>
 <p>Supposing the files <code>mean.R</code> and <code>median.R</code> contain the scripts</p>
 
@@ -373,7 +339,7 @@ median: median.R
 </ol>
 <p>Notice how we use DSC
 to pass information from one script to another (through the use of modules and pipeline variables).</p>
-<h3 id="Two-score-modules">Two <code>score</code> modules<a class="anchor-link" href="#Two-score-modules">&#182;</a></h3><p>Finally we create two <code>score</code> modules, one based on squared error (<code>sq_err</code>) and one based on absolute error (<code>abs_err</code>).
+<h2 id="Two-score-modules">Two <code>score</code> modules<a class="anchor-link" href="#Two-score-modules">&#182;</a></h2><p>Finally we create two <code>score</code> modules, one based on squared error (<code>sq_err</code>) and one based on absolute error (<code>abs_err</code>).
 Suppose the files <code>sq.R</code> and <code>abs.R</code> contain the scripts</p>
 
 <pre><code>e = (a-b)^2</code></pre>
@@ -391,7 +357,7 @@ abs_err: abs.R
   a: $est_mean
   b: $true_mean
   $error: e</code></pre>
-<h3 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h3><p>The final stage is to tell DSC how to combine these
+<h2 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h2><p>The final stage is to tell DSC how to combine these
 six modules into pipelines. We do this by
 first defining the "groups" of similar modules, and then
 defining pipelines in terms of these groups.</p>
@@ -413,6 +379,7 @@ defining pipelines in terms of these groups.</p>
 <li><code>exec_path</code> tells DSC where to look for the script files</li>
 <li><code>output</code> tells DSC where to save results</li>
 </ul>
+<p>The <code>DSC::run</code> property reflects our <code>simulate</code>-<code>analyze</code>-<code>score</code> structure, a typical DSC setup where <code>normal</code> and <code>t</code> create <em>simulate</em> under various settings, <code>mean</code> and <code>median</code> are both methods to <em>analyze</em>, and <code>sq_err</code> and <code>abs_err</code> are <em>score</em>s that evaluate for performance. Therefore module groups <code>simulate</code>, <code>analyze</code> and <code>score</code> are created using <code>DSC::define</code> and are used to build pipelines (<code>*</code> operator) of combinations of modules.</p>
 
 </div>
 </div>
