@@ -283,8 +283,8 @@ body {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>usage: dsc [--target str [str ...]] [--truncate] [-o str] [-s option]
-           [--touch] [--clean option] [-c N] [--ignore-errors]
+<pre>usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str]
+           [-s option] [--touch] [--clean option] [-c N] [--ignore-errors]
            [-v {0,1,2,3,4}] [--host file] [--to-host dir [dir ...]]
            [--version] [-h]
            DSC script
@@ -305,11 +305,14 @@ Customized execution:
                         particular DSC output files that needs to be removed.
                         (default: None)
   --truncate            When applied, DSC will only run one value per
-                        parameter. For example with &#34;--truncate&#34;, &#34;seed:
-                        R(1:50)&#34; will be truncated to &#34;seed: 1&#34;. This is
-                        useful in exploratory analysis and diagnostics,
-                        particularly when used in combination with &#34;--target&#34;.
-                        (default: False)
+                        parameter. For example with &#34;--truncate&#34;, &#34;n: R(1:50)&#34;
+                        will be truncated to &#34;n: 1&#34;. This is useful in
+                        exploratory analysis and diagnostics, particularly
+                        when used in combination with &#34;--target&#34;. (default:
+                        False)
+  --replicate N         Overrides &#34;DSC::replicate&#34; to set number of
+                        replicates. Will be set to 1 when &#34;--truncate&#34; is in
+                        action. (default: None)
   -o str                Benchmark output. It overrides &#34;DSC::output&#34; defined
                         in DSC file. (default: None)
 
@@ -375,7 +378,7 @@ Other options:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here we elaborate on some of these options:</p>
+<p>Here we elaborate on some of options we did not have space to elaborate on the interface:</p>
 <ul>
 <li><p><code>-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code>-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc2/issues">github issue</a>.</p>
 </li>
@@ -435,7 +438,8 @@ Other options:
 <pre>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
                  [--description str [str ...]] [-t WHAT [WHAT ...]]
                  [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]] [--add-path]
-                 [--language str] [--addon str [str ...]] [-v {0,1,2,3}]
+                 [--language str] [--addon str [str ...]]
+                 [--rds {omit,overwrite}] [-v {0,1,2,3}]
                  DSC output folder
 
 An internal command to extract meta-table for DSC results (requires &#39;sos-
@@ -475,6 +479,9 @@ optional arguments:
                         Scripts to load to the notebooks for follow up
                         analysis. Only usable in conjunction with &#34;--
                         language&#34;. (default: None)
+  --rds {omit,overwrite}
+                        Convert Python serialized files to R serialized files
+                        (default: None)
   -v {0,1,2,3}, --verbosity {0,1,2,3}
                         Output error (0), warning (1), info (2) and debug (3)
                         information. (default: 2)
