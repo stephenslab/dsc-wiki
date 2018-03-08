@@ -333,7 +333,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Misc">Misc<a class="anchor-link" href="#Misc">&#182;</a></h3><ul>
-<li>[] Do not write library installed files if installation fails</li>
+<li>[x] Do not write library installed files if installation fails</li>
 </ul>
 
 </div>
@@ -352,7 +352,7 @@ body {
 <li>[] Add a tutorial that compares computation time / speed between modules</li>
 <li>[] Add a tutorial for benchmark output managing, eg, remove / rerun specified steps and moving project from one computer to another</li>
 <li>[] Add a documentation page on remote execution, and a tutorial for it (<code>ash</code> example)</li>
-<li>[] <strong>Add a doucmentation for <code>dscrutils</code>, and a tutorial on data extraction using <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Explore_Output.html"><code>one_sample_location</code> example</a>; and update <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Intermediate_R_1.html"><code>ash</code> example</a> to include result exploration (maybe call it <code>Intermediate_R_2.html</code>)</strong></li>
+<li>[x] Add a doucmentation for <code>dscrutils</code>, and a tutorial on data extraction using <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Explore_Output.html"><code>one_sample_location</code> example</a>; and update <a href="https://stephenslab.github.io/dsc-wiki/tutorials/Intermediate_R_1.html"><code>ash</code> example</a> to include result exploration</li>
 </ul>
 
 </div>
@@ -382,13 +382,14 @@ body {
 <li>[x] Fix github R package arbitary paths</li>
 <li>[!] Add tags for queries</li>
 <li>[x] Support <code>(N,P):(100,1000)</code></li>
-<li>[] Unsupport nested tuples <code>((100,200),(300,400)), ((9,8))</code></li>
-<li>[] Properly handle grouped input eg <code>g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P)</li>
+<li>[!] Unsupport nested tuples <code>((100,200),(300,400)), ((9,8))</code> -- i actually have attempted to handle this in R</li>
+<li>[!] Properly handle grouped input eg <code>g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P) -- no need. just query with <code>"(N,P)"</code> as a string, otherwise users should use paired parameter.</li>
 <li>[x] <code>file()</code> / <code>file(ext)</code> behavior is reversed ... need to fix</li>
 <li>[x] Replace eg <code>simulate_n</code> with <code>simulate:n</code> in the column names</li>
 <li>[] Reimplement the underlying <code>args</code> and <code>sys.argv</code> for plugins -- make them more general</li>
 <li>[x] Support <code>Rmd</code> file as executable</li>
 <li>[x] Rmd file chunk name</li>
+<li>[] Make operator <code>Python()</code> smarter, along the lines of <code>R()</code> operator</li>
 </ul>
 
 </div>
@@ -403,7 +404,7 @@ body {
 <li>[x] <code>inline</code> executables</li>
 </ul>
 <h3 id="R-interface">R interface<a class="anchor-link" href="#R-interface">&#182;</a></h3><ul>
-<li>[] Make operator <code>R()</code> smarter: <strong>basically make a <code>dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</strong></li>
+<li>[x] Make operator <code>R()</code> smarter: basically make a <code>dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</li>
 <li>[!] <strong>New data exchange format in HDF5</strong><ul>
 <li>[x] Might stick to <code>rpy2</code> until we need to support Matlab</li>
 </ul>
