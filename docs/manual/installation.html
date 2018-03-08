@@ -290,15 +290,15 @@ pip3 --version</code></pre>
 <h2 id="3.-Install-dependencies">3. Install dependencies<a class="anchor-link" href="#3.-Install-dependencies">&#182;</a></h2><p>DSC depends on <a href="manual/Implementation_Details.html">a number of Python libraries</a>. We provide two sets of installation instructions for these dependencies: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
 <h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC2:</p>
 
-<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml</code></pre>
+<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 
-<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr pytables \
+<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
                 psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
 
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow ruamel.yaml</code></pre>
+<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 
-<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr pytables \
+<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
                 psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 
