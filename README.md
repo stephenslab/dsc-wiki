@@ -41,3 +41,23 @@ install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtool
 devtools::install_github('IRkernel/IRkernel')
 IRkernel::installspec()
 ```
+
+## Work with Jupyter Notebooks
+
+`nbdime` is a good tool to work with Jupyter Notebooks for a git repo. To install:
+
+```
+pip install nbdime
+```
+
+To view notebook differences, for example:
+
+```
+nbdiff <notebook_name>
+```
+
+Run this command if you want `git diff` to behave like `nbdiff` by default:
+
+```
+nbdime config-git --enable --global
+```
