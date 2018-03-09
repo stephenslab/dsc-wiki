@@ -9,7 +9,7 @@ The web pages are edited using Jupyter notebook.
 To revise the wiki, you need to have sos kernel for Jupyter installed:
 
 ```
-pip install sos-notebook
+pip install sos-notebook sos-r
 python -m sos_notebook.install
 ```
 
