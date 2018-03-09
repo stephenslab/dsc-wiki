@@ -31,3 +31,13 @@ To build the site, simply type:
 ```
 ./release
 ```
+
+## Update R examples
+
+You will need to configure Jupyter Nootbook with `R` kernel. Here is what worked for me
+
+```r
+install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
+devtools::install_github('IRkernel/IRkernel')
+IRkernel::installspec()
+```
