@@ -9,7 +9,7 @@ The web pages are edited using Jupyter notebook.
 To revise the wiki, you need to have sos kernel for Jupyter installed:
 
 ```
-pip install sos-notebook
+pip install sos-notebook sos-r
 python -m sos_notebook.install
 ```
 
@@ -30,4 +30,34 @@ To build the site, simply type:
 
 ```
 ./release
+```
+
+## Update R examples
+
+You will need to configure Jupyter Nootbook with `R` kernel. Here is what worked for me
+
+```r
+install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
+devtools::install_github('IRkernel/IRkernel')
+IRkernel::installspec()
+```
+
+## Work with Jupyter Notebooks
+
+`nbdime` is a good tool to work with Jupyter Notebooks for a git repo. To install:
+
+```
+pip install nbdime
+```
+
+To view notebook differences, for example:
+
+```
+nbdiff <notebook_name>
+```
+
+Run this command if you want `git diff` to behave like `nbdiff` by default:
+
+```
+nbdime config-git --enable --global
 ```
