@@ -266,10 +266,10 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Module-names">Module names<a class="anchor-link" href="#Module-names">&#182;</a></h3><ul>
-<li>[] module name cannot start with <code>pipeline_</code></li>
-<li>[] module names have to be SQL friendly</li>
-<li>[] modules that are identical in every way except names</li>
-<li>[] module names match number of executables</li>
+<li>[x] module name cannot start with <code>pipeline_</code></li>
+<li>[?] module names have to be SQL friendly</li>
+<li>[!] modules that are identical in every way except names</li>
+<li>[x] module names match number of executables</li>
 </ul>
 
 </div>
@@ -284,16 +284,17 @@ body {
 <li>[x] More tests to @ALIAS</li>
 <li>[x] More tests to @CONF</li>
 <li>[x] Module inherit omitting exec</li>
-<li>[] No multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
-<li>[] All module output in the same block should have same name (a required good practice)</li>
+<li>[x] No multiple module input <code>$x</code>, <code>$y</code> or any mixture of them with module parameters</li>
+<li>[!] All module output in the same block should have same name (a required good practice)</li>
 <li>[] <code>DSC::run</code> we support only <code>()</code> <code>*</code> and  <code>,</code></li>
-<li>[x] Module names / parameters cannot start with <code>_</code> and cannot have <code>.</code> in them</li>
-<li>[] Duplicate module / parameter names</li>
+<li>[x] Module names / parameters cannot start / end with <code>_</code> and cannot have <code>.</code> in them</li>
+<li>[x] Duplicate module / parameter names</li>
 <li>[] Different length of params in different exec. e.g. mybeta = 1,2,3 vs. mybeta = (4,5,6) will lead to file lock fail. </li>
 <li>[] Strings ending with <code>,</code> intentionally</li>
-<li>[] Check if @ALIAS in the parameter list (or is a number or str?)</li>
-<li>[] <code>@FILTER</code> cannot have pipeline variables <code>$</code></li>
-<li>[] Packages installed from github also has version option</li>
+<li>[] Check if @ALIAS is of the right type (is a number or str?)</li>
+<li>[] Check if all parameter names are of the right type</li>
+<li>[x] <code>@FILTER</code> cannot have pipeline variables <code>$</code></li>
+<li>[x] Packages installed from github also has version option</li>
 </ul>
 
 </div>
@@ -311,7 +312,10 @@ body {
 <li>[] Looped steps. Actually this should be a feature when desired ...</li>
 <li>[] Downstream pipeline did not use any of upstream variables</li>
 <li>[] All modules are valid (defined)</li>
-<li>[] Find some Rmd source code and test if they work as executables</li>
+<li>[x] Find some Rmd source code and test if they work as executables<ul>
+<li><code>mashr</code> intro works</li>
+</ul>
+</li>
 </ul>
 
 </div>
