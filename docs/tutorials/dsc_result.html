@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>dsc_result | DSC2</title>
+<!DOCTYPE html><html><head><title>DSC - dsc_result</title>
 <style type="text/css">
 /*! fancyBox v2.1.5 fancyapps.com | fancyapps.com/fancybox/#license */
 .fancybox-wrap,
@@ -2740,6 +2740,8 @@ Prism.languages.yaml={scalar:{pattern:/([\-:]\s*(![^\s]+)?[ \t]*[|>])[ \t]*(?:((
 !function(){function e(e){this.defaults=r({},e)}function n(e){return e.replace(/-(\w)/g,function(e,n){return n.toUpperCase()})}function t(e){for(var n=0,t=0;t<e.length;++t)e.charCodeAt(t)=="	".charCodeAt(0)&&(n+=3);return e.length+n}if("undefined"!=typeof self&&self.Prism&&self.document){var r=Object.assign||function(e,n){for(var t in n)n.hasOwnProperty(t)&&(e[t]=n[t]);return e};e.prototype={setDefaults:function(e){this.defaults=r(this.defaults,e)},normalize:function(e,t){t=r(this.defaults,t);for(var i in t){var o=n(i);"normalize"!==i&&"setDefaults"!==o&&t[i]&&this[o]&&(e=this[o].call(this,e,t[i]))}return e},leftTrim:function(e){return e.replace(/^\s+/,"")},rightTrim:function(e){return e.replace(/\s+$/,"")},tabsToSpaces:function(e,n){return n=0|n||4,e.replace(/\t/g,new Array(++n).join(" "))},spacesToTabs:function(e,n){return n=0|n||4,e.replace(new RegExp(" {"+n+"}","g"),"	")},removeTrailing:function(e){return e.replace(/\s*?$/gm,"")},removeInitialLineFeed:function(e){return e.replace(/^(?:\r?\n|\r)/,"")},removeIndent:function(e){var n=e.match(/^[^\S\n\r]*(?=\S)/gm);return n&&n[0].length?(n.sort(function(e,n){return e.length-n.length}),n[0].length?e.replace(new RegExp("^"+n[0],"gm"),""):e):e},indent:function(e,n){return e.replace(/^[^\S\n\r]*(?=\S)/gm,new Array(++n).join("	")+"$&")},breakLines:function(e,n){n=n===!0?80:0|n||80;for(var r=e.split("\n"),i=0;i<r.length;++i)if(!(t(r[i])<=n)){for(var o=r[i].split(/(\s+)/g),a=0,s=0;s<o.length;++s){var l=t(o[s]);a+=l,a>n&&(o[s]="\n"+o[s],a=l)}r[i]=o.join("")}return r.join("\n")}},Prism.plugins.NormalizeWhitespace=new e({"remove-trailing":!0,"remove-indent":!0,"left-trim":!0,"right-trim":!0}),Prism.hooks.add("before-highlight",function(e){var n=e.element.parentNode,t=/\bno-whitespace-normalization\b/;if(!(!e.code||!n||"pre"!==n.nodeName.toLowerCase()||e.settings&&e.settings["whitespace-normalization"]===!1||t.test(n.className)||t.test(e.element.className))){for(var r=n.childNodes,i="",o="",a=!1,s=Prism.plugins.NormalizeWhitespace,l=0;l<r.length;++l){var c=r[l];c==e.element?a=!0:"#text"===c.nodeName&&(a?o+=c.nodeValue:i+=c.nodeValue,n.removeChild(c),--l)}if(e.element.children.length&&Prism.plugins.KeepMarkup){var u=i+e.element.innerHTML+o;e.element.innerHTML=s.normalize(u,e.settings),e.code=e.element.textContent}else e.code=i+e.code+o,e.code=s.normalize(e.code,e.settings)}})}}();
 </script></head><body><h3>DSC <a class="various" href="#dsc_conf">configuration script</a></h3>
 <div style="display:none"><div id="dsc_conf"><pre><code class="language-yaml; line-numbers; left-trim; right-trim;">
+#!/usr/bin/env dsc
+
 normal: normal.R
   n: 100
   $data: x
@@ -2777,27 +2779,31 @@ DSC:
     run: simulate * analyze * score
     exec_path: R
     output: dsc_result
+
 </code></pre></div></div><div class="accordion">
 <div class="accodion-section">
 <a class="accordion-section-title" href="#normal-mean-abs_err">normal->mean->abs_err</a>
 <div id=normal-mean-abs_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#normal-mean-abs_err_normalr">normal.R</a></li>
-<li><a href="#normal-mean-abs_err_meanr">mean.R</a></li>
-<li><a href="#normal-mean-abs_err_absr">abs.R</a></li>
+<li class="active"><a href="#normal-mean-abs_err_normalr-d6da230f">normal.R (d6da230f)</a></li>
+<li><a href="#normal-mean-abs_err_meanr-435f1028">mean.R (435f1028)</a></li>
+<li><a href="#normal-mean-abs_err_absr-1cc1ac31">abs.R (1cc1ac31)</a></li>
 </ul>
 <div class="tab-content">
-<div id="normal-mean-abs_err_normalr" class="tab active">
+<div id="normal-mean-abs_err_normalr-d6da230f" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = rnorm(n,0,1)
 </code></pre></div>
-<div id="normal-mean-abs_err_meanr" class="tab">
+<div id="normal-mean-abs_err_meanr-435f1028" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = mean(x)
 </code></pre></div>
-<div id="normal-mean-abs_err_absr" class="tab">
+<div id="normal-mean-abs_err_absr-1cc1ac31" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = abs(a-b)
 </code></pre></div>
 </div></div></div></div>
@@ -2806,21 +2812,24 @@ e = abs(a-b)
 <div id=normal-mean-sq_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#normal-mean-sq_err_normalr">normal.R</a></li>
-<li><a href="#normal-mean-sq_err_meanr">mean.R</a></li>
-<li><a href="#normal-mean-sq_err_sqr">sq.R</a></li>
+<li class="active"><a href="#normal-mean-sq_err_normalr-d6da230f">normal.R (d6da230f)</a></li>
+<li><a href="#normal-mean-sq_err_meanr-435f1028">mean.R (435f1028)</a></li>
+<li><a href="#normal-mean-sq_err_sqr-1670addf">sq.R (1670addf)</a></li>
 </ul>
 <div class="tab-content">
-<div id="normal-mean-sq_err_normalr" class="tab active">
+<div id="normal-mean-sq_err_normalr-d6da230f" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = rnorm(n,0,1)
 </code></pre></div>
-<div id="normal-mean-sq_err_meanr" class="tab">
+<div id="normal-mean-sq_err_meanr-435f1028" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = mean(x)
 </code></pre></div>
-<div id="normal-mean-sq_err_sqr" class="tab">
+<div id="normal-mean-sq_err_sqr-1670addf" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = (a-b)^2
 </code></pre></div>
 </div></div></div></div>
@@ -2829,21 +2838,24 @@ e = (a-b)^2
 <div id=normal-median-abs_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#normal-median-abs_err_normalr">normal.R</a></li>
-<li><a href="#normal-median-abs_err_medianr">median.R</a></li>
-<li><a href="#normal-median-abs_err_absr">abs.R</a></li>
+<li class="active"><a href="#normal-median-abs_err_normalr-d6da230f">normal.R (d6da230f)</a></li>
+<li><a href="#normal-median-abs_err_medianr-d14752d5">median.R (d14752d5)</a></li>
+<li><a href="#normal-median-abs_err_absr-1cc1ac31">abs.R (1cc1ac31)</a></li>
 </ul>
 <div class="tab-content">
-<div id="normal-median-abs_err_normalr" class="tab active">
+<div id="normal-median-abs_err_normalr-d6da230f" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = rnorm(n,0,1)
 </code></pre></div>
-<div id="normal-median-abs_err_medianr" class="tab">
+<div id="normal-median-abs_err_medianr-d14752d5" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = median(x)
 </code></pre></div>
-<div id="normal-median-abs_err_absr" class="tab">
+<div id="normal-median-abs_err_absr-1cc1ac31" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = abs(a-b)
 </code></pre></div>
 </div></div></div></div>
@@ -2852,21 +2864,24 @@ e = abs(a-b)
 <div id=normal-median-sq_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#normal-median-sq_err_normalr">normal.R</a></li>
-<li><a href="#normal-median-sq_err_medianr">median.R</a></li>
-<li><a href="#normal-median-sq_err_sqr">sq.R</a></li>
+<li class="active"><a href="#normal-median-sq_err_normalr-d6da230f">normal.R (d6da230f)</a></li>
+<li><a href="#normal-median-sq_err_medianr-d14752d5">median.R (d14752d5)</a></li>
+<li><a href="#normal-median-sq_err_sqr-1670addf">sq.R (1670addf)</a></li>
 </ul>
 <div class="tab-content">
-<div id="normal-median-sq_err_normalr" class="tab active">
+<div id="normal-median-sq_err_normalr-d6da230f" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = rnorm(n,0,1)
 </code></pre></div>
-<div id="normal-median-sq_err_medianr" class="tab">
+<div id="normal-median-sq_err_medianr-d14752d5" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = median(x)
 </code></pre></div>
-<div id="normal-median-sq_err_sqr" class="tab">
+<div id="normal-median-sq_err_sqr-1670addf" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = (a-b)^2
 </code></pre></div>
 </div></div></div></div>
@@ -2875,21 +2890,24 @@ e = (a-b)^2
 <div id=t-mean-abs_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#t-mean-abs_err_tr">t.R</a></li>
-<li><a href="#t-mean-abs_err_meanr">mean.R</a></li>
-<li><a href="#t-mean-abs_err_absr">abs.R</a></li>
+<li class="active"><a href="#t-mean-abs_err_tr-7fd4f693">t.R (7fd4f693)</a></li>
+<li><a href="#t-mean-abs_err_meanr-435f1028">mean.R (435f1028)</a></li>
+<li><a href="#t-mean-abs_err_absr-1cc1ac31">abs.R (1cc1ac31)</a></li>
 </ul>
 <div class="tab-content">
-<div id="t-mean-abs_err_tr" class="tab active">
+<div id="t-mean-abs_err_tr-7fd4f693" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = 3+rt(n,df)
 </code></pre></div>
-<div id="t-mean-abs_err_meanr" class="tab">
+<div id="t-mean-abs_err_meanr-435f1028" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = mean(x)
 </code></pre></div>
-<div id="t-mean-abs_err_absr" class="tab">
+<div id="t-mean-abs_err_absr-1cc1ac31" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = abs(a-b)
 </code></pre></div>
 </div></div></div></div>
@@ -2898,21 +2916,24 @@ e = abs(a-b)
 <div id=t-mean-sq_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#t-mean-sq_err_tr">t.R</a></li>
-<li><a href="#t-mean-sq_err_meanr">mean.R</a></li>
-<li><a href="#t-mean-sq_err_sqr">sq.R</a></li>
+<li class="active"><a href="#t-mean-sq_err_tr-7fd4f693">t.R (7fd4f693)</a></li>
+<li><a href="#t-mean-sq_err_meanr-435f1028">mean.R (435f1028)</a></li>
+<li><a href="#t-mean-sq_err_sqr-1670addf">sq.R (1670addf)</a></li>
 </ul>
 <div class="tab-content">
-<div id="t-mean-sq_err_tr" class="tab active">
+<div id="t-mean-sq_err_tr-7fd4f693" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = 3+rt(n,df)
 </code></pre></div>
-<div id="t-mean-sq_err_meanr" class="tab">
+<div id="t-mean-sq_err_meanr-435f1028" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = mean(x)
 </code></pre></div>
-<div id="t-mean-sq_err_sqr" class="tab">
+<div id="t-mean-sq_err_sqr-1670addf" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = (a-b)^2
 </code></pre></div>
 </div></div></div></div>
@@ -2921,21 +2942,24 @@ e = (a-b)^2
 <div id=t-median-abs_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#t-median-abs_err_tr">t.R</a></li>
-<li><a href="#t-median-abs_err_medianr">median.R</a></li>
-<li><a href="#t-median-abs_err_absr">abs.R</a></li>
+<li class="active"><a href="#t-median-abs_err_tr-7fd4f693">t.R (7fd4f693)</a></li>
+<li><a href="#t-median-abs_err_medianr-d14752d5">median.R (d14752d5)</a></li>
+<li><a href="#t-median-abs_err_absr-1cc1ac31">abs.R (1cc1ac31)</a></li>
 </ul>
 <div class="tab-content">
-<div id="t-median-abs_err_tr" class="tab active">
+<div id="t-median-abs_err_tr-7fd4f693" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = 3+rt(n,df)
 </code></pre></div>
-<div id="t-median-abs_err_medianr" class="tab">
+<div id="t-median-abs_err_medianr-d14752d5" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = median(x)
 </code></pre></div>
-<div id="t-median-abs_err_absr" class="tab">
+<div id="t-median-abs_err_absr-1cc1ac31" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = abs(a-b)
 </code></pre></div>
 </div></div></div></div>
@@ -2944,21 +2968,24 @@ e = abs(a-b)
 <div id=t-median-sq_err class="accordion-section-content">
 <div class="tabs">
 <ul class="tab-links">
-<li class="active"><a href="#t-median-sq_err_tr">t.R</a></li>
-<li><a href="#t-median-sq_err_medianr">median.R</a></li>
-<li><a href="#t-median-sq_err_sqr">sq.R</a></li>
+<li class="active"><a href="#t-median-sq_err_tr-7fd4f693">t.R (7fd4f693)</a></li>
+<li><a href="#t-median-sq_err_medianr-d14752d5">median.R (d14752d5)</a></li>
+<li><a href="#t-median-sq_err_sqr-1670addf">sq.R (1670addf)</a></li>
 </ul>
 <div class="tab-content">
-<div id="t-median-sq_err_tr" class="tab active">
+<div id="t-median-sq_err_tr-7fd4f693" class="tab active">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 x = 3+rt(n,df)
 </code></pre></div>
-<div id="t-median-sq_err_medianr" class="tab">
+<div id="t-median-sq_err_medianr-d14752d5" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 y = median(x)
 </code></pre></div>
-<div id="t-median-sq_err_sqr" class="tab">
+<div id="t-median-sq_err_sqr-1670addf" class="tab">
 <pre><code class="language-r; line-numbers; left-trim; right-trim;">
+
 e = (a-b)^2
 </code></pre></div>
 </div></div></div></div>
