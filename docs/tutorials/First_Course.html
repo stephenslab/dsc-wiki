@@ -248,7 +248,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="A-First-Course-to-DSC">A First Course to DSC<a class="anchor-link" href="#A-First-Course-to-DSC">&#182;</a></h1>
+<h1 id="Introduction-to-DSC-(Part-I)">Introduction to DSC (Part I)<a class="anchor-link" href="#Introduction-to-DSC-(Part-I)">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -263,6 +263,7 @@ DSC helps execute such comparisons in an organized and reproducible
 way, and provides convenient ways to query the results.
 DSC is designed to help make these comparisons
 "dynamic" -- that is, easy to extend by adding new methods or simulation scenarios. Hence the name: "Dynamic Statistical Comparisons".</p>
+<p>DSC is particularly well suited to experiments run using the R or Python environments, and also provides some support for experiments that mix these two environments.</p>
 
 </div>
 </div>
@@ -271,7 +272,7 @@ DSC is designed to help make these comparisons
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare many methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".</p>
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".</p>
 <p>To compare methods to perform $I$ we could conduct a benchmarking experiment, by repeating the following three steps:</p>
 <ol>
 <li>Simulate some data suitable for performing $I$.</li>
@@ -279,8 +280,7 @@ DSC is designed to help make these comparisons
 <li>Score how well the method performed $I$ (e.g. by comparison with the simulation ground truth).</li>
 </ol>
 <p>DSC can handle more complex
-settings than this, but this basic structure suffices to illustrate 
-the key concepts. We will call this the <code>simulate</code>-<code>analyze</code>-<code>score</code> structure.</p>
+settings than this, but this basic structure suffices to explain the key concepts. We will call this the <code>simulate</code>-<code>analyze</code>-<code>score</code> structure.</p>
 
 </div>
 </div>
@@ -293,12 +293,10 @@ the key concepts. We will call this the <code>simulate</code>-<code>analyze</cod
 to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
 how well a method performed. 
 In DSC this is accomplished by defining groups of
-"modules" that can accomplish each step. For example, we could define a group of <code>simulate</code> modules, each of which can perform step 1; a group of
-<code>analyze</code> modules, each of which can perform step 2; and a group of <code>score</code> modules, each of which can perform step 3. Running the benchmark would then consist of running lots of "pipelines"
+"modules" that can accomplish each step. For example, we would define a group of <code>simulate</code> modules, each of which can perform step 1; a group of
+<code>analyze</code> modules, each of which can perform step 2; and a group of <code>score</code> modules, each of which can perform step 3. Running the benchmark then consists of running lots of "pipelines"
 -- sequences of modules -- each of which involves running one module from the <code>simulate</code> group, followed by one module from the <code>analyze</code> group, followed by one module from the <code>score</code> group.</p>
-<p>The DSC software helps manage and run benchmarks like these (as well as more complex ones). The user specifies modules,
-groups, and pipelines. DSC then runs all pipelines, saving results in a structured way that makes them
-easy to query. The modular design 
+<p>DSC helps manage and run benchmarks like these, as well as more complex ones. The modular design 
 makes it easy to extend
 benchmarks (e.g. adding a new method simply by defining a new <code>analyze</code> module). And DSC helps with parallelization: for example, once a <code>simulate</code> module has created a dataset, DSC can apply multiple <code>analyze</code> modules in parallel on a suitable compute cluster.</p>
 
@@ -309,15 +307,28 @@ benchmarks (e.g. adding a new method simply by defining a new <code>analyze</cod
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>To manage a benchmark using DSC the user must create a "DSC file", which is a text file written using a custom-built syntax illustrated below (and elaborated <a href="First_Course_Elaborated.html">elsewhere</a>). The job of the DSC file is to
-define the modules, the groups of modules, and the pipelines (sequences of modules) to be executed. 
-In so-doing the DSC file also specifies the way that information flows through the pipelines.</p>
-<p>Here we introduce the syntax of the DSC file through
-a simple example: we will benchmark methods
-to estimate the expectation of a distribution, given a random sample from the distribution. We will compare two methods: the sample mean and the sample median. We will do simulations
-under two different distributions: a <em>t</em> distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
-<p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>.</p>
-<p>The problem is fully specified in DSC2 language below:</p>
+<h3 id="Running-benchmarks-with-DSC">Running benchmarks with DSC<a class="anchor-link" href="#Running-benchmarks-with-DSC">&#182;</a></h3><p>To run a benchmark using DSC the user must:</p>
+<ol>
+<li><p>Create a "DSC file" which specifies all the necessary modules, groups, and pipelines, and how information flows from module to module. The DSC file is a text file written using a custom-built syntax illustrated below (and explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
+</li>
+<li><p>Run the DSC using the <code>dsc</code> command line program. This runs all pipelines specified by the DSC file, and saves results to files in a structured way that makes them easy to query.</p>
+</li>
+<li><p>Query and summarize the results. The simplest way to do this is using the R package <code>dscrutils</code>, which provides a convenient way to read results from the DSC into an R dataframe, as illustrated below.</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>We now illustrate DSC using a simple example benchmark.</p>
+<p>Our example benchmark compares methods
+for a very simple task: estimating the mean of a population given a random sample from the population. We will compare two methods for estimating the population mean: the sample mean and the sample median. We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
+<h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
+can be found in the <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to Part II. For now we just show it with minimal explanation:</p>
 
 </div>
 </div>
@@ -364,7 +375,8 @@ DSC:
     run: simulate * analyze * score
     exec_path: R
     output: dsc_result</code></pre>
-<p>All <code>R</code> scripts are located in directories specified in the <code>DSC::exec_path</code> property. Here we display the contents:</p>
+<p>This DSC file defines six modules: two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>), two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>). It then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run.</p>
+<p>The modules all involve very simple <code>R</code> scripts in the <code>R/</code> subdirectory:</p>
 <div class="highlight"><pre><span></span><span class="o">==&gt;</span> normal.R <span class="o">&lt;==</span>
 x <span class="o">=</span> rnorm<span class="p">(</span>n<span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">)</span>
 
@@ -391,7 +403,7 @@ e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Run-DSC-with-replicates">Run DSC with replicates<a class="anchor-link" href="#Run-DSC-with-replicates">&#182;</a></h2>
+<h3 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -429,7 +441,7 @@ e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To account for randomness in comparison we run this DSC with 10 replicates, using 8 CPU threads on a local computer:</p>
+<p>We run 10 replicates of this benchmark (each replicate using a different random number seed), using 8 CPU threads:</p>
 
 </div>
 </div>
@@ -476,9 +488,9 @@ INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> will be automatically installed.</p>
-<h3 id="DSC-script-browser">DSC script browser<a class="anchor-link" href="#DSC-script-browser">&#182;</a></h3><p>In this example a file <a href="dsc_result.html"><code>dsc_result.html</code></a> is generated under your work directory. This is a script browswer that contains the DSC configuration, executed pipelines and their source code.</p>
-<h3 id="DSC-results">DSC results<a class="anchor-link" href="#DSC-results">&#182;</a></h3><p>Results are saved to folder <code>dsc_result/</code> as specified in the DSC file. We will discuss these results next.</p>
+<p>(For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> will be automatically installed at this point.)</p>
+<p>When run, DSC will create results files in the folder <code>dsc_result/</code> (as specified in the DSC file). We will see how to query these results and read them into <code>R</code> below.</p>
+<p>In addition, DSC will create an html file <a href="dsc_result.html"><code>dsc_result.html</code></a> in the working directory. This file allows you to conveniently view the DSC file, executed pipelines and their source code.</p>
 
 </div>
 </div>
@@ -487,14 +499,14 @@ INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Benchmark-query-and-visualization">Benchmark query and visualization<a class="anchor-link" href="#Benchmark-query-and-visualization">&#182;</a></h2><p>We use the R function <code>dscquery</code> provided by <code>dscrutils</code> package to extract partial benchmark we are interested in. Since this example is small enough, we demonstrate loading all results to R and explore from there.</p>
+<h3 id="Query-and-visualize-results">Query and visualize results<a class="anchor-link" href="#Query-and-visualize-results">&#182;</a></h3><p>We use the R function <code>dscquery</code> in the <code>dscrutils</code> package to extract results. Since this example is small it is simple to load all results into an R dataframe and explore from there. In more complex examples one might want to start by extracting subsets of results; see <code>?dscquery</code> for more information.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc_dir</span> <span class="o">=</span> <span class="s2">&quot;dsc_result&quot;</span>
@@ -514,12 +526,8 @@ INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Running shell command:
-dsc-query dsc_result -o /tmp/RtmpRThys8/dsc/query.csv --target simulate analyze score.error 
-Loading dsc-query output from CSV file.
-Reading DSC outputs:
- - score.error: extracted atomic values
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Failed to switch to language &#34;ir&#34;: No subkernel named ir is found. Please make sure that you have the kernel installed (listed in the output of &#34;jupyter kernelspec list&#34; and usable in jupyter by itself), install appropriate language module (e.g. &#34;pip install sos-r&#34;), restart jupyter notebook and try again.
 </pre>
 </div>
 </div>
@@ -575,7 +583,8 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And we can summarize the results using the <code>aggregate</code> function:</p>
+<p>Once the results are in a dataframe in R like this we can easily use standard R functions to investigate them further.</p>
+<p>For example, we can summarize results using the <code>aggregate</code> function:</p>
 
 </div>
 </div>
@@ -629,7 +638,7 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Or, we focus on comparison under <em>t</em> simulation using the squared error metric:</p>
+<p>Here we summarize results of the <em>t</em> simulation, under the squared error metric:</p>
 
 </div>
 </div>
