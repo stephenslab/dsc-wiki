@@ -497,11 +497,11 @@ result = f1(args$var_a) / f2(args$var_b)</code></pre>
 <p>Without <code>@FILTER</code> DSC will exhaust all combinations of 5 values of <code>n</code> and 2 of <code>k</code> for both modules, creating a total of 20 parallel jobs. The <code>@FILTER</code> here states that instead of running all 20 jobs, DSC will run for <code>t</code> 3 values from <code>n</code> with <code>k = 0</code>, then run the rest 2 values of <code>n</code> with <code>k = 1</code>, which is a total of 5 jobs for <code>t</code>. Then it runs for <code>normal</code> with <code>n = 500</code> combined with 2 values from <code>k</code>, a total of 2 jobs. Therefore only 7 jobs will be executed after applying the <code>@FILTER</code>.</p>
 <p>When no module name is specified, eg. <code>n</code>, then all modules will subject to the filter:</p>
 
-<pre><code>    @FILTER: (n in (100,200,300) and k = 0)</code></pre>
+<pre><code>    @FILTER: (n in [100,200,300] and k = 0)</code></pre>
 <p>Wildcard <code>*</code> is also supported,</p>
 
 <pre><code>    @FILTER: 
-        *: n in (100,200,300)
+        *: n in [100,200,300]
         t: n = 300</code></pre>
 <p>then for <code>t</code> we restrict <code>n</code> to <code>300</code>, and for all other modules we set <code>n</code> to loop over <code>100,200,300</code>.</p>
 

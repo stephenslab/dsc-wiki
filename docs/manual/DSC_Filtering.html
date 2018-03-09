@@ -267,7 +267,8 @@ C = C_1 {logic operator} C_2 {logic operator} ...</code></pre>
 <li>condition operators: <code>=, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in</code></li>
 <li>logic operators: <code>AND</code>, <code>OR</code>, <code>NOT</code>, or derived compound logic, eg <code>((NOT (a AND b) OR c) AND d)</code></li>
 </ul>
-<p>For example:</p>
+<p>Notice that <code>in</code> logic will have to use <code>[]</code>, eg, <code>in [1,2,3]</code>, not <code>in (1,2,3)</code> because <code>()</code> is reserved for specifying order of operations (precedence). Misuse of <code>()</code> will lead to parser error.</p>
+<p>Here is an example:</p>
 
 <pre><code>simulate: sim.R
     n: 10, 20, 150, 200
@@ -289,7 +290,7 @@ method: method.R
 <p>will only rule out the combination of <code>(p1, p2) = (0.1, 0.2)</code> in the example above.</p>
 <h2 id="For-developers">For developers<a class="anchor-link" href="#For-developers">&#182;</a></h2><p><code>dsc-query</code> command can serve as the core to writing extension packages to explore DSC benchmark results. The command option is <code>dsc-query -c</code>, which allows users to decide which specific pipeline instance to extract and explore. The syntax is similar to in <code>@FILTER</code> except instead of <code>{parameter}_i</code>, here we need to specify <code>{module.parameter}_i</code> or <code>{group.parameter}_i</code>. For example,</p>
 
-<pre><code>dsc_query ... -c "simulate.n &gt; 100" "(method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)"</code></pre>
+<pre><code>dsc_query ... -c "simulate.n &gt; 100" "method.p1 &lt; 0.5 OR method.p2 &lt; 0.5"</code></pre>
 <p>Multiple conditions are connected by the <code>AND</code> logic, that is, the above condition is <code>simulate.n &gt; 100 AND (method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)</code>.</p>
 
 </div>
