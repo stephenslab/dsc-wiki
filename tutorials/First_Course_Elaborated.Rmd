@@ -7,9 +7,7 @@ output: html_document
 
 # Introduction to DSC (Part II)
 
-This is a continuation of the [Introduction to DSC (Part I)](First_Course.html). Here we introduce the key concepts of "pipeline variables", and "script variables", and provide details on the design and syntax of the DSC file. 
-
-The files used in this example are [here](https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location).
+This is a continuation of the [Introduction to DSC (Part I)](First_Course.html). Here we introduce the key concepts of "pipeline variables", and "script variables", and provide details on the design and syntax of the DSC file. Material used in this example are in [the DSC2 vignettes repo](https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location).
 
 
 ## Planning: module input/output and pipeline variables
@@ -195,11 +193,11 @@ DSC:
 Here:
 
 - `DSC` is a keyword to indicate that here we are defining groups and pipelines (not a module definition).
-- `define` is a keyword to indicate we are defining groups
+- `define` is a keyword to indicate we are defining groups.
 (here `simulate`, `analyze` and `score`).
 - `run` is a keyword to indicate that we are defining the pipelines to be run. The `A * B` notation means to create all possible sequences of modules from groups `A` and `B`. That is, all sequences of the form `a`-`b` where `a` is a module in group `A` and `b` is a module in a group `B`. So here
 `simulate * analyze * score` generates all pipelines that consist of first a module from the `simulate` group (`normal` or `t`), then a module from `analyze` (`mean` or `median`) and then a module from the `score` group (`sq_err` or `abs_err`).
-- `exec_path` tells DSC where to look for the script files
-- `output` tells DSC where to save results
+- `exec_path` tells DSC where to look for the script files.
+- `output` tells DSC where to save results.
 
 

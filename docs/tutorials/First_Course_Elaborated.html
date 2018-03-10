@@ -248,8 +248,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC-(Part-II)">Introduction to DSC (Part II)<a class="anchor-link" href="#Introduction-to-DSC-(Part-II)">&#182;</a></h1><p>This is a continuation of the <a href="First_Course.html">Introduction to DSC (Part I)</a>. Here we introduce the key concepts of "pipeline variables", and "script variables", and provide details on the design and syntax of the DSC file.</p>
-<p>The files used in this example are <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">here</a>.</p>
+<h1 id="Introduction-to-DSC-(Part-II)">Introduction to DSC (Part II)<a class="anchor-link" href="#Introduction-to-DSC-(Part-II)">&#182;</a></h1><p>This is a continuation of the <a href="First_Course.html">Introduction to DSC (Part I)</a>. Here we introduce the key concepts of "pipeline variables", and "script variables", and provide details on the design and syntax of the DSC file. Material used in this example are in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">the DSC2 vignettes repo</a>.</p>
 <h2 id="Planning:-module-input/output-and-pipeline-variables">Planning: module input/output and pipeline variables<a class="anchor-link" href="#Planning:-module-input/output-and-pipeline-variables">&#182;</a></h2><p>As with any programming project, before writing a DSC file it is helpful to do some planning. We suggest starting by
 identifying the <em>types of module</em> and the <em>quantities that are going to be passed from module to module</em>. In DSC we refer to quantities that are passed from module to module as "pipeline variables". Pipeline variables should be given an informative name which must begin with a <code>$</code>. (Note: variable names in DSC cannot contain a <code>.</code>, because this is reserved for another use; we suggest using <code>_</code> instead.)</p>
 <p>Recall that our example benchmark compares methods for estimating a population mean from a simulated sample, and follows the simple <code>simulate</code>-<code>analyze</code>-<code>score</code> design.
@@ -385,12 +384,12 @@ defining pipelines in terms of these groups.</p>
 <p>Here:</p>
 <ul>
 <li><code>DSC</code> is a keyword to indicate that here we are defining groups and pipelines (not a module definition).</li>
-<li><code>define</code> is a keyword to indicate we are defining groups
+<li><code>define</code> is a keyword to indicate we are defining groups.
 (here <code>simulate</code>, <code>analyze</code> and <code>score</code>).</li>
 <li><code>run</code> is a keyword to indicate that we are defining the pipelines to be run. The <code>A * B</code> notation means to create all possible sequences of modules from groups <code>A</code> and <code>B</code>. That is, all sequences of the form <code>a</code>-<code>b</code> where <code>a</code> is a module in group <code>A</code> and <code>b</code> is a module in a group <code>B</code>. So here
 <code>simulate * analyze * score</code> generates all pipelines that consist of first a module from the <code>simulate</code> group (<code>normal</code> or <code>t</code>), then a module from <code>analyze</code> (<code>mean</code> or <code>median</code>) and then a module from the <code>score</code> group (<code>sq_err</code> or <code>abs_err</code>).</li>
-<li><code>exec_path</code> tells DSC where to look for the script files</li>
-<li><code>output</code> tells DSC where to save results</li>
+<li><code>exec_path</code> tells DSC where to look for the script files.</li>
+<li><code>output</code> tells DSC where to save results.</li>
 </ul>
 
 </div>
