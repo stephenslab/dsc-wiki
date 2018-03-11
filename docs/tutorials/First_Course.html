@@ -313,7 +313,7 @@ benchmarks (e.g. adding a new method simply by defining a new <code>analyze</cod
 </li>
 <li><p>Run the DSC using the <code>dsc</code> command line program. This runs all pipelines specified by the DSC file, and saves results to files in a structured way that makes them easy to query.</p>
 </li>
-<li><p>Query and summarize the results. The simplest way to do this is using the R package <code>dscrutils</code>, which provides a convenient way to read results from the DSC into an R dataframe, as illustrated below.</p>
+<li><p>Query and summarize the results. The simplest way to do this is using the R package <code>dscrutils</code>, which provides a convenient way to read results from the DSC into an R dataframe, as illustrated below. (A command line tool <code>dsc-query</code> is also available).</p>
 </li>
 </ol>
 
@@ -328,7 +328,7 @@ benchmarks (e.g. adding a new method simply by defining a new <code>analyze</cod
 <p>Our example benchmark compares methods
 for a very simple task: estimating the mean of a population given a random sample from the population. We will compare two methods for estimating the population mean: the sample mean and the sample median. We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
 <h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
-can be found in the <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to Part II. For now we just show it with minimal explanation:</p>
+can be found in the <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. For now we just show the DSC file (<code>settings.dsc</code>) with minimal explanation:</p>
 
 </div>
 </div>
@@ -407,6 +407,15 @@ e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First we change directory to the location of the <code>settings.dsc</code> file.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -441,7 +450,7 @@ e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We run 10 replicates of this benchmark (each replicate using a different random number seed), using 8 CPU threads:</p>
+<p>And now we use the <code>dsc</code> command line program to run 10 replicates of this benchmark (each replicate using a different random number seed), using 8 CPU threads:</p>
 
 </div>
 </div>
@@ -499,7 +508,7 @@ INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Query-and-visualize-results">Query and visualize results<a class="anchor-link" href="#Query-and-visualize-results">&#182;</a></h3><p>We use the R function <code>dscquery</code> in the <code>dscrutils</code> package to extract results. Since this example is small it is simple to load all results into an R dataframe and explore from there. In more complex examples one might want to start by extracting subsets of results; see <code>?dscquery</code> for more information.</p>
+<h3 id="Query-and-visualize-results">Query and visualize results<a class="anchor-link" href="#Query-and-visualize-results">&#182;</a></h3><p>We can now read the results into R using the function <code>dscquery</code> in the <code>dscrutils</code> package. Since this example is small it is convenient to load all results into an R dataframe and explore from there. In more complex examples one might want to start by extracting subsets of results; see <code>?dscquery</code> for more information.</p>
 
 </div>
 </div>
@@ -1344,6 +1353,15 @@ WOL/AY8euZ1YAayWAAAAAElFTkSuQmCC"
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">&#182;</a></h2><p>To understand more about the syntax of the DSC file so that you can run your own DSCs read <a href="First_Course_Elaborated.html">Part II of this Introduction to DSC</a>.</p>
+
+</div>
+</div>
 </div>
 <hr>
 &copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, The University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
