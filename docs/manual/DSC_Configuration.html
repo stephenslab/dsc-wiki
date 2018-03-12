@@ -318,19 +318,40 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Module-Inheritance">Module Inheritance<a class="anchor-link" href="#Module-Inheritance">&#182;</a></h3><p>Modules can be <em>inherited</em> as follows, a shorthand to define new modules based on existing ones:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
-    n: 1000
-    $x: x
+<pre><code>normal: R( x = mu + rnorm(n) )
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
 
 shifted_normal(normal): 
-    mu: 1</code></pre>
+  mu: 1</code></pre>
 <p><code>shifted_normal</code> is a derived module from <code>normal</code>. The complete definition of <code>shifted_normal</code>, after expanding the derived contents, is in fact:</p>
 
-<pre><code>shifted_normal: rnorm.R
-    n: 1000
-    mu: 1
-    $x: x</code></pre>
-<p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is essentially <code>normal</code> with additional parameters.</p>
+<pre><code>shifted_normal: R( x = mu + rnorm(n) )
+  n: 100, 1000
+  mu: 1
+  $data: x
+  $true_mean: mu</code></pre>
+<p>The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that <code>shifted_normal</code> is essentially <code>normal</code> with different parameters.</p>
+<p>Module inheritance can also be used to add parameters, eg,</p>
+
+<pre><code>normal: R( x = mu + rnorm(n) )
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
+
+t(normal): R( x = mu + rt(n,df) )
+  df: 2</code></pre>
+<p>Then <code>t</code> is inherited from <code>normal</code> with a different script and additional parameter, which will get expanded to:</p>
+
+<pre><code>t(normal): R( x = mu + rt(n,df) )
+  n: 100, 1000
+  mu: 0
+  df: 2
+  $data: x
+  $true_mean: mu</code></pre>
 
 </div>
 </div>
