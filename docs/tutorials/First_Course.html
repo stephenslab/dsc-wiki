@@ -338,31 +338,28 @@ can be found in the <a href="https://github.com/stephenslab/dsc2/tree/master/vig
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 
-<pre><code>normal: normal.R
-  n: 100
+<pre><code>normal: R( x = rnorm(100,0,1) )
   $data: x
   $true_mean: 0
 
-t: t.R
-  n: 100
-  df: 2
+t: R( x = 3 + rt(100,df=2) )
   $data: x
   $true_mean: 3
 
-mean: mean.R
+mean: R( y = mean(x) )
   x: $data
   $est_mean: y
 
-median: median.R
+median: R( y = median(x) )
   x: $data
   $est_mean: y
 
-sq_err: sq.R
+sq_err: R( e = (a-b)^2 )
   a: $est_mean
   b: $true_mean
   $error: e
 
-abs_err: abs.R
+abs_err: R( e = abs(a-b) )
   a: $est_mean
   b: $true_mean
   $error: e 
@@ -375,26 +372,9 @@ DSC:
     run: simulate * analyze * score
     exec_path: R
     output: dsc_result</code></pre>
-<p>This DSC file defines six modules: two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>), two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>). It then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run.</p>
-<p>The modules all involve very simple <code>R</code> scripts in the <code>R/</code> subdirectory:</p>
-<div class="highlight"><pre><span></span><span class="o">==&gt;</span> normal.R <span class="o">&lt;==</span>
-x <span class="o">=</span> rnorm<span class="p">(</span>n<span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">)</span>
-
-<span class="o">==&gt;</span> t.R <span class="o">&lt;==</span>
-x <span class="o">=</span> <span class="m">3</span><span class="o">+</span>rt<span class="p">(</span>n<span class="p">,</span>df<span class="p">)</span>
-
-<span class="o">==&gt;</span> mean.R <span class="o">&lt;==</span>
-y <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
-
-<span class="o">==&gt;</span> median.R <span class="o">&lt;==</span>
-y <span class="o">=</span> median<span class="p">(</span>x<span class="p">)</span>
-
-<span class="o">==&gt;</span> sq.R <span class="o">&lt;==</span>
-e <span class="o">=</span> <span class="p">(</span>a<span class="o">-</span>b<span class="p">)</span><span class="o">^</span><span class="m">2</span>
-
-<span class="o">==&gt;</span> abs.R <span class="o">&lt;==</span>
-e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<span class="o">-</span>b<span class="p">)</span>
-</pre></div>
+<p>This DSC file defines six modules: two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>), two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>). Each module in this example involves a very simple one-line <code>R</code> script (in realistic cases these scripts will involve multiple lines and likely live in separate files).</p>
+<p>The DSC file then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run (<code>simulate*analyze*score</code> indicates all combinations).
+```</p>
 
 </div>
 </div>
@@ -411,7 +391,7 @@ e <span class="o">=</span> <span class="kp">abs</span><span class="p">(</span>a<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First we change directory to the location of the <code>settings.dsc</code> file.</p>
+<p>To run dsc we first change directory to the location of the <code>settings.dsc</code> file.</p>
 
 </div>
 </div>
