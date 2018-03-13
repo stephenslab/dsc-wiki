@@ -2,6 +2,8 @@ docs/examples.html
 docs/examples.tpl
 docs/index.html
 docs/index.tpl
+docs/installation.html
+docs/installation.tpl
 docs/js/docs.js
 docs/manual.html
 docs/manual.tpl
@@ -15,13 +17,6 @@ docs/manual/Implementation_Details.html
 docs/manual/Remote_Computations.html
 docs/manual/Road_Map.html
 docs/manual/Terminology.html
-docs/manual/installation.html
-docs/playground.tpl
-docs/playground/Overview.html
-docs/playground/Q1.html
-docs/playground/Q2.html
-docs/quick_start.html
-docs/quick_start.tpl
 docs/tutorials.html
 docs/tutorials.tpl
 docs/tutorials/5_Minutes_Python.html

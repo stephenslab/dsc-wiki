@@ -143,12 +143,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=playgroundDict[$("h1:first").attr("id")];
+            var file=installationDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=playgroundArray;
-            var docs_map=playgroundArrayMap;
-            var pos=playgroundArray.indexOf(file);
+            var docs=installationArray;
+            var docs_map=installationArrayMap;
+            var pos=installationArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -217,15 +217,7 @@ body {
       <ul class="nav navbar-nav">
         
 <li>
-  <a href="../index.html">Overview</a>
-</li>
-        
-<li>
-  <a href="../quick_start.html">Quick Start</a>
-</li>
-        
-<li>
-  <a href="../manual.html">Manual</a>
+  <a href="../index.html">Home</a>
 </li>
         
 <li>
@@ -233,7 +225,15 @@ body {
 </li>
         
 <li>
+  <a href="../installation.html">Installation</a>
+</li>
+        
+<li>
   <a href="../examples.html">Examples</a>
+</li>
+        
+<li>
+  <a href="../manual.html">Manual</a>
 </li>
         
       </ul>
@@ -252,7 +252,7 @@ body {
 
 {% block footer %}
 <hr>
-&copy 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a> at Stephens Lab, The University of Chicago.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
+Developed by <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>.<br>&nbsp;&nbsp;&nbsp;This wiki is available under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (read <a href="https://creativecommons.org/licenses/by/4.0/legalcode">full legal text</a>).
 </div>
 </div>
 </body>
