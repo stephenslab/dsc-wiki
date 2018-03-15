@@ -257,7 +257,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This tutorial reimplements the execution part of <a href="http://faculty.bscb.cornell.edu/~bien/simulator_vignettes/getting-started.html">Getting Started with Simulator</a> example. We demonstrate in this tutorial how compound module executables are specified with scripts and inline executables.</p>
-<p>Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/simulator_example">DSC2 vignettes repo</a>. It also contains the code to reproduce the original <code>simulator</code> simulation.</p>
+<p>Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/simulator_example">DSC vignettes repo</a>. It also contains the code to reproduce the original <code>simulator</code> simulation.</p>
 
 </div>
 </div>
@@ -266,7 +266,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC2 syntax below:</p>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC syntax below:</p>
 
 <pre><code>simulate: model.R + R(m = simulate(n, prob))
   seed: R(1:10)
@@ -304,7 +304,7 @@ DSC:
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">simulator_example</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">simulator_example</span>
 </pre></div>
 
 </div>
@@ -321,7 +321,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc2/vignettes/simulator_example</pre>
+<pre>/home/gaow/GIT/dsc/vignettes/simulator_example</pre>
 </div>
 </div>
 
@@ -351,7 +351,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
 INFO: DSC script exported to <span class="ansi-green-fg">simulator_results.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">main.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
@@ -371,7 +371,7 @@ INFO: Elapsed time <span class="ansi-green-fg">67.413</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You may notice that for this trivial benchmark, the execution is a lot slower compared to the original implementation. This is a limitation of DSC2 when running lite jobs -- having to build and execute DAG, checking file signatures and monitoring runtime environment results in substential overhead. For real-world benchmarking when execution time is much longer, this overhead is perhaps tolerable because it is relatively insignificant under such scenario. Also notice that under <code>simulator_results</code> there are 420 intermediate output <code>*.rds</code> files generated, compared to only 31 <code>*.Rdata</code> itermediate files generated when you run the <code>simulator</code> version of the example. This is because the demonstrated DSC2 implementation is a lot more modular. You can compare the data generating code in <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/simulator_example/R/model.R">DSC2</a> vs in <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/simulator_example/sims/model_functions.R"><code>simulator</code></a> to tell the more modular setup we have adopted here -- although it is entirely possible to develop a different style of DSC that reproduces exactly the <code>simulator</code> example's output (yet stored in <code>rds</code> rather than <code>Rdata</code> format).</p>
+<p>You may notice that for this trivial benchmark, the execution is a lot slower compared to the original implementation. This is a limitation of DSC when running lite jobs -- having to build and execute DAG, checking file signatures and monitoring runtime environment results in substential overhead. For real-world benchmarking when execution time is much longer, this overhead is perhaps tolerable because it is relatively insignificant under such scenario. Also notice that under <code>simulator_results</code> there are 420 intermediate output <code>*.rds</code> files generated, compared to only 31 <code>*.Rdata</code> itermediate files generated when you run the <code>simulator</code> version of the example. This is because the demonstrated DSC2 implementation is a lot more modular. You can compare the data generating code in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/R/model.R">DSC2</a> vs in <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/simulator_example/sims/model_functions.R"><code>simulator</code></a> to tell the more modular setup we have adopted here -- although it is entirely possible to develop a different style of DSC that reproduces exactly the <code>simulator</code> example's output (yet stored in <code>rds</code> rather than <code>Rdata</code> format).</p>
 
 </div>
 </div>

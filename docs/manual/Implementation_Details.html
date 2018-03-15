@@ -256,7 +256,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC2 is implemented in Python 3. It relies on a number of libraries:</p>
+<p>DSC is implemented in Python 3. It relies on a number of libraries:</p>
 <ul>
 <li><a href="https://github.com/vatlab/SoS"><code>SoS</code></a> library supports the execution of steps in DSC, which implements job dispatch and management via <a href="https://networkx.github.io/"><code>networkx</code></a> and, different from other timestamp-based workflow tools, a file signature system via <a href="https://cyan4973.github.io/xxHash/"><code>xxHash</code></a>. Development of DSC is contributed directly to <code>SoS</code> whenever approperate.</li>
 <li><a href="http://www.sympy.org/en/index.html"><code>sympy</code></a> is used to expand DSC benchmark specification into pipelines, and to expand logic for <code>@FILTER</code> decorator.</li>
@@ -264,10 +264,10 @@ body {
 <li><a href="https://www.scipy.org"><code>scipy</code></a> provides a <code>sparse</code> module that supports storing <code>scipy.sparse</code> type of matrix to DSC default storage format for Python. </li>
 <li><a href="http://www.pytables.org"><code>pytables</code></a> provides support to HDF5 format for hierarchical data storage as DSC default storage format for Python.</li>
 <li><a href="https://www.sqlalchemy.org"><code>sqlalchemy</code></a> supports <code>dsc-query</code> via SQL-like syntax.</li>
-<li>The DSC2 script partially uses <a href="http://yaml.readthedocs.io/en/latest/"><code>ruamel.yaml</code></a>, a YAML 1.2 loader, for parsing DSC configuration (although DSC configuration format is not compatible with YAML).</li>
+<li>The DSC script partially uses <a href="http://yaml.readthedocs.io/en/latest/"><code>ruamel.yaml</code></a>, a YAML 1.2 loader, for parsing DSC configuration (although DSC configuration format is not compatible with YAML).</li>
 </ul>
 <p><strong>FIXME: cross language communication is broken for 0.2.x versions since 0.2.6. This will soon be changed to using HDF5 format (with restrictions) in version 0.3.x</strong></p>
-<p>Data flow between computational routines via <a href="http://www.inside-r.org/r-doc/base/saverds">RDS files</a>, if those routines are implemented as R or Python plugins. Saving and loading RDS files can be costly in both execution time and disk space; as a result you may notice that it seems to take DSC2 rather long time to complete a job compared to directly running R or Python scripts involved to complete a job. On the other hand, archiving outcome of computational routines in the form of RDS files makes it possible to re-use existing results, thus beneficial in the long run, particularly for projects where computational steps are not trivial and there is a need to actively add new computational routines to existing DSC framework.</p>
+<p>Data flow between computational routines via <a href="http://www.inside-r.org/r-doc/base/saverds">RDS files</a>, if those routines are implemented as R or Python plugins. Saving and loading RDS files can be costly in both execution time and disk space; as a result you may notice that it seems to take DSC rather long time to complete a job compared to directly running R or Python scripts involved to complete a job. On the other hand, archiving outcome of computational routines in the form of RDS files makes it possible to re-use existing results, thus beneficial in the long run, particularly for projects where computational steps are not trivial and there is a need to actively add new computational routines to existing DSC framework.</p>
 
 </div>
 </div>

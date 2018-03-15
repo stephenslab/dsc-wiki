@@ -256,7 +256,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a more advanced application of DSC with R scripts. We demonstrate in this tutorial features of DSC2 including:</p>
+<p>This is a more advanced application of DSC with R scripts. We demonstrate in this tutorial features of DSC including:</p>
 <ul>
 <li>Inline code as parameters</li>
 <li><code>@ALIAS</code> decorator</li>
@@ -271,11 +271,11 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Problem">DSC Problem<a class="anchor-link" href="#DSC-Problem">&#182;</a></h2><p>The DSC problem is based on the ASH example of DSCR (<a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">R Markdown version</a> and <a href="dscr_dsc_shrink.html">HTML version</a>). Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/ash">DSC2 vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
+<h2 id="DSC-Problem">DSC Problem<a class="anchor-link" href="#DSC-Problem">&#182;</a></h2><p>The DSC problem is based on the ASH example of DSCR (<a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">R Markdown version</a> and <a href="dscr_dsc_shrink.html">HTML version</a>). Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/ash">DSC vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
 <blockquote><p>To illustrate we consider the problem of shrinkage, which is tackled by the <code>ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output "shrunk" estimates for $\beta$ (so output is a list with one element, called <code>beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code>beta_est</code> with beta.</p>
 <p>First define a datamaker which simulates true values of $\beta$ from a user-specified normal mixture, where one of the components is a point mass at 0 of mass $\pi_0$, which is a user-specified parameter. It then simulates $\hat\beta \sim N(\beta_j,s_j)$ (where $s_j$ is again user-specified). It returns the true $\beta$ values and true $\pi_0$ value as meta-data, and the estimates $\hat\beta$ and $s$ as input-data.</p>
-<p>Now define a <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> for the <code>ash</code> function from the <code>ashr</code> package. Notice that this wrapper does not return output in the required format - it simply returns the entire ash output.</p>
-<p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code>ash</code>.</p>
+<p>Now define a <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> for the <code>ash</code> function from the <code>ashr</code> package. Notice that this wrapper does not return output in the required format - it simply returns the entire ash output.</p>
+<p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code>ash</code>.</p>
 </blockquote>
 
 </div>
@@ -285,7 +285,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC2 syntax below, following the structure of the original <code>DSCR</code> implementation:</p>
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC syntax below, following the structure of the original <code>DSCR</code> implementation:</p>
 
 <pre><code>#!/usr/bin/env dsc
 simulate: datamaker.R
@@ -348,7 +348,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is suggested that you check out the corresponding R codes for modules <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/datamaker.R"><code>simulate</code></a>, <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R"><code>shrink</code></a> and the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC2 communicates with your R scripts.</p>
+<p>It is suggested that you check out the corresponding R codes for modules <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/datamaker.R"><code>simulate</code></a>, <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/runash.R"><code>shrink</code></a> and the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC communicates with your R scripts.</p>
 <p>Here we will walk through all modules to highlight important syntactical elements.</p>
 
 </div>
@@ -358,7 +358,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-simulate">Module <code>simulate</code><a class="anchor-link" href="#Module-simulate">&#182;</a></h3><h4 id="Inline-code-as-parameters-and-output-values">Inline code as parameters and output values<a class="anchor-link" href="#Inline-code-as-parameters-and-output-values">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which have used <code>raw()</code> operator to configure. Contents inside <code>raw()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC2 will interpret each as, eg, <code>g &lt;- list(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned <strong>at runtime</strong> the output of R codes in <code>raw()</code> for use with <code>datamaker.R</code>. Without <code>raw()</code>, this line will be interpreted as strings assigned to <code>g</code> which apparently is problematic, ie, <code>g &lt;- c("c(2/3,1/3)","c(0,0)","c(1,2)")</code>. Similarly, <code>mixcompdist: raw(normalmix)</code> will be interpreted as <code>mixcompdist &lt;- normalmix</code> -- this statement is valid as long as <code>datamaker.R</code> has loaded <code>ashr</code> library, because <code>normalmix</code> is function from <code>ashr</code> library.</p>
+<h3 id="Module-simulate">Module <code>simulate</code><a class="anchor-link" href="#Module-simulate">&#182;</a></h3><h4 id="Inline-code-as-parameters-and-output-values">Inline code as parameters and output values<a class="anchor-link" href="#Inline-code-as-parameters-and-output-values">&#182;</a></h4><p>The parameter <code>g</code> has three candidate values, all of which have used <code>raw()</code> operator to configure. Contents inside <code>raw()</code> will be interpreted as functional code pieces rather than strings. In other words, DSC will interpret each as, eg, <code>g &lt;- list(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code>g</code> will be assigned <strong>at runtime</strong> the output of R codes in <code>raw()</code> for use with <code>datamaker.R</code>. Without <code>raw()</code>, this line will be interpreted as strings assigned to <code>g</code> which apparently is problematic, ie, <code>g &lt;- c("c(2/3,1/3)","c(0,0)","c(1,2)")</code>. Similarly, <code>mixcompdist: raw(normalmix)</code> will be interpreted as <code>mixcompdist &lt;- normalmix</code> -- this statement is valid as long as <code>datamaker.R</code> has loaded <code>ashr</code> library, because <code>normalmix</code> is function from <code>ashr</code> library.</p>
 
 </div>
 </div>
@@ -367,7 +367,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Decorator-@ALIAS-for-R-list">Decorator <code>@ALIAS</code> for R list<a class="anchor-link" href="#Decorator-@ALIAS-for-R-list">&#182;</a></h4><p>Inside <code>datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this module. The decorator <code>@ALIAS</code> uses a special DSC2 operation <code>List()</code> to consolidate these parameters into an R list <code>args</code> which corresponds to the input parameter in <code>datamaker.R</code>.</p>
+<h4 id="Decorator-@ALIAS-for-R-list">Decorator <code>@ALIAS</code> for R list<a class="anchor-link" href="#Decorator-@ALIAS-for-R-list">&#182;</a></h4><p>Inside <code>datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this module. The decorator <code>@ALIAS</code> uses a special DSC operation <code>List()</code> to consolidate these parameters into an R list <code>args</code> which corresponds to the input parameter in <code>datamaker.R</code>.</p>
 
 </div>
 </div>
@@ -443,7 +443,7 @@ DSC:
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">ash</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">ash</span>
 </pre></div>
 
 </div>
@@ -460,7 +460,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc2/vignettes/ash</pre>
+<pre>/home/gaow/GIT/dsc/vignettes/ash</pre>
 </div>
 </div>
 
@@ -491,7 +491,7 @@ DSC:
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library ashr@stephens999/ashr ...</span>
-<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
@@ -521,7 +521,7 @@ INFO: Elapsed time <span class="ansi-green-fg">85.214</span> seconds.
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s1">&#39;~/GIT/dsc2/vignettes/ash&#39;</span><span class="p">)</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s1">&#39;~/GIT/dsc/vignettes/ash&#39;</span><span class="p">)</span>
 <span class="n">dsc_dir</span> <span class="o">=</span> <span class="s1">&#39;dsc_result&#39;</span>
 </pre></div>
 

@@ -248,7 +248,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Debugging-in-DSC2">Debugging in DSC2<a class="anchor-link" href="#Debugging-in-DSC2">&#182;</a></h1>
+<h1 id="Debugging-in-DSC">Debugging in DSC<a class="anchor-link" href="#Debugging-in-DSC">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -256,13 +256,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-executable-and-generated-script">Module executable and generated script<a class="anchor-link" href="#Module-executable-and-generated-script">&#182;</a></h2><p>As seen from previous tutorials, the <a href="dsc_result.html">module executables in DSC</a> are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC2 generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
+<h2 id="Module-executable-and-generated-script">Module executable and generated script<a class="anchor-link" href="#Module-executable-and-generated-script">&#182;</a></h2><p>As seen from previous tutorials, the <a href="dsc_result.html">module executables in DSC</a> are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
 <ol>
 <li>Inconsistency between DSC interface and module executables</li>
 <li>Error from module executables as provided</li>
 </ol>
 <p>In the presence of errors DSC will fail. However the automatically generated script will be saved to disk and will be pointed to you as part of the error prompt on the command console so that you can reproduce and fix the bugs.</p>
-<p>Here we look at <a href="https://github.com/stephenslab/dsc2/tree/32311ab75848ae053fe7dbf614d06337a5f8238e/vignettes/one_sample_location">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
+<p>Here we look at <a href="https://github.com/stephenslab/dsc/tree/32311ab75848ae053fe7dbf614d06337a5f8238e/vignettes/one_sample_location">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
 
 </div>
 </div>
@@ -306,7 +306,7 @@ body {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings_error_v1.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
@@ -315,20 +315,20 @@ DSC:  18%|███████                                | 2/11 [00:01&lt;
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
 script_6123501901101114663 in &lt;module&gt;
-      ## END code by DSC2
+      ## END code by DSC
       
 ----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/normal_0_0_652e6bc3.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
+RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/normal_0_0_652e6bc3.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
 [49bb3658-fb20-4736-b8d4-1d9c2ee0c6f4]: [t_0]: 
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
 script_-5770973451880312504 in &lt;module&gt;
-      ## END code by DSC2
+      ## END code by DSC
       
 ----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/t_0_0_b8a69d4f.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
+RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/t_0_0_b8a69d4f.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
 [DSC]: 9 pending steps: DSC_0, a_mse, b_mse, c_mse, d_mse, a_mean, b_median, c_mean, d_median</span>
 <span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">If needed, you can open </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg"> and use </span><span class="ansi-green-fg">ctrl-F</span><span class="ansi-magenta-intense-fg"> to search by file names to trace back problematic chunks of code.</span>
 INFO: Elapsed time <span class="ansi-green-fg">5.065</span> seconds.
@@ -435,17 +435,17 @@ Execution halted
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>## r script UUID: c218f56b48d262e5
-## BEGIN code by DSC2
+## BEGIN code by DSC
 n &lt;- 1000
 true_mean &lt;- 0
 weed &lt;- 1
 DSC_4AAF65D6_tic_pt &lt;- proc.time()
-## END code by DSC2
+## END code by DSC
 set.seed(seed)
 x=true_mean+rt(n,df=2)
-## BEGIN code by DSC2
+## BEGIN code by DSC
 saveRDS(list(x=x, true_mean=true_mean, DSC_TIMER = proc.time() - DSC_4AAF65D6_tic_pt), &#39;dsc_result/t_1.rds&#39;)
-## END code by DSC2
+## END code by DSC
 
 </pre>
 </div>
@@ -459,7 +459,7 @@ saveRDS(list(x=x, true_mean=true_mean, DSC_TIMER = proc.time() - DSC_4AAF65D6_ti
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It looks like <code>set.seed()</code> looks for variable <code>seed</code>, which was not provided by DSC. We know from the <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/settings_error_v1.dsc">DSC script</a> that we had set <code>weed</code> not <code>seed</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>weed</code> to <code>seed</code> in the DSC script.</p>
+<p>It looks like <code>set.seed()</code> looks for variable <code>seed</code>, which was not provided by DSC. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings_error_v1.dsc">DSC script</a> that we had set <code>weed</code> not <code>seed</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>weed</code> to <code>seed</code> in the DSC script.</p>
 <p>In practice when you identify problems that does not have an obvious fix such as this one, you should load the problematic script <code>.sos/t_0_0_b8a69d4f.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
 
 </div>
@@ -510,20 +510,20 @@ DSC:  91%|███████████████████████�
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
 script_4384414397566502935 in &lt;module&gt;
-      ## END code by DSC2
+      ## END code by DSC
       
 ----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/mse_0_0_c3a61422.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
+RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/mse_0_0_c3a61422.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
 [1c24f16d-7e75-4161-bbd6-97c3e35239bb]: [mse_0]: 
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
 script_4384414397566502935 in &lt;module&gt;
-      ## END code by DSC2
+      ## END code by DSC
       
 ----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc2/vignettes/one_sample_location/.sos/mse_0_0_93b09896.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
+RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/mse_0_0_93b09896.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc2/vignettes/one_sample_location)
 [DSC]: 1 pending step: DSC_0</span>
 <span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">If needed, you can open </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg"> and use </span><span class="ansi-green-fg">ctrl-F</span><span class="ansi-magenta-intense-fg"> to search by file names to trace back problematic chunks of code.</span>
 INFO: Elapsed time <span class="ansi-green-fg">11.066</span> seconds.
@@ -590,23 +590,23 @@ Execution halted
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="c1">## BEGIN code by DSC2</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="c1">## BEGIN code by DSC</span>
 <span class="n">DSC_1589D5E6</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
 <span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_result/t_1.rds&#39;</span><span class="p">,</span><span class="s1">&#39;dsc_result/t_1_mean_1.rds&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_1589D5E6</span> <span class="o">&lt;-</span> <span class="n">dscrutils</span><span class="p">:::</span><span class="n">merge_lists</span><span class="p">(</span><span class="n">DSC_1589D5E6</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 <span class="n">mean_est</span> <span class="o">&lt;-</span> <span class="n">DSC_1589D5E6</span><span class="err">$</span><span class="n">mean</span>
 <span class="n">true_mean</span> <span class="o">&lt;-</span> <span class="n">DSC_1589D5E6</span><span class="err">$</span><span class="n">true_mean</span>
 <span class="n">DSC_1589D5E6_tic_pt</span> <span class="o">&lt;-</span> <span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="c1">## END code by DSC2</span>
+<span class="c1">## END code by DSC</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">mean_est</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">true_mean</span><span class="p">)</span>
 <span class="n">mse</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean_est</span><span class="o">-</span><span class="n">true_mean</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
 
 
-<span class="c1">## BEGIN code by DSC2</span>
+<span class="c1">## BEGIN code by DSC</span>
 <span class="n">saveRDS</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mse</span><span class="o">=</span><span class="n">mse</span><span class="p">,</span> <span class="n">DSC_TIMER</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">DSC_1589D5E6_tic_pt</span><span class="p">),</span> <span class="s1">&#39;dsc_result/t_1_mean_1_mse_1.rds&#39;</span><span class="p">)</span>
-<span class="c1">## END code by DSC2</span>
+<span class="c1">## END code by DSC</span>
 </pre></div>
 
 </div>

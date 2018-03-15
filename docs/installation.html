@@ -211,7 +211,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Quick-Start">Quick Start<a class="anchor-link" href="#Quick-Start">&#182;</a></h1><p>Follow these five steps to quickly get started using DSC2.</p>
+<h1 id="Quick-Start">Quick Start<a class="anchor-link" href="#Quick-Start">&#182;</a></h1><p>Follow these five steps to quickly get started using DSC.</p>
 
 </div>
 </div>
@@ -220,9 +220,9 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Install-python-&gt;=-3.6">1. Install python &gt;= 3.6<a class="anchor-link" href="#1.-Install-python-&gt;=-3.6">&#182;</a></h2><p>To use DSC2, you must have Python version 3.6 or greater. There are several accepted ways to install Python &gt;= 3.6 for DSC2.</p>
+<h2 id="1.-Install-python-&gt;=-3.6">1. Install python &gt;= 3.6<a class="anchor-link" href="#1.-Install-python-&gt;=-3.6">&#182;</a></h2><p>To use DSC, you must have Python version 3.6 or greater. There are several accepted ways to install Python &gt;= 3.6 for DSC.</p>
 <p><strong>Our recommendation:</strong> install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you would like to start from scratch we recommand using <a href="https://conda.io/miniconda.html">Miniconda</a> due to its light-weight and consquently less complications. <a href="#Troubleshooting">Here</a> are some novice advice on installation and configuration.</p>
-<p><strong> Other options:</strong> DSC2 will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>, and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code>conda</code> because it will provide easy access to various Python packages DSC2 depends on, thus making it a lot easier to install DSC2.</p>
+<p><strong> Other options:</strong> DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>, and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code>conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC2.</p>
 
 </div>
 </div>
@@ -231,7 +231,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC2 is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
+<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
 
 <pre><code>python --version
 pip --version</code></pre>
@@ -251,7 +251,7 @@ pip3 --version</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="3.-Install-dependencies">3. Install dependencies<a class="anchor-link" href="#3.-Install-dependencies">&#182;</a></h2><p>DSC depends on <a href="manual/Implementation_Details.html">a number of Python libraries</a>. We provide two sets of installation instructions for these dependencies: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
-<h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC2:</p>
+<h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC:</p>
 
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 
@@ -287,28 +287,28 @@ pip3 --version</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Install-DSC2">4. Install DSC2<a class="anchor-link" href="#4.-Install-DSC2">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>You may run this command to install DSC2 and all the remaining Python dependencies from source:</p>
+<h2 id="4.-Install-DSC">4. Install DSC<a class="anchor-link" href="#4.-Install-DSC">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>You may run this command to install DSC and all the remaining Python dependencies from source:</p>
 
 <pre><code>pip install dsc</code></pre>
-<p>To upgrade the DSC2 you previously have installed, run the following command:</p>
+<p>To upgrade the DSC you previously have installed, run the following command:</p>
 
 <pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
 <p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 <h3 id="4b.-Install-development-version">4b. Install development version<a class="anchor-link" href="#4b.-Install-development-version">&#182;</a></h3><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
-<p>DSC2 is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
+<p>DSC is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
 <p>First install the latest version of SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SoS.git
 cd SoS
 python setup.py install --single-version-externally-managed --root /</code></pre>
-<p>Then install the latest version of DSC2:</p>
+<p>Then install the latest version of DSC:</p>
 
-<pre><code>git clone https://github.com/stephenslab/dsc2.git
-cd dsc2
+<pre><code>git clone https://github.com/stephenslab/dsc.git
+cd dsc
 python setup.py install --single-version-externally-managed --root /</code></pre>
 <p>If you are running R code within your DSC project, you may also want the latest development version of the <strong>dscrutils</strong> R package. This can be installed from GitHub by running the following code in R:</p>
 <div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
-install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc2&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 <h3 id="4c.-Test-installation">4c. Test installation<a class="anchor-link" href="#4c.-Test-installation">&#182;</a></h3><p>Type in command prompt:</p>
 
@@ -322,7 +322,7 @@ install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc2&quo
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Start-your-first-DSC2-project">5. Start your first DSC2 project<a class="anchor-link" href="#5.-Start-your-first-DSC2-project">&#182;</a></h2><p>Start from <a href="https://stephenslab.github.io/dsc-wiki/tutorials/First_Course.html">here</a> for a first course on DSC, and <a href="https://stephenslab.github.io/dsc-wiki/tutorials/First_Course_Elaborated.html">here</a> an elaboration of its design and syntax.</p>
+<h2 id="5.-Start-your-first-DSC-project">5. Start your first DSC project<a class="anchor-link" href="#5.-Start-your-first-DSC-project">&#182;</a></h2><p>Start from <a href="https://stephenslab.github.io/dsc-wiki/tutorials/First_Course.html">here</a> for a first course on DSC, and <a href="https://stephenslab.github.io/dsc-wiki/tutorials/First_Course_Elaborated.html">here</a> an elaboration of its design and syntax.</p>
 
 </div>
 </div>

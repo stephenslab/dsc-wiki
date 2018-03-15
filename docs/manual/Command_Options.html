@@ -256,7 +256,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>DSC2 implements 2 command programs, <code>dsc</code> and <code>dsc-query</code>, for executing DSC and extracting result from executed benchmarks, respectively.</p>
+<p>DSC implements 2 command programs, <code>dsc</code> and <code>dsc-query</code>, for executing DSC and extracting result from executed benchmarks, respectively.</p>
 <h2 id="DSC-main-program">DSC main program<a class="anchor-link" href="#DSC-main-program">&#182;</a></h2>
 </div>
 </div>
@@ -380,7 +380,7 @@ Other options:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here we elaborate on some of options we did not have space to elaborate on the interface:</p>
 <ul>
-<li><p><code>-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code>-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc2/issues">github issue</a>.</p>
+<li><p><code>-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code>-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc/issues">github issue</a>.</p>
 </li>
 <li><p><code>--target</code>: this option takes multiple input.</p>
 <ul>
@@ -500,7 +500,7 @@ optional arguments:
 <p>This is a companion program to <code>dsc</code> that can be used to extract results from benchmark for given conditions. Although <code>dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it -- the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
 <p>Currently supported languages specific libraries are:</p>
 <ul>
-<li>R: <code>dsc_query</code> function for <a href="https://github.com/stephenslab/dsc2/tree/master/dscrutils"><code>dscrutils</code> package</a>.</li>
+<li>R: <code>dsc_query</code> function for <a href="https://github.com/stephenslab/dsc/tree/master/dscrutils"><code>dscrutils</code> package</a>.</li>
 </ul>
 
 </div>

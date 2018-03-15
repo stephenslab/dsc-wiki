@@ -312,7 +312,7 @@ benchmarks (e.g. adding a new method simply by defining a new <code>analyze</cod
 <p>Our example benchmark compares methods
 for a very simple task: estimating the mean of a population given a random sample from the population. We will compare two methods for estimating the population mean: the sample mean and the sample median. We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
 <h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
-can be found in the <a href="https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location">DSC2 vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. For now we just show the DSC file (<code>settings.dsc</code>) with minimal explanation:</p>
+can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. For now we just show the DSC file (<code>settings.dsc</code>) with minimal explanation:</p>
 
 </div>
 </div>
@@ -385,7 +385,7 @@ DSC:
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc2</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
 </pre></div>
 
 </div>
@@ -402,7 +402,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/Documents/GIT/software/dsc2/vignettes/one_sample_location</pre>
+<pre>/home/gaow/Documents/GIT/software/dsc/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -441,7 +441,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc2/dscrutils ...</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
