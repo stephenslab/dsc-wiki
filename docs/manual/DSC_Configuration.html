@@ -360,7 +360,7 @@ t(normal): R( x = mu + rt(n,df) )
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Each module parameter is an indented property under module property line. In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
+<h3 id="Module-parameters">Module parameters<a class="anchor-link" href="#Module-parameters">&#182;</a></h3><p>Each module parameter is an indented property under module property line. In the example above, <code>n</code> is module input parameter for both modules <code>normal</code> and <code>t</code>, corresponding to the variable <code>n</code> in both <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> scripts. Here <code>n</code> is set to <code>1000</code>. When set to an array-like value, eg <code>n: 100, 500, 1000</code> then effectively 3 modules are defined for <code>normal</code> and <code>t</code> each. Take <code>normal</code> for example:</p>
 <ul>
 <li>module 1: <code>rnorm.R</code> with <code>n</code> set to 100</li>
 <li>module 2: <code>rnorm.R</code> with <code>n</code> set to 500</li>
@@ -376,7 +376,7 @@ t(normal): R( x = mu + rt(n,df) )
 
 <pre><code>(n, p): (10, 0.1), (20, 0.2)</code></pre>
 <p>results in <code>(n = 10, p = 0.1), (n = 20, p = 0.2)</code>.</p>
-<p>Caution that module parameter names must match with variable names, or command-line arguments, for module executables. For example, module parameter <code>n</code> is specified at DSC level and passed to <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc2/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> -- neither of these executables has definition for <code>n</code> because they rely on DSC to provide it. It is the user's responsibility to ensure that they match.</p>
+<p>Caution that module parameter names must match with variable names, or command-line arguments, for module executables. For example, module parameter <code>n</code> is specified at DSC level and passed to <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R">rnorm.R</a> and <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rt.R">rt.R</a> -- neither of these executables has definition for <code>n</code> because they rely on DSC to provide it. It is the user's responsibility to ensure that they match.</p>
 
 </div>
 </div>

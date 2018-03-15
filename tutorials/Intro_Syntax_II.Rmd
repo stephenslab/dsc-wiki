@@ -11,7 +11,7 @@ This is a continuation of the [Introduction to DSC (Part II)](First_Course_Elabo
 example to illustrate new concepts and syntax, particularly
 the use of parameters to create multiple similar modules.
 
-Material used in this example are in [the DSC2 vignettes repo](https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location).
+Material used in this example are in [the DSC vignettes repo](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location).
 
 
 ## Defining similar modules via parameters

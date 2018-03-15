@@ -10,7 +10,7 @@ output: html_document
 This is a continuation of the [Introduction to DSC (Part I)](First_Course.html). Here we use the example from that introduction to
 illustrate three key concepts of DSC: "modules", "groups" and "pipeline variables". More advanced concepts will be introduced in [Part III](). 
 
-Material used in this example are in [the DSC2 vignettes repo](https://github.com/stephenslab/dsc2/tree/master/vignettes/one_sample_location).
+Material used in this example are in [the DSC vignettes repo](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location).
 
 
 ## Module input/output; pipeline variables
