@@ -389,7 +389,7 @@ dsc file.dsc --target simulate</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Override-runtime-options-in-modules-with-@CONF">Override runtime options in modules with <code>@CONF</code><a class="anchor-link" href="#Override-runtime-options-in-modules-with-@CONF">&#182;</a></h3><p>Among these DSC runtime options, the following can be customized on per-module basis:</p>
 <ul>
-<li><code>exec_path</code>, <code>lib_path</code>, <code>work_dir</code></li>
+<li><code>exec_path</code>, <code>lib_path</code>, <code>work_dir</code>, <code>R_libs</code>, <code>python_modules</code></li>
 </ul>
 <p>The syntax is similar to that of <code>@ALIAS</code>. That is, values are assigned by <code>=</code>:</p>
 
@@ -403,7 +403,16 @@ dsc file.dsc --target simulate</code></pre>
     @CONF:
         normal: exec_path = normal_bin
         t: exec_path = t_bin</code></pre>
-<p>Notice that unlike with the case in <code>DSC</code> section, here only one path can be specified -- <code>@CONF</code> is designed to "fine-tune" the runtime environment of a module.</p>
+<p>Multiple paths needs to be specified as a tuple, eg.</p>
+
+<pre><code>simulate: simulate.R
+    ...
+    @CONF: lib_path = (simulate_lib, main_lib), R_libs = (ashr@stephenslab/ashr 2.2.7+, mashr 0.2.6+)</code></pre>
+<p><code>@CONF</code> is designed not only to "fine-tune" the runtime environment of a module, but, as a "decorator", will change behavior of a module's execution. Specifically:</p>
+<ul>
+<li><code>lib_path</code> when specified under <code>@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code>R</code> or <code>Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
+<li><code>R_libs</code> when specified under <code>@CONF</code> will automatically load all listed libraries via <code>library(...)</code> prior to running the module script. <strong>Please use DSC::R_libs instead if this is not the desired behavior</strong>.</li>
+</ul>
 
 </div>
 </div>
