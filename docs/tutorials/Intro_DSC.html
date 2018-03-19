@@ -296,7 +296,7 @@ body {
 </li>
 </ol>
 <p>Running the benchmark then consists of running sequences of modules—what we call "pipelines"—and each pipeline invokes one module from the <code>simulate</code> group, followed by a module from the <code>analyze</code> group, and then a module from the <code>score</code> group.</p>
-<p>DSC helps manage and run benchmarks like these, as well as more complex ones. The modular design makes it easy to extend benchmarks (e.g., by defining a new <code>analyze</code> module). And DSC will efficiently use available computational resources by running modules in parallel when possible; for example, once a <code>simulate</code> module has created a dataset, DSC may run multiple <code>analyze</code> modules in parallel.</p>
+<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design makes it easy to extend benchmarks (e.g., by defining a new <code>analyze</code> module)—hence the "Dynamic" in in <em>Dynamic Statistical Comparisons.</em> And DSC will efficiently use available computational resources by running modules in parallel when possible; for example, once a <code>simulate</code> module has created a dataset, DSC may run multiple <code>analyze</code> modules in parallel.</p>
 
 </div>
 </div>
@@ -305,13 +305,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Running-benchmarks-with-DSC">Running benchmarks with DSC<a class="anchor-link" href="#Running-benchmarks-with-DSC">&#182;</a></h3><p>To run a benchmark using DSC the user must:</p>
+<h3 id="Running-benchmarks-with-DSC">Running benchmarks with DSC<a class="anchor-link" href="#Running-benchmarks-with-DSC">&#182;</a></h3><p>These are the essential ingredients of a DSC benchmark:</p>
 <ol>
-<li><p>Create a "DSC file" which specifies all the necessary modules, groups, and pipelines, and how information flows from module to module. The DSC file is a text file written using a custom-built syntax illustrated below (and explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
+<li><p>Create a "DSC file" defining the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in the custom DSC syntax illustrated below (and explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
 </li>
-<li><p>Run the DSC using the <code>dsc</code> command line program. This runs all pipelines specified by the DSC file, and saves results to files in a structured way that makes them easy to query.</p>
+<li><p>Call the <code>dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
 </li>
-<li><p>Query and summarize the results. The simplest way to do this is using the R package <code>dscrutils</code>, which provides a convenient way to read results from the DSC into an R dataframe, as illustrated below. (A command line tool <code>dsc-query</code> is also available).</p>
+<li><p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into an R data frame. We also provide a command-line tool, <code>dsc-query</code>, which is demonstrated in other tutorials.</p>
 </li>
 </ol>
 
@@ -322,11 +322,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>We now illustrate DSC using a simple example benchmark.</p>
-<p>Our example benchmark compares methods
-for a very simple task: estimating the mean of a population given a random sample from the population. We will compare two methods for estimating the population mean: the sample mean and the sample median. We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution. And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
+<h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>We now illustrate how DSC can be used to implement a simple benchmark.</p>
+<p>In this example, we have a very simple task: estimate the mean of a population given a random sample from the population.</p>
+<p>We will compare two methods for estimating the population mean: the sample mean and the sample median.</p>
+<p>We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
+<p>And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
 <h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
-can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repo</a>. We defer a detailed explanation of the syntax of the DSC file to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. For now we just show the DSC file (<code>settings.dsc</code>) with minimal explanation:</p>
+can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. For now, we present the DSC file, <code>settings.dsc</code>, with minimal explanation,  deferring a detailed explanation of the DSC file syntax to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>:</p>
 
 </div>
 </div>
@@ -371,8 +373,7 @@ DSC:
     exec_path: R
     output: dsc_result</code></pre>
 <p>This DSC file defines six modules: two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>), two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>). Each module in this example involves a very simple one-line <code>R</code> script (in realistic cases these scripts will involve multiple lines and likely live in separate files).</p>
-<p>The DSC file then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run (<code>simulate*analyze*score</code> indicates all combinations).
-```</p>
+<p>The DSC file then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run (<code>simulate*analyze*score</code> indicates all combinations).</p>
 
 </div>
 </div>
