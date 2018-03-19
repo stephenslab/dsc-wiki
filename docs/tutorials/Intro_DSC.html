@@ -248,23 +248,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC">Introduction to DSC<a class="anchor-link" href="#Introduction-to-DSC">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, $I$ say. For example, $I$ could be "predict the missing entries in a matrix with missing entries", "estimate a covariance matrix from a sample", or "estimate a regression function relating outcome $Y$ to covariates (features) $X$".</p>
-<p>To compare methods to perform $I$ we could conduct a benchmarking experiment, by repeating the following three steps:</p>
-<ol>
-<li>Simulate some data suitable for performing $I$.</li>
-<li>Analyze the data with a method designed to perform $I$.</li>
-<li>Score how well the method performed $I$ (e.g. by comparison with the simulation ground truth).</li>
-</ol>
-<p>DSC can handle more complex
-settings than this, but this basic structure suffices to explain the key concepts. We will call this the <code>simulate</code>-<code>analyze</code>-<code>score</code> structure.</p>
+<h1 id="Introduction-to-DSC">Introduction to DSC<a class="anchor-link" href="#Introduction-to-DSC">&#182;</a></h1><p><em>Add a 1–3 sentence summary here explaining what this tutorial is about---who this tutorial is for, and what you will learn from it.</em></p>
 
 </div>
 </div>
@@ -273,16 +257,46 @@ settings than this, but this basic structure suffices to explain the key concept
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Modules,-groups,-and-pipelines">Modules, groups, and pipelines<a class="anchor-link" href="#Modules,-groups,-and-pipelines">&#182;</a></h3><p>Typically we will want to consider multiple ways
-to perform each of the steps 1-3: multiple ways to simulate data, multiple ways to analyze the data, and multiple ways to score
-how well a method performed. 
-In DSC this is accomplished by defining groups of
-"modules" that can accomplish each step. For example, we would define a group of <code>simulate</code> modules, each of which can perform step 1; a group of
-<code>analyze</code> modules, each of which can perform step 2; and a group of <code>score</code> modules, each of which can perform step 3. Running the benchmark then consists of running lots of "pipelines"
--- sequences of modules -- each of which involves running one module from the <code>simulate</code> group, followed by one module from the <code>analyze</code> group, followed by one module from the <code>score</code> group.</p>
-<p>DSC helps manage and run benchmarks like these, as well as more complex ones. The modular design 
-makes it easy to extend
-benchmarks (e.g. adding a new method simply by defining a new <code>analyze</code> module). And DSC helps with parallelization: for example, once a <code>simulate</code> module has created a dataset, DSC can apply multiple <code>analyze</code> modules in parallel on a suitable compute cluster.</p>
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
+<ul>
+<li><p>Predict the missing entries of a matrix;</p>
+</li>
+<li><p>Estimate a covariance matrix from a data sample;</p>
+</li>
+<li><p>Estimate a regression function relating outcome $Y$ to covariates (features) $X$.</p>
+</li>
+</ul>
+<p>For these three tasks, and others, we could conduct a benchmarking experiment to compare methods to perform $I$ by repeating the following three steps:</p>
+<ol>
+<li><p>Simulate some data suitable for performing $I$.</p>
+</li>
+<li><p>Analyze the data with a method designed to perform $I$.</p>
+</li>
+<li><p>Score how well the method performed $I$ (e.g., by comparing the methods' estimates against the ground-truth provided by the simulation).</p>
+</li>
+</ol>
+<p>DSC can handle more complex settings than this, but this basic structure suffices to explain the key concepts. We call this basic structure the "simulate-analyze-score" design pattern.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="DSC-modules,-groups,-and-pipelines">DSC modules, groups, and pipelines<a class="anchor-link" href="#DSC-modules,-groups,-and-pipelines">&#182;</a></h3><p>Typically we will want to try different ways of implementating steps 1–3; that is, different ways to simulate the data, different ways to analyze the data, and different ways to score how well a method performed.</p>
+<p>In DSC, each different way of implementing a step is expressed as a "module", and then a "group of modules" defines the collection of alternative approaches.</p>
+<p>In our example, we define:</p>
+<ol>
+<li><p>A group of <code>simulate</code> modules, each of which can perform step 1;</p>
+</li>
+<li><p>A group of <code>analyze</code> modules, each of which can perform step 2; and</p>
+</li>
+<li><p>A group of <code>score</code> modules, each of which can perform step 3.</p>
+</li>
+</ol>
+<p>Running the benchmark then consists of running sequences of modules—what we call "pipelines"—and each pipeline invokes one module from the <code>simulate</code> group, followed by a module from the <code>analyze</code> group, and then a module from the <code>score</code> group.</p>
+<p>DSC helps manage and run benchmarks like these, as well as more complex ones. The modular design makes it easy to extend benchmarks (e.g., by defining a new <code>analyze</code> module). And DSC will efficiently use available computational resources by running modules in parallel when possible; for example, once a <code>simulate</code> module has created a dataset, DSC may run multiple <code>analyze</code> modules in parallel.</p>
 
 </div>
 </div>
