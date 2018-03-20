@@ -421,7 +421,7 @@ DSC:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">git</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
@@ -460,7 +460,7 @@ DSC:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
@@ -483,10 +483,10 @@ DSC:
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:21&lt;00:00,  1.15s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:04&lt;00:00,  3.42it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">23.562</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">6.869</span> seconds.
 </pre>
 </div>
 </div>
@@ -517,7 +517,7 @@ INFO: Elapsed time <span class="ansi-green-fg">23.562</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span>
@@ -538,9 +538,21 @@ INFO: Elapsed time <span class="ansi-green-fg">23.562</span> seconds.
 <div class="prompt"></div>
 
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/pcarbo/anaconda3/lib/python3.6/site-packages/jupyter_client/connect.py:157: RuntimeWarning: Failed to set sticky bit on &#39;/var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T&#39;: [Errno 1] Operation not permitted: &#39;/var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T&#39;
+  RuntimeWarning,
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpLzk52p/dsc/query.csv -f --target simulate analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpNROqbR/dsc/query.csv -f --target simulate analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
@@ -554,7 +566,7 @@ Reading DSC outputs:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span>
@@ -607,7 +619,7 @@ Reading DSC outputs:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dscsummary</span> <span class="o">&lt;-</span> <span class="n">aggregate</span><span class="p">(</span><span class="n">score</span><span class="o">.</span><span class="n">error</span> <span class="o">~</span> <span class="n">simulate</span> <span class="o">+</span> <span class="n">analyze</span> <span class="o">+</span> <span class="n">score</span><span class="p">,</span><span class="n">dscout</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span>
@@ -671,7 +683,7 @@ Reading DSC outputs:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="c1"># Load the ggplot2 package and set up graphics within the Jupyter environment.</span>
