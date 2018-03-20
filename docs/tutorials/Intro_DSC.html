@@ -328,7 +328,8 @@ body {
 <p>We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
 <p>And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
 <h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
-can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. For now, we present the DSC file, <code>settings.dsc</code>, with minimal explanation,  deferring a detailed explanation of the DSC file syntax to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>:</p>
+can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>.</p>
+<p>Here, we give only a high-level overview of the DSC file, <code>first_investigation.dsc</code>, deferring a more detailed explanation of the syntax to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. This is the DSC file:</p>
 
 </div>
 </div>
@@ -338,42 +339,65 @@ can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vign
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 
-<pre><code>normal: R( x = rnorm(100,0,1) )
+<pre><code># Simulate samples from the normal distribution with mean 0 and
+# standard deviation 1.
+normal: R(x = rnorm(n,mean = mu,sd = 1))
+  mu: 0
+  n: 100
   $data: x
-  $true_mean: 0
+  $true_mean: mu
 
-t: R( x = 3 + rt(100,df=2) )
+# Simulate samples from the non-centered t-distribution with 3 degrees
+# of freedom.
+t: R(x = mu + rt(n,df = 2))
+  mu: 3
+  n: 100
   $data: x
-  $true_mean: 3
+  $true_mean: mu
 
-mean: R( y = mean(x) )
+# Estimate the population mean by computing the mean value of the
+# provided sample.
+mean: R(y = mean(x))
   x: $data
   $est_mean: y
 
-median: R( y = median(x) )
+# Estimate the population mean by computing the median value of the
+# provided sample.
+median: R(y = median(x))
   x: $data
-  $est_mean: y
+  $est_mean: y  
 
-sq_err: R( e = (a-b)^2 )
-  a: $est_mean
-  b: $true_mean
+# Compute the error in the estimated mean by taking the squared
+# difference between the true mean and the estimated mean.
+sq_err: R(e = (x - y)^2)
+  x: $est_mean
+  y: $true_mean
   $error: e
 
-abs_err: R( e = abs(a-b) )
-  a: $est_mean
-  b: $true_mean
-  $error: e 
+# Compute the error in the estimated mean by taking the absolute
+# difference between the true mean and the estimated mean.
+abs_err: R(e = abs(x - y))
+  x: $est_mean
+  y: $true_mean
+  $error: e
 
 DSC:
     define:
       simulate: normal, t
       analyze: mean, median
       score: abs_err, sq_err
-    run: simulate * analyze * score
-    exec_path: R
-    output: dsc_result</code></pre>
-<p>This DSC file defines six modules: two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>), two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>). Each module in this example involves a very simple one-line <code>R</code> script (in realistic cases these scripts will involve multiple lines and likely live in separate files).</p>
-<p>The DSC file then defines module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>), and the pipelines to run (<code>simulate*analyze*score</code> indicates all combinations).</p>
+    run: simulate * analyze * score</code></pre>
+<p>This DSC file defines six modules:</p>
+<ul>
+<li><p>two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>),</p>
+</li>
+<li><p>two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and</p>
+</li>
+<li><p>two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>).</p>
+</li>
+</ul>
+<p>Each module in this example involves only one line of R code (usually the modules will be implemented in many lines of code, in which case the code can live in separate files).</p>
+<p>The DSC file then defines the module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>) and the pipelines to run (<code>simulate * analyze * score</code> indicates that all combinations of the <code>simulate</code>, <code>analyze</code> and <code>score</code> modules should be run in sequence).</p>
 
 </div>
 </div>
@@ -390,17 +414,17 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To run dsc we first change directory to the location of the <code>settings.dsc</code> file.</p>
+<p>To run DSC, we first change directory to the location of the <code>first_investigation.dsc</code> file.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">git</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
 </pre></div>
 
 </div>
@@ -417,7 +441,7 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/Documents/GIT/software/dsc/vignettes/one_sample_location</pre>
+<pre>/Users/pcarbo/git/dsc/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -429,17 +453,17 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And now we use the <code>dsc</code> command line program to run 10 replicates of this benchmark (each replicate using a different random number seed), using 8 CPU threads:</p>
+<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate using a different random number seed), with 2 threads:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">8</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
 </pre></div>
 
 </div>
@@ -456,14 +480,13 @@ DSC:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
-INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings.dsc</span> ...
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:17&lt;00:00,  1.15s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:21&lt;00:00,  1.15s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">23.562</span> seconds.
 </pre>
 </div>
 </div>
@@ -477,8 +500,8 @@ INFO: Elapsed time <span class="ansi-green-fg">21.323</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>(For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> will be automatically installed at this point.)</p>
-<p>When run, DSC will create results files in the folder <code>dsc_result/</code> (as specified in the DSC file). We will see how to query these results and read them into <code>R</code> below.</p>
-<p>In addition, DSC will create an html file with the DSC output folder name as prefix (in this example, <a href="dsc_result.html"><code>dsc_result.html</code></a>) in the working directory. This file allows you to conveniently view the DSC file, executed pipelines and their source code.</p>
+<p>When run, DSC will create results files in the folder <code>first_investigation</code> (this is the default folder name, and can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
+<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code>first_investigation.html</code> in the working directory). This file allows you to conveniently browse the DSC file, executed pipelines, and the corresponding source code.</p>
 
 </div>
 </div>
