@@ -238,27 +238,36 @@ This code does the following:
 + We define three module groups: `simulate`, `analyze` and `score`.
 
 + The defining characteristic of module groups is that they should
-  have a similar function (more precisely, similar 
+  have a similar function (and, ideally, the same inputs and outputs).
 
 + `run` is a keyword to indicate that we are defining the
   computational pipelines to be executed.
 
-+ The `A * B` notation asks to generate all possible sequences of
-   modules from groups `A` and `B`; that is, all sequences of the form
-   (`a`,`b`) where `a` is a module in group `A` and `b` is a module in
-   a group `B`. So here `simulate * analyze * score` generates all
-   pipelines that consist of first a module from the `simulate` group
-   (`normal` or `t`), a second module from `analyze` (`mean` or
-   `median`) and then a module from the `score` group (`sq_err` or
-   `abs_err`).
++ The `A * B` notation asks DSC to generate all possible sequences of
+  modules from groups `A` and `B`; that is, all sequences of the form
+  (`a`,`b`) where `a` is a module in group `A` and `b` is a module in
+  a group `B`. So in this example `simulate * analyze * score`
+  generates all pipelines that consist of first a module from the
+  `simulate` group (`normal` or `t`), a second module from `analyze`
+  (`mean` or `median`) and then a module from the `score` group
+  (`sq_err` or `abs_err`). In this example, there are $2 \times 2
+  \times 2 = 8$ different module sequences.
 
 ## Recap
 
-*Add a summary of the second tutorial here.*
+In this tutorial, we learned how the DSC file is used to define the
+key components of a DSC experiment:
+
+1. Module inputs, outputs and scripts;
+
+2. Module groups; and
+
+3. Pipelines.
 
 ## Next steps
 
-In the [third introductory tutorial](Intro_Syntax_II.html), we will...
+In the [third introductory tutorial](Intro_Syntax_II.html), we will
+extend this example and introduce a few other useful DSC features.
 
 <!-- You can think of a pipeline variable as a variable whose value
 may change as a pipeline is run. For example, in a pipeline `a-b-c`,

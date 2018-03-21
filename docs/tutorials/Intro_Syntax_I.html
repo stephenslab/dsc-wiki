@@ -412,35 +412,63 @@ abs_err: R(e &lt;- abs(x - y))
   $error: e</code></pre>
 <p>The inputs to both modules are <code>$est_mean</code> and <code>$true_mean</code>, and the
 output is <code>$error</code>.</p>
-<h2 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h2><p>The final stage is to tell DSC how to combine these
-six modules into pipelines. We do this by
-first defining the "groups" of similar modules, and then
-defining pipelines in terms of these groups.</p>
+<h2 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h2><p>So far, we have defined the modules—that is, the individual
+computational steps of the DSC experiment—but we have not yet
+described how these modules relate to each other to compose the
+pipelines. The <code>DSC</code> block in the DSC file defines the relationships
+between the modules—the key components of the <code>DSC</code> block are the
+<code>define</code> and <code>run</code> statements.</p>
 
 <pre><code>DSC:
-    define:
-      simulate: normal, t
-      analyze: mean, median
-      score: abs_err, sq_err
-    run: simulate * analyze * score
-    output: dsc_result</code></pre>
-<p>Here:</p>
+  define:
+    simulate: normal, t
+    analyze: mean, median
+    score: abs_err, sq_err
+  run: simulate * analyze * score</code></pre>
+<p>This code does the following:</p>
 <ul>
-<li><code>DSC</code> is a keyword to indicate that here we are defining groups and pipelines (not a module definition).</li>
-<li><code>define</code> is a keyword to indicate we are defining groups.
-(here <code>simulate</code>, <code>analyze</code> and <code>score</code>).</li>
-<li><code>run</code> is a keyword to indicate that we are defining the pipelines to be run. The <code>A * B</code> notation means to create all possible sequences of modules from groups <code>A</code> and <code>B</code>. That is, all sequences of the form <code>a</code>-<code>b</code> where <code>a</code> is a module in group <code>A</code> and <code>b</code> is a module in a group <code>B</code>. So here
-<code>simulate * analyze * score</code> generates all pipelines that consist of first a module from the <code>simulate</code> group (<code>normal</code> or <code>t</code>), then a module from <code>analyze</code> (<code>mean</code> or <code>median</code>) and then a module from the <code>score</code> group (<code>sq_err</code> or <code>abs_err</code>).</li>
-<li><code>output</code> tells DSC where to save results.</li>
+<li><p><code>DSC</code> is a keyword to indicate that here we are defining the
+module groups and pipelines (that is, we are not defining a module).</p>
+</li>
+<li><p><code>define</code> is a keyword to indicate we are defining module groups.</p>
+</li>
+<li><p>We define three module groups: <code>simulate</code>, <code>analyze</code> and <code>score</code>.</p>
+</li>
+<li><p>The defining characteristic of module groups is that they should
+have a similar function (and, ideally, the same inputs and outputs).</p>
+</li>
+<li><p><code>run</code> is a keyword to indicate that we are defining the
+computational pipelines to be executed.</p>
+</li>
+<li><p>The <code>A * B</code> notation asks DSC to generate all possible sequences of
+modules from groups <code>A</code> and <code>B</code>; that is, all sequences of the form
+(<code>a</code>,<code>b</code>) where <code>a</code> is a module in group <code>A</code> and <code>b</code> is a module in
+a group <code>B</code>. So in this example <code>simulate * analyze * score</code>
+generates all pipelines that consist of first a module from the
+<code>simulate</code> group (<code>normal</code> or <code>t</code>), a second module from <code>analyze</code>
+(<code>mean</code> or <code>median</code>) and then a module from the <code>score</code> group
+(<code>sq_err</code> or <code>abs_err</code>). In this example, there are $2 \times 2
+\times 2 = 8$ different module sequences.</p>
+</li>
 </ul>
-<!----
-You can think of a pipeline variable
-as a variable whose value may change as a pipeline is run. For example, in a pipeline `a-b-c`, with modules `a`, `b` and `c`,
-if module `a` outputs a pipeline variable `$data`, and
-then module `b` outputs `$data` with a new value,
-then if module `c` inputs `$data` its value
-will be the one output by `b` and not the one output by `a`.
----->
+<h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we learned how the DSC file is used to define the
+key components of a DSC experiment:</p>
+<ol>
+<li><p>Module inputs, outputs and scripts;</p>
+</li>
+<li><p>Module groups; and</p>
+</li>
+<li><p>Pipelines.</p>
+</li>
+</ol>
+<h2 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">&#182;</a></h2><p>In the <a href="Intro_Syntax_II.html">third introductory tutorial</a>, we will
+extend this example and introduce a few other useful DSC features.</p>
+<!-- You can think of a pipeline variable as a variable whose value
+may change as a pipeline is run. For example, in a pipeline `a-b-c`,
+with modules `a`, `b` and `c`, if module `a` outputs a pipeline
+variable `$data`, and then module `b` outputs `$data` with a new
+value, then if module `c` inputs `$data` its value will be the one
+output by `b` and not the one output by `a`. -->
 </div>
 </div>
 </div>
