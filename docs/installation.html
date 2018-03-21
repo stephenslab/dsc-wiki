@@ -234,13 +234,13 @@ $(document).ready(function () {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
-
-<pre><code>python --version
-pip --version</code></pre>
+<div class="highlight"><pre><span></span>python --version
+pip --version
+</pre></div>
 <p>or</p>
-
-<pre><code>python3 --version
-pip3 --version</code></pre>
+<div class="highlight"><pre><span></span>python3 --version
+pip3 --version
+</pre></div>
 <p>If the reported Python version is or greater than 3.6.0 and <code>pip</code> is reported to come from that version (eg. <code>pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
 <p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code>python</code>, your pip (python 3.6+) executable is <code>pip</code>. However, you might need to replace <code>python</code> with <code>python3</code> and <code>pip</code> with <code>pip3</code> if they otherwise point to other versions</em></p>
 <p>If you already have some old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see instructions <a href="#Troubleshooting">here</a> for what to do.</p>
@@ -254,17 +254,17 @@ pip3 --version</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="3.-Install-dependencies">3. Install dependencies<a class="anchor-link" href="#3.-Install-dependencies">&#182;</a></h2><p>DSC depends on <a href="manual/Implementation_Details.html">a number of Python libraries</a>. We provide two sets of installation instructions for these dependencies: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
 <h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC:</p>
-
-<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
-
-<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
-                psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<div class="highlight"><pre><span></span>conda install -c conda-forge fasteners python-xxhash pyarrow
+</pre></div>
+<div class="highlight"><pre><span></span>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py <span class="se">\</span>
+                psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect
+</pre></div>
 <p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
-
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow</code></pre>
-
-<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
-                psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<div class="highlight"><pre><span></span>conda update -c conda-forge fasteners python-xxhash pyarrow
+</pre></div>
+<div class="highlight"><pre><span></span>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py <span class="se">\</span>
+                psutil networkx pydot pydotplus pyyaml tqdm pygments pexpect
+</pre></div>
 <p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 
 </div>
@@ -290,31 +290,31 @@ pip3 --version</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.-Install-DSC">4. Install DSC<a class="anchor-link" href="#4.-Install-DSC">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>You may run this command to install DSC and all the remaining Python dependencies from source:</p>
-
-<pre><code>pip install dsc</code></pre>
+<div class="highlight"><pre><span></span>pip install dsc
+</pre></div>
 <p>To upgrade the DSC you previously have installed, run the following command:</p>
-
-<pre><code>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc</code></pre>
+<div class="highlight"><pre><span></span>pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir dsc
+</pre></div>
 <p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 <h3 id="4b.-Install-development-version">4b. Install development version<a class="anchor-link" href="#4b.-Install-development-version">&#182;</a></h3><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
 <p>DSC is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
 <p>First install the latest version of SoS:</p>
-
-<pre><code>git clone https://github.com/vatlab/SoS.git
-cd SoS
-python setup.py install --single-version-externally-managed --root /</code></pre>
+<div class="highlight"><pre><span></span>git clone https://github.com/vatlab/SoS.git
+<span class="nb">cd</span> SoS
+python setup.py install --single-version-externally-managed --root /
+</pre></div>
 <p>Then install the latest version of DSC:</p>
-
-<pre><code>git clone https://github.com/stephenslab/dsc.git
-cd dsc
-python setup.py install --single-version-externally-managed --root /</code></pre>
+<div class="highlight"><pre><span></span>git clone https://github.com/stephenslab/dsc.git
+<span class="nb">cd</span> dsc
+python setup.py install --single-version-externally-managed --root /
+</pre></div>
 <p>If you are running R code within your DSC project, you may also want the latest development version of the <strong>dscrutils</strong> R package. This can be installed from GitHub by running the following code in R:</p>
 <div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
 install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 <h3 id="4c.-Test-installation">4c. Test installation<a class="anchor-link" href="#4c.-Test-installation">&#182;</a></h3><p>Type in command prompt:</p>
-
-<pre><code>dsc -h</code></pre>
+<div class="highlight"><pre><span></span>dsc -h
+</pre></div>
 <p>You should see the DSC <a href="https://stephenslab.github.io/dsc-wiki/manual/Command_Options.html">command interface</a> displayed.</p>
 
 </div>
@@ -336,9 +336,9 @@ install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc&quot
 <h2 id="Troubleshooting">Troubleshooting<a class="anchor-link" href="#Troubleshooting">&#182;</a></h2><h3 id="I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">I am new to <code>conda</code>. Do you have advice for setting it up?<a class="anchor-link" href="#I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">&#182;</a></h3><p>Here we provide some suggestions for installing <a href="https://conda.io/miniconda.html">Miniconda</a> with Python 3. (The instructions below worked for Miniconda3 4.4.10 -- future versions may have a different 
 installation procedure.)</p>
 <p>First, download the version Miniconda built for your operating system. On a Mac computer, for example, open up a terminal and run these commands:</p>
-
-<pre><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
-./Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
+<div class="highlight"><pre><span></span>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
+./Miniconda3-latest-MacOSX-x86_64.sh
+</pre></div>
 <p>Follow the prompt to install it (use <code>ctrl+F</code> a couple of times to quickly jump to the end of the Licenses if you have read them before). At the end of installation, the installer will ask you something like this:</p>
 
 <pre><code>Do you wish the installer to prepend the Miniconda3 install location
@@ -350,8 +350,8 @@ to PATH in your /home/&lt;user_name&gt;/.bashrc ? [yes|no]
 export PATH=/&lt;path_to_conda&gt;/bin:$PATH
 Thank you for installing Miniconda3!</code></pre>
 <p>The next step is important: open an empty text file <code>~/.bash_conda</code>, copy the "<code>export PATH=...</code>" line <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type</p>
-
-<pre><code>source ~/.bash_conda</code></pre>
+<div class="highlight"><pre><span></span><span class="nb">source</span> ~/.bash_conda
+</pre></div>
 <p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code>source</code> with this file</strong>. If you do this often, you may want to add this line to your <code>.bashrc</code> file.</p>
 
 </div>
@@ -363,16 +363,16 @@ Thank you for installing Miniconda3!</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">What do I do if I already have <code>conda</code>, but not python &gt;= 3.6?<a class="anchor-link" href="#What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">&#182;</a></h3><p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
 <p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
-
-<pre><code>$ which python
-/home/osboxes/miniconda3/bin/python</code></pre>
+<div class="highlight"><pre><span></span>$ which python
+/home/osboxes/miniconda3/bin/python
+</pre></div>
 <p>Next, remove <code>/home/osboxes/miniconda3</code>:</p>
-
-<pre><code>rm -rf /home/osboxes/miniconda3</code></pre>
+<div class="highlight"><pre><span></span>rm -rf /home/osboxes/miniconda3
+</pre></div>
 <p>Then follow the provided instructions to install Anaconda or Miniconda.</p>
 <p>Alternatively, update Python to the latest version (currently version 3.6):</p>
-
-<pre><code>conda install python=3.6</code></pre>
+<div class="highlight"><pre><span></span>conda install <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
+</pre></div>
 
 </div>
 </div>
@@ -382,8 +382,8 @@ Thank you for installing Miniconda3!</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">What do I do when I do not have permission to install Python packages?<a class="anchor-link" href="#What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">&#182;</a></h3><p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code>--user</code> switch to the <code>pip</code> command:</p>
-
-<pre><code>pip install --user dsc</code></pre>
+<div class="highlight"><pre><span></span>pip install --user dsc
+</pre></div>
 <p><strong>Important note:</strong> The <code>--user</code> switch will install packages to the <code>~/.local</code> hidden directory. This may cause problems if <code>dsc</code> is upgraded at a later date without the <code>--user</code> switch.</p>
 
 </div>
@@ -394,9 +394,9 @@ Thank you for installing Miniconda3!</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="What-to-do-if-dscquery-in-R-complains-about-dsc-query-command-not-found-yet-I-can-use-it-from-command-console?">What to do if <code>dscquery</code> in R complains about <code>dsc-query</code> command not found yet I can use it from command console?<a class="anchor-link" href="#What-to-do-if-dscquery-in-R-complains-about-dsc-query-command-not-found-yet-I-can-use-it-from-command-console?">&#182;</a></h3><p>If you are using DSC in RStudio, you will need to adjust your <code>~/.Renviron</code> settings, e.g. if your <code>dsc-query</code> is in <code>/home/osboxes/miniconda3/bin</code> (use <code>which dsc-query</code> to figure this out) then your <code>~/.Renviron</code> should look like:</p>
-
-<pre><code>$ cat ~/.Renviron
-PATH=/home/osboxes/miniconda3/bin:$PATH</code></pre>
+<div class="highlight"><pre><span></span>$ cat ~/.Renviron
+<span class="nv">PATH</span><span class="o">=</span>/home/osboxes/miniconda3/bin:<span class="nv">$PATH</span>
+</pre></div>
 
 </div>
 </div>
