@@ -3,7 +3,7 @@
 name: "Dynamic Statistical Comparisons"
 
 # Link to the source repository (e.g., on Github).
-repo: "https://github.com/stephenslab/dsc2"
+repo: "https://github.com/stephenslab/dsc"
 site_url: "https://stephenslab.github.io/dsc-wiki"
 
 # Footer added to the bottom of some webpages.
@@ -33,4 +33,4 @@ homepage_label: "Home"
 add_commit_info: False
 report_style: False
 password_file: .passwd
-auto_highlight: True
+auto_highlight: dsc
