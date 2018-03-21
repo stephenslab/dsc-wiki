@@ -421,7 +421,7 @@ shrink: method.R
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Decorators">Decorators<a class="anchor-link" href="#Decorators">&#182;</a></h2><p>The word "decorator" is borrowed from the term "decorator pattern" in object-oriented programming (a design pattern that allows behavior to be added to an individual object without affecting the behavior of other objects from the same class). A DSC decorator, when applied, will modify behavior of modules specified without impacting other modules in the same syntax block. Available decorators are:</p>
 <ul>
-<li>@<module></li>
+<li>@ &lt; module &gt;</li>
 <li>@ALIAS</li>
 <li>@FILTER</li>
 <li>@CONF</li>
@@ -467,10 +467,10 @@ shrink: method.R
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Decorator-ALIAS">Decorator ALIAS<a class="anchor-link" href="#Decorator-ALIAS">&#182;</a></h3><p><code>@ALIAS</code> is used to adjust the way inputs and parameters are passed to modules. DSC module parameter are of "simple" types (single elements or an array of single elements). In practice parameters specification may get complicated. <code>@ALIAS</code> can be used to compose a commonly used parameter input theme: all parameters are nested inside a "key-value" system.</p>
 <p>For example an R script <code>method.R</code> accepts one "List" variable <code>args</code> that contains <code>var_a</code> and <code>var_b</code>:</p>
-
-<pre><code>f1 = function(x) { ... }
-f2 = function(x) { ... }
-result = f1(args$var_a) / f2(args$var_b)</code></pre>
+<div class="highlight"><pre><span></span>f1 <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="p">{</span> <span class="kc">...</span> <span class="p">}</span>
+f2 <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="p">{</span> <span class="kc">...</span> <span class="p">}</span>
+result <span class="o">=</span> f1<span class="p">(</span><span class="kp">args</span><span class="o">$</span>var_a<span class="p">)</span> <span class="o">/</span> f2<span class="p">(</span><span class="kp">args</span><span class="o">$</span>var_b<span class="p">)</span>
+</pre></div>
 <p>Then instead of modifying <code>method.R</code> to take "simple" parameters, we can use <code>@ALIAS</code>,</p>
 
 <pre><code>method: method.R

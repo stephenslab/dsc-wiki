@@ -33,3 +33,4 @@ homepage_label: "Home"
 add_commit_info: False
 report_style: False
 password_file: .passwd
+auto_highlight: True
