@@ -392,22 +392,26 @@ pipeline variable <code>$est_mean</code> to the value of the script variable
 <code>y</code>.</p>
 </li>
 </ul>
-<p><strong>Note:</strong> Although the R code in <code>normal</code>,<code>t</code>,<code>median</code> and <code>mean</code> all
-use a script variable <code>x</code>, these variables are logically distinct, and
-we must use a pipeline variable (here <code>$data</code>) to pass the information
-on <code>x</code> from one script to another. Information can flow from one
-module to another only through pipeline variables.</p>
-<h3 id="Two-score-modules">Two <code>score</code> modules<a class="anchor-link" href="#Two-score-modules">&#182;</a></h3><p>Finally we create two <code>score</code> modules, one based on squared error (<code>sq_err</code>) and one based on absolute error (<code>abs_err</code>):</p>
+<p><strong>Note:</strong> Although the R code in the <code>normal</code>,<code>t</code>,<code>median</code> and <code>mean</code>
+modules all use a script variable <code>x</code>, these variables are distinct,
+and we must use a pipeline variable (here <code>$data</code>) to pass the
+information on <code>x</code> from one script to another. Information can flow
+from one module to another only through pipeline variables.</p>
+<h3 id="The-two-score-modules">The two <code>score</code> modules<a class="anchor-link" href="#The-two-score-modules">&#182;</a></h3><p>Finally, we create two <code>score</code> modules that measure error in the
+estimate, one based on squared differences (<code>sq_err</code>) and another
+based on absolute differences (<code>abs_err</code>):</p>
 
-<pre><code>sq_err: R( e = (a-b)^2 )
-  a: $est_mean
-  b: $true_mean
+<pre><code>sq_err: R(e &lt;- (x - y)^2)
+  x: $est_mean
+  y: $true_mean
   $error: e
 
-abs_err: R( e = abs(a-b) )
-  a: $est_mean
-  b: $true_mean
+abs_err: R(e &lt;- abs(x - y))
+  x: $est_mean
+  y: $true_mean
   $error: e</code></pre>
+<p>The inputs to both modules are <code>$est_mean</code> and <code>$true_mean</code>, and the
+output is <code>$error</code>.</p>
 <h2 id="Defining-groups-and-pipelines">Defining groups and pipelines<a class="anchor-link" href="#Defining-groups-and-pipelines">&#182;</a></h2><p>The final stage is to tell DSC how to combine these
 six modules into pipelines. We do this by
 first defining the "groups" of similar modules, and then

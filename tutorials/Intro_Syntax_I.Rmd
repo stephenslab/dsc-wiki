@@ -183,27 +183,33 @@ inputs in addition to outputs:
   pipeline variable `$est_mean` to the value of the script variable
   `y`.
 
-**Note:** Although the R code in `normal`,`t`,`median` and `mean` all
-use a script variable `x`, these variables are logically distinct, and
-we must use a pipeline variable (here `$data`) to pass the information
-on `x` from one script to another. Information can flow from one
-module to another only through pipeline variables.
+**Note:** Although the R code in the `normal`,`t`,`median` and `mean`
+modules all use a script variable `x`, these variables are distinct,
+and we must use a pipeline variable (here `$data`) to pass the
+information on `x` from one script to another. Information can flow
+from one module to another only through pipeline variables.
 
-### Two `score` modules
+### The two `score` modules
 
-Finally we create two `score` modules, one based on squared error (`sq_err`) and one based on absolute error (`abs_err`):
+Finally, we create two `score` modules that measure error in the
+estimate, one based on squared differences (`sq_err`) and another
+based on absolute differences (`abs_err`):
+
 ```
-sq_err: R( e = (a-b)^2 )
-  a: $est_mean
-  b: $true_mean
+sq_err: R(e <- (x - y)^2)
+  x: $est_mean
+  y: $true_mean
   $error: e
  
-abs_err: R( e = abs(a-b) )
-  a: $est_mean
-  b: $true_mean
+abs_err: R(e <- abs(x - y))
+  x: $est_mean
+  y: $true_mean
   $error: e 
 ```
-  
+
+The inputs to both modules are `$est_mean` and `$true_mean`, and the
+output is `$error`.
+
 ## Defining groups and pipelines
 
 The final stage is to tell DSC how to combine these
