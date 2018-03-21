@@ -341,7 +341,7 @@
 }), hljs.registerLanguage("yaml", function(e) {
     var n = "true false yes no null",
         t = "^[ \\-]*",
-        r = "[a-zA-Z_$@*][\\w\\-\\,\\s\\(\\)]*",
+        r = "[a-zA-Z\\$@\\*\\(][\\w\\-\\,\\s\\(\\)]*",
         a = {
             cN: "attr",
             v: [{

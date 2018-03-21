@@ -21,7 +21,7 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
-      href="site_libs/highlightjs/jnbinder.min.css"
+      href="site_libs/highlightjs/null.min.css"
       type="text/css" />
 
 <script src="site_libs/highlightjs/highlight.dsc.js"></script>
