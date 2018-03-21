@@ -212,36 +212,57 @@ output is `$error`.
 
 ## Defining groups and pipelines
 
-The final stage is to tell DSC how to combine these
-six modules into pipelines. We do this by
-first defining the "groups" of similar modules, and then
-defining pipelines in terms of these groups. 
+So far, we have defined the modules—that is, the individual
+computational steps of the DSC experiment—but we have not yet
+described how these modules relate to each other to compose the 
+pipelines. The `DSC` block in the DSC file defines the relationships
+between the modules—the key components of the `DSC` block are the
+`define` and `run` statements.
 
 ```
 DSC:
-    define:
-      simulate: normal, t
-      analyze: mean, median
-      score: abs_err, sq_err
-    run: simulate * analyze * score
-    output: dsc_result
+  define:
+    simulate: normal, t
+    analyze: mean, median
+    score: abs_err, sq_err
+  run: simulate * analyze * score
 ```
 
-Here:
+This code does the following:
 
-- `DSC` is a keyword to indicate that here we are defining groups and pipelines (not a module definition).
-- `define` is a keyword to indicate we are defining groups.
-(here `simulate`, `analyze` and `score`).
-- `run` is a keyword to indicate that we are defining the pipelines to be run. The `A * B` notation means to create all possible sequences of modules from groups `A` and `B`. That is, all sequences of the form `a`-`b` where `a` is a module in group `A` and `b` is a module in a group `B`. So here
-`simulate * analyze * score` generates all pipelines that consist of first a module from the `simulate` group (`normal` or `t`), then a module from `analyze` (`mean` or `median`) and then a module from the `score` group (`sq_err` or `abs_err`).
-- `output` tells DSC where to save results.
++ `DSC` is a keyword to indicate that here we are defining the
+  module groups and pipelines (that is, we are not defining a module).
 
++ `define` is a keyword to indicate we are defining module groups.
 
-<!----
-You can think of a pipeline variable
-as a variable whose value may change as a pipeline is run. For example, in a pipeline `a-b-c`, with modules `a`, `b` and `c`, 
-if module `a` outputs a pipeline variable `$data`, and
-then module `b` outputs `$data` with a new value,
-then if module `c` inputs `$data` its value
-will be the one output by `b` and not the one output by `a`. 
----->
++ We define three module groups: `simulate`, `analyze` and `score`.
+
++ The defining characteristic of module groups is that they should
+  have a similar function (more precisely, similar 
+
++ `run` is a keyword to indicate that we are defining the
+  computational pipelines to be executed.
+
++ The `A * B` notation asks to generate all possible sequences of
+   modules from groups `A` and `B`; that is, all sequences of the form
+   (`a`,`b`) where `a` is a module in group `A` and `b` is a module in
+   a group `B`. So here `simulate * analyze * score` generates all
+   pipelines that consist of first a module from the `simulate` group
+   (`normal` or `t`), a second module from `analyze` (`mean` or
+   `median`) and then a module from the `score` group (`sq_err` or
+   `abs_err`).
+
+## Recap
+
+*Add a summary of the second tutorial here.*
+
+## Next steps
+
+In the [third introductory tutorial](Intro_Syntax_II.html), we will...
+
+<!-- You can think of a pipeline variable as a variable whose value
+may change as a pipeline is run. For example, in a pipeline `a-b-c`,
+with modules `a`, `b` and `c`, if module `a` outputs a pipeline
+variable `$data`, and then module `b` outputs `$data` with a new
+value, then if module `c` inputs `$data` its value will be the one
+output by `b` and not the one output by `a`. -->
