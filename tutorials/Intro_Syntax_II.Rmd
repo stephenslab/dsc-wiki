@@ -53,6 +53,7 @@ when querying the results of a dsc we will be able to subset results on the valu
 refer to these two modules (this is just a convenient shorthand to help
 our explanation, not a part of DSC syntax). Both modules take the same kind of input (no input) and produce the same type of output (pipeline variables `$data` and `$true_mean`).--->
 
+*NOTE:* We need to explain **order of evaluation** here.
 
 ### Example 2: multiple parameters
 

@@ -284,7 +284,7 @@ when querying the results of a dsc we will be able to subset results on the valu
 refer to these two modules (this is just a convenient shorthand to help
 our explanation, not a part of DSC syntax). Both modules take the same kind of input (no input) and produce the same type of output (pipeline variables `$data` and `$true_mean`).--->
 
-
+<p><em>NOTE:</em> We need to explain <strong>order of evaluation</strong> here.</p>
 <h3 id="Example-2:-multiple-parameters">Example 2: multiple parameters<a class="anchor-link" href="#Example-2:-multiple-parameters">&#182;</a></h3><p>If you provide more than one value for multiple parameters, DSC considers all combinations. For example:</p>
 
 <pre><code>t: R( x = rt(n, df) )

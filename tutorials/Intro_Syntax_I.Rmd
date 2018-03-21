@@ -1,129 +1,193 @@
 ---
-title: "dsc_intro.rmd"
-author: "Matthew Stephens"
-date: "2/26/2018"
+title: "Introduction to DSC (Part II)"
+author: "Matthew Stephens, Gao Wang and Peter Carbonetto"
+date: "March 21, 2018"
 output: html_document
 ---
 
 # Introduction to DSC (Part II)
 
-This is a continuation of the [Introduction to DSC (Part I)](First_Course.html). Here we use the example from that introduction to
-illustrate three key concepts of DSC: "modules", "groups" and "pipeline variables". More advanced concepts will be introduced in [Part III](). 
+This is a continuation of the [Introduction to DSC (Part
+I)](First_Course.html). Here we use the same example from the first
+part to illustrate three key concepts of DSC: *modules*, *groups*
+and *pipeline variables*. More advanced concepts will be introduced
+in [Part III]().
 
-Material used in this example are in [the DSC vignettes repo](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location).
+Materials used in this tutorial can be found in the [DSC vignettes
+repository](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location).
 
+## Pipeline variables
 
-## Module input/output; pipeline variables
+In DSC, all information is passed from one module to another through
+*pipeline variables*. All pipeline variables are indicated with a `$`
+as the first character, as in `$data` or `$mean_test_error`.
 
-In DSC, information is passed from module to module
-through "pipeline variables", which are indicated by using a name that begins with `$` (for example `$data`). 
-Under the hood DSC keeps track of pipeline variable values by saving
-them in files. Specifically, when a module outputs a pipeline variable, its value is saved in a file; and when a module inputs a pipeline variable its value is read from a file. The values of pipeline variables can also be retrieved from these files after the DSC is run. 
+Under the hood, when a module outputs a pipeline variable, the value
+of this variable is saved to a file; and when a pipeline variable is
+provided as input to a module, the value of this variable is read from
+a file. You will never need to access these files directly; DSC
+provides a user interface that allows you to access (*i.e.*, query)
+the pipeline variables without having to know which files they come
+from, or how the pipeline variables are stored in these files. We have
+given an example of the user interface in the [previous
+tutorial](Intro_DSC.html).
 
-### Planning a DSC file
+## Planning a DSC file
 
-DSC is intended to help make benchmarks easier to read, maintain and extend. To achieve this it will be helpful
-to start by doing some planning before writing a DSC file.
+The main aim of DSC is to make your benchmark easier to read, easier
+to maintain, and easier to extend. To achieve these aims, we recommend
+that you to start by planning out your DSC project.
 
-We suggesting starting the plan by identifying the *types of module* and the *pipeline variables* (i.e. the quantities being passed from module to module).
-Pipeline variables should be given an informative name which must begin with a `$`. It may also be helpful to give names to the types of module.
-(Note: names in DSC cannot have `.` character, which is reserved for another use.)
+We suggesting starting the plan by identifying the *module types* (the
+key computation steps in your benchmark) and the *pipeline variables*
+(the quantities being passed from module to another). All pipeline
+variables should be given informative names (which must begin with a
+`$`). It is also helpful to give the modules informative names.
+(*Note:* unlike some other programming languages, such as R, names in
+DSC cannot have a period, which is reserved for another use.)
 
-Recall that our example benchmark compares methods for estimating a population mean from a simulated sample, and follows the simple `simulate`-`analyze`-`score` design.
-There are three different types of module:
+In our working example, recall that we are comparing methods for
+estimating a population mean from a simulated data sample. This
+example follows the **simulate-analyze-score** design pattern, meaning
+that the benchmark can be naturally decomposed in three types of
+module:
 
-+ a `simulate` module outputs a vector of simulated data (`$data`),  and the value of the population mean used to simulate it (`$true_mean`). 
-+ an `analyze` module inputs `$data` and outputs an estimate (`$est_mean`) of the population mean.
-+ a `score` module inputs `$est_mean` and `$true_mean` and output a measure of the error (`$error`).
++ A `simulate` module that generates a vector of simulated data
+(`$data`), and the population mean setting used to simulate these data
+(`$true_mean`).
 
-Our DSC therefore has four pipeline variables: `$data`,`$true_mean`,`$est_mean` and `$error`. 
++ An `analyze` module that accepts `$data` as input, and outputs an
+estimate of the population mean (`$est_mean`).
 
-This information is summarized in comments at the top of the DSC file (the `#` character indicates a comment in a DSC file; anything after a `#` is ignored by DSC.)
++ A `score` module that accepts inputs `$est_mean` and `$true_mean`
+and outputs an error measure (`$error`).
+
+Therefore, our DSC has four pipeline variables:
+`$data`,`$true_mean`,`$est_mean` and `$error`.
+
+We have summarized this information in the comments at the top of the
+DSC file (the `#` character indicates a comment in a DSC
+file—anything after a `#` is ignored by DSC):
+
 ```
-# Pipeline variables
-#
-# $data: vector of simulated data
-# $true_mean: scalar value of the population mean used to simulate $data 
-# $est_mean:  scalar estimated value of the population mean
-# $error: scalar measure of the accuracy of the estimate
-#
-#
-# Module types
-#
-# simulate: . -> $data, $true_mean
-# analyze: $data -> $est_mean
-# score: $est_mean, $true_mean -> $error
+# PIPELINE VARIABLES
+# $data       simulated data (vector)
+# $true_mean  population mean used to simulate $data (scalar)
+# $est_mean   population mean estimate (scalar)
+# $error      error in the estimate (scalar)
+# 
+# MODULE TYPES
+# name     inputs                outputs
+# ----     ------                -------
+# simulate none                  $data, $true_mean
+# analyze  $data                 $est_mean
+# score:   $est_mean, $true_mean $error
 ```
 
+## A couple important notes about pipeline variables
 
-### Notes on pipeline variables
+1. The pipeline variables outputted by a module should be exactly the
+parts of the module output that you want stored for future use. For
+example, `$error` is here considered a pipeline variable since we
+would like to use this quantity to study the results of the
+experiment.
 
-1. The pipeline variables output by a module are exactly the parts of the module output that are saved (in a file) for future use. So `$error` is here considered a pipeline variable because we want it saved at the end of the pipeline. 
+2. The pipeline variables are the only way that modules can
+communicate with one another. So if a module requires access to a
+piece of information generated by a previous module, then this must be
+a pipeline variable. For example, a `score` module naturally requires
+access to the true mean used to generate the data, so here this is
+outputted as a pipeline variable from a `simulate` module.
 
-2. The pipeline variables are the only way that modules can communicate with one another. So if a module requires access to a piece of information generated by a previous module then this must be a pipeline variable. For example, a `score` module  naturally requires access to the true mean used to generate the data, so here this is output, as a pipeline variable, from a `simulate` module. 
+## Defining modules in DSC file
 
-
-
-## Specifying modules in DSC file
-
-At its simplest, a DSC module definition 
-consists of a name,  a script (code)
-implementing the module, and details of how pipeline variables are to be
-passed in and out of the script.
+At its simplest, a DSC module definition consists of a name, a script
+(code) implementing the module, and details of how pipeline variables
+are to be passed in and out of the script.
 
 Here we illustrate the syntax by explaining each module in our example.
 
 ### The `normal` module
 
 The first module defined in the DSC file is the `normal` module:
+
 ```
-normal: R( x = rnorm(100,0,1) )
+normal: R(x <- rnorm(n = 100,mean = 0,sd = 1))
   $data: x
   $true_mean: 0
 ```
 
-The syntax tells DSC three things:
+(Note that this code is simplified slightly from the previous
+tutorial, but it achieves the same result.)
 
-- a name for the module (`normal`) 
-- an R script containing the code for the module. Here `R()` tells DSC that this code is an R script. For longer scripts this would be replaced with a filename of the file containing the script. We refer to variables in scripts like this as "script variables", so here `x` is a script variable. 
-- how to determine the values of the pipeline variables `$data` and `$true_mean` after running the script. Here we want `$data` to take the value of the script variable `x`, and `$true_mean` is 0.
+This code tells DSC three things:
 
+1. The name of the module is "normal".
+
+2. The R script implementing the module is a single line of code:
+   `x <- rnorm(n,mean = mu,sd = 1)`. Here, `R()` tells DSC that this
+   code should be parsed and evaluated in R. For longer code, this
+   should be replaced with a name of a file containing the R
+   code. Any variables defined inside a script are called "script
+   variables"; in this module, there one script variable is defined,
+   `x`.
+
+3. After running the script, the pipeline variable `$data` is
+   determined by the value of script variable `x`, and the pipeline
+   variable `$true_mean` is set to 0.
 
 ### The `t` module
 
-The `t` module is similar to the `normal` module, but
- generates 100 observations from a $t$ distribution with mean 3 and degrees of freedom 2.
-Here is the specification:
+The `t` module has the same outputs as the `normal` module, but
+generates `$data` from a *t* distribution with a mean of 3 and 2
+degrees of freedom.
+
+Here is the code (again, simplified slightly from the previous
+tutorial):
+
 ```
-t: R( 3 + rt(100, df=2) )
+t: R(x <- 3 + rt(n = 100,df = 2))
   $data: x
   $true_mean: 3
 ```
 
-### Two `analyze` modules
+### The two `analyze` modules
 
-Our example has two `analyze` modules: `mean` estimates the distribution mean by the sample mean; and `median` estimates the distribution mean by the sample median. 
+Our example has two `analyze` modules: the `mean` module estimates the
+population mean by the sample mean, and the `median` module estimates
+the population mean by the sample median.
+
 They are defined in the DSC file as follows:
+
 ```
-mean: R( y = mean(x) )
+mean: R(y <- mean(x))
   x: $data
   $est_mean: y
   
-median: R( y = median(x) )
+median: R(y <- median(x))
   x: $data
   $est_mean: y
 ```
 
-These modules differ from the `simulate` modules in that they have both input and output.
-Specifically:
+These modules differ from the `simulate` modules in that they have
+inputs in addition to outputs:
 
-- The syntax `x: $data` specifies a module input. It tells DSC that, before running the script, it should set the script variable `x` to the value of the pipeline variable `$data` (which means the value of `$data` output by the most recent previous module that output `$data`).
++ The line `x: $data` specifies a module input. It tells DSC that,
+  before running the R code, it should set the script variable `x` to
+  the value of the pipeline variable `$data` (the value of `$data` is
+  given by the most recently run module in the pipeline that output
+  `$data`).
 
-- The syntax `$est_mean: y` specifies a module output. It tells DSC that after running the script it should set the value of the pipeline variable `$est_mean` to the value of the script variable `y` (similar to the `simulate` modules)
++ The lines `$est_mean: y` specifies a module output. It tells DSC
+  that after running the script it should set the value of the
+  pipeline variable `$est_mean` to the value of the script variable
+  `y`.
 
-Note that although the scripts in `normal`,`t`,`median` and `mean` all use a script variable `x`, these variables are logically distinct, and we must use a pipeline variable
-(here `$data`) to pass the information on `x` from one script to another. Information can
-flow from one module to another only through pipeline variables.
+**Note:** Although the R code in `normal`,`t`,`median` and `mean` all
+use a script variable `x`, these variables are logically distinct, and
+we must use a pipeline variable (here `$data`) to pass the information
+on `x` from one script to another. Information can flow from one
+module to another only through pipeline variables.
 
 ### Two `score` modules
 
