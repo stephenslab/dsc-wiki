@@ -658,6 +658,17 @@ l: (raw('1', '2', '3'))</code></pre>
 k <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">)</span>
 l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&#39;1&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;2&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;3&#39;&quot;</span><span class="p">)</span>
 </pre></div>
+<p>Another example:</p>
+
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  mu: raw(0.0)</code></pre>
+<p>will result in</p>
+<div class="highlight"><pre><span></span>x <span class="o">&lt;-</span> rnorm<span class="p">(</span>n<span class="p">,</span>mean <span class="o">=</span> <span class="m">0.0</span><span class="p">,</span>sd <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</pre></div>
+<p>However replacing <code>raw(0.0)</code> with <code>0.0</code> it will result in</p>
+<div class="highlight"><pre><span></span>x <span class="o">&lt;-</span> rnorm<span class="p">(</span>n<span class="p">,</span>mean <span class="o">=</span> <span class="m">0</span><span class="p">,</span>sd <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</pre></div>
+<p>Caution that whatever goes into <code>raw()</code> will be treated as strings in the <code>condition</code> parameter of <a href="https://github.com/stephenslab/dsc/blob/master/dscrutils/man/dscquery.Rd"><code>dscrutils::dscquery</code></a>.</p>
 
 </div>
 </div>
