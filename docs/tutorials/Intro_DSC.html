@@ -249,7 +249,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC">Introduction to DSC<a class="anchor-link" href="#Introduction-to-DSC">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a very simple example. You are encouraged to <a href="../installation.html">install DSC</a> and try running the DSC example on your computer.</p>
+<h1 id="DSC-Essentials">DSC Essentials<a class="anchor-link" href="#DSC-Essentials">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a very simple example. You are encouraged to <a href="../installation.html">install DSC</a> and try running the DSC example on your computer.</p>
 
 </div>
 </div>
@@ -258,7 +258,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
+<h2 id="An-illustration:-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern<a class="anchor-link" href="#An-illustration:-the-simulate-analyze-score-design-pattern">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
 <ul>
 <li><p>Predict the missing entries of a matrix;</p>
 </li>
@@ -285,7 +285,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="DSC-modules,-groups,-and-pipelines">DSC modules, groups, and pipelines<a class="anchor-link" href="#DSC-modules,-groups,-and-pipelines">&#182;</a></h3><p>Typically we will want to try different ways of implementating steps 1–3; that is, different ways to simulate the data, different ways to analyze the data, and different ways to score how well a method performed.</p>
+<h2 id="The-DSC-building-blocks:-modules,-groups-and-pipelines">The DSC building blocks: modules, groups and pipelines<a class="anchor-link" href="#The-DSC-building-blocks:-modules,-groups-and-pipelines">&#182;</a></h2><p>Typically we will want to try different ways of implementating steps 1–3; that is, different ways to simulate the data, different ways to analyze the data, and different ways to score how well a method performed.</p>
 <p>In DSC, each different way of implementing a step is expressed as a "module", and then a "group of modules" defines the collection of alternative approaches.</p>
 <p>In our example, we define:</p>
 <ol>
@@ -306,7 +306,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Running-benchmarks-with-DSC">Running benchmarks with DSC<a class="anchor-link" href="#Running-benchmarks-with-DSC">&#182;</a></h3><p>These are the essential ingredients of a DSC benchmark:</p>
+<h2 id="Running-a-DSC-benchmark">Running a DSC benchmark<a class="anchor-link" href="#Running-a-DSC-benchmark">&#182;</a></h2><p>These are the essential ingredients of a DSC benchmark:</p>
 <ol>
 <li><p>Create a "DSC file" defining the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in the custom DSC syntax illustrated below (and explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
 </li>
@@ -324,11 +324,19 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>We now illustrate how DSC can be used to implement a simple benchmark.</p>
-<p>In this example, we have a very simple task: estimate the mean of a population given a random sample from the population.</p>
+<p>In this example, we have a very simple task: <em>estimate the mean of a population given a random sample from the population.</em></p>
 <p>We will compare two methods for estimating the population mean: the sample mean and the sample median.</p>
 <p>We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
 <p>And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
-<h3 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h3><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
 can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>.</p>
 <p>Here, we give only a high-level overview of the DSC file, <code>first_investigation.dsc</code>, deferring a more detailed explanation of the syntax to <a href="First_Course_Elaborated.html">Part II of the Introduction</a>. This is the DSC file:</p>
 
@@ -407,7 +415,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h3>
+<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -454,7 +462,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate using a different random number seed), with 2 threads:</p>
+<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers), with 2 threads:</p>
 
 </div>
 </div>
@@ -500,9 +508,9 @@ INFO: Elapsed time <span class="ansi-green-fg">6.781</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> will be automatically installed at this point.)</p>
+<p>(For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> should automatically installed at this point.)</p>
 <p>When run, DSC will create results files in the folder <code>first_investigation</code> (this is the default folder name, and can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
-<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code>first_investigation.html</code> in the working directory). This file allows you to conveniently browse the DSC file, executed pipelines, and the corresponding source code.</p>
+<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code>first_investigation.html</code>). This file allows you to conveniently browse the DSC file, the executed pipelines, and the corresponding source code.</p>
 
 </div>
 </div>
@@ -511,7 +519,7 @@ INFO: Elapsed time <span class="ansi-green-fg">6.781</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Query-and-visualize-results">Query and visualize results<a class="anchor-link" href="#Query-and-visualize-results">&#182;</a></h3><p>We can now read the results into R using the <code>dscquery</code> function from the <code>dscrutils</code> package. Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame in the R environment. In more complex examples, one might want to start by extracting subsets of results; type <code>help(dscquery)</code> in R for more information.</p>
+<h2 id="Query-the-results">Query the results<a class="anchor-link" href="#Query-the-results">&#182;</a></h2><p>We can now read the results into R using the <code>dscquery</code> function from the <code>dscrutils</code> package. Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code>help(dscquery)</code> in R for more information.</p>
 
 </div>
 </div>
@@ -665,7 +673,7 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we use the <code>ggplot2</code> package to create a plot summarizing the results with the squared-error metric:</p>
+<h2 id="Visualize-the-results">Visualize the results<a class="anchor-link" href="#Visualize-the-results">&#182;</a></h2><p>Next, we use the <code>ggplot2</code> package to create a plot summarizing the squared-error results:</p>
 
 </div>
 </div>
@@ -1181,7 +1189,7 @@ EAEikGsI/D+Z/tjvBauofwAAAABJRU5ErkJggg=="
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From this plot, we see that the median is substantially more accurate than the mean in the normal simulations, on average, and it yields only slightly worse accuracy in the normal simulations.</p>
+<p>Based on the results from the 10 replicates, we see that the median is substantially more accurate than the mean in the normal simulations, on average, and it yields only slightly worse accuracy in the normal simulations.</p>
 
 </div>
 </div>
