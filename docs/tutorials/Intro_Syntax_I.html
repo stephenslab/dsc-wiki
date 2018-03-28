@@ -249,11 +249,11 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC-(Part-II)">Introduction to DSC (Part II)<a class="anchor-link" href="#Introduction-to-DSC-(Part-II)">&#182;</a></h1><p>This is a continuation of the <a href="First_Course.html">Introduction to DSC (Part
-I)</a>. Here we use the same example from the first
-part to illustrate three key concepts of DSC: <em>modules</em>, <em>groups</em>
-and <em>pipeline variables</em>. More advanced concepts will be introduced
-in <a href="">Part III</a>.</p>
+<h1 id="Introduction-to-DSC-(Part-II)">Introduction to DSC (Part II)<a class="anchor-link" href="#Introduction-to-DSC-(Part-II)">&#182;</a></h1><p>This is a continuation of the
+<a href="First_Course.html">Introduction to DSC (Part I)</a>. Here we revisit the
+same example from the first part to illustrate key concepts of DSC,
+including <em>modules</em>, <em>groups</em> and <em>pipeline variables</em>. More advanced
+concepts will be introduced in <a href="">Part III</a>.</p>
 <p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes
 repository</a>.</p>
 <h2 id="Pipeline-variables">Pipeline variables<a class="anchor-link" href="#Pipeline-variables">&#182;</a></h2><p>In DSC, all information is passed from one module to another through
@@ -264,25 +264,24 @@ of this variable is saved to a file; and when a pipeline variable is
 provided as input to a module, the value of this variable is read from
 a file. You will never need to access these files directly; DSC
 provides a user interface that allows you to access (<em>i.e.</em>, query)
-the pipeline variables without having to know which files they come
-from, or how the pipeline variables are stored in these files. We have
-given an example of the user interface in the <a href="Intro_DSC.html">previous
-tutorial</a>.</p>
-<h2 id="Planning-a-DSC-file">Planning a DSC file<a class="anchor-link" href="#Planning-a-DSC-file">&#182;</a></h2><p>The main aim of DSC is to make your benchmark easier to read, easier
-to maintain, and easier to extend. To achieve these aims, we recommend
-that you to start by planning out your DSC project.</p>
-<p>We suggesting starting the plan by identifying the <em>module types</em> (the
-key computation steps in your benchmark) and the <em>pipeline variables</em>
-(the quantities being passed from module to another). All pipeline
-variables should be given informative names (which must begin with a
-<code>$</code>). It is also helpful to give the modules informative names.
-(<em>Note:</em> unlike some other programming languages, such as R, names in
-DSC cannot have a period, which is reserved for another use.)</p>
-<p>In our working example, recall that we are comparing methods for
-estimating a population mean from a simulated data sample. This
-example follows the <strong>simulate-analyze-score</strong> design pattern, meaning
-that the benchmark can be naturally decomposed in three types of
-module:</p>
+the pipeline variables without having to know where or how they are
+stored. In the previous tutorial we illustrated how the pipeline
+variables can be queried in R.</p>
+<h2 id="Planning-a-DSC-file">Planning a DSC file<a class="anchor-link" href="#Planning-a-DSC-file">&#182;</a></h2><p>The main aim of DSC is to make your benchmark, or computational
+experiment, easier to read, easier to maintain, and easier to
+extend. To achieve these aims, we recommend that you to start by
+planning out your DSC project.</p>
+<p>We suggest starting the planning by identifying the <em>module types</em>
+(the key computational steps in your benchmark) and the <em>pipeline
+variables</em> (the quantities being fed from one step to another). All
+pipeline variables should be given informative names (which must begin
+with a <code>$</code>). It is also helpful to give the modules informative names.
+(<em>Note:</em> unlike other programming languages such as R, names in DSC
+cannot have a period.)</p>
+<p>In our working example, recall that we compared methods for estimating
+a population mean from a simulated data sample. This example follows
+the <strong>simulate-analyze-score</strong> design pattern, meaning that the
+benchmark can be naturally decomposed into three module types:</p>
 <ul>
 <li><p>A <code>simulate</code> module that generates a vector of simulated data
 (<code>$data</code>), and the population mean setting used to simulate these data
@@ -291,7 +290,7 @@ module:</p>
 <li><p>An <code>analyze</code> module that accepts <code>$data</code> as input, and outputs an
 estimate of the population mean (<code>$est_mean</code>).</p>
 </li>
-<li><p>A <code>score</code> module that accepts inputs <code>$est_mean</code> and <code>$true_mean</code>
+<li><p>A <code>score</code> module that accepts inputs <code>$est_mean</code> and <code>$true_mean</code>,
 and outputs an error measure (<code>$error</code>).</p>
 </li>
 </ul>
@@ -313,19 +312,21 @@ file—anything after a <code>#</code> is ignored by DSC):</p>
 # simulate none                  $data, $true_mean
 # analyze  $data                 $est_mean
 # score:   $est_mean, $true_mean $error</code></pre>
-<h2 id="A-couple-important-notes-about-pipeline-variables">A couple important notes about pipeline variables<a class="anchor-link" href="#A-couple-important-notes-about-pipeline-variables">&#182;</a></h2><ol>
+<h2 id="Two-important-notes-about-pipeline-variables">Two important notes about pipeline variables<a class="anchor-link" href="#Two-important-notes-about-pipeline-variables">&#182;</a></h2><ol>
 <li><p>The pipeline variables outputted by a module should be exactly the
 parts of the module output that you want stored for future use. For
 example, <code>$error</code> is here considered a pipeline variable since we
 would like to use this quantity to study the results of the
 experiment.</p>
 </li>
-<li><p>The pipeline variables are the only way that modules can
-communicate with one another. So if a module requires access to a
+<li><p><em>The pipeline variables are the only way that modules can
+communicate with one another.</em> So if a module requires access to a
 piece of information generated by a previous module, then this must be
 a pipeline variable. For example, a <code>score</code> module naturally requires
 access to the true mean used to generate the data, so here this is
-outputted as a pipeline variable from a <code>simulate</code> module.</p>
+outputted as a pipeline variable from a <code>simulate</code> module. In other
+words, <em>all information in a DSC program is local to each module
+unless it is defined as a pipeline variable with the <code>$</code> character.</em></p>
 </li>
 </ol>
 <h2 id="Defining-modules-in-DSC-file">Defining modules in DSC file<a class="anchor-link" href="#Defining-modules-in-DSC-file">&#182;</a></h2><p>At its simplest, a DSC module definition consists of a name, a script
