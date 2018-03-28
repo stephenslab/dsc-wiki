@@ -13,8 +13,10 @@ same example from the first part to illustrate key concepts of DSC,
 including *modules*, *groups* and *pipeline variables*. More advanced
 concepts will be introduced in [Part III]().
 
-Materials used in this tutorial can be found in the [DSC vignettes
-repository](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location).
+Materials used in this tutorial can be found in the
+[DSC vignettes repository](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location). As
+before, you may choose to run this example DSC program as you read
+through the tutorial.
 
 ## Pipeline variables
 
@@ -147,10 +149,11 @@ This code tells DSC three things:
 
 The `t` module has the same outputs as the `normal` module, but
 generates `$data` from a *t* distribution with a mean of 3 and 2
-degrees of freedom.
+degrees of freedom. After running the script, the pipeline variable
+$data is assigned the value of script variable `x`, and
+`$true_mean` is set to 0.
 
-Here is the code (again, simplified slightly from the previous
-tutorial):
+Here is the code:
 
 ```
 t: R(x <- 3 + rt(n = 100,df = 2))
@@ -179,22 +182,25 @@ median: R(y <- median(x))
 These modules differ from the `simulate` modules in that they have
 inputs in addition to outputs:
 
-+ The line `x: $data` specifies a module input. It tells DSC that,
-  before running the R code, it should set the script variable `x` to
-  the value of the pipeline variable `$data` (the value of `$data` is
-  given by the most recently run module in the pipeline that output
-  `$data`).
++ The line `x: $data` specifies a module input. It tells DSC that, at
+  the beginning of the R code, it should define a new script variable
+  `x`, and set the value of `x` to the value of the pipeline variable
+  `$data`. The value of `$data` is given by the most recently run
+  module in the pipeline that assigned a value to `$data`.
 
-+ The lines `$est_mean: y` specifies a module output. It tells DSC
++ The line `$est_mean: y` specifies a module output. It tells DSC
   that after running the script it should set the value of the
   pipeline variable `$est_mean` to the value of the script variable
   `y`.
 
-**Note:** Although the R code in the `normal`,`t`,`median` and `mean`
-modules all use a script variable `x`, these variables are distinct,
-and we must use a pipeline variable (here `$data`) to pass the
-information on `x` from one script to another. Information can flow
-from one module to another only through pipeline variables.
+**Important note:** Although the R code in the `normal`,`t`,`median`
+and `mean` modules all define a script variable `x`, these variables
+are distinct, and we must use a pipeline variable (here `$data`) to
+pass the information on `x` from one script to another.
+
+In summary, all script variables are local to each module, and
+information can flow from one module to another only through pipeline
+variables.
 
 ### The two `score` modules
 
@@ -217,14 +223,25 @@ abs_err: R(e <- abs(x - y))
 The inputs to both modules are `$est_mean` and `$true_mean`, and the
 output is `$error`.
 
+In each of these modules, there are three script variables:
+
+1. `x`, set to the current value of pipeline variable `$est_mean`.
+
+2. `y`, set to the current value of pipeline variable `$true_mean`.
+
+3. `e`, which is determined by the R code, and its value is assigned
+   to pipeline variable $error$.
+
+This completes the module definitions.
+
 ## Defining groups and pipelines
 
 So far, we have defined the modules—that is, the individual
 computational steps of the DSC experiment—but we have not yet
-described how these modules relate to each other to compose the 
-pipelines. The `DSC` block in the DSC file defines the relationships
-between the modules—the key components of the `DSC` block are the
-`define` and `run` statements.
+described how these modules relate to each other, and how they are
+used to build pipelines. This is the purpose of the `DSC` block in the
+DSC file; the key components of the `DSC` block are the `define` and
+`run` statements.
 
 ```
 DSC:
@@ -237,39 +254,66 @@ DSC:
 
 This code does the following:
 
-+ `DSC` is a keyword to indicate that here we are defining the
-  module groups and pipelines (that is, we are not defining a module).
+1. `DSC` is a special keyword indicating that we are defining the
+   module groups and pipelines (that is, we are not defining a module).
 
-+ `define` is a keyword to indicate we are defining module groups.
+2. `define` is another keyword indicatingthat we are defining module
+   groups.
 
-+ We define three module groups: `simulate`, `analyze` and `score`.
+3. We define three module groups: `simulate`, `analyze` and `score`.
+   The defining characteristic of module groups is that they should
+   have a similar function (and, ideally, the same inputs and outputs,
+   although this is not required).
 
-+ The defining characteristic of module groups is that they should
-  have a similar function (and, ideally, the same inputs and outputs).
-
-+ `run` is a keyword to indicate that we are defining the
-  computational pipelines to be executed.
+4. `run` is a keyword indicating that we are defining the
+   computational pipelines (sequences of modules) to be executed.
 
 + The `A * B` notation asks DSC to generate all possible sequences of
   modules from groups `A` and `B`; that is, all sequences of the form
-  (`a`,`b`) where `a` is a module in group `A` and `b` is a module in
-  a group `B`. So in this example `simulate * analyze * score`
-  generates all pipelines that consist of first a module from the
-  `simulate` group (`normal` or `t`), a second module from `analyze`
-  (`mean` or `median`) and then a module from the `score` group
+  (`a`, `b`) where `a` is a module in group `A` and `b` is a module in
+  a group `B`. So, in this example, `simulate * analyze * score`
+  generates all pipelines that consist of a module from the `simulate`
+  group (`normal` or `t`), followed by a module from the `analyze`
+  group (`mean` or `median`), and then a module from the `score` group
   (`sq_err` or `abs_err`). In this example, there are $2 \times 2
-  \times 2 = 8$ different module sequences.
+  \times 2 = 8$ different pipelines defined by this `run` statement.
+
+## Executing the DSC benchmark and inspecting the results
+
+*Add text here.*
+
+```
+rm -Rf first_investigation.html first_investigation.log first_investigation
+```
+
+*Add text here.*
+
+```
+dsc first_investigation_simpler.dsc --replicate 1 -c 2
+```
+
+*Add text here.*
+
+```
+library(dscrutils)
+dscout <- dscquery(dsc.outdir = "first_investigation",
+                   targets    = c("simulate","analyze","score.error"))
+```
+
+*Add text here.*
 
 ## Recap
 
 In this tutorial, we learned how the DSC file is used to define the
 key components of a DSC experiment:
 
-1. Module inputs, outputs and scripts;
+1. Module inputs and outputs (pipeline variables);
 
-2. Module groups; and
+2. Module scripts and script variables.
 
-3. Pipelines.
+3. Module groups; and
+
+3. Module sequences (pipelines).
 
 ## Next steps
 
