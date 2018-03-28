@@ -100,13 +100,19 @@ outputted as a pipeline variable from a `simulate` module. In other
 words, *all information in a DSC program is local o each module unless
 it is defined as a pipeline variable with the `$` character.*
 
-## Defining modules in DSC file
+## Defining modules in a DSC file
 
 At its simplest, a DSC module definition consists of a name, a script
 (code) implementing the module, and details of how pipeline variables
 are to be passed in and out of the script.
 
-Here we illustrate the syntax by explaining each module in our example.
+Here we illustrate the syntax by explaining each module in our
+example. To keep the presentation focused on the key concepts, we use
+a slightly simplified version of the
+[mean estimation example](Intro_DSC.html) that achieves the same
+result; see file `first_investigation_simpler.dsc` in the
+[DSC vignettes repository](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location)
+for the full example.
 
 ### The `normal` module
 
@@ -118,24 +124,24 @@ normal: R(x <- rnorm(n = 100,mean = 0,sd = 1))
   $true_mean: 0
 ```
 
-(Note that this code is simplified slightly from the previous
-tutorial, but it achieves the same result.)
+(Again, this code is simplified slightly from the previous tutorial,
+but it achieves the same result.)
 
 This code tells DSC three things:
 
 1. The name of the module is "normal".
 
-2. The R script implementing the module is a single line of code:
-   `x <- rnorm(n,mean = mu,sd = 1)`. Here, `R()` tells DSC that this
-   code should be parsed and evaluated in R. For longer code, this
-   should be replaced with a name of a file containing the R
-   code. Any variables defined inside a script are called "script
-   variables"; in this module, there one script variable is defined,
+2. The R script implementing the module is a single line of code: `x
+   <- rnorm(n,mean = mu,sd = 1)`. Here, `R()` tells DSC that this code
+   should be parsed and evaluated as an R script. For longer code,
+   this should be replaced with a name of a file containing the R
+   code. Any global variables defined inside a script are called
+   "script variables"; in this module, one script variable is defined,
    `x`.
 
 3. After running the script, the pipeline variable `$data` is
-   determined by the value of script variable `x`, and the pipeline
-   variable `$true_mean` is set to 0.
+   determined by the value of script variable `x`. A second
+   pipeline variable, `$true_mean`, is set to 0.
 
 ### The `t` module
 
