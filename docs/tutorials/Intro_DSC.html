@@ -1403,10 +1403,11 @@ Reading DSC outputs:
 
 <pre><code># Estimate the population mean by computing the Winsorized mean; the
 # mean is computed after trimming the top and bottom 10% quantiles.
-winsor: R(y &lt;- psych::winsor.mean(x,trim = 0.1,na.rm = TRUE))
+winsor: R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))
+  trim: 0.1
   x: $data
   $est_mean: y</code></pre>
-<p>This module looks very similar to the <code>mean</code> and <code>t</code> modules, and only the code inside the <code>R()</code> is different.</p>
+<p>This module is similar in structure to the <code>mean</code> and <code>t</code> modules; the main difference is the R code inside the <code>R()</code>.</p>
 <p>To include the Winsorized mean method in our benchmark, we also need to add the winsor module to the "analyze" module group:</p>
 
 <pre><code>DSC:
@@ -1423,7 +1424,7 @@ winsor: R(y &lt;- psych::winsor.mean(x,trim = 0.1,na.rm = TRUE))
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">add_winsor_method1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">20</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
@@ -1446,10 +1447,10 @@ winsor: R(y &lt;- psych::winsor.mean(x,trim = 0.1,na.rm = TRUE))
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">add_winsor_method1.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 21/21 [00:31&lt;00:00,  1.94s/it]
+DSC: 100%|██████████████████████████████████████| 21/21 [00:29&lt;00:00,  1.97s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">33.463</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">31.912</span> seconds.
 </pre>
 </div>
 </div>
@@ -1470,7 +1471,7 @@ INFO: Elapsed time <span class="ansi-green-fg">33.463</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dscout3</span> <span class="o">&lt;-</span> <span class="n">dscquery</span><span class="p">(</span><span class="n">dsc</span><span class="o">.</span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;first_investigation&quot;</span><span class="p">,</span>
@@ -1492,7 +1493,7 @@ INFO: Elapsed time <span class="ansi-green-fg">33.463</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//Rtmpk6TcMn/file152a932ec85ca.csv -f --target simulate analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpiqKwJK/file1eb11ab17408.csv -f --target simulate analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
@@ -1508,14 +1509,14 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As before, we can easily create a visual summary of the squared-error results using <code>ggplot</code>:</p>
+<p>As before, we can easily create a visual summary of the squared-error results:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">create</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">dscout3</span><span class="p">)</span>
@@ -2062,15 +2063,19 @@ QmCC"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we presented a very simple example of a DSC benchmark. Despite its simplicity, we illustrated some of the essential features of DSC:</p>
+<h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we presented a very simple example of a DSC benchmark. Despite its simplicity, this example was useful for illustrating some of the essential features of DSC:</p>
 <ol>
-<li><p>A DSC experiment can be decomposed into "modules";</p>
+<li><p>A DSC experiment can be decomposed into <em>modules</em>;</p>
 </li>
-<li><p>The modules can be conveniently grouped, combined and replicated;</p>
+<li><p>The modules can be organized into <em>module groups</em>;</p>
 </li>
-<li><p>The results of a DSC experiment can be quickly loaded into a data frame in R, and they can be explored using standard R tools or R packages such as ggplot2.</p>
+<li><p>The modules and module groups and combined in sequence, forming <em>pipelines</em>;</p>
 </li>
-<li><p>When updating or extending a benchmark, DSC generates the results <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamically</a>—DSC determines the minimum computational effort needed to update the results.</p>
+<li><p>Pipelines can easily be replicated with different pseudorandom number sequences;</p>
+</li>
+<li><p>The results of a DSC experiment can be conveniently loaded into a data frame in R, and the results can be examined using standard tools and packages in R.</p>
+</li>
+<li><p>When updating or extending a benchmark, DSC generates the results <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamically</a>—that is, DSC determines the minimum computational effort needed to update or extend the results.</p>
 </li>
 </ol>
 
