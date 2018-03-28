@@ -308,13 +308,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Running-a-DSC-benchmark">Running a DSC benchmark<a class="anchor-link" href="#Running-a-DSC-benchmark">&#182;</a></h2><p>These are the essential ingredients of a DSC benchmark:</p>
+<h2 id="Running-a-DSC-benchmark">Running a DSC benchmark<a class="anchor-link" href="#Running-a-DSC-benchmark">&#182;</a></h2><p>There are three essential ingredients to a DSC benchmark:</p>
 <ol>
-<li><p>Create a "DSC file" defining the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in the custom DSC syntax illustrated below (and explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
+<li><p>A "DSC file", which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="First_Course_Elaborated.html">Part II of the Introduction</a>).</p>
 </li>
-<li><p>Call the <code>dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
+<li><p>A call to the <code>dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
 </li>
-<li><p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into an R data frame. We also provide a command-line tool, <code>dsc-query</code>, which is demonstrated in other tutorials.</p>
+<li><p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into a data frame in R. We also provide a command-line tool, <code>dsc-query</code>, which is demonstrated in other tutorials.</p>
 </li>
 </ol>
 
@@ -326,10 +326,10 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>We now illustrate how DSC can be used to implement a simple benchmark.</p>
-<p>In this example, we have a very simple task: <em>estimate the mean of a population given a random sample from the population.</em></p>
-<p>We will compare two methods for estimating the population mean: the sample mean and the sample median.</p>
-<p>We will simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
-<p>And we will compute accuracy using two different metrics: squared error, and absolute error.</p>
+<p>In this example, we have a simple task: <em>estimate the mean of a population given a random sample from the population.</em></p>
+<p>We compare two methods for estimating the population mean: the sample mean and the sample median.</p>
+<p>We simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
+<p>And we compute accuracy of the estimatesusing two different metrics: squared error, and absolute error.</p>
 
 </div>
 </div>
@@ -376,7 +376,7 @@ mean: R(y &lt;- mean(x))
 # provided sample.
 median: R(y &lt;- median(x))
   x: $data
-  $est_mean: y  
+  $est_mean: y
 
 # Compute the error in the estimated mean by taking the squared
 # difference between the true mean and the estimated mean.
@@ -393,22 +393,22 @@ abs_err: R(e &lt;- abs(x - y))
   $error: e
 
 DSC:
-    define:
-      simulate: normal, t
-      analyze: mean, median
-      score: abs_err, sq_err
-    run: simulate * analyze * score</code></pre>
+  define:
+    simulate: normal, t
+    analyze: mean, median
+    score: abs_err, sq_err
+  run: simulate * analyze * score</code></pre>
 <p>This DSC file defines six modules:</p>
 <ul>
-<li><p>two <code>simulate</code> modules  (<code>normal</code>, <code>t</code>),</p>
+<li><p>two <code>simulate</code> modules  (<code>normal</code> and <code>t</code>),</p>
 </li>
-<li><p>two <code>analyze</code> modules (<code>mean</code>, <code>median</code>), and</p>
+<li><p>two <code>analyze</code> modules (<code>mean</code> and <code>median</code>), and</p>
 </li>
-<li><p>two <code>score</code> modules (<code>sq_err</code>,<code>abs_err</code>).</p>
+<li><p>two <code>score</code> modules (<code>sq_err</code> and <code>abs_err</code>).</p>
 </li>
 </ul>
-<p>Each module in this example involves only one line of R code (usually the modules will be implemented in many lines of code, in which case the code can live in separate files).</p>
-<p>The DSC file then defines the module groups (<code>simulate</code>,<code>analyze</code> and <code>score</code>) and the pipelines to run (<code>simulate * analyze * score</code> indicates that all combinations of the <code>simulate</code>, <code>analyze</code> and <code>score</code> modules should be run in sequence).</p>
+<p>Each module in this example involves only one line of R code (for more complex modules, the code can live in separate files).</p>
+<p>The DSC file then defines the module groups (<code>simulate</code>, <code>analyze</code> and <code>score</code>) and the pipelines to run; <code>simulate * analyze * score</code> indicates that all sequences of the <code>simulate</code>, <code>analyze</code> and <code>score</code> modules should be run.</p>
 
 </div>
 </div>
@@ -425,14 +425,14 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To run DSC, we first change directory to the location of the <code>first_investigation.dsc</code> file.</p>
+<p>To run DSC, we first change the working directory to the location of the <code>first_investigation.dsc</code> file.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">git</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
@@ -446,18 +446,6 @@ DSC:
 <div class="output_wrapper">
 <div class="output">
 
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Users/pcarbo/anaconda3/lib/python3.6/site-packages/jupyter_client/connect.py:157: RuntimeWarning: Failed to set sticky bit on &#39;/var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T&#39;: [Errno 1] Operation not permitted: &#39;/var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T&#39;
-  RuntimeWarning,
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -478,14 +466,14 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If there are any previously generated results, let's remove them before continuing.</p>
+<p>If there are any previously generated results, let's remove them before moving on.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">Rf</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">html</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">log</span> <span class="n">first_investigation</span>
@@ -500,14 +488,14 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers), with 2 threads:</p>
+<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers to simulate the data), with 2 threads:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
@@ -530,10 +518,10 @@ DSC:
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:26&lt;00:00,  1.26s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:25&lt;00:00,  1.24s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">29.183</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">27.428</span> seconds.
 </pre>
 </div>
 </div>
@@ -546,8 +534,8 @@ INFO: Elapsed time <span class="ansi-green-fg">29.183</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(For first time users of DSC with <code>R</code>, a companion <code>R</code> package <code>dscrutils</code> should automatically installed at this point.)</p>
-<p>When run, DSC will create results files in the folder <code>first_investigation</code> (this is the default folder name, and can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
+<p>(For first time users of DSC, a companion <code>R</code> package <code>dscrutils</code> should automatically installed at this point.)</p>
+<p>When run, DSC will create results files in the folder <code>first_investigation</code> (this is the default folder name, and it can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
 <p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code>first_investigation.html</code>). This file allows you to conveniently browse the DSC file, the executed pipelines, and the corresponding source code.</p>
 
 </div>
@@ -557,18 +545,39 @@ INFO: Elapsed time <span class="ansi-green-fg">29.183</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Query-the-results">Query the results<a class="anchor-link" href="#Query-the-results">&#182;</a></h2><p>We can now read the results into R using the <code>dscquery</code> function from the <code>dscrutils</code> package. Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code>help(dscquery)</code> in R for more information.</p>
+<h2 id="Query-the-results">Query the results<a class="anchor-link" href="#Query-the-results">&#182;</a></h2><p>Next, we will read the results into R using the <code>dscquery</code> function from the <code>dscrutils</code> package. To do so, change the working directory in R to the location of the <code>first_investigation.dsc</code> file.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s2">&quot;~/git/dsc/vignettes/one_sample_location&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame interactively in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code>help(dscquery)</code> in R for more information.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span>
-<span class="n">setwd</span><span class="p">(</span><span class="s2">&quot;~/git/dsc/vignettes/one_sample_location&quot;</span><span class="p">)</span>
 <span class="n">dscout</span> <span class="o">&lt;-</span> <span class="n">dscquery</span><span class="p">(</span><span class="n">dsc</span><span class="o">.</span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;first_investigation&quot;</span><span class="p">,</span>
                    <span class="n">targets</span>    <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;simulate&quot;</span><span class="p">,</span><span class="s2">&quot;analyze&quot;</span><span class="p">,</span><span class="s2">&quot;score.error&quot;</span><span class="p">))</span>
 </pre></div>
@@ -588,7 +597,7 @@ INFO: Elapsed time <span class="ansi-green-fg">29.183</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//Rtmpk6TcMn/file152a976c00441.csv -f --target simulate analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpiqKwJK/file1eb1225c20e7.csv -f --target simulate analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
@@ -602,7 +611,7 @@ Reading DSC outputs:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span>
@@ -648,7 +657,7 @@ Reading DSC outputs:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Once the results are in an R data frame like this, we can easily use standard functions in R to investigate them further.</p>
-<p>For example, we can easily generate an informative summary of the results using the <code>aggregate</code> function, followed by a call to the <code>order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
+<p>For example, we can generate an informative summary of the results using the <code>aggregate</code> function, followed by a call to the <code>order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
 
 </div>
 </div>
@@ -703,7 +712,7 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From this table, we see that the median is a more accurate estimate of the population mean for <em>t</em>-distributed data (on average), and it is also a better estimate for normally distributed data judging as measured by the absolute error—but it is not better if we look at the squared differences.</p>
+<p>From this summary, we see that the median is a more accurate estimate of the population mean for <em>t</em>-distributed data (on average), and it is also a better estimate for normally distributed data judging as measured by the absolute error—but it is not better if we look at the squared differences.</p>
 
 </div>
 </div>
@@ -712,14 +721,14 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Visualize-the-results">Visualize the results<a class="anchor-link" href="#Visualize-the-results">&#182;</a></h2><p>Next, we use the <code>ggplot2</code> package to create a plot summarizing the squared-error results:</p>
+<h2 id="Visualize-the-results">Visualize the results<a class="anchor-link" href="#Visualize-the-results">&#182;</a></h2><p>Next, we demonstrate use of the <code>ggplot2</code> package to create a visual summary the squared-error results:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="c1"># Load the ggplot2 package and set up graphics within the Jupyter environment.</span>
@@ -1231,7 +1240,7 @@ EAEikGsI/D+Z/tjvBauofwAAAABJRU5ErkJggg=="
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on the results from the 10 replicates, we see that the median is substantially more accurate than the mean in the normal simulations, on average, and it yields only slightly worse accuracy in the normal simulations.</p>
+<p>Based on the results from the 10 replicates, we see that the median is substantially more accurate than the mean in the normal simulations, on average, and it yields only slightly worse accuracy in the <em>t</em> simulations.</p>
 
 </div>
 </div>
@@ -1240,16 +1249,16 @@ EAEikGsI/D+Z/tjvBauofwAAAABJRU5ErkJggg=="
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Expand-the-experiment">Expand the experiment<a class="anchor-link" href="#Expand-the-experiment">&#182;</a></h2><p>Above, we ran the DSC comparing different ways to estimate the population mean from a sample, and examined the results of this experiment. We observed that the median estimate tends to be more accurate than the mean estimate. However, this was based on very little data—we only ran 10 replicates.</p>
+<h2 id="Expand-the-experiment">Expand the experiment<a class="anchor-link" href="#Expand-the-experiment">&#182;</a></h2><p>Above, we compared different ways to estimate the population mean from a sample, and examined the results of this comparison. We observed that the median estimate tends to be more accurate than the mean estimate. However, this was based on very little data—we only ran 10 replicates.</p>
 <p>Here, we increase the number of replicates to 20 to strengthen the conclusions we drew above.</p>
-<p>We will see that DSC determines the minimum effort needed to produce the new results—that is, it will retain previously generated results, and only re-run the scripts as needed to generate results for new replicates.</p>
+<p>We will see that DSC does this efficiently; it determines the minimum effort needed to produce the new results, and only runs scripts if they are needed to generate new results.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">20</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
@@ -1272,10 +1281,10 @@ EAEikGsI/D+Z/tjvBauofwAAAABJRU5ErkJggg=="
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:28&lt;00:00,  1.49s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:25&lt;00:00,  1.28s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">31.596</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">27.675</span> seconds.
 </pre>
 </div>
 </div>
@@ -1289,15 +1298,15 @@ INFO: Elapsed time <span class="ansi-green-fg">31.596</span> seconds.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>NOTE: Gao will add a line to the summary indicating which module outputs are newly generated, and which are unchanged from a previous run. This needs to be done in SoS.</em></p>
-<p>From this summary, we see that X of the module outputs were generated by this DSC run, and Y module outputs are unchanged from the previous run, and therefore did not need to be generated again. Although the benefit is not particularly noticeable for this small example, avoiding unnecessary computations can yield a huge payoff when running complex analyses or when working with very large data sets.</p>
-<p>Let's load the results from our expanded DSC run.</p>
+<p>From this summary, we see that X of the module outputs were generated in this DSC run, and Y module outputs are unchanged from the previous run, and therefore did not need to be generated again. Although the benefit is not particularly noticeable for this toy example, avoiding unnecessary computations can yield a huge payoff when running complex analyses or when working with very large data sets.</p>
+<p>Let's now load the results from our expanded DSC run.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dscout2</span> <span class="o">&lt;-</span> <span class="n">dscquery</span><span class="p">(</span><span class="n">dsc</span><span class="o">.</span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;first_investigation&quot;</span><span class="p">,</span>
@@ -1319,7 +1328,7 @@ INFO: Elapsed time <span class="ansi-green-fg">31.596</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//Rtmpk6TcMn/file152a9526eec2b.csv -f --target simulate analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpiqKwJK/file1eb132bc6dfb.csv -f --target simulate analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
@@ -1335,14 +1344,14 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Indeed, we have twice as many results in the extended experiment.</p>
+<p>Comparing to the previous <code>dscquery</code> output, we confirm that the new DSC run generated twice as many results.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span>
