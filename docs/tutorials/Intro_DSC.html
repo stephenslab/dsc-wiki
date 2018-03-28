@@ -249,7 +249,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Essentials,-Part-1">DSC Essentials, Part 1<a class="anchor-link" href="#DSC-Essentials,-Part-1">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a very simple example. You are encouraged to <a href="../installation.html">install DSC</a> and try running the DSC example on your computer.</p>
+<h1 id="DSC-Essentials,-Part-1">DSC Essentials, Part 1<a class="anchor-link" href="#DSC-Essentials,-Part-1">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example.</p>
+<p>This is a working example—optionally, you may <a href="../installation.html">install DSC</a>, and try running this example DSC program as you read through the tutorial.</p>
 
 </div>
 </div>
@@ -286,7 +287,7 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-DSC-building-blocks:-modules,-groups-and-pipelines">The DSC building blocks: modules, groups and pipelines<a class="anchor-link" href="#The-DSC-building-blocks:-modules,-groups-and-pipelines">&#182;</a></h2><p>Typically we will want to try different ways of implementating steps 1–3; that is, different ways to simulate the data, different ways to analyze the data, and different ways to score how well a method performed.</p>
-<p>In DSC, each different way of implementing a step is expressed as a "module", and then a "group of modules" defines the collection of alternative approaches.</p>
+<p>In DSC, each different way of implementing a step is expressed as a "module". A "group of modules" defines the collection of alternative implementations of a step.</p>
 <p>In our example, we define:</p>
 <ol>
 <li><p>A group of <code>simulate</code> modules, each of which can perform step 1;</p>
@@ -296,8 +297,9 @@ body {
 <li><p>A group of <code>score</code> modules, each of which can perform step 3.</p>
 </li>
 </ol>
-<p>Running the benchmark then consists of running sequences of modules—what we call "pipelines"—and each pipeline invokes one module from the <code>simulate</code> group, followed by a module from the <code>analyze</code> group, and then a module from the <code>score</code> group.</p>
-<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design makes it easy to extend benchmarks (e.g., by defining a new <code>analyze</code> module)—hence the "Dynamic" in in <em>Dynamic Statistical Comparisons.</em> And DSC will efficiently use available computational resources by running modules in parallel when possible; for example, once a <code>simulate</code> module has created a dataset, DSC may run multiple <code>analyze</code> modules in parallel.</p>
+<p>Running the benchmark then consists of running sequences of modules—called "pipelines" in DSC—and each pipeline invokes one module from the <code>simulate</code> group, followed by a module from the <code>analyze</code> group, then a module from the <code>score</code> group.</p>
+<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design of DSC makes it easy to extend benchmarks (e.g., by defining a new <code>analyze</code> module)—hence the <em>Dynamic</em> in Dynamic Statistical Comparisons.</p>
+<p>Also, DSC efficiently uses the available computational resources by running modules in parallel when possible; for example, once a <code>simulate</code> module has created a dataset, DSC may run multiple <code>analyze</code> modules in parallel.</p>
 
 </div>
 </div>
