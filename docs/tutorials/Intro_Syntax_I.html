@@ -457,13 +457,13 @@ DSC file; the key components of the <code>DSC</code> block are the <code>define<
 <li><p><code>DSC</code> is a special keyword indicating that we are defining the
 module groups and pipelines (that is, we are not defining a module).</p>
 </li>
-<li><p><code>define</code> is another keyword indicatingthat we are defining module
+<li><p><code>define</code> is another keyword indicating that we are defining module
 groups.</p>
 </li>
 <li><p>We define three module groups: <code>simulate</code>, <code>analyze</code> and <code>score</code>.
 The defining characteristic of module groups is that they should
-have a similar function (and, ideally, the same inputs and outputs,
-although this is not required).</p>
+have a similar function (and, in the simplest case, the same inputs
+and outputs, although this is not required).</p>
 </li>
 <li><p><code>run</code> is a keyword indicating that we are defining the
 computational pipelines (sequences of modules) to be executed.</p>
@@ -484,19 +484,22 @@ file; the DSC file doesn't do anything unless it is interpreted and
 executed by the <code>dsc</code> program.</p>
 <p>The <code>dsc</code> program will run all the pipelines, keeping track of the
 values of all the script variables and pipeline variables generated in
-each pipeline, and storing the values of the module outputs for our
-subsequent analysis in R.</p>
-<p>To run the DSC benchmark, change the working directory to the
-location of the <code>first_investigation_simpler.dsc</code> file.</p>
+each pipeline, and it will store the values of all the module outputs,
+which we will retrieve for analysis in R.</p>
+<p>To run the DSC benchmark, change the working directory to the location
+of the <code>first_investigation_simpler.dsc</code> file. (Here we assume the
+<code>dsc</code> repository is stored in the <code>git</code> subdirectory of your home
+directory. If you are running the example yourself, please move to the
+appropriate directory on your computer.)</p>
 
 <pre><code>cd ~/git/dsc/vignettes/one_sample_location
 pwd</code></pre>
 <p>Let's also remove any previously generated results.</p>
 
 <pre><code>rm -Rf first_investigation.html first_investigation.log first_investigation</code></pre>
-<p>To keep this example as simple as possible, let's generate only a
-single replicate for each of the pipelines, and we will run the
-pipelines in parallel on 2 CPUs, if available:</p>
+<p>To keep this example as simple as possible, generate only a single
+replicate for each of the pipelines, and execute in parallel at most 2
+modules at any one time:</p>
 
 <pre><code>dsc first_investigation_simpler.dsc --replicate 1 -c 2</code></pre>
 <p><em>TO DO: Add a sentence here pointing out the number of module outputs
@@ -512,23 +515,26 @@ dscout &lt;-
   dscquery(dsc.outdir = "first_investigation",
            targets = c("simulate.true_mean","analyze.est_mean","score.error"))
 dscout</code></pre>
-<p>A few remarks at this point:</p>
+<p>This table of results highlights several key features of DSC programs:</p>
 <ol>
-<li><p>Looking at the "simulate", "analyze" and "score" table columns,
-we see that DSC has run 8 different pipelines, corresponding to each
-possible combination of the <code>simulate</code>, <code>analyze</code> and <code>score</code> modules.</p>
+<li><p>Looking at the "simulate", "analyze" and "score" table columns, we
+can confirm that DSC has run 8 different pipelines, in which each
+pipeline runs a different combination of the <code>simulate</code>, <code>analyze</code> and
+<code>score</code> modules.</p>
 </li>
-<li><p>Each module output is assigned a value in each of the 8 pipelines,
-and these values are now accessible in the data frame. (We did not
-include vector <code>simulate.data</code> because it is too large to show in this
-table, but its can value can be queried like this other outputs.)</p>
+<li><p>Unlike most programs that assign a single value to each variable,
+<strong>in DSC each module output takes on a different value for each
+pipeline that it is run in.</strong> In this example, each module output has
+8 different values for each of the 8 different pipelines. (We did not
+include the <code>simulate.data</code> module output in this table because it is
+too large to show, but we point out that its can value can be
+extracted like the other outputs.)</p>
 </li>
-<li><p>The information flow happens across the modules <em>within the same
-pipeline</em>. For example, in the first pipeline (the first row of the
-table), the error in the <code>abs_err</code> module (0.05858) is calculated from
-the value of the true mean, which was set to 0 in the <code>normal</code> module,
-and from the estimated mean, which was set to 0.05858 in the <code>mean</code>
-module.</p>
+<li><p>Information flows between modules <em>within the same pipeline</em>. For
+example, in the first pipeline (the first row of the table), the error
+in the <code>abs_err</code> module (0.05858) is calculated from (1) the value of
+the true mean, which was set to 0 in the <code>normal</code> module, and (2) from
+the estimated mean, which was set to 0.05858 in the <code>mean</code> module.</p>
 </li>
 </ol>
 <h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we learned how the DSC file is used to define the
@@ -543,6 +549,9 @@ key components of a DSC experiment:</p>
 <li><p>Module sequences (pipelines).</p>
 </li>
 </ol>
+<p>We also learned how information flows between modules executed in a
+pipeline, and how values are assigned to pipeline variables separately
+in each pipeline.</p>
 <h2 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">&#182;</a></h2><p>In the <a href="Intro_Syntax_II.html">third introductory tutorial</a>, we will
 extend this example and introduce a few other useful DSC features.</p>
 <!-- You can think of a pipeline variable as a variable whose value

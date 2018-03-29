@@ -262,13 +262,13 @@ This code does the following:
 1. `DSC` is a special keyword indicating that we are defining the
    module groups and pipelines (that is, we are not defining a module).
 
-2. `define` is another keyword indicatingthat we are defining module
+2. `define` is another keyword indicating that we are defining module
    groups.
 
 3. We define three module groups: `simulate`, `analyze` and `score`.
    The defining characteristic of module groups is that they should
-   have a similar function (and, ideally, the same inputs and outputs,
-   although this is not required).
+   have a similar function (and, in the simplest case, the same inputs
+   and outputs, although this is not required).
 
 4. `run` is a keyword indicating that we are defining the
    computational pipelines (sequences of modules) to be executed.
@@ -291,11 +291,14 @@ executed by the `dsc` program.
 
 The `dsc` program will run all the pipelines, keeping track of the
 values of all the script variables and pipeline variables generated in
-each pipeline, and storing the values of the module outputs for our
-subsequent analysis in R.
+each pipeline, and it will store the values of all the module outputs,
+which we will retrieve for analysis in R.
 
-To run the DSC benchmark, change the working directory to the
-location of the `first_investigation_simpler.dsc` file.
+To run the DSC benchmark, change the working directory to the location
+of the `first_investigation_simpler.dsc` file. (Here we assume the
+`dsc` repository is stored in the `git` subdirectory of your home
+directory. If you are running the example yourself, please move to the
+appropriate directory on your computer.)
 
 ```
 cd ~/git/dsc/vignettes/one_sample_location
@@ -308,9 +311,9 @@ Let's also remove any previously generated results.
 rm -Rf first_investigation.html first_investigation.log first_investigation
 ```
 
-To keep this example as simple as possible, let's generate only a
-single replicate for each of the pipelines, and we will run the
-pipelines in parallel on 2 CPUs, if available:
+To keep this example as simple as possible, generate only a single
+replicate for each of the pipelines, and execute in parallel at most 2
+modules at any one time:
 
 ```
 dsc first_investigation_simpler.dsc --replicate 1 -c 2
@@ -333,23 +336,26 @@ dscout <-
 dscout
 ```
 
-A few remarks at this point:
+This table of results highlights several key features of DSC programs:
 
-1. Looking at the "simulate", "analyze" and "score" table columns,
-we see that DSC has run 8 different pipelines, corresponding to each
-possible combination of the `simulate`, `analyze` and `score` modules.
+1. Looking at the "simulate", "analyze" and "score" table columns, we
+can confirm that DSC has run 8 different pipelines, in which each
+pipeline runs a different combination of the `simulate`, `analyze` and
+`score` modules.
 
-2. Each module output is assigned a value in each of the 8 pipelines,
-and these values are now accessible in the data frame. (We did not
-include vector `simulate.data` because it is too large to show in this
-table, but its can value can be queried like this other outputs.)
+2. Unlike most programs that assign a single value to each variable,
+**in DSC each module output takes on a different value for each
+pipeline that it is run in.** In this example, each module output has
+8 different values for each of the 8 different pipelines. (We did not
+include the `simulate.data` module output in this table because it is
+too large to show, but we point out that its can value can be
+extracted like the other outputs.)
 
-3. The information flow happens across the modules *within the same
-pipeline*. For example, in the first pipeline (the first row of the
-table), the error in the `abs_err` module (0.05858) is calculated from
-the value of the true mean, which was set to 0 in the `normal` module,
-and from the estimated mean, which was set to 0.05858 in the `mean`
-module.
+3. Information flows between modules *within the same pipeline*. For
+example, in the first pipeline (the first row of the table), the error
+in the `abs_err` module (0.05858) is calculated from (1) the value of
+the true mean, which was set to 0 in the `normal` module, and (2) from
+the estimated mean, which was set to 0.05858 in the `mean` module.
 
 ## Recap
 
@@ -363,6 +369,10 @@ key components of a DSC experiment:
 3. Module groups; and
 
 3. Module sequences (pipelines).
+
+We also learned how information flows between modules executed in a
+pipeline, and how values are assigned to pipeline variables separately
+in each pipeline.
 
 ## Next steps
 
