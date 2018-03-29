@@ -515,12 +515,13 @@ dscout &lt;-
   dscquery(dsc.outdir = "first_investigation",
            targets = c("simulate.true_mean","analyze.est_mean","score.error"))
 dscout</code></pre>
-<p>This table of results highlights several key features of DSC programs:</p>
-<ol>
+<p>The results in this table illustrate several essential features of a
+DSC program:</p>
+<ul>
 <li><p>Looking at the "simulate", "analyze" and "score" table columns, we
 can confirm that DSC has run 8 different pipelines, in which each
-pipeline runs a different combination of the <code>simulate</code>, <code>analyze</code> and
-<code>score</code> modules.</p>
+pipeline runs a different combination of the <code>simulate</code>, <code>analyze</code>
+and <code>score</code> modules.</p>
 </li>
 <li><p>Unlike most programs that assign a single value to each variable,
 <strong>in DSC each module output takes on a different value for each
@@ -530,13 +531,14 @@ include the <code>simulate.data</code> module output in this table because it is
 too large to show, but we point out that its can value can be
 extracted like the other outputs.)</p>
 </li>
-<li><p>Information flows between modules <em>within the same pipeline</em>. For
-example, in the first pipeline (the first row of the table), the error
-in the <code>abs_err</code> module (0.05858) is calculated from (1) the value of
-the true mean, which was set to 0 in the <code>normal</code> module, and (2) from
-the estimated mean, which was set to 0.05858 in the <code>mean</code> module.</p>
+<li><p><strong>Information flows between modules within the same pipeline.</strong> For
+example, in the first pipeline (the first row of the table), the
+error in the <code>abs_err</code> module (0.05858) is calculated from (1) the
+value of the true mean, which was set to 0 in the <code>normal</code> module,
+and (2) from the estimated mean, which was set to 0.05858 in the
+<code>mean</code> module.</p>
 </li>
-</ol>
+</ul>
 <h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we learned how the DSC file is used to define the
 key components of a DSC experiment:</p>
 <ol>
