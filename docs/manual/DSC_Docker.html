@@ -293,15 +293,15 @@ body {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To use the docker image:</p>
-
-<pre><code>docker pull gaow/dsc
-docker run --rm --security-opt label:disable \
-        -v ${HOME%%/${USER}}:/home -v /tmp:/tmp \
-       -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc \
-       dsc -h</code></pre>
+<div class="highlight"><pre><span></span>docker pull gaow/dsc
+docker run --rm --security-opt label:disable <span class="se">\</span>
+       -v <span class="nv">$USER</span>:/home/docker -v /tmp:/tmp <span class="se">\</span>
+       -t -P -w <span class="nv">$PWD</span> -u <span class="nv">$UID</span>:<span class="si">${</span><span class="nv">GROUPS</span><span class="p">[0]</span><span class="si">}</span> gaow/dsc <span class="se">\</span>
+       dsc -h
+</pre></div>
 <p>You can add a shortcut to your shell configuration script (<code>~/.bashrc</code> on Linux and <code>~/.bash_profile</code> on Mac) to trigger docker based DSC:</p>
-
-<pre><code>alias dsc-docker='docker run --rm --security-opt label:disable -v ${HOME%%/${USER}}:/home -v /tmp:/tmp -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc dsc'</code></pre>
+<div class="highlight"><pre><span></span><span class="nb">alias</span> dsc-docker<span class="o">=</span><span class="s1">&#39;docker run --rm --security-opt label:disable -v $USER:/home/docker -v /tmp:/tmp -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc dsc&#39;</span>
+</pre></div>
 
 </div>
 </div>
@@ -317,30 +317,13 @@ docker run --rm --security-opt label:disable \
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc/vignettes/one_sample_location</pre>
-</div>
-</div>
-
 </div>
 </div>
 
