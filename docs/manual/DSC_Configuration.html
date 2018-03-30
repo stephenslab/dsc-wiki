@@ -587,8 +587,7 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Language-interpreters">Language interpreters<a class="anchor-link" href="#Language-interpreters">&#182;</a></h3><p>Currently <code>R()</code>, <code>Python()</code>, and <code>Shell()</code> are supported to specify module parameters. Codes inside these operators will be interpreted while DSC parses the configuration file; output will be evaluated as parameter values. For example <code>seed: R(1:5)</code> results in <code>seed: 1, 2, 3, 4, 5</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
-<p><strong> FIXME: advanced behavor of <code>R()</code> for parameters is yet to be implemented, via the <code>dscrutils</code> R package. </strong></p>
+<h3 id="Language-interpreters">Language interpreters<a class="anchor-link" href="#Language-interpreters">&#182;</a></h3><p>Currently <code>R()</code>, <code>Python()</code>, and <code>Shell()</code> are supported to specify module parameters. Codes inside these operators will be interpreted while DSC parses the configuration file; output will be evaluated as parameter values. For example <code>n: R((1:5)*10)</code> results in <code>n: 10, 20, 30, 40, 50</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
 <p><code>R()</code> and <code>Python()</code> can also be used to <a href="#Inline-executables">create inline module executables</a>. They will be interpreted at runtime as part of the module executable scripts.</p>
 
 </div>
