@@ -307,8 +307,6 @@ body {
 <p>Or,</p>
 
 <pre><code>method1, method2: (utils1.R, utils2.R) + R(res = main(...))</code></pre>
-<p><a href="#Variable-wildcard-131">Variable wild-card</a> <code>$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Please read <a href="../tutorials/Inline_Executable.html">this tutorial</a> for a concrete example.</p>
-<h4 id="Rmarkdown-based-modules">Rmarkdown based modules<a class="anchor-link" href="#Rmarkdown-based-modules">&#182;</a></h4><p>See <a href="../tutorials/Rmd_Executable.html">this tutorial</a> for detailed introduction with an example.</p>
 
 </div>
 </div>
@@ -551,28 +549,6 @@ result <span class="o">=</span> f1<span class="p">(</span><span class="kp">args<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Variable-wildcard">Variable wildcard<a class="anchor-link" href="#Variable-wildcard">&#182;</a></h3><p>The variable wildcard <code>$()</code>, when used to specify module parameters, refers to variables defined in <code>DSC::global</code>.</p>
-
-<pre><code>simulate_cosine: cosine.R
-    types: $(data_functions)
-...
-
-DSC:
-    global: 
-        data_functions: discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
-<p>is equivalent to</p>
-
-<pre><code>simulate_cosine: cosine.R
-    types: discrete.cosine, discrete.cosine2, discrete.cosine.peaksel</code></pre>
-<p>When used as part of <a href="#Inline-executables">inline module executables</a>, when they are inside language interpreters it refers to module inputs available from one of its <em>upstream</em> modules (see <a href="../tutorials/Inline_Executable.html">this tutorial</a> for a concrete example); otherwise it should point to module parameters in the <em>current</em> module, as part of command argument to a module executable (<strong>FIXME: need examples</strong>).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Tuple-operator">Tuple operator<a class="anchor-link" href="#Tuple-operator">&#182;</a></h3><p>When used to specify module parameters, tuple operator <code>()</code> simply creates grouped values as module parameters, for example</p>
 
 <pre><code>method: method.R
@@ -589,46 +565,6 @@ DSC:
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Language-interpreters">Language interpreters<a class="anchor-link" href="#Language-interpreters">&#182;</a></h3><p>Currently <code>R()</code>, <code>Python()</code>, and <code>Shell()</code> are supported to specify module parameters. Codes inside these operators will be interpreted while DSC parses the configuration file; output will be evaluated as parameter values. For example <code>n: R((1:5)*10)</code> results in <code>n: 10, 20, 30, 40, 50</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
 <p><code>R()</code> and <code>Python()</code> can also be used to <a href="#Inline-executables">create inline module executables</a>. They will be interpreted at runtime as part of the module executable scripts.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Grouping-operators">Grouping operators<a class="anchor-link" href="#Grouping-operators">&#182;</a></h3><p>Currently <code>for_each()</code> and <code>pairs()</code> are supported to generate cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
-
-<pre><code>n: for_each(1, [1,2,3])</code></pre>
-<p>is equivalent to the cartesian product</p>
-
-<pre><code>n: (1,1), (1,2), (1,3)</code></pre>
-<p>and</p>
-
-<pre><code>...
-  settings: pairs($(classifier), $(kernel))
-...
-DSC:
-  globals:
-    classifier: svm, ridge
-    kernel: k1, k2</code></pre>
-<p>is equivalent to:</p>
-
-<pre><code>...
-  settings: (svm, k1), (ridge, k2)
-...</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h3><p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
-
-<pre><code>@ALIAS: args = List()</code></pre>
-<p>will convert all input / parameters the module has available, say <code>x,y,z</code> to <code>args &lt;- list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
 
 </div>
 </div>
