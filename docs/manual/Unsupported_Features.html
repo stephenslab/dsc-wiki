@@ -330,6 +330,18 @@ DSC:
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h2><p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
+
+<pre><code>@ALIAS: args = List()</code></pre>
+<p>will convert all input / parameters the module has available, say <code>x,y,z</code> to <code>args &lt;- list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
+
+</div>
+</div>
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
 
