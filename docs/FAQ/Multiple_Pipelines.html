@@ -141,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=tutorialsDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=tutorialsArray;
-            var docs_map=tutorialsArrayMap;
-            var pos=tutorialsArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -253,82 +253,191 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC-(Part-III)">Introduction to DSC (Part III)<a class="anchor-link" href="#Introduction-to-DSC-(Part-III)">&#182;</a></h1><p>This is a continuation of the <a href="First_Course_Elaborated.html">Introduction to DSC (Part II)</a>. Here we continue the
-example to illustrate new concepts and syntax, particularly
-the use of parameters to create multiple similar modules.</p>
-<p>Material used in this example are in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">the DSC vignettes repo</a>.</p>
-<h2 id="Defining-similar-modules-via-parameters">Defining similar modules via parameters<a class="anchor-link" href="#Defining-similar-modules-via-parameters">&#182;</a></h2><p>Sometimes it can be helpful to specify multiple similar modules.</p>
-<p>For example, our <code>normal</code> module simulated 100 observations
-from an $N(0,1)$ distribution. What if we would like to
-also define a module that simulates 1000 observations from $N(0,1)$?</p>
-<p>DSC makes this easy by:</p>
-<ol>
-<li>Allowing module definitions to include
-parameter values to be passed to the script.</li>
-<li>Allowing parameters to be given more than one value, separated by ",",
-each defining a different module.</li>
-</ol>
-<h3 id="Example-1:-a-single-parameter">Example 1: a single parameter<a class="anchor-link" href="#Example-1:-a-single-parameter">&#182;</a></h3><p>For example, consider the following DSC syntax:</p>
-
-<pre><code>normal: R( x = rnorm(n, 0, 1) )
-  n: 100, 1000
-  $data: x
-  $true_mean: 0</code></pre>
-<p>This introduces two new pieces of syntax:</p>
-<ol>
-<li><code>n</code> is a parameter,
-whose value is passed to the script variable <code>n</code>. (The parameter
-and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of <a href="alias_link.html">@alias</a>.)</li>
-<li>The <code>n: 100, 1000</code> line defines <em>two</em> modules, one with a parameter <code>n=100</code> that simulates 100 values, and one with <code>n=1000</code> that simulates 1000 observations. Both modules have the same name -- <code>normal</code> --
-but they are differentiated by the value of the parameter <code>n</code>. For example,
-when querying the results of a dsc we will be able to subset results on the value of <code>n</code>. Put another way, <code>normal</code> now becomes a
-"group" containing two similar modules.</li>
-</ol>
-<!----For shorthand we might write `normal(n=100)` and `normal(n=1000)` to
-refer to these two modules (this is just a convenient shorthand to help
-our explanation, not a part of DSC syntax). Both modules take the same kind of input (no input) and produce the same type of output (pipeline variables `$data` and `$true_mean`).--->
-
-<p><em>NOTE:</em> We need to explain <strong>order of evaluation</strong> here.</p>
-<h3 id="Example-2:-multiple-parameters">Example 2: multiple parameters<a class="anchor-link" href="#Example-2:-multiple-parameters">&#182;</a></h3><p>If you provide more than one value for multiple parameters, DSC considers all combinations. For example:</p>
-
-<pre><code>t: R( x = rt(n, df) )
-  n: 100, 1000
-  df: 2, 4, 10
-  $data: x
-  $true_mean: 0</code></pre>
-<p>defines a group of six modules, which simulate 100 or 1000 observations from a $t$ distributions with 2, 4 or 10 degrees of freedom.</p>
-<h3 id="Example-3:-inputs-and-parameters">Example 3: inputs and parameters<a class="anchor-link" href="#Example-3:-inputs-and-parameters">&#182;</a></h3><p>Now consider the following DSC syntax:</p>
-
-<pre><code>trim_mean: R( y = mean(x, trim) )
-  trim: 0, 0.2
-  x: $data
-  $est_mean: y</code></pre>
-<p>defines two modules which compute the trimmed mean of the pipeline variable
-<code>$data</code>, with different levels of trimming (0 or 0.2), and output
-the result as the pipeline variable <code>$est_mean</code>.</p>
-<p>Schematically we might represent this as:</p>
-
-<pre><code># trim_mean(trim=0): $data -&gt; $est_mean
-# trim_mean(trim=0.2): $data -&gt; $est_mean</code></pre>
-<p>to indicate we have two different modules, each of which take input
-<code>$data</code> and output <code>$est_mean</code>.</p>
-<p>Note: it can be important, conceptually, to distinguish module inputs from module parameters. But in some cases this distinction may seem a gray area. There is a simple rule in DSC: parameters cannot be assigned to be pipeline variables. So in this example, <code>trim</code> is a parameter, but <code>x</code> is not.</p>
-<p>Because this rule uniquely distinguishes parameters from inputs, the DSC
-syntax does not require the user to make the distinction explicitly.
-However,  it may aid readability to add comments:</p>
-
-<pre><code>trim_mean: R( y = mean(x, trim) )
-  # parameters
-  trim: 0, 0.2
-
-  # input
-  x: $data
-
-  # output
-  $est_mean: y</code></pre>
+<h1 id="Multiple-DSC-pipelines">Multiple DSC pipelines<a class="anchor-link" href="#Multiple-DSC-pipelines">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this tutorial we further expand benchmark of the DSC problem described in <a href="5_Minutes.html">the 5 Minutes tutorial</a>, to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_winsor">DSC vignettes repo</a>.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Configuration">Configuration<a class="anchor-link" href="#Configuration">&#182;</a></h2><p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code>transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two DSC pipelines:</p>
+<ul>
+<li>simulate -&gt; estimate -&gt; score</li>
+<li>simulate -&gt; transform -&gt; estimate -&gt; score</li>
+</ul>
+<p>The DSC problem is fully specified as:</p>
+
+<pre><code>#!/usr/bin/env dsc
+
+normal: normal.R
+  n: 100
+  $data: x
+  $true_mean: 0
+
+t: t.R
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
+
+winsor1, winsor2: winsor1.R, winsor2.R
+    x: $data
+    @winsor1:
+      fraction: 0.05
+    @winsor2:
+      multiple: 3
+    $data: x
+
+mean: mean.R
+  x: $data
+  $est_mean: y
+
+median: median.R
+  x: $data
+  $est_mean: y
+
+sq_err: sq.R
+  a: $est_mean
+  b: $true_mean
+  $error: e
+
+abs_err: abs.R
+  a: $est_mean
+  b: $true_mean
+  $error: e 
+
+DSC:
+    define:
+      simulate: normal, t
+      transform: winsor1, winsor2
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * (analyze, transform * analyze) * score
+    exec_path: R
+    output: dsc_result</code></pre>
+<p>where <code>transform</code> module ensemble contains:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location_winsor<span class="o">/</span>R<span class="o">/</span>winsor1.R <span class="o">&lt;==</span>
+  <span class="c1">##  replace the extreme values with limits</span>
+  winsor1 <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span>x<span class="p">,</span> fraction<span class="o">=</span><span class="m">.05</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="kr">if</span><span class="p">(</span><span class="kp">length</span><span class="p">(</span>fraction<span class="p">)</span> <span class="o">!=</span> <span class="m">1</span> <span class="o">||</span> fraction <span class="o">&lt;</span> <span class="m">0</span> <span class="o">||</span>
+           fraction <span class="o">&gt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kp">stop</span><span class="p">(</span><span class="s">&quot;bad value for &#39;fraction&#39;&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+     lim <span class="o">&lt;-</span> quantile<span class="p">(</span>x<span class="p">,</span> probs<span class="o">=</span><span class="kt">c</span><span class="p">(</span>fraction<span class="p">,</span> <span class="m">1</span><span class="o">-</span>fraction<span class="p">))</span>
+     x<span class="p">[</span> x <span class="o">&lt;</span> lim<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">]</span> <span class="o">&lt;-</span> lim<span class="p">[</span><span class="m">1</span><span class="p">]</span>
+     x<span class="p">[</span> x <span class="o">&gt;</span> lim<span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="p">]</span> <span class="o">&lt;-</span> lim<span class="p">[</span><span class="m">2</span><span class="p">]</span>
+     <span class="kr">return</span><span class="p">(</span>x<span class="p">)</span>
+  <span class="p">}</span>
+  x <span class="o">=</span> winsor1<span class="p">(</span>x<span class="p">,</span> fraction<span class="p">)</span>
+
+  <span class="o">==&gt;</span> <span class="m">..</span><span class="o">/</span>vignettes<span class="o">/</span>one_sample_location_winsor<span class="o">/</span>R<span class="o">/</span>winsor2.R <span class="o">&lt;==</span>
+  <span class="c1">## move the datapoints that are x times the absolute deviations from mean</span>
+  winsor2 <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span>x<span class="p">,</span> multiple<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+  <span class="p">{</span>
+     <span class="kr">if</span><span class="p">(</span><span class="kp">length</span><span class="p">(</span>multiple<span class="p">)</span> <span class="o">!=</span> <span class="m">1</span> <span class="o">||</span> multiple <span class="o">&lt;=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kp">stop</span><span class="p">(</span><span class="s">&quot;bad value for &#39;multiple&#39;&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+     med <span class="o">&lt;-</span> median<span class="p">(</span>x<span class="p">)</span>
+     y <span class="o">&lt;-</span> x <span class="o">-</span> med
+     sc <span class="o">&lt;-</span> mad<span class="p">(</span>y<span class="p">,</span> center<span class="o">=</span><span class="m">0</span><span class="p">)</span> <span class="o">*</span> multiple
+     y<span class="p">[</span> y <span class="o">&gt;</span> sc <span class="p">]</span> <span class="o">&lt;-</span> sc
+     y<span class="p">[</span> y <span class="o">&lt;</span> <span class="o">-</span>sc <span class="p">]</span> <span class="o">&lt;-</span> <span class="o">-</span>sc
+     <span class="kr">return</span><span class="p">(</span>y <span class="o">+</span> med<span class="p">)</span>
+  <span class="p">}</span>
+  x <span class="o">=</span> winsor2<span class="p">(</span>x<span class="p">,</span> multiple<span class="p">)</span>
+</pre></div>
+<p>As a result, the previous <code>analyze</code> step is now a pipeline ensemble of <code>(transform * analyze, analyze)</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Execution">Execution<a class="anchor-link" href="#Execution">&#182;</a></h2><p>To run the benchmark</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_winsor</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/Documents/GIT/software/dsc/vignettes/one_sample_location_winsor</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="o">./</span><span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">./settings.dsc</span> ...
+INFO: Building execution graph &amp; Running DSC ...
+DSC: 100%|██████████████████████████████████████| 43/43 [00:04&lt;00:00, 12.82it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">7.230</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.

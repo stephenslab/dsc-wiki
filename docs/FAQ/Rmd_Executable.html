@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -144,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -252,14 +249,150 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Convert-existing-Rmarkdown-file-to-DSC-executables">Convert existing Rmarkdown file to DSC executables<a class="anchor-link" href="#Convert-existing-Rmarkdown-file-to-DSC-executables">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tutorial demonstrates a convenient way to construct DSC based on Rmarkdown files being used in Rstudio interactive sessions. Material used can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/mash">DSC vignettes repository</a>.</p>
 
-{%- endblock header -%}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Caution that running DSC with source code provided from Rmarkdown files is meant to ease DSC development, but is more error prone because users may make more mistakes matching variables or code chunks between DSC interface and Rmarkdown documents. This feature is therefore intended to only prototyping a benchmark. Users will be discouraged with a DSC warning message to use Rmd files in finalized benchmark.</p>
 
-{% block footer %}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Rmarkdown file comes from the <a href="https://stephenslab.github.io/mashr/docs/intro_mash.html"><code>mashr</code> package intro vigenette</a>. Here we run in DSC the steps of simulating data, compute covariance matrices (prior), and fit the <code>mash</code> model. The DSC file is specified as:</p>
+
+<pre><code>#!/usr/bin/env dsc
+
+simulate: R(library(mashr)) + simulate_*@intro_mash.Rmd
+  n_effects: 500
+  n_cond: 5
+  $data: data
+
+get_cov: R(library(mashr)) + cov*@intro_mash.Rmd
+  data: $data
+  $U_c: U.c 
+
+fit: R(library(mashr)) + fit*@intro_mash.Rmd
+  U_c: $U_c
+  data: $data
+  $m_c: m.c
+  @ALIAS: U.c = U_c
+
+DSC:
+  run: simulate * get_cov * fit
+  R_libs: mashr@stephenslab/mashr (0.2.5+)
+  output: mash_result</code></pre>
+<p>Take <code>simulate_*@intro_mash.Rmd</code> for example: it means the module executable comes from code chunks matching <code>simulate_*</code> pattern in file <code>intro_mash.Rmd</code>. The code chunk matching pattern follows from <a href="http://www.robelle.com/smugbook/wildcard.html">UNIX wildcard</a> convention. When only the Rmarkdown filename (the part after <code>@</code>) is specified, all code chunks in the Rmarkdown file will be loaded.</p>
+<p>The extracted code can be found in DSC code browser <a href="mash_result.html"><code>mash_result.html</code></a>. To run the benchmark:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">mash</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc/vignettes/mash</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="o">./</span><span class="n">settings</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Source code of </span><span class="ansi-green-fg">simulate</span><span class="ansi-magenta-intense-fg"> is loaded from </span><span class="ansi-green-fg">intro_mash.Rmd</span><span class="ansi-magenta-intense-fg">. This is only recommended for prototyping.</span>
+<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Source code of </span><span class="ansi-green-fg">get_cov</span><span class="ansi-magenta-intense-fg"> is loaded from </span><span class="ansi-green-fg">intro_mash.Rmd</span><span class="ansi-magenta-intense-fg">. This is only recommended for prototyping.</span>
+<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Source code of </span><span class="ansi-green-fg">fit</span><span class="ansi-magenta-intense-fg"> is loaded from </span><span class="ansi-green-fg">intro_mash.Rmd</span><span class="ansi-magenta-intense-fg">. This is only recommended for prototyping.</span>
+<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library mashr@stephenslab/mashr ...</span>
+<span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">mash_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">./settings.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|████████████████████████████████████████| 4/4 [00:08&lt;00:00,  1.92s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">13.973</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that warning messages are displayed when module executables are loaded from Rmarkdown files, to remind users to finalize the DSC with formal scripts rather than some dynamic document.</p>
+
+</div>
+</div>
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}

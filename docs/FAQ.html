@@ -217,8 +217,16 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intermedium-examples">Intermedium examples<a class="anchor-link" href="#Intermedium-examples">&#182;</a></h2><p><a href="examples/Intermediate_R_1.html">An R example: <code>ashr</code> benchmark</a><br>
-&nbsp; &nbsp; An illustration of inline codes, variable alias, R library installation and query demos</p>
+<h1 id="FAQ">FAQ<a class="anchor-link" href="#FAQ">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Other-DSC-features">Other DSC features<a class="anchor-link" href="#Other-DSC-features">&#182;</a></h2><h4 id="I'm-done-with-the-DSC-introductory-tutorials.-What-next?">I'm done with the DSC introductory tutorials. What next?<a class="anchor-link" href="#I'm-done-with-the-DSC-introductory-tutorials.-What-next?">&#182;</a></h4><p><a href="FAQ/Syntax_Tips">This document</a> demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
+You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our <a href="reference.html">Reference Manual</a>.</p>
 
 </div>
 </div>
@@ -227,8 +235,8 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="examples/Intermediate_R_2.html">Reimplementation of "quick start" example from <code>simulator</code> R package</a><br>
-&nbsp; &nbsp; A more modular implementation illustrating compound and inline module executables</p>
+<h4 id="My-DSC-run-failed-with-an-error.-What-should-I-do?">My DSC run failed with an error. What should I do?<a class="anchor-link" href="#My-DSC-run-failed-with-an-error.-What-should-I-do?">&#182;</a></h4><p>Well, the bug is either ours or yours. DSC software is still under active development. If you catch one of our bug please <a href="https://github.com/stephenslab/dsc/issues">post an issue</a> with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first.</p>
+<p>If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as <a href="FAQ/Debug_Tips.html">demonstrated on this page</a>.</p>
 
 </div>
 </div>
@@ -237,8 +245,10 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Advanced-examples">Advanced examples<a class="anchor-link" href="#Advanced-examples">&#182;</a></h2><p><a href="https://stephenslab.github.io/dsc-omega">Covariance estimation</a> by Wei Wang and Gao Wang<br>
-&nbsp; &nbsp; A benchmark on methods estimating covariance matrix from data</p>
+<h4 id="The-introductory-tutorials-are-benchmarks-implemented-in-R.-Can-I-work-with-other-languages?">The introductory tutorials are benchmarks implemented in R. Can I work with other languages?<a class="anchor-link" href="#The-introductory-tutorials-are-benchmarks-implemented-in-R.-Can-I-work-with-other-languages?">&#182;</a></h4><p>Current implementation of DSC works with R, Python and Shell, and provides implicit data handling for R and Python modules. 
+You can find in <a href="FAQ/5_Minutes_Python.html">here</a> a Python example, and <a href="5_Minutes_RPY.html">here</a> preliminary support to mixing R and Python
+codes in benchmark.</p>
+<p>Additionally DSC provides experimental support for Rmd files to run R benchmarks, see <a href="FAQ/Rmd_Executable.html">this tutorial</a> for details.</p>
 
 </div>
 </div>
@@ -247,8 +257,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://github.com/stephenslab/dsc-regression">Linear regression</a> by Xiang Zhu, Wei Wang and Gao Wang<br>
-&nbsp; &nbsp; High-dimensional regression based on the simulation study of Elastic-Net (Zou and Hastie, 2005)</p>
+<h4 id="My-benchmark-is-more-complicated-than-the-3-step-paradigm-(&quot;simulate&quot;,-&quot;analyze&quot;-and-&quot;score&quot;).-Can-I-still-use-DSC?">My benchmark is more complicated than the 3-step paradigm ("simulate", "analyze" and "score"). Can I still use DSC?<a class="anchor-link" href="#My-benchmark-is-more-complicated-than-the-3-step-paradigm-(&quot;simulate&quot;,-&quot;analyze&quot;-and-&quot;score&quot;).-Can-I-still-use-DSC?">&#182;</a></h4><p>Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC's term, modules), as demonstrated in <a href="FAQ/Multiple_Pipelines.html">this toy example</a>.</p>
 
 </div>
 </div>
@@ -257,8 +266,44 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://github.com/stephenslab/dsc-blm">Bayesian regression in genomic prediction</a> by Xiang Zhu<br>
-&nbsp; &nbsp; Bayesian linear model fitting procedures and their applications in genetic association studies</p>
+<h4 id="I-wish-DSC-has-feature-X-to-make-my-benchmarking-easier.-Can-you-do-that-for-me?">I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?<a class="anchor-link" href="#I-wish-DSC-has-feature-X-to-make-my-benchmarking-easier.-Can-you-do-that-for-me?">&#182;</a></h4><p>Before you <a href="https://github.com/stephenslab/dsc/issues">file a feature request</a> please take a look at our <a href="FAQ/Unsupported_Features.html">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Running-DSC-benchmarks">Running DSC benchmarks<a class="anchor-link" href="#Running-DSC-benchmarks">&#182;</a></h2><h4 id="How-do-I-run-DSC-on-a-remote-computer?">How do I run DSC on a remote computer?<a class="anchor-link" href="#How-do-I-run-DSC-on-a-remote-computer?">&#182;</a></h4><p><a href="FAQ/Remote_Computations.html">Here is a tutorial</a> for running DSC on a remote computer such as HPC cluster.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="I-want-to-share-my-benchmark-for-my-manuscript-that-allows-others-to-reproduce-with-little-hassle.-What's-the-best-way-to-do-it?">I want to share my benchmark for my manuscript that allows others to reproduce with little hassle. What's the best way to do it?<a class="anchor-link" href="#I-want-to-share-my-benchmark-for-my-manuscript-that-allows-others-to-reproduce-with-little-hassle.-What's-the-best-way-to-do-it?">&#182;</a></h4><p>We suggest using Docker. <a href="FAQ/DSC_Docker.html">Here</a> is a tutorial on dockerizing your benchmark.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-under-the-hood">DSC under the hood<a class="anchor-link" href="#DSC-under-the-hood">&#182;</a></h2><h4 id="I'm-curious-how-DSC-handles-data-implicitly.-How-does-it-work?">I'm curious how DSC handles data implicitly. How does it work?<a class="anchor-link" href="#I'm-curious-how-DSC-handles-data-implicitly.-How-does-it-work?">&#182;</a></h4><p><a href="FAQ/DSC_Data.html">This page</a> has a discussion on how  DSC handles data communication and storage for R and Python languages.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Why-is-DSC-written-in-Python?">Why is DSC written in Python?<a class="anchor-link" href="#Why-is-DSC-written-in-Python?">&#182;</a></h4><p>DSC relies heavily on <a href="https://github.com/vatlab/SOS">Script of Scripts (SoS)</a> project, a Python-based project for pipeline executions. 
+Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages <a href="FAQ/Implementation_Details.html">listed here</a>.</p>
 
 </div>
 </div>

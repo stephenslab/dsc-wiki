@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -252,14 +249,142 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Reproducing-simulator-package-Quick-Start">Reproducing <code>simulator</code> package Quick Start<a class="anchor-link" href="#Reproducing-simulator-package-Quick-Start">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tutorial reimplements the execution part of <a href="http://faculty.bscb.cornell.edu/~bien/simulator_vignettes/getting-started.html">Getting Started with Simulator</a> example. We demonstrate in this tutorial how compound module executables are specified with scripts and inline executables.</p>
+<p>Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/simulator_example">DSC vignettes repo</a>. It also contains the code to reproduce the original <code>simulator</code> simulation.</p>
 
-{%- endblock header -%}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-Specification">DSC Specification<a class="anchor-link" href="#DSC-Specification">&#182;</a></h2><p>The problem is fully specified in DSC syntax below:</p>
 
-{% block footer %}
+<pre><code>simulate: model.R + R(m = simulate(n, prob))
+  seed: R(1:10)
+  n: 50
+  prob: R(seq(0,1,length=6))
+  $model: m
+
+my_method, their_method: (my.R, their.R) + R(fit = method($(model)$x)$fit)
+  $fit: fit
+
+abs, mse: (herloss.R, hisloss.R) + R(score = metric($(model)$mu, $(fit)))
+  $score: score
+
+DSC:
+  define:
+    method: my_method, their_method
+    score: abs, mse
+  run: simulate * method * score
+  output: simulator_results
+  exec_path: R</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-DSC">Run DSC<a class="anchor-link" href="#Run-DSC">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">simulator_example</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc/vignettes/simulator_example</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">main</span><span class="o">.</span><span class="n">dsc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">simulator_results.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">main.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|████████████████████████████████████████| 8/8 [01:02&lt;00:00,  8.24s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">67.413</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may notice that for this trivial benchmark, the execution is a lot slower compared to the original implementation. This is a limitation of DSC when running lite jobs -- having to build and execute DAG, checking file signatures and monitoring runtime environment results in substential overhead. For real-world benchmarking when execution time is much longer, this overhead is perhaps tolerable because it is relatively insignificant under such scenario. Also notice that under <code>simulator_results</code> there are 420 intermediate output <code>*.rds</code> files generated, compared to only 31 <code>*.Rdata</code> itermediate files generated when you run the <code>simulator</code> version of the example. This is because the demonstrated DSC implementation is a lot more modular. You can compare the data generating code in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/R/model.R">DSC</a> vs in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/sims/model_functions.R"><code>simulator</code></a> to tell the more modular setup we have adopted here -- although it is entirely possible to develop a different style of DSC that reproduces exactly the <code>simulator</code> example's output (yet stored in <code>rds</code> rather than <code>Rdata</code> format).</p>
+
+</div>
+</div>
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}

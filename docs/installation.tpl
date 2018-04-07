@@ -230,11 +230,15 @@ body {
 </li>
         
 <li>
+  <a href="../FAQ.html">FAQ</a>
+</li>
+        
+<li>
   <a href="../examples.html">Examples</a>
 </li>
         
 <li>
-  <a href="../manual.html">Manual</a>
+  <a href="../reference.html">Reference</a>
 </li>
         
       </ul>

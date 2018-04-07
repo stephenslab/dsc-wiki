@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="ipynb_website:version" content="0.9.4" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" href="../css/jt.css">
+
+<link rel="stylesheet" type="text/css" href="../css/toc2.css">
+
+<link href="../site_libs/jqueryui-1.11.4/jquery-ui.css">
+<link rel="stylesheet" href="../site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="../site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="stylesheet"
+      href="../site_libs/highlightjs/jnbinder.min.css"
+      type="text/css" />
+
+<script src="../site_libs/highlightjs/highlight.dsc.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+<script src="../js/doc_toc.js"></script>
+<script src="../js/docs.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+        },
+        "HTML-CSS": {
+            preferredFont: "TeX",
+            availableFonts: ["TeX"],
+            styles: {
+                scale: 110,
+                ".MathJax_Display": {
+                    "font-size": "110%",
+                }
+            }
+        }
+    });
+</script>
+<script>
+function filterDataFrame(id) {
+    var input = document.getElementById("search_" + id);
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("dataframe_" + id);
+    var tr = table.getElementsByTagName("tr");
+    // Loop through all table rows, and hide those who don't match the search query
+    for (var i = 1; i < tr.length; i++) {
+        for (var j = 0; j < tr[i].cells.length; ++j) {
+            var matched = false;
+            if (tr[i].cells[j].innerHTML.toUpperCase().indexOf(filter) != -1) {
+                tr[i].style.display = "";
+                matched = true
+                break;
+            }
+            if (!matched)
+                tr[i].style.display = "none";
+        }
+    }
+}
+function sortDataFrame(id, n, dtype) {
+    var table = document.getElementById("dataframe_" + id);
+    var tb = table.tBodies[0]; // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+    var tr = Array.prototype.slice.call(tb.rows, 0); // put rows into array
+    if (dtype === 'numeric') {
+        var fn = function(a, b) { 
+            return parseFloat(a.cells[n].textContent) <= parseFloat(b.cells[n].textContent) ? -1 : 1;
+        }
+    } else {
+        var fn = function(a, b) {
+            var c = a.cells[n].textContent.trim().localeCompare(b.cells[n].textContent.trim()); 
+            return c > 0 ? 1 : (c < 0 ? -1 : 0) }
+    }
+    var isSorted = function(array, fn) {
+        if (array.length < 2)
+            return 1;
+        var direction = fn(array[0], array[1]); 
+        for (var i = 1; i < array.length - 1; ++i) {
+            var d = fn(array[i], array[i+1]);
+            if (d == 0)
+                continue;
+            else if (direction == 0)
+                direction = d;
+            else if (direction != d)
+                return 0;
+            }
+        return direction;
+    }
+    var sorted = isSorted(tr, fn);
+    if (sorted == 1 || sorted == -1) {
+        // if sorted already, reverse it
+        for(var i = tr.length - 1; i >= 0; --i)
+            tb.appendChild(tr[i]); // append each row in order
+    } else {
+        tr = tr.sort(fn);
+        for(var i = 0; i < tr.length; ++i)
+            tb.appendChild(tr[i]); // append each row in order
+    }
+}
+</script>
+
+<script>
+$( document ).ready(function(){
+            var cfg={'threshold':3,     // depth of toc (number of levels)
+             'number_sections': false,
+             'toc_cell': false,          // useless here
+             'toc_window_display': true, // display the toc window
+             "toc_section_display": "block", // display toc contents in the window
+             'sideBar':true,       // sidebar or floating window
+             'navigate_menu':false       // navigation menu (only in liveNotebook -- do not change)
+            }
+            var st={};                  // some variables used in the script
+            st.rendering_toc_cell = false;
+            st.config_loaded = false;
+            st.extension_initialized=false;
+            st.nbcontainer_marginleft = $('#notebook-container').css('margin-left')
+            st.nbcontainer_marginright = $('#notebook-container').css('margin-right')
+            st.nbcontainer_width = $('#notebook-container').css('width')
+            st.oldTocHeight = undefined
+            st.cell_toc = undefined;
+            st.toc_index=0;
+            // fire the main function with these parameters
+            table_of_contents(cfg, st);
+            var file=FAQDict[$("h1:first").attr("id")];
+            $("#toc-level0 a").css("color","#126dce");
+            $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
+            for (var a=pos;a>=0;a--){
+                  $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
+            }
+            $('a[href="'+file+'.html'+'"]').css("color","#126dce");
+            for (var a=pos+1;a<docs.length;a++){
+                  $(".toc #toc-level0").append('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>');
+            }
+            // $("#toc-header").hide(); // comment out because it prevents search bar from displaying
+    });
+</script>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  // mark it active
+  menuAnchor.parent().addClass('active');
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<div class="container-fluid main-container">
+<!-- tabsets -->
+<script src="../site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+
+
+<title>Dynamic Statistical Comparisons</title>
+
+<style type = "text/css">
+body {
+  font-family: "Droid Sans";
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+</style>
+</head>
+
+<body>
+<div tabindex="-1" id="notebook" class="border-box-sizing">
+<div class="container" id="notebook-container">
+
+<!-- code folding -->
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Dynamic Statistical Comparisons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+<li>
+  <a href="../index.html">Home</a>
+</li>
+        
+<li>
+  <a href="../tutorials.html">Tutorials</a>
+</li>
+        
+<li>
+  <a href="../installation.html">Installation</a>
+</li>
+        
+<li>
+  <a href="../FAQ.html">FAQ</a>
+</li>
+        
+<li>
+  <a href="../examples.html">Examples</a>
+</li>
+        
+<li>
+  <a href="../reference.html">Reference</a>
+</li>
+        
+      </ul>
+        
+<ul class="nav navbar-nav navbar-right">
+<li>
+   <a href="https://github.com/stephenslab/dsc"> <span class="fa fa-github"></span> </a>
+</li>
+</ul>
+        
+      </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Running-DSC-on-a-remote-computer">Running DSC on a remote computer<a class="anchor-link" href="#Running-DSC-on-a-remote-computer">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h2><p>DSC uses one additional configuration file and two command options to run on a remote computer. Here a remote computer can be:</p>
+<ol>
+<li>A standalone desktop workstation without a job queue system</li>
+<li>A system with a job queue manager, such as PBS-based cluster</li>
+</ol>
+<p>Conventionally, to run jobs on a remote computer (or host, hereafter), users will have to log in to the host from their local computer (or local, hereafter), copy over required resources and install required software, before performing any computation. For cluster systems users will not only have to write job files to submit, but also have to actively monitoring active jobs and keep submitting new ones, because otherwise submitting them all will likely hit the system's limit of permitted jobs and result in failure. For a DSC benchmark that contains relatively arbitrary number of computational tasks with implicit input and output and different resource requirements, it is nearly impossible to manually configure cluster jobs properly.</p>
+<p>Using a DSC job template and command options, DSC allows users to:</p>
+<ol>
+<li>Use remote host without having to login.</li>
+<li>Easily configure resource requirement per module.</li>
+<li>Submit the entire benchmark without worrying about job limits.</li>
+<li>Automatically sync files to the remote computer even if file path convention is different between local and host (eg <code>/Users/&lt;username&gt;</code> on Mac vs <code>/home/&lt;username&gt;</code> on Linux)</li>
+</ol>
+<p>Under the hood, DSC will utilize local resource to:</p>
+<ol>
+<li>Analyze DSC and build-up input / output dependencies</li>
+<li>Submitting jobs to remote in such a way that only maximum allowed jobs are submitted; the unsubmitted jobs are stashed on a local computer, which will keep monitoring the remote computer and keep submitting jobs to it as previous jobs complete.</li>
+</ol>
+<p>As one can probably tell, the local still has to be active and perform some computations (mostly monitoring, using one CPU thread) while the behchmark is being executed. Therefore the local has to be kept active -- the computer has to be on and not in "suspend" mode. We realize this might be inconvenient for laptop users. Though in principle one can use a <a href="https://www.gnu.org/software/screen/"><code>screen</code></a> on cluster's headnode as local and compute node as remote to keep the monitor run on the background, we discourage doing so because it is typically not good practice to have long running computations on a headnode. Users can either use an interactive section as "local" to submit jobs, or just keep a local laptop / desktop up and running throughout the entire benchmarking process.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Implementation">Implementation<a class="anchor-link" href="#Implementation">&#182;</a></h2><p>DSC uses <a href="https://vatlab.github.io/sos-docs"><code>SoS</code></a> library to execute jobs. In order for remote submission to work, one needs to install <code>sos</code> package to the remote host, and additionally <code>sos-pbs</code> package if the remote uses a PBS system.To install SoS to remote host,</p>
+
+<pre><code>pip install sos sos-pbs</code></pre>
+<p>If you run into troubles, you may find <a href="https://stephenslab.github.io/dsc-wiki/quick_start.html">DSC installation guide</a> a useful resource to resolve problems.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Remote-configuration">Remote configuration<a class="anchor-link" href="#Remote-configuration">&#182;</a></h2><p>DSC command option <code>--host</code> accepts a YAML configuration file that specifies a <em>template</em> for remote jobs. <strong>We provide support to such configuration files on need-basis</strong>, because we (the DSC developers) can only verify and ensure the it works on system that we have access to and use on regular basis. For example, here is a template for a system running PBS type of queue via Slurm Workload Manage:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">DSC</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">midway2</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">UChicago RCC cluster Midway 2</span>
+    <span class="l l-Scalar l-Scalar-Plain">address</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gaow@midway2.rcc.uchicago.edu</span>
+    <span class="l l-Scalar l-Scalar-Plain">paths</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">home</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/home/gaow</span>
+    <span class="l l-Scalar l-Scalar-Plain">queue_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pbs</span>
+    <span class="l l-Scalar l-Scalar-Plain">wait_for_tasks</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+    <span class="l l-Scalar l-Scalar-Plain">status_check_interval</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_running_jobs</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_cores</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_walltime</span><span class="p p-Indicator">:</span> <span class="s">&quot;36:00:00&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_mem</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">64G</span>
+    <span class="l l-Scalar l-Scalar-Plain">job_template</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+      <span class="no">#!/bin/bash</span>
+      <span class="no">#SBATCH --time={walltime}</span>
+      <span class="no">#{partition}</span>
+      <span class="no">#{account}</span>
+      <span class="no">#SBATCH --nodes=1</span>
+      <span class="no">#SBATCH --ntasks-per-node={cores}</span>
+      <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
+      <span class="no">#SBATCH --job-name={job_name}</span>
+      <span class="no">#SBATCH --output={cur_dir}/.sos/{job_name}.out</span>
+      <span class="no">#SBATCH --error={cur_dir}/.sos/{job_name}.err</span>
+      <span class="no">cd {cur_dir}</span>
+      <span class="no">module load R/3.4.3</span>
+    <span class="l l-Scalar l-Scalar-Plain">partition</span><span class="p p-Indicator">:</span> <span class="s">&quot;SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">account</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">submit_cmd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sbatch {job_file}</span>
+    <span class="l l-Scalar l-Scalar-Plain">submit_cmd_output</span><span class="p p-Indicator">:</span> <span class="s">&quot;Submitted</span><span class="nv"> </span><span class="s">batch</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">{job_id}&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">status_cmd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">squeue --job {job_id}</span>
+    <span class="l l-Scalar l-Scalar-Plain">kill_cmd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">scancel {job_id}</span>
+  <span class="l l-Scalar l-Scalar-Plain">stephenslab</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">based_on</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hosts.midway2</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_cores</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">28</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_mem</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">128G</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_walltime</span><span class="p p-Indicator">:</span> <span class="s">&quot;10d&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">partition</span><span class="p p-Indicator">:</span> <span class="s">&quot;SBATCH</span><span class="nv"> </span><span class="s">--partition=mstephens&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">account</span><span class="p p-Indicator">:</span> <span class="s">&quot;SBATCH</span><span class="nv"> </span><span class="s">--account=pi-mstephens&quot;</span>
+
+
+<span class="l l-Scalar l-Scalar-Plain">default</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">queue</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">midway2</span>
+  <span class="l l-Scalar l-Scalar-Plain">time_per_instance</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10m</span>
+  <span class="l l-Scalar l-Scalar-Plain">instances_per_job</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+  <span class="l l-Scalar l-Scalar-Plain">n_cpu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+  <span class="l l-Scalar l-Scalar-Plain">mem_per_cpu</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2G</span>
+
+<span class="l l-Scalar l-Scalar-Plain">simulate</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">instances_per_job</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The section <code>DSC</code> is required to configure all systems. Its syntax mostly follows from <a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">SoS remote task specification</a>. Here <code>midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code>partition=broadwl</code>. Typically it has 40 cores per node, allows for 30 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the <code>max_*</code> values in the configuration. <code>stephenslab</code> is a special partition on <code>midway2</code> that allows for different configurations under the same system, thus it is derived from <code>midway2</code> via <code>based_on: hosts.midway2</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The section <code>default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
+<ul>
+<li><code>queue</code>: name of the queue on the remote host that the DSC uses</li>
+<li><code>time_per_instance</code>: maximum computation time for each <a href="Terminology.html#Module-instance-14">module instance</a>.</li>
+<li><code>instance_per_job</code>: how many <a href="Terminology.html#Module-instance-14">module instance</a> to submit as one remote jobs. This is useful consolidating numerous light-weight module instances into one jobs submission. </li>
+<li><code>n_cpu</code> and <code>mem_per_cpu</code> specify the CPU and memory requirement of a module instance.</li>
+</ul>
+<p>For example for 100 module instances of <code>simulate</code> that each generates some data in under a minute, one can specify <code>time_per_instance: 1m</code> and <code>instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
+<p>Typically, <code>DSC</code> and <code>default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code>gaow</code> with their UChicago cnetID.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-remote-jobs">Run remote jobs<a class="anchor-link" href="#Run-remote-jobs">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Command</p>
+
+<pre><code>dsc ... --host /path/to/config.yml</code></pre>
+<p>will load remote configuration in <code>/path/to/config.yml</code> and submit jobs.</p>
+<p>Additionally,</p>
+
+<pre><code>dsc ... --host /path/to/config.yml --to-host file1 dir1 file2</code></pre>
+<p>will sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in <code>DSC::lib_path</code>).</p>
+<p>Caution that to successfully use <code>--host</code> and <code>--to-host</code>, the command program <a href="https://rsync.samba.org"><code>rsync</code></a> have to be available from the local computer.</p>
+
+</div>
+</div>
+</div>
+<hr>
+Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
+</div>
+</div>
+</body>
+</html>

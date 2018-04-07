@@ -11,7 +11,7 @@ footer: 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wan
 
 # These directories contain .ipynb notebooks that will be rendered
 # into webpages.
-include_dir: ["tutorials", "installation", "examples", "manual"]
+include_dir: ["tutorials", "installation", "FAQ", "examples", "reference"]
 
 # Do not add links to the navigation bar for .ipynb notebooks in these
 # directories.
@@ -22,7 +22,7 @@ include_dir: ["tutorials", "installation", "examples", "manual"]
 exclude_file: []
 
 # Notebook used to generate home page.
-homepage: "manual/Overview.ipynb"
+homepage: "reference/Overview.ipynb"
 
 # The name of the homepage link shown in the navigation bar.
 homepage_label: "Home"

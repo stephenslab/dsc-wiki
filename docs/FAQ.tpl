@@ -144,12 +144,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }

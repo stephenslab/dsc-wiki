@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -144,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -252,14 +249,60 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tips-and-Tricks">Tips and Tricks<a class="anchor-link" href="#Tips-and-Tricks">&#182;</a></h1><p>Once you have completed the <a href="First_Course.html">Introduction to DSC</a>,
+you should be ready to write your own DSC.</p>
+<p>This file introduces you
+to some of the most convenient syntax short-cuts we have implemented
+to make DSCs easier to write and read.</p>
+<h2 id="Combining-definitions-of-similar-modules">Combining definitions of similar modules<a class="anchor-link" href="#Combining-definitions-of-similar-modules">&#182;</a></h2><p>Sometimes modules share much of their definition.
+For example:</p>
 
-{%- endblock header -%}
+<pre><code>mean: R(y = mean(x))
+  x: $data
+  $est_mean: y
 
-{% block footer %}
+median: R(y = median(x))
+  x: $data
+  $est_mean: y</code></pre>
+<p>Here DSC allows a shorthand syntax to define both modules:</p>
+
+<pre><code>mean, median: R(y = mean(x)), R(y=median(x))
+  x: $data
+  $est_mean: y</code></pre>
+<h2 id="Aliasing">Aliasing<a class="anchor-link" href="#Aliasing">&#182;</a></h2><h3 id="Renaming-a-parameter">Renaming a parameter<a class="anchor-link" href="#Renaming-a-parameter">&#182;</a></h3><p>This feature allows one to use a different name for a parameter
+than is used in a script. For example:</p>
+
+<pre><code>t: R( y = rt(m, df=2))
+  n: 100, 1000
+  $data: y
+  $true_mean: 3
+  @ALIAS: m = n</code></pre>
+<p>This defines a module with parameter <code>n</code>, and the <code>ALIAS</code> command
+tells DSC to pass the parameter value to the script variable <code>m</code> (rather than
+the default, which is to pass it to the script variable of the same name as the parameter).</p>
+<p>This can be useful when you want two different modules to have the same
+parameter names, even when the scripts use different script variables.</p>
+<h2 id="Module-inheritance">Module inheritance<a class="anchor-link" href="#Module-inheritance">&#182;</a></h2>
+<pre><code>normal: R( x = mu + rnorm(n) )
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
+
+shifted_normal(normal):
+  mu: 1</code></pre>
+
+</div>
+</div>
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}

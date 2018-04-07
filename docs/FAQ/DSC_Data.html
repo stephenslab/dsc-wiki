@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -144,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -252,14 +249,86 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="DSC-data-storage">DSC data storage<a class="anchor-link" href="#DSC-data-storage">&#182;</a></h1><p>This documentation discusses how DSC variables and parameters are handled and stored. The former is relevant to how one think about data flow when developing the benchmark; the latter is relevant to how parameters are used in 1) user provided scripts when executing benchmark and 2) user specified filter conditions when making queries on results.</p>
 
-{%- endblock header -%}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-variables">DSC variables<a class="anchor-link" href="#DSC-variables">&#182;</a></h2><p>DSC variables are module input and output. Since a module input is always output from another module we focus our discussion on handling of module outputs.</p>
+<p>When working in pure R or Python environments users do not have to worry about how module outputs are stored, because all data objects will flow across modules without loss of information using serialized files. Specifically we use <code>RDS</code> for R, and <code>pickle</code> for Python. Under the hood one such file is generated per module instance to include all output variables.</p>
+<p>For mixed languages, currently for R and Python, our solution is to use an <code>rpy2</code> interface to convert between <code>RDS</code> and <code>pickle</code> data to communicate between modules. Caution that information exchanges is no longer loss-less (see <a href="https://github.com/stephenslab/dsc/blob/master/src/dsc_io.py#L33">these codes</a> for how it works -- we will continue to improve these utility functions to support more type exchanges). In the future we may switch to <code>HDF5</code> to support more languages.</p>
+<p>In sum, for R and Python scripts users do not need to worry about files when thinking about DSC variables, though bearing in mind the caveat that mixed language communication is not loss-less and only "shareable" types of objects should be used to communicated cross language.</p>
 
-{% block footer %}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DSC-parameters">DSC parameters<a class="anchor-link" href="#DSC-parameters">&#182;</a></h2><h3 id="Basic-behavior">Basic behavior<a class="anchor-link" href="#Basic-behavior">&#182;</a></h3><table>
+<thead><tr>
+<th style="text-align:center">type</th>
+<th style="text-align:center">DSC interface</th>
+<th style="text-align:center">DSC processed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center"><code>a</code></td>
+<td style="text-align:center"><code>"a"</code></td>
+</tr>
+<tr>
+<td style="text-align:center">raw string</td>
+<td style="text-align:center"><code>"a"</code>, <code>'a'</code></td>
+<td style="text-align:center"><code>"\"a\""</code>, <code>"'a'"</code></td>
+</tr>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center"><code>1</code>, <code>1.0</code></td>
+<td style="text-align:center"><code>1</code>, <code>1</code></td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center"><code>3.14</code></td>
+<td style="text-align:center"><code>3.14</code></td>
+</tr>
+<tr>
+<td style="text-align:center">1-D vector</td>
+<td style="text-align:center"><code>(1,2,3)</code></td>
+<td style="text-align:center">language specific</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center"><code>TRUE</code>, <code>True</code>, <code>true</code>, <code>FALSE</code>, <code>False</code>, <code>false</code></td>
+<td style="text-align:center"><code>1</code>,<code>1</code>,<code>1</code>,<code>0</code>,<code>0</code>,<code>0</code></td>
+</tr>
+<tr>
+<td style="text-align:center">missing</td>
+<td style="text-align:center"><code>NULL</code>, <code>None</code></td>
+<td style="text-align:center">(omitted even when specified)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>FIXME: need to verify and explain for boolean and missing data</strong>.</p>
+<h3 id="Advanced-behavior">Advanced behavior<a class="anchor-link" href="#Advanced-behavior">&#182;</a></h3><p><strong>FIXME: document <code>R()</code>, <code>raw()</code> etc or at least refer to where they are documented; document 1-D vector for different languages; document nested vector</strong></p>
+
+</div>
+</div>
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}

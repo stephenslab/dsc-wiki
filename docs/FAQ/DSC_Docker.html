@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -144,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -252,14 +249,151 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Share-DSC-via-docker">Share DSC via docker<a class="anchor-link" href="#Share-DSC-via-docker">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First you need to install and configure docker:</p>
+<ul>
+<li>Follow <a href="https://www.docker.com/community-edition">Docker installation guild</a> until you can use <code>sudo docker</code> to print the "Hello World" example.</li>
+<li>Run <code>sudo usermod -aG docker $USER</code></li>
+<li>Log out and log back in</li>
+</ul>
 
-{%- endblock header -%}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have provided a docker image for DSC which can be used to</p>
+<ul>
+<li>Run some of the DSC vignettes examples</li>
+<li>Serve as the base docker image to add to it your own benchmarks for others to reproduce.</li>
+</ul>
 
-{% block footer %}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-DSC-base-docker-image">Run DSC base docker image<a class="anchor-link" href="#Run-DSC-base-docker-image">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To use the docker image:</p>
+<div class="highlight"><pre><span></span>docker pull gaow/dsc
+docker run --rm --security-opt label:disable <span class="se">\</span>
+       -v <span class="nv">$USER</span>:/home/docker -v /tmp:/tmp -v <span class="nv">$PWD</span>:<span class="nv">$PWD</span> <span class="se">\</span>
+       -t -P -w <span class="nv">$PWD</span> -u <span class="nv">$UID</span>:<span class="si">${</span><span class="nv">GROUPS</span><span class="p">[0]</span><span class="si">}</span> gaow/dsc <span class="se">\</span>
+       dsc -h
+</pre></div>
+<p>You can add a shortcut to your shell configuration script (<code>~/.bashrc</code> on Linux and <code>~/.bash_profile</code> on Mac) to trigger docker based DSC:</p>
+<div class="highlight"><pre><span></span><span class="nb">alias</span> dsc-docker<span class="o">=</span><span class="s1">&#39;docker run --rm --security-opt label:disable -v $USER:/home/docker -v /tmp:/tmp -v $PWD:$PWD -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc dsc&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For example, to run the <a href="../tutorials/Intro_DSC.html">Introductory DSC tutorial</a>,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/GIT/dsc/vignettes/one_sample_location</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="kn">bash:</span>
+    <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">security</span><span class="o">-</span><span class="n">opt</span> <span class="n">label</span><span class="p">:</span><span class="n">disable</span> \
+        <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">USER</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">docker</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">tmp</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span> <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">PWD</span><span class="p">:</span><span class="err">$</span><span class="n">PWD</span> \
+        <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">w</span> <span class="err">$</span><span class="n">PWD</span> <span class="o">-</span><span class="n">u</span> <span class="err">$</span><span class="n">UID</span><span class="p">:</span><span class="err">$</span><span class="p">{</span><span class="n">GROUPS</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span> <span class="n">gaow</span><span class="o">/</span><span class="n">dsc</span> \
+        <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:22&lt;00:00,  1.17s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">25.351</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}

@@ -1,7 +1,4 @@
-{%- extends 'basic.tpl' -%}
 
-{%- block header -%}
-{{ super() }}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -124,7 +121,7 @@ function sortDataFrame(id, n, dtype) {
 
 <script>
 $( document ).ready(function(){
-            var cfg={'threshold':{{ nb.get('metadata', {}).get('toc', {}).get('threshold', '3') }},     // depth of toc (number of levels)
+            var cfg={'threshold':3,     // depth of toc (number of levels)
              'number_sections': false,
              'toc_cell': false,          // useless here
              'toc_window_display': true, // display the toc window
@@ -144,12 +141,12 @@ $( document ).ready(function(){
             st.toc_index=0;
             // fire the main function with these parameters
             table_of_contents(cfg, st);
-            var file=examplesDict[$("h1:first").attr("id")];
+            var file=FAQDict[$("h1:first").attr("id")];
             $("#toc-level0 a").css("color","#126dce");
             $('a[href="#'+$("h1:first").attr("id")+'"]').hide()
-            var docs=examplesArray;
-            var docs_map=examplesArrayMap;
-            var pos=examplesArray.indexOf(file);
+            var docs=FAQArray;
+            var docs_map=FAQArrayMap;
+            var pos=FAQArray.indexOf(file);
             for (var a=pos;a>=0;a--){
                   $('<li><a href="'+docs[a]+'.html"><font color="#073642"><b>'+docs_map[docs[a]].replace(/_/g," ")+'</b></font></a></li>').insertBefore("#toc-level0 li:eq(0)");
             }
@@ -252,14 +249,169 @@ body {
       </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="DSC-in-5-Minutes-with-Python">DSC in 5 Minutes with Python<a class="anchor-link" href="#DSC-in-5-Minutes-with-Python">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tutorials shows re-implementation of the <a href="5_Minutes.html">5 Minutes example</a> in Python. Source code to run this example can be found <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python">here</a>.</p>
+<p>The DSC script mostly the same as the Quick Start example:</p>
 
-{%- endblock header -%}
+<pre><code>#!/usr/bin/env dsc
 
-{% block footer %}
+normal: normal.py
+  n: 100
+  $data: x
+  $true_mean: 0
+
+t: t.py
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
+
+mean: mean.py
+  x: $data
+  $est_mean: y
+
+median: median.py
+  x: $data
+  $est_mean: y
+
+sq_err: sq.py
+  a: $est_mean
+  b: $true_mean
+  $error: e
+
+abs_err: abs.py
+  a: $est_mean
+  b: $true_mean
+  $error: e 
+
+DSC:
+    define:
+      simulate: normal, t
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * analyze * score
+    exec_path: PY
+    python_modules: numpy
+    output: dsc_result</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You may notice the only difference are the executables (and search path) -- now implemented in Python:</p>
+<div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="n">normal</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">x</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">+</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="n">mean</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="n">median</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="nb">abs</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="n">e</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+
+<span class="o">==&gt;</span> <span class="n">sq</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;==</span>
+<span class="n">e</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+<p>To run the DSC,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_python</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/Documents/GIT/software/dsc/vignettes/one_sample_location_python</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="o">./</span><span class="n">settings</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">30</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking Python module numpy ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">./settings.dsc</span> ...
+INFO: Building execution graph &amp; Running DSC ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:04&lt;00:00,  2.41it/s]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">6.003</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+
 </div>
 </div>
 </body>
 </html>
-{% endblock %}
