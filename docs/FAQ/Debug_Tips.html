@@ -297,19 +297,6 @@ body {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gaow</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
@@ -489,14 +476,10 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Buggy-module-script">Buggy module script<a class="anchor-link" href="#Buggy-module-script">&#182;</a></h2><p>Now let's undermine the module code instead. We change from:</p>
 
-<pre><code>mean: R(y &lt;- mean(x))
-  x: $data
-  $est_mean: y</code></pre>
+<pre><code>mean: R(y &lt;- mean(x))</code></pre>
 <p>to</p>
 
-<pre><code>mean: R(y &lt;- meow(x))
-  x: $data
-  $est_mean: y</code></pre>
+<pre><code>mean: R(y &lt;- "meow")</code></pre>
 <p>As you can probably tell, this will not result an error for this module, but may impact downstream ones. So let's find it out!</p>
 
 </div>
@@ -504,10 +487,10 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_error_v2</span><span class="o">.</span><span class="n">dsc</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_error_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">o</span> <span class="n">dsc_result</span>
 </pre></div>
 
 </div>
@@ -525,31 +508,60 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings_error_v2.dsc</span> ...
+INFO: Constructing DSC from <span class="ansi-green-fg">first_error_v2.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC:  91%|██████████████████████████████████▌   | 10/11 [00:08&lt;00:00,  1.22it/s]
-<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[01278859-93de-4e0c-8126-f4af09cf28eb]: [mse_0]: 
+DSC:  93%|███████████████████████████████████▍  | 14/15 [00:03&lt;00:00,  4.19it/s]
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[317e740e-7dea-478f-ae3d-cfec17674a99]: [abs_err_0]: 
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
-script_4384414397566502935 in &lt;module&gt;
-      ## END code by DSC
+script_-6533540462407766879 in &lt;module&gt;
       
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
+      
+----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/mse_0_0_c3a61422.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc/vignettes/one_sample_location)
-[1c24f16d-7e75-4161-bbd6-97c3e35239bb]: [mse_0]: 
+RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpf1phv0qi.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/abs_err_0_0_909abdf6.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">)
+[ffc0b82c-f9da-42bf-ac5b-99141a1bcaa2]: [sq_err_0]: 
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
-script_4384414397566502935 in &lt;module&gt;
-      ## END code by DSC
+script_-7940773457002835044 in &lt;module&gt;
       
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
+      
+----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/mse_0_0_93b09896.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc/vignettes/one_sample_location)
+RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpt3tkk9_6.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/sq_err_0_0_42c75fd3.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/normal_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">)
+[fe2174d5-8e6c-40f2-81dd-8331983d2c67]: [abs_err_0]: 
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+script_-6533540462407766879 in &lt;module&gt;
+      
+      
+----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
+
+RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpqa9oq6l_.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/abs_err_0_0_5d4f02e1.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/t_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">)
+[d2016ae5-d9fc-4c83-8e9a-8962bdf88cca]: [sq_err_0]: 
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+script_-7940773457002835044 in &lt;module&gt;
+      
+      
+----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
+
+RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpxaew1km1.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/sq_err_0_0_8c068b57.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/t_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">)
 [DSC]: 1 pending step: DSC_0</span>
-<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">If needed, you can open </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg"> and use </span><span class="ansi-green-fg">ctrl-F</span><span class="ansi-magenta-intense-fg"> to search by file names to trace back problematic chunks of code.</span>
-INFO: Elapsed time <span class="ansi-green-fg">11.066</span> seconds.
+<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Files </span><span class="ansi-green-fg">in green</span><span class="ansi-magenta-intense-fg"> in the error prompt above contains codes and error info to help debug.
+Scripts upstream of the error can be found in </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg">.</span>
+INFO: Elapsed time <span class="ansi-green-fg">4.924</span> seconds.
 </pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre></pre>
 </div>
 </div>
 
@@ -561,17 +573,17 @@ INFO: Elapsed time <span class="ansi-green-fg">11.066</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Same as before, we run:</p>
+<p>So there are multiple module failures. In case like this we should check and fix the first one first. Same as before, we check:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">Rscript</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">mse_0_0_93b09896</span><span class="o">.</span><span class="n">R</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="n">dsc_result</span><span class="o">/</span><span class="n">abs_err</span><span class="o">/</span><span class="n">normal_1_mean_1_abs_err_1</span><span class="o">.</span><span class="n">stderr</span>
 </pre></div>
 
 </div>
@@ -588,7 +600,7 @@ INFO: Elapsed time <span class="ansi-green-fg">11.066</span> seconds.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Error in mean_est - true_mean : non-numeric argument to binary operator
+<pre>Error in x - y : non-numeric argument to binary operator
 Execution halted
 </pre>
 </div>
@@ -602,33 +614,36 @@ Execution halted
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>and we examine the code by adding a couple of <code>print</code> commands before the line in question:</p>
+<p>It is not immediately clear what is going on, so we examine the code <code>.sos/abs_err_0_0_909abdf6.R</code> by adding a couple of <code>print</code> commands before the line in question:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="c1">## BEGIN code by DSC</span>
-<span class="n">DSC_1589D5E6</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
-<span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_result/t_1.rds&#39;</span><span class="p">,</span><span class="s1">&#39;dsc_result/t_1_mean_1.rds&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_1589D5E6</span> <span class="o">&lt;-</span> <span class="n">dscrutils</span><span class="p">:::</span><span class="n">merge_lists</span><span class="p">(</span><span class="n">DSC_1589D5E6</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-<span class="n">mean_est</span> <span class="o">&lt;-</span> <span class="n">DSC_1589D5E6</span><span class="err">$</span><span class="n">mean</span>
-<span class="n">true_mean</span> <span class="o">&lt;-</span> <span class="n">DSC_1589D5E6</span><span class="err">$</span><span class="n">true_mean</span>
-<span class="n">DSC_1589D5E6_tic_pt</span> <span class="o">&lt;-</span> <span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="c1">## END code by DSC</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="c1">## r script UUID: 90107557</span>
+<span class="kn">dscrutils:</span><span class="p">::</span><span class="n">empty_text</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stdout&quot;</span><span class="p">,</span> <span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr&quot;</span><span class="p">))</span>
+<span class="n">DSC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
+<span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_result/normal/normal_1.rds&#39;</span><span class="p">,</span><span class="s1">&#39;dsc_result/mean/normal_1_mean_1.rds&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="n">dscrutils</span><span class="p">:::</span><span class="n">merge_lists</span><span class="p">(</span><span class="n">DSC_A0BFA20F</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">DSC_REPLICATE</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">DSC_DEBUG</span><span class="err">$</span><span class="n">replicate</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">est_mean</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">true_mean</span>
+<span class="n">TIC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">set</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">DSC_REPLICATE</span> <span class="o">+</span> <span class="mi">90107557</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">mean_est</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">true_mean</span><span class="p">)</span>
-<span class="n">mse</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean_est</span><span class="o">-</span><span class="n">true_mean</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+<span class="c1">## BEGIN DSC CORE</span>
 
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">&lt;-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="c1">## END DSC CORE</span>
 
-<span class="c1">## BEGIN code by DSC</span>
-<span class="n">saveRDS</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mse</span><span class="o">=</span><span class="n">mse</span><span class="p">,</span> <span class="n">DSC_TIMER</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">DSC_1589D5E6_tic_pt</span><span class="p">),</span> <span class="s1">&#39;dsc_result/t_1_mean_1_mse_1.rds&#39;</span><span class="p">)</span>
-<span class="c1">## END code by DSC</span>
+<span class="n">saveRDS</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">DSC_DEBUG</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">proc</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">TIC_A0BFA20F</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="n">dscrutils</span><span class="p">:::</span><span class="n">load_script</span><span class="p">(),</span> <span class="n">replicate</span><span class="o">=</span><span class="n">DSC_REPLICATE</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">toString</span><span class="p">(</span><span class="n">sessionInfo</span><span class="p">()))),</span> <span class="s1">&#39;dsc_result/abs_err/normal_1_mean_1_abs_err_1.rds&#39;</span><span class="p">)</span>
+<span class="kn">dscrutils:</span><span class="p">::</span><span class="n">rm_if_empty</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stdout&quot;</span><span class="p">,</span> <span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr&quot;</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -658,7 +673,7 @@ Execution halted
 
 <div class="output_subarea output_text output_error">
 <pre>
-Error in mean_est - true_mean: non-numeric argument to binary operator
+Error in x - y: non-numeric argument to binary operator
 Traceback:
 </pre>
 </div>
@@ -672,7 +687,7 @@ Traceback:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It looks like <code>mean_est</code>, instead of being a number, is a string <code>meow</code>. Therefore the line <code>mse = (mean_est-true_mean)^2</code> is doomed to fail. We know from the DSC script that <code>mean_est</code> comes from an upstream module ensemble <code>estimate</code>, that somehow returned <code>meow</code> as output. We can also see from this script that the variable comes from one of <code>'dsc_result/t_1.rds','dsc_result/t_1_mean_1.rds'</code>. From our knowledge in the DSC script we know it should come from <code>'dsc_result/t_1_mean_1.rds'</code> the <code>mean</code> module. Therefore there is nothing we can do in the current script to fix the problem.</p>
+<p>It looks like <code>x</code>, instead of being a number, is a string <code>meow</code>. Therefore the line <code>e &lt;- abs(x - y)</code> is doomed to fail. We know from the DSC script that <code>x</code> comes from an upstream module group <code>analyze</code>, that somehow returned <code>meow</code> as output. We can also see from this script that the variable comes from one of <code>'dsc_result/normal/normal_1.rds','dsc_result/mean/normal_1_mean_1.rds'</code>. From our knowledge of the DSC script we know it should come from <code>'dsc_result/mean/normal_1_mean_1.rds'</code> the <code>mean</code> module. Therefore there is nothing we can do in the current script to fix the problem.</p>
 
 </div>
 </div>
@@ -681,10 +696,10 @@ Traceback:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Debugging-with-upstream-scripts">Debugging with upstream scripts<a class="anchor-link" href="#Debugging-with-upstream-scripts">&#182;</a></h3><p>Now we want to find out what has produced the problematic <code>mean_est</code> variable. That is, we want to find the module instance that generated <code>'dsc_result/t_1_mean_1.rds'</code> from which <code>mean_est</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="dsc_result.scripts.html"><code>dsc_result.scripts.html</code></a>.</p>
-<p>You can open up <a href="dsc_result.scripts.html">this file</a> in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/t_1_mean_1.rds</code>. This leads you to the following:</p>
+<h3 id="Debugging-with-upstream-scripts">Debugging with upstream scripts<a class="anchor-link" href="#Debugging-with-upstream-scripts">&#182;</a></h3><p>Now we want to find out what has produced the problematic <code>x</code> variable. That is, we want to find the module instance that generated <code>'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code>x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../tutorials/dsc_result.scripts_e2.html"><code>dsc_result.scripts.html</code></a>.</p>
+<p>You can open up <a href="../tutorials/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
 <p><img src="../img/debug-tips-1.png" alt="debug-1"></p>
-<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/mse_0_0_93b09896.R</code> to an interactive session, fix the code until <code>.sos/mse_0_0_93b09896.R</code> works, and apply the knowledge learned to the original module <code>R/method/mean.R</code>.</p>
+<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/abs_err_0_0_909abdf6.R</code> to an interactive session, fix it until <code>.sos/abs_err_0_0_909abdf6.R</code> works, and apply the knowledge learned to the original module line <code>mean: R(y &lt;- "meow")</code> in the DSC script.</p>
 
 </div>
 </div>
@@ -710,7 +725,7 @@ dcs file.dsc --target "normal * median * mse" --truncate</code></pre>
 <p>This will ensure all module are tested for at least one instance. Then you can run the benchmark knowing that the chances of errors has already been reduced.</p>
 
 <pre><code>dcs file.dsc</code></pre>
-<h2 id="Log-files">Log files<a class="anchor-link" href="#Log-files">&#182;</a></h2><p>The run-time information are kept in greater detail in <code>*.log</code> file, when used with verbosity level greater than <code>2</code>. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with <code>-v 4</code> and look into the log file for more run-time information to help performing diagnostics.</p>
+<h2 id="More-output-info">More output info<a class="anchor-link" href="#More-output-info">&#182;</a></h2><p>The run-time information are kept in greater when running DSC with verbosity level greater than <code>2</code>. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with <code>-v 4</code> and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics.</p>
 
 </div>
 </div>
