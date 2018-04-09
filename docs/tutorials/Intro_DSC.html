@@ -492,7 +492,72 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we use the <code>dsc</code> command-line program to run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers to simulate the data), with 2 threads:</p>
+<p>Before executing the benchmark, we can use the <code>dsc</code> command-line program to get a summary of what this benchmark includes:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+INFO: <span class="ansi-green-fg">MODULES</span>
++---------+------------+-------+-----------------+
+|         | parameters | input |      output     |
++---------+------------+-------+-----------------+
+|  normal |   mu, n    |       | data, true_mean |
+|    t    |   mu, n    |       | data, true_mean |
+|   mean  |            |   x   |     est_mean    |
+|  median |            |   x   |     est_mean    |
+|  sq_err |            |  x, y |      error      |
+| abs_err |            |  x, y |      error      |
++---------+------------+-------+-----------------+
+
+INFO: <span class="ansi-green-fg">PIPELINES</span>
+1: simulate  -&gt;  analyze  -&gt;  score
+
+INFO: <span class="ansi-green-fg">PIPELINES EXPANDED</span>
+1: normal -&gt; mean -&gt; abs_err
+2: normal -&gt; mean -&gt; sq_err
+3: normal -&gt; median -&gt; abs_err
+4: normal -&gt; median -&gt; sq_err
+5: t -&gt; mean -&gt; abs_err
+6: t -&gt; mean -&gt; sq_err
+7: t -&gt; median -&gt; abs_err
+8: t -&gt; median -&gt; sq_err
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers to simulate the data), with 2 threads:</p>
 
 </div>
 </div>
