@@ -270,7 +270,41 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Wildcard-for-inline-modules">Wildcard for inline modules<a class="anchor-link" href="#Wildcard-for-inline-modules">&#182;</a></h2><p><a href="#Variable-wildcard-131">Variable wild-card</a> <code>$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Please read <a href="../tutorials/Inline_Executable.html">this tutorial</a> for a concrete example.</p>
+<h2 id="Wildcard-for-inline-modules">Wildcard for inline modules<a class="anchor-link" href="#Wildcard-for-inline-modules">&#182;</a></h2><p><a href="#Variable-wildcard-131">Variable wild-card</a> <code>$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Here is a full example using this feature:</p>
+
+<pre><code>#!/usr/bin/env dsc
+
+normal: R(x = rnorm(n,0,1))
+  n: 100
+  $data: x
+  $true_mean: 0
+
+t: R(x = 3+rt(n,df))
+  n: 100
+  df: 2
+  $data: x
+  $true_mean: 3
+
+mean: R(y = mean($(data))) 
+  $est_mean: y
+
+median: R(y = median($(data)))
+  $est_mean: y
+
+sq_err: R(e = ($(est_mean) - $(true_mean))^2)
+  $error: e
+
+abs_err: R(e = abs($(est_mean) - $(true_mean)))
+  $error: e 
+
+DSC:
+    define:
+      simulate: normal, t
+      analyze: mean, median
+      score: abs_err, sq_err
+    run: simulate * analyze * score
+    output: dsc_result</code></pre>
+<p><code>$()</code> in inline module executables specifies the required pipeline variables. Therefore for modules <code>mean</code>, <code>median</code> and <code>sq_err</code> and <code>abs_err</code> only module output needs to be specified -- module input are defined already in this inline module executable style.</p>
 
 </div>
 </div>
@@ -279,7 +313,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Rmarkdown-based-modules">Rmarkdown based modules<a class="anchor-link" href="#Rmarkdown-based-modules">&#182;</a></h2><p>See <a href="../tutorials/Rmd_Executable.html">this tutorial</a> for detailed introduction with an example.</p>
+<h2 id="Rmarkdown-based-modules">Rmarkdown based modules<a class="anchor-link" href="#Rmarkdown-based-modules">&#182;</a></h2><p>See <a href="Rmd_Executable.html">this tutorial</a> for detailed introduction with an example.</p>
 
 </div>
 </div>
