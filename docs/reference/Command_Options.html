@@ -522,11 +522,11 @@ optional arguments:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="To-dump-single-file-from-DSC-benchmark-to-text">To dump single file from DSC benchmark to text<a class="anchor-link" href="#To-dump-single-file-from-DSC-benchmark-to-text">&#182;</a></h3><p><code>dsc-query</code> can also be used to browse single benchmark output file in <code>rds</code> or <code>pkl</code> format. For example:</p>
-
-<pre><code>dsc-query dsc_result/simulate/data_1.pkl -o data.out
+<h3 id="To-dump-single-file-from-DSC-benchmark-to-text">To dump single file from DSC benchmark to text<a class="anchor-link" href="#To-dump-single-file-from-DSC-benchmark-to-text">&#182;</a></h3><p><code>dsc-query</code> can also be used to convert to text file single benchmark output file in <code>rds</code> or <code>pkl</code> format, along with a scripts to reproduce the result. For example:</p>
+<div class="highlight"><pre><span></span>dsc-query dsc_result/simulate/data_1.pkl -o data.out
 INFO: Loading database ...
-INFO: Data dumped to text files data.out and data.out.script.</code></pre>
+INFO: Data dumped to text files data.out and data.out.script.
+</pre></div>
 <p><code>*.out</code> file contains data in plain text, and <code>*.script</code> contains the script that generated the data as well as the time elapsed executing the script.</p>
 
 </div>

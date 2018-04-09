@@ -341,7 +341,7 @@ docker run --rm --security-opt label:disable <span class="se">\</span>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/GIT/dsc/vignettes/one_sample_location</pre>
+<pre>/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location</pre>
 </div>
 </div>
 
@@ -351,14 +351,13 @@ docker run --rm --security-opt label:disable <span class="se">\</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="kn">bash:</span>
-    <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">security</span><span class="o">-</span><span class="n">opt</span> <span class="n">label</span><span class="p">:</span><span class="n">disable</span> \
-        <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">USER</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">docker</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">tmp</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span> <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">PWD</span><span class="p">:</span><span class="err">$</span><span class="n">PWD</span> \
-        <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">w</span> <span class="err">$</span><span class="n">PWD</span> <span class="o">-</span><span class="n">u</span> <span class="err">$</span><span class="n">UID</span><span class="p">:</span><span class="err">$</span><span class="p">{</span><span class="n">GROUPS</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span> <span class="n">gaow</span><span class="o">/</span><span class="n">dsc</span> \
-        <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">security</span><span class="o">-</span><span class="n">opt</span> <span class="n">label</span><span class="p">:</span><span class="n">disable</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">USER</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">docker</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">tmp</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span> <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">PWD</span><span class="p">:</span><span class="err">$</span><span class="n">PWD</span> \
+    <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">w</span> <span class="err">$</span><span class="n">PWD</span> <span class="o">-</span><span class="n">u</span> <span class="err">$</span><span class="n">UID</span><span class="p">:</span><span class="err">$</span><span class="p">{</span><span class="n">GROUPS</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span> <span class="n">gaow</span><span class="o">/</span><span class="n">dsc</span> \
+    <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
 </pre></div>
 
 </div>
@@ -378,10 +377,10 @@ docker run --rm --security-opt label:disable <span class="se">\</span>
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:22&lt;00:00,  1.17s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:16&lt;00:00,  1.23it/s]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">25.351</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">18.142</span> seconds.
 </pre>
 </div>
 </div>
