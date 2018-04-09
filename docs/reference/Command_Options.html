@@ -271,7 +271,7 @@ body {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="o">-</span><span class="n">h</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
 
 </div>
@@ -418,12 +418,21 @@ Other options:
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a companion program to <code>dsc</code> that can be used to extract results from benchmark.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="o">-</span><span class="n">h</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span><span class="o">-</span><span class="n">query</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
 
 </div>
@@ -442,16 +451,16 @@ Other options:
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
                  [--description str [str ...]] [-t WHAT [WHAT ...]]
-                 [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]] [--add-path]
+                 [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]]
                  [--language str] [--addon str [str ...]]
                  [--rds {omit,overwrite}] [-v {0,1,2,3}]
-                 DSC output folder
+                 DSC output folder or a single output file
 
 An internal command to extract meta-table for DSC results (requires &#39;sos-
 essentials&#39; package to use notebook output).
 
 positional arguments:
-  DSC output folder     Path to DSC output.
+  DSC output folder or a single output file
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -476,8 +485,6 @@ optional arguments:
                         Query conditions. (default: None)
   -g G:A,B [G:A,B ...], --groups G:A,B [G:A,B ...]
                         Definition of module groups. (default: None)
-  --add-path            Save the complete path of data files, not just the
-                        base name of file. (default: False)
   --language str        Language kernel to switch to for follow up analysis in
                         notebook generated. (default: None)
   --addon str [str ...]
@@ -502,11 +509,24 @@ optional arguments:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a companion program to <code>dsc</code> that can be used to extract results from benchmark for given conditions. Although <code>dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it -- the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
+<h3 id="To-query-result">To query result<a class="anchor-link" href="#To-query-result">&#182;</a></h3><p>The main goal of <code>dsc-query</code> is to extract results from benchmark given conditions. Although <code>dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it -- the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
 <p>Currently supported languages specific libraries are:</p>
 <ul>
 <li>R: <code>dsc_query</code> function for <a href="https://github.com/stephenslab/dsc/tree/master/dscrutils"><code>dscrutils</code> package</a>.</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="To-dump-single-file-from-DSC-benchmark-to-text">To dump single file from DSC benchmark to text<a class="anchor-link" href="#To-dump-single-file-from-DSC-benchmark-to-text">&#182;</a></h3><p><code>dsc-query</code> can also be used to browse single benchmark output file in <code>rds</code> or <code>pkl</code> format. For example:</p>
+
+<pre><code>dsc-query dsc_result/simulate/data_1.pkl -o data.out
+INFO: Loading database ...
+INFO: Data dumped to text files data.out and data.out.debug.</code></pre>
 
 </div>
 </div>
