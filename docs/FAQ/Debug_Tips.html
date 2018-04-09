@@ -261,13 +261,13 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Module-executable-and-generated-script">Module executable and generated script<a class="anchor-link" href="#Module-executable-and-generated-script">&#182;</a></h2><p>As seen from previous tutorials, the <a href="dsc_result.html">module executables in DSC</a> are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
+<h2 id="Module-executable-and-generated-script">Module executable and generated script<a class="anchor-link" href="#Module-executable-and-generated-script">&#182;</a></h2><p>As seen from previous tutorials, the <a href="../tutorials/dsc_result.html">module executables in DSC</a> are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
 <ol>
 <li>Inconsistency between DSC interface and module executables</li>
 <li>Error from module executables as provided</li>
 </ol>
 <p>In the presence of errors DSC will fail. However the automatically generated script will be saved to disk and will be pointed to you as part of the error prompt on the command console so that you can reproduce and fix the bugs.</p>
-<p>Here we look at <a href="https://github.com/stephenslab/dsc/tree/32311ab75848ae053fe7dbf614d06337a5f8238e/vignettes/one_sample_location">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
+<p>Here we look at <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_error">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
 
 </div>
 </div>
@@ -278,23 +278,42 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Buggy-DSC-interface">Buggy DSC interface<a class="anchor-link" href="#Buggy-DSC-interface">&#182;</a></h2><p>To demonstrate inconsistency between interface and module we change the first block of DSC script from:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
-    seed: R(1:5)</code></pre>
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  mu: 0
+  n: 100
+  $data: x
+  $true_mean: mu</code></pre>
 <p>to:</p>
 
-<pre><code>normal, t: rnorm.R, rt.R
-    weed: R(1:5)</code></pre>
-<p>creating a parameter <code>weed</code>, a typo of <code>seed</code>, that does not exist in <code>rnorm.R</code> and <code>rt.R</code>. Consequently the required <code>seed</code> variable for these routines will not be provided by DSC interface. We save this configuration file as <code>settings_error_v1.dsc</code> and run it:</p>
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  nu: 0
+  n: 100
+  $data: x
+  $true_mean: mu</code></pre>
+<p>creating a parameter <code>nu</code>, a typo of <code>mu</code>, that does not exist in <code>normal</code> module <code>rt.R</code>. Consequently the required <code>mu</code> variable for these routines will not be provided by DSC interface. We save this configuration file as <code>first_error_v1.dsc</code> and run it:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">dsc</span> <span class="n">settings_error_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="kp">skip</span> <span class="n">none</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gaow</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_error_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">o</span> <span class="n">dsc_result</span>
 </pre></div>
 
 </div>
@@ -313,31 +332,33 @@ body {
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">settings_error_v1.dsc</span> ...
+INFO: Constructing DSC from <span class="ansi-green-fg">first_error_v1.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC:  18%|███████                                | 2/11 [00:01&lt;00:05,  1.60it/s]
-<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[3808530b-4117-459c-990c-ab31d5074b42]: [normal_0]: 
+DSC:  53%|████████████████████▊                  | 8/15 [00:03&lt;00:02,  2.54it/s]
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[566b788d-73de-4e34-85ed-b480227a3e5d]: [normal_0]: 
 ---------------------------------------------------------------------------
 RuntimeError                              Traceback (most recent call last)
-script_6123501901101114663 in &lt;module&gt;
-      ## END code by DSC
+script_-3186687848203597564 in &lt;module&gt;
       
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
-
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/normal_0_0_652e6bc3.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc/vignettes/one_sample_location)
-[49bb3658-fb20-4736-b8d4-1d9c2ee0c6f4]: [t_0]: 
----------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-5770973451880312504 in &lt;module&gt;
-      ## END code by DSC
       
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = None, stdout = None)
+----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
 
-RuntimeError: Failed to execute commmand </span><span class="ansi-green-fg">Rscript --default-packages=datasets,methods,utils,stats,grDevices,graphics  /home/gaow/GIT/dsc/vignettes/one_sample_location/.sos/t_0_0_b8a69d4f.R</span><span class="ansi-red-intense-fg"> (ret=1, workdir=/home/gaow/GIT/dsc/vignettes/one_sample_location)
-[DSC]: 9 pending steps: DSC_0, a_mse, b_mse, c_mse, d_mse, a_mean, b_median, c_mean, d_median</span>
-<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">If needed, you can open </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg"> and use </span><span class="ansi-green-fg">ctrl-F</span><span class="ansi-magenta-intense-fg"> to search by file names to trace back problematic chunks of code.</span>
-INFO: Elapsed time <span class="ansi-green-fg">5.065</span> seconds.
+RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmp9arx3lf5.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/normal_0_0_a467d5c4.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/normal/normal_1.stderr</span><span class="ansi-red-intense-fg">)
+[DSC]: 7 pending steps: DSC_0, a_abs_err, b_sq_err, c_abs_err, d_sq_err, a_mean, c_median</span>
+<span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Files </span><span class="ansi-green-fg">in green</span><span class="ansi-magenta-intense-fg"> in the error prompt above contains codes and error info to help debug.
+Scripts upstream of the error can be found in </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg">.</span>
+INFO: Elapsed time <span class="ansi-green-fg">5.150</span> seconds.
 </pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre></pre>
 </div>
 </div>
 
@@ -359,17 +380,17 @@ INFO: Elapsed time <span class="ansi-green-fg">5.065</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Debug-with-the-problematic-script">Debug with the problematic script<a class="anchor-link" href="#Debug-with-the-problematic-script">&#182;</a></h3><p>As prompted in the error message, let's try to execute <code>.sos/t_0_0_b8a69d4f.R</code>:</p>
+<h3 id="Debug-with-the-problematic-script">Debug with the problematic script<a class="anchor-link" href="#Debug-with-the-problematic-script">&#182;</a></h3><p>As prompted in the error message, let's see what's inside <code>dsc_result/normal/normal_1.stderr</code>:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="err">!</span> <span class="n">Rscript</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">t_0_0_b8a69d4f</span><span class="o">.</span><span class="n">R</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="n">dsc_result</span><span class="o">/</span><span class="n">normal</span><span class="o">/</span><span class="n">normal_1</span><span class="o">.</span><span class="n">stderr</span>
 </pre></div>
 
 </div>
@@ -386,7 +407,7 @@ INFO: Elapsed time <span class="ansi-green-fg">5.065</span> seconds.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Error in set.seed(seed) : object &#39;seed&#39; not found
+<pre>Error in rnorm(n, mean = mu, sd = 1) : object &#39;mu&#39; not found
 Execution halted
 </pre>
 </div>
@@ -407,10 +428,10 @@ Execution halted
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">preview</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">t_0_0_b8a69d4f</span><span class="o">.</span><span class="n">R</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="mi">1</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">normal_0_0_a467d5c4</span><span class="o">.</span><span class="n">R</span>
 </pre></div>
 
 </div>
@@ -426,31 +447,23 @@ Execution halted
 <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea ">
-<div class="sos_hint">> .sos/t_0_0_b8a69d4f.R (337 B):</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>## r script UUID: c218f56b48d262e5
-## BEGIN code by DSC
-n &lt;- 1000
-true_mean &lt;- 0
-weed &lt;- 1
-DSC_4AAF65D6_tic_pt &lt;- proc.time()
-## END code by DSC
-set.seed(seed)
-x=true_mean+rt(n,df=2)
-## BEGIN code by DSC
-saveRDS(list(x=x, true_mean=true_mean, DSC_TIMER = proc.time() - DSC_4AAF65D6_tic_pt), &#39;dsc_result/t_1.rds&#39;)
-## END code by DSC
+<pre>## r script UUID: 89241936
+
+dscrutils:::empty_text(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_result/normal/normal_1.stderr&#34;))
+DSC_REPLICATE &lt;- 1
+n &lt;- 100
+nu &lt;- 0
+TIC_C1997B87 &lt;- proc.time()
+set.seed(DSC_REPLICATE + 89241936)
+
+## BEGIN DSC CORE
+x &lt;- rnorm(n,mean = mu,sd = 1)
+## END DSC CORE
+
+saveRDS(list(data=x, true_mean=mu, DSC_DEBUG=list(time=proc.time() - TIC_C1997B87, script=dscrutils:::load_script(), replicate=DSC_REPLICATE, session=toString(sessionInfo()))), &#39;dsc_result/normal/normal_1.rds&#39;)
+dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_result/normal/normal_1.stderr&#34;))
+
 
 </pre>
 </div>
@@ -464,8 +477,8 @@ saveRDS(list(x=x, true_mean=true_mean, DSC_TIMER = proc.time() - DSC_4AAF65D6_ti
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It looks like <code>set.seed()</code> looks for variable <code>seed</code>, which was not provided by DSC. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings_error_v1.dsc">DSC script</a> that we had set <code>weed</code> not <code>seed</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>weed</code> to <code>seed</code> in the DSC script.</p>
-<p>In practice when you identify problems that does not have an obvious fix such as this one, you should load the problematic script <code>.sos/t_0_0_b8a69d4f.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
+<p>It seems like the line <code>x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code>mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_error/first_error_v1.dsc">DSC script</a> that we had set <code>nu</code> not <code>mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>nu</code> to <code>mu</code> in the DSC script.</p>
+<p>In practice when you run into problems that you cannot immediately tell what is going on from <code>err</code> file or script file, you should load the problematic script <code>.sos/normal_0_0_a467d5c4.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
 
 </div>
 </div>
@@ -474,12 +487,16 @@ saveRDS(list(x=x, true_mean=true_mean, DSC_TIMER = proc.time() - DSC_4AAF65D6_ti
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Buggy-module-script">Buggy module script<a class="anchor-link" href="#Buggy-module-script">&#182;</a></h2><p>Now let's undermine the module code instead. We change <code>R/methods/mean.R</code> from:</p>
-<div class="highlight"><pre><span></span>mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>x<span class="p">)</span>
-</pre></div>
+<h2 id="Buggy-module-script">Buggy module script<a class="anchor-link" href="#Buggy-module-script">&#182;</a></h2><p>Now let's undermine the module code instead. We change from:</p>
+
+<pre><code>mean: R(y &lt;- mean(x))
+  x: $data
+  $est_mean: y</code></pre>
 <p>to</p>
-<div class="highlight"><pre><span></span>mean <span class="o">=</span> <span class="s">&#39;meow&#39;</span>
-</pre></div>
+
+<pre><code>mean: R(y &lt;- meow(x))
+  x: $data
+  $est_mean: y</code></pre>
 <p>As you can probably tell, this will not result an error for this module, but may impact downstream ones. So let's find it out!</p>
 
 </div>

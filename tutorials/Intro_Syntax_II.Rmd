@@ -7,7 +7,7 @@ output: html_document
 
 # Introduction to DSC (Part III)
 
-This is a continuation of the [Introduction to DSC (Part II)](First_Course_Elaborated.html). Here we continue the 
+This is a continuation of the [Introduction to DSC (Part II)](Intro_Syntax_I.html). Here we continue the 
 example to illustrate new concepts and syntax, particularly
 the use of parameters to create multiple similar modules.
 
@@ -43,7 +43,7 @@ This introduces two new pieces of syntax:
 
 1. `n` is a parameter,
 whose value is passed to the script variable `n`. (The parameter
-and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of [@alias](alias_link.html).)
+and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of [@ALIAS](../reference/DSC_Configuration.html#Decorator-ALIAS-122).)
 2. The `n: 100, 1000` line defines *two* modules, one with a parameter `n=100` that simulates 100 values, and one with `n=1000` that simulates 1000 observations. Both modules have the same name -- `normal` --
 but they are differentiated by the value of the parameter `n`. For example,
 when querying the results of a dsc we will be able to subset results on the value of `n`. Put another way, `normal` now becomes a 

@@ -7,7 +7,7 @@ output: html_document
 
 # Tips and Tricks
 
-Once you have completed the [Introduction to DSC](First_Course.html), 
+Once you have completed the [Introduction to DSC](../tutorials/Intro_DSC.html), 
 you should be ready to write your own DSC.
 
 This file introduces you

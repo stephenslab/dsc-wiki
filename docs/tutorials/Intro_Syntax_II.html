@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC-(Part-III)">Introduction to DSC (Part III)<a class="anchor-link" href="#Introduction-to-DSC-(Part-III)">&#182;</a></h1><p>This is a continuation of the <a href="First_Course_Elaborated.html">Introduction to DSC (Part II)</a>. Here we continue the
+<h1 id="Introduction-to-DSC-(Part-III)">Introduction to DSC (Part III)<a class="anchor-link" href="#Introduction-to-DSC-(Part-III)">&#182;</a></h1><p>This is a continuation of the <a href="Intro_Syntax_I.html">Introduction to DSC (Part II)</a>. Here we continue the
 example to illustrate new concepts and syntax, particularly
 the use of parameters to create multiple similar modules.</p>
 <p>Material used in this example are in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">the DSC vignettes repo</a>.</p>
@@ -278,7 +278,7 @@ each defining a different module.</li>
 <ol>
 <li><code>n</code> is a parameter,
 whose value is passed to the script variable <code>n</code>. (The parameter
-and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of <a href="alias_link.html">@alias</a>.)</li>
+and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of <a href="../reference/DSC_Configuration.html#Decorator-ALIAS-122">@ALIAS</a>.)</li>
 <li>The <code>n: 100, 1000</code> line defines <em>two</em> modules, one with a parameter <code>n=100</code> that simulates 100 values, and one with <code>n=1000</code> that simulates 1000 observations. Both modules have the same name -- <code>normal</code> --
 but they are differentiated by the value of the parameter <code>n</code>. For example,
 when querying the results of a dsc we will be able to subset results on the value of <code>n</code>. Put another way, <code>normal</code> now becomes a
