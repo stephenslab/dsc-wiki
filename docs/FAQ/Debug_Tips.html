@@ -267,7 +267,7 @@ body {
 <li>Error from module executables as provided</li>
 </ol>
 <p>In the presence of errors DSC will fail. However the automatically generated script will be saved to disk and will be pointed to you as part of the error prompt on the command console so that you can reproduce and fix the bugs.</p>
-<p>Here we look at <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_error">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
+<p>Here we look at <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_debug">this toy example</a>. We undermine the setup to demonstrate the 2 types of errors we have discussed.</p>
 
 </div>
 </div>
@@ -464,7 +464,7 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It seems like the line <code>x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code>mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_error/first_error_v1.dsc">DSC script</a> that we had set <code>nu</code> not <code>mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>nu</code> to <code>mu</code> in the DSC script.</p>
+<p>It seems like the line <code>x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code>mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_debug/first_error_v1.dsc">DSC script</a> that we had set <code>nu</code> not <code>mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>nu</code> to <code>mu</code> in the DSC script.</p>
 <p>In practice when you run into problems that you cannot immediately tell what is going on from <code>err</code> file or script file, you should load the problematic script <code>.sos/normal_0_0_a467d5c4.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
 
 </div>

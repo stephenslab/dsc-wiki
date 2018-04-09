@@ -291,7 +291,7 @@ body {
 <h2 id="Implementation">Implementation<a class="anchor-link" href="#Implementation">&#182;</a></h2><p>DSC uses <a href="https://vatlab.github.io/sos-docs"><code>SoS</code></a> library to execute jobs. In order for remote submission to work, one needs to install <code>sos</code> package to the remote host, and additionally <code>sos-pbs</code> package if the remote uses a PBS system.To install SoS to remote host,</p>
 
 <pre><code>pip install sos sos-pbs</code></pre>
-<p>If you run into troubles, you may find <a href="https://stephenslab.github.io/dsc-wiki/quick_start.html">DSC installation guide</a> a useful resource to resolve problems.</p>
+<p>If you run into troubles, you may find <a href="../installation.html">DSC installation guide</a> a useful resource to resolve problems.</p>
 
 </div>
 </div>
@@ -380,8 +380,8 @@ body {
 <p>The section <code>default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
 <ul>
 <li><code>queue</code>: name of the queue on the remote host that the DSC uses</li>
-<li><code>time_per_instance</code>: maximum computation time for each <a href="Terminology.html#Module-instance-14">module instance</a>.</li>
-<li><code>instance_per_job</code>: how many <a href="Terminology.html#Module-instance-14">module instance</a> to submit as one remote jobs. This is useful consolidating numerous light-weight module instances into one jobs submission. </li>
+<li><code>time_per_instance</code>: maximum computation time for each module instance.</li>
+<li><code>instance_per_job</code>: how many module instances to submit as one remote jobs. This is useful consolidating numerous light-weight module instances into one jobs submission. </li>
 <li><code>n_cpu</code> and <code>mem_per_cpu</code> specify the CPU and memory requirement of a module instance.</li>
 </ul>
 <p>For example for 100 module instances of <code>simulate</code> that each generates some data in under a minute, one can specify <code>time_per_instance: 1m</code> and <code>instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
