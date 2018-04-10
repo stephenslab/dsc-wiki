@@ -253,20 +253,16 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-DSC-(Part-III)">Introduction to DSC (Part III)<a class="anchor-link" href="#Introduction-to-DSC-(Part-III)">&#182;</a></h1><p>This is a continuation of the <a href="Intro_Syntax_I.html">Introduction to DSC (Part II)</a>. Here we continue the
-example to illustrate new concepts and syntax, particularly
-the use of parameters to create multiple similar modules.</p>
+<h1 id="DSC-Basics,-Part-II">DSC Basics, Part II<a class="anchor-link" href="#DSC-Basics,-Part-II">&#182;</a></h1><p>This is a continuation of <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>. Here we continue the example to illustrate new concepts and syntax, particularly the use of parameters to create multiple similar modules.</p>
 <p>Material used in this example are in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">the DSC vignettes repo</a>.</p>
 <h2 id="Defining-similar-modules-via-parameters">Defining similar modules via parameters<a class="anchor-link" href="#Defining-similar-modules-via-parameters">&#182;</a></h2><p>Sometimes it can be helpful to specify multiple similar modules.</p>
-<p>For example, our <code>normal</code> module simulated 100 observations
-from an $N(0,1)$ distribution. What if we would like to
-also define a module that simulates 1000 observations from $N(0,1)$?</p>
+<p>For example, our <code>normal</code> module simulated 100 observations from an $N(0,1)$ distribution. What if we would like to also define a module that simulates 1000 observations from $N(0,1)$?</p>
 <p>DSC makes this easy by:</p>
 <ol>
-<li>Allowing module definitions to include
-parameter values to be passed to the script.</li>
-<li>Allowing parameters to be given more than one value, separated by ",",
-each defining a different module.</li>
+<li><p>Allowing module definitions to include parameter values to be passed to the script.</p>
+</li>
+<li><p>Allowing parameters to be given more than one value, separated by ",", each defining a different module.</p>
+</li>
 </ol>
 <h3 id="Example-1:-a-single-parameter">Example 1: a single parameter<a class="anchor-link" href="#Example-1:-a-single-parameter">&#182;</a></h3><p>For example, consider the following DSC syntax:</p>
 
@@ -276,17 +272,12 @@ each defining a different module.</li>
   $true_mean: 0</code></pre>
 <p>This introduces two new pieces of syntax:</p>
 <ol>
-<li><code>n</code> is a parameter,
-whose value is passed to the script variable <code>n</code>. (The parameter
-and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of <a href="../reference/DSC_Configuration.html#Decorator-ALIAS-122">@ALIAS</a>.)</li>
-<li>The <code>n: 100, 1000</code> line defines <em>two</em> modules, one with a parameter <code>n=100</code> that simulates 100 values, and one with <code>n=1000</code> that simulates 1000 observations. Both modules have the same name -- <code>normal</code> --
-but they are differentiated by the value of the parameter <code>n</code>. For example,
-when querying the results of a dsc we will be able to subset results on the value of <code>n</code>. Put another way, <code>normal</code> now becomes a
-"group" containing two similar modules.</li>
+<li><p><code>n</code> is a parameter, whose value is passed to the script variable <code>n</code>. (The parameter and script variable are conceptually distinct, even though they have the same name. By default DSC passes parameters to the script variable with the same name, but this behaviour can be modified by use of <a href="../reference/DSC_Configuration.html#Decorator-ALIAS-122">@ALIAS</a>.)</p>
+</li>
+<li><p>The <code>n: 100, 1000</code> line defines <em>two</em> modules, one with a parameter <code>n=100</code> that simulates 100 values, and one with <code>n=1000</code> that simulates 1000 observations. Both modules have the same name -- <code>normal</code> -- but they are differentiated by the value of the parameter <code>n</code>. For example, when querying the results of a dsc we will be able to subset results on the value of <code>n</code>. Put another way, <code>normal</code> now becomes a "group" containing two similar modules.</p>
+</li>
 </ol>
-<!----For shorthand we might write `normal(n=100)` and `normal(n=1000)` to
-refer to these two modules (this is just a convenient shorthand to help
-our explanation, not a part of DSC syntax). Both modules take the same kind of input (no input) and produce the same type of output (pipeline variables `$data` and `$true_mean`).--->
+<!-- For shorthand we might write `normal(n=100)` and `normal(n=1000)` to refer to these two modules (this is just a convenient shorthand to help our explanation, not a part of DSC syntax). Both modules take the same kind of input (no input) and produce the same type of output (pipeline variables `$data` and `$true_mean`). -->
 
 <p><em>NOTE:</em> We need to explain <strong>order of evaluation</strong> here.</p>
 <h3 id="Example-2:-multiple-parameters">Example 2: multiple parameters<a class="anchor-link" href="#Example-2:-multiple-parameters">&#182;</a></h3><p>If you provide more than one value for multiple parameters, DSC considers all combinations. For example:</p>
