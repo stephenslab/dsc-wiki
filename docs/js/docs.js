@@ -1,6 +1,6 @@
 var tutorialsArray = ['Intro_DSC', 'Intro_Syntax_I', 'Intro_Syntax_II']
-var tutorialsDict = {'DSC-Essentials,-Part-1-1': 'Intro_DSC', 'Introduction-to-DSC-(Part-II)-1': 'Intro_Syntax_I', 'Introduction-to-DSC-(Part-III)-1': 'Intro_Syntax_II'}
-var tutorialsArrayMap = {'Intro_DSC': 'DSC Essentials, Part 1', 'Intro_Syntax_I': 'Introduction to DSC (Part II)', 'Intro_Syntax_II': 'Introduction to DSC (Part III)'}
+var tutorialsDict = {'Introduction-to-Dynamical-Statistical-Comparisons-1': 'Intro_DSC', 'Introduction-to-DSC-(Part-II)-1': 'Intro_Syntax_I', 'Introduction-to-DSC-(Part-III)-1': 'Intro_Syntax_II'}
+var tutorialsArrayMap = {'Intro_DSC': 'Introduction to Dynamic ... Comparisons', 'Intro_Syntax_I': 'Introduction to DSC (Part II)', 'Intro_Syntax_II': 'Introduction to DSC (Part III)'}
 var installationArray = []
 var installationDict = {}
 var installationArrayMap = {}

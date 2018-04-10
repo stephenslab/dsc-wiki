@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Essentials,-Part-1">DSC Essentials, Part 1<a class="anchor-link" href="#DSC-Essentials,-Part-1">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example.</p>
+<h1 id="Introduction-to-Dynamical-Statistical-Comparisons">Introduction to Dynamical Statistical Comparisons<a class="anchor-link" href="#Introduction-to-Dynamical-Statistical-Comparisons">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example.</p>
 <p>This is a working example—optionally, you may <a href="../installation.html">install DSC</a>, and try running this example DSC program as you read through the tutorial.</p>
 
 </div>
@@ -314,7 +314,7 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Running-a-DSC-benchmark">Running a DSC benchmark<a class="anchor-link" href="#Running-a-DSC-benchmark">&#182;</a></h2><p>There are three essential ingredients to a DSC benchmark:</p>
 <ol>
-<li><p>A "DSC file", which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I.html">Part II of the Introduction</a>).</p>
+<li><p>A "DSC file", which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>).</p>
 </li>
 <li><p>A call to the <code>dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
 </li>
@@ -333,7 +333,7 @@ body {
 <p>In this example, we have a simple task: <em>estimate the mean of a population given a random sample from the population.</em></p>
 <p>We compare two methods for estimating the population mean: the sample mean and the sample median.</p>
 <p>We simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
-<p>And we compute accuracy of the estimatesusing two different metrics: squared error, and absolute error.</p>
+<p>And we compute accuracy of the estimates using two different metrics: squared error, and absolute error.</p>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
 can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>.</p>
-<p>Here, we give only a high-level overview of the DSC file, <code>first_investigation.dsc</code>, deferring a more detailed explanation of the syntax to <a href="Intro_Syntax_I.html">Part II of the Introduction</a>. This is the DSC file:</p>
+<p>Here, we give only a high-level overview of the DSC file, <code>first_investigation.dsc</code>, deferring a more detailed explanation of the syntax to <a href="Intro_Syntax_I.html">DSC Basics, Part II</a>. This is the DSC file:</p>
 
 </div>
 </div>
@@ -2155,7 +2155,7 @@ QmCC"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">&#182;</a></h2><p>To learn more about the syntax of the DSC file so that you can develop your own DSCs, read <a href="Intro_Syntax_I.html">Part II of this Introduction to DSC</a>.</p>
+<h2 id="Next-steps">Next steps<a class="anchor-link" href="#Next-steps">&#182;</a></h2><p>To learn more about the syntax of the DSC file so that you can develop your own DSCs, move to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
 
 </div>
 </div>
