@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Basics,-Part-II">DSC Basics, Part II<a class="anchor-link" href="#DSC-Basics,-Part-II">&#182;</a></h1><p>This is the second part of the "DSC Basics" tutorial. You should have read already <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>. Here we continue the mean estimation example from the previous part to illustrate new concepts and syntax, particularly the use of <em>module parameters</em>.</p>
+<h1 id="DSC-Basics,-Part-II">DSC Basics, Part II<a class="anchor-link" href="#DSC-Basics,-Part-II">&#182;</a></h1><p>This is the second part of the "DSC Basics" tutorial. Before working through this tutorial, you should have already read <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>. Here we build on the mean estimation example from the previous part to illustrate new concepts and syntax in DSC, with an emphasis on the use of <em>module parameters</em>.</p>
 <p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. As before, you may choose to run this example DSC program as you read through the tutorial, but this is not required.</p>
 
 </div>
@@ -268,19 +268,19 @@ body {
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))
   $data: x
   $true_mean: 0</code></pre>
-<p>In defining this module, we made a poor design decision: the mean used to simulate the data is defined twice, once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places. It would be better if we had a single variable that defines the mean of the data.</p>
-<p>In DSC, it is possible to define such a variable, called a <em>module parameter</em>:</p>
+<p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data is defined twice, once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors. It would be preferrable if we had a single variable that defines the mean of the data.</p>
+<p>In DSC, this can be done with a <em>module parameter</em>:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = mu,sd = 1))
   mu: 0
   $data: x
   $true_mean: mu</code></pre>
-<p>Here, a module parameter <code>mu</code> is defined, and it is set to the value zero. Once we have defined module parameter <code>mu</code>, any R code and module outputs within the <code>normal</code> module may refer to this module parameter.</p>
-<p>Now, with this newly defined module, modifying the mean used to simulate the data only requires changing one line of code.</p>
+<p>Here, we defined a module parameter <code>mu</code>, and set it to the value zero. Once we have defined module parameter <code>mu</code>, any R code and module outputs within the <code>normal</code> module may refer to this module parameter. For example, here the second argument of <code>rnorm</code> is set to the value of <code>mu</code>.</p>
+<p>Now modifying the mean used to simulate the data only requires changing one line of code.</p>
 <p>Similarly, we can use a module parameter to specify the mean of the data that are simulated from a $t$ distribution:</p>
 
 <pre><code>t: R(x &lt;- mu + rt(n = 100,df = 2))
-  mu: 3
+  mu: 3d
   $data: x
   $true_mean: mu</code></pre>
 <p>Note that there is no requirement that the module parameters for the <code>normal</code> and <code>t</code> modules have the same name, <code>mu</code>.</p>
@@ -292,22 +292,22 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>Below, we will give some more elaborate examples of using module parameters inside a DSC. Before continuing, it is important to keep in mind these two points:</p>
+<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>Below, we will give some more elaborate examples using module parameters. Before continuing, please keep in mind these two points:</p>
 <ul>
 <li><p>A module parameter cannot depend on any of the module inputs or any other module parameters. In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters.</p>
 </li>
 <li><p>Module parameters are evaluated <em>before</em> the module script. The exact procedure for evaluating a module is as follows:</p>
 <ol>
-<li>Evaluate any R code used to determine the module parameters.</li>
+<li>Evaluate any R code used to determine the values of the module parameters.</li>
 <li>Set the values of the module parameters.</li>
-<li>Initialize the module inputs according to the current values of the pipeline variables.</li>
+<li>Initialize the module inputs according to the current stored values of the pipeline variables.</li>
 <li>For each module parameter and module input, define a script variable with the same name and same value. </li>
-<li>Evaluate the module script or inline source code. Any variable defined within the global environment in which the script is evaluated is retained for resolving the module outputs.</li>
-<li>Set each module output to the stored value of the specified script variable.</li>
+<li>Evaluate the module script or inline source code. Any variable defined within the global environment in which the script is evaluated is retained for resolving any module outputs.</li>
+<li>Set each module output to the stored value of the selected script variable.</li>
 </ol>
 </li>
 </ul>
-<p>The evaluation procedure will become more clear as we illustrate it in some of the examples below.</p>
+<p>This evaluation procedure will become more clear as we illustrate it in some of the examples below.</p>
 
 </div>
 </div>
@@ -316,18 +316,20 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-single-module-parameter-with-multiple-values">A single module parameter with multiple values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-values">&#182;</a></h2><p>In the example above, we showed that module parameters can be useful to streamline code by defining a variable that is used in multiple places inside the module. Another reason module parameters are useful is that they can be used to define multiple similar modules.</p>
-<p>For example, in the <code>normal</code> module above, we simulated 100 random samples from a normal distribution. If we would like to define a second module that simulates 1,000 random samples from a normal distribution, this is easily done by defining a new module parameter that takes on two possible values:</p>
+<h2 id="A-single-module-parameter-with-multiple-alternative-values">A single module parameter with multiple <em>alternative</em> values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-alternative-values">&#182;</a></h2><p>In the example above, we showed that module parameters are useful for simplifying a module definition by defining a variable that is used in multiple places inside the module. Here we will see that module parameters have another powerful feature: they can be used to define multiple similar modules.</p>
+<p>Currently, in the <code>normal</code> module, we simulate 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code>n</code> that takes on two different values:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
   mu: 0
   n: 100, 1000
   $data: x
   $true_mean: mu</code></pre>
-<p>Observe that, since we have defined a new module parameter <code>n</code>, we can refer to this module parameter inside the R code that simulates random draws from a normal distribution.</p>
-<p>This is equivalent to defining two modules, <code>normal_100</code> and <code>normal_1000</code>, that are the identical in every way except that the first module includes parameter definition <code>n: 100</code> and the second defines <code>n: 100</code>. The code above is of course much more succinct.</p>
-<p>The values 100 and 1000 are <em>alternative values</em> for module parameter <code>n</code>; that is, <code>n</code> should not be interpreted as a vector or sequence with two entries, 100 and 1000, but rather should be understood as a single number that is either set to 100 or 1000 depending on the module that is evaluated. Likewise, the values 100 and 1000 define two <em>alternative modules</em>, both named "normal".</p>
-<p>Although we have now defined two modules with the same name, "normal", these two modules can be distinguished in the results by the value for the module parameter <code>n</code>. We will illustrate this next.</p>
+<p>The comma delimits the two possible values of model parameter <code>n</code>.</p>
+<p>Now that we have defined <code>n</code> inside this module, we can refer to this module parameter inside the R code that simulates random draws from a normal distribution.</p>
+<p>This is equivalent to defining two modules, <code>normal_100</code> and <code>normal_1000</code>, that are identical in every way except that the first module includes parameter definition <code>n: 100</code> and the second defines <code>n: 100</code>. The code above is of course much more succinct.</p>
+<p>The values 100 and 1000 are <em>alternative values</em> for module parameter <code>n</code>; that is, the definition of <code>n</code> should not be interpreted as a vector or sequence with two entries, 100 and 1000. Instead, it should be understood as defining a <em>set of alternative values</em>, in which <code>n</code> within any given module is set to 100 or 1000. To put it another way, <code>n: 100, 1000</code> defines two <em>alternative values</em> for module parameter <code>n</code>, and likewise defines two <em>alternative modules</em> that are the same in every way except for the setting of <code>n</code>.</p>
+<p>A distinguishing property of module parameters with multiple alternative values is that <em>their order does not matter</em>. For example, if we instead wrote <code>n: 1000, 100</code>, <em>the DSC results will be exactly the same</em>. (The only thing that will change is the order in which the results will appear in the tables, and the way in which the results are stored in files.)</p>
+<p>Now that we have defined two <code>normal</code> modules, there is also the question of how these modules can be distinguished in the results; for example, you may want to compare the accuracy of the estimates in the larger and smaller simulated data sets. Next we will see that the results from these two modules can be selected according to the stored value of the module parameter <code>n</code>.</p>
 
 </div>
 </div>
