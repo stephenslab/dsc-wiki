@@ -316,7 +316,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-single-module-parameter-with-multiple-alternative-values">A single module parameter with multiple <em>alternative</em> values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-alternative-values">&#182;</a></h2><p>In the example above, we showed that module parameters are useful for simplifying a module definition by defining a variable that is used in multiple places inside the module. Here we will see that module parameters have another powerful feature: they can be used to define multiple similar modules.</p>
+<h2 id="A-single-module-parameter-with-multiple-alternative-values">A single module parameter with multiple alternative values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-alternative-values">&#182;</a></h2><p>In the example above, we showed that module parameters are useful for simplifying a module definition by defining a variable that is used in multiple places inside the module. Here we will see that module parameters have another powerful feature: they can be used to define multiple similar modules.</p>
 <p>Currently, in the <code>normal</code> module, we simulate 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code>n</code> that takes on two different values:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
@@ -338,13 +338,285 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Executing-and-querying-the-DSC-when-module-alternatives-are-defined-with-a-module-parameter">Executing and querying the DSC when module alternatives are defined with a module parameter<a class="anchor-link" href="#Executing-and-querying-the-DSC-when-module-alternatives-are-defined-with-a-module-parameter">&#182;</a></h2><p>Here we examine how the new DSC works in practice.</p>
+<h2 id="Executing-the-DSC-with-two-alternative-normal-and-t-modules">Executing the DSC with two alternative <code>normal</code> and <code>t</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-two-alternative-normal-and-t-modules">&#182;</a></h2><p>In our new DSC, <code>simulate_data_twice.dsc</code>, we define the two <code>simulate</code> modules as follows:</p>
+
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  mu: 0
+  n: 100, 1000
+  $data: x
+  $true_mean: mu
+
+t: R(x &lt;- mu + rt(n,df = 2))
+  mu: 3
+  n: 100, 1000
+  $data: x
+  $true_mean: mu</code></pre>
+<p>The rest of the DSC remains unchanged from before.</p>
+<p>To run the DSC benchmark, change the working directory (here we have assumed the dsc repository is stored in the git subdirectory of your home directory),</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">git</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
+<span class="n">pwd</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/Users/pcarbo/git/dsc/vignettes/one_sample_location
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>remove any previously generated results,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">Rf</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">html</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">log</span> <span class="n">first_investigation</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>then run 10 replicates of all the pipelines:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">simulate_data_twice</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
+INFO: Constructing DSC from <span class="ansi-green-fg">simulate_data_twice.dsc</span> ...
+INFO: Building execution graph &amp; running DSC ...
+DSC: 100%|██████████████████████████████████████| 15/15 [00:51&lt;00:00,  2.49s/it]
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time <span class="ansi-green-fg">53.970</span> seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Comparing-the-DSC-result-with-n=100-and-n=1000">Comparing the DSC result with <code>n=100</code> and <code>n=1000</code><a class="anchor-link" href="#Comparing-the-DSC-result-with-n=100-and-n=1000">&#182;</a></h2><p><em>Add text here.</em></p>
 <ul>
-<li><p>Run the DSC.</p>
-</li>
-<li><p>The two modules have the same name, but they can be identified in the results by different values for <code>n</code>.</p>
-</li>
+<li>The two modules have the same name, but they can be identified in the results by different values for <code>n</code>.</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s2">&quot;~/git/dsc/vignettes/one_sample_location&quot;</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span>
+<span class="n">dscout</span> <span class="o">&lt;-</span>
+  <span class="n">dscquery</span><span class="p">(</span><span class="n">dsc</span><span class="o">.</span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;first_investigation&quot;</span><span class="p">,</span>
+           <span class="n">targets</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;simulate.n&quot;</span><span class="p">,</span><span class="s2">&quot;simulate.true_mean&quot;</span><span class="p">,</span><span class="s2">&quot;analyze&quot;</span><span class="p">,</span><span class="s2">&quot;score.error&quot;</span><span class="p">))</span>
+<span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Running shell command:
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpuFA2aT/file4a332912f0f6.csv -f --target simulate.n simulate.true_mean analyze score.error 
+Loading dsc-query output from CSV file.
+Reading DSC outputs:
+ - simulate.true_mean: extracted atomic values
+ - score.error: extracted atomic values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+160
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>Text goes here.</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="k">with</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">simulate</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>        simulate.n
+simulate 100 1000
+  normal  40   40
+  t       40   40</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>Text goes here.</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span> <span class="o">&lt;-</span> <span class="n">subset</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">score</span> <span class="o">==</span> <span class="s2">&quot;sq_err&quot;</span><span class="p">)</span>
+<span class="k">as</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="k">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate</span><span class="o">.</span><span class="n">n</span><span class="p">),</span><span class="n">function</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="err">$</span><span class="n">score</span><span class="o">.</span><span class="n">error</span><span class="p">))))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>            100     1000
+mean   0.308991 0.004709
+median 0.015792 0.002163</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>Text goes here.</em></p>
 
 </div>
 </div>
