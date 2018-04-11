@@ -217,7 +217,8 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Quick-Start">Quick Start<a class="anchor-link" href="#Quick-Start">&#182;</a></h1><p>Follow these five steps to quickly get started using DSC. If you are familiar with <code>docker</code> and would like to try out DSC without installing, you can follow <a href="FAQ/DSC_Docker.html">instructions here</a> and jump directly to step 5 from there.</p>
+<h1 id="Quick-Start">Quick Start<a class="anchor-link" href="#Quick-Start">&#182;</a></h1><p>Follow these steps to quickly get started using DSC. If you are familiar with <code>docker</code> and would like to try out DSC without installing, you can follow <a href="FAQ/DSC_Docker.html">instructions here</a> and jump directly to step 5 from there.</p>
+<p>If you encounter problems, please see <a href="#Troubleshooting">Troubleshooting</a> at the bottom of this page.</p>
 
 </div>
 </div>
@@ -397,7 +398,7 @@ Thank you for installing Miniconda3!</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-to-do-if-dscquery-in-R-complains-about-dsc-query-command-not-found-yet-I-can-use-it-from-command-console?">What to do if <code>dscquery</code> in R complains about <code>dsc-query</code> command not found yet I can use it from command console?<a class="anchor-link" href="#What-to-do-if-dscquery-in-R-complains-about-dsc-query-command-not-found-yet-I-can-use-it-from-command-console?">&#182;</a></h3><p>If you are using DSC in RStudio, you will need to adjust your <code>~/.Renviron</code> settings, e.g. if your <code>dsc-query</code> is in <code>/home/osboxes/miniconda3/bin</code> (use <code>which dsc-query</code> to figure this out) then your <code>~/.Renviron</code> should look like:</p>
+<h3 id="What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">What to do if I try to run <code>dscquery</code> in RStudio, and it complains that the <code>dsc-query</code> command is not found?<a class="anchor-link" href="#What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">&#182;</a></h3><p>If you are using DSC in RStudio, you will need to adjust your <code>~/.Renviron</code> settings, e.g. if your <code>dsc-query</code> is in <code>/home/osboxes/miniconda3/bin</code> (use <code>which dsc-query</code> to figure this out) then your <code>~/.Renviron</code> should look like:</p>
 
 <pre><code>$ cat ~/.Renviron
 PATH=/home/osboxes/miniconda3/bin:$PATH</code></pre>
