@@ -338,7 +338,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Executing-the-DSC-with-two-alternative-normal-and-t-modules">Executing the DSC with two alternative <code>normal</code> and <code>t</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-two-alternative-normal-and-t-modules">&#182;</a></h2><p>In our new DSC, <code>simulate_data_twice.dsc</code>, we define the two <code>simulate</code> modules as follows:</p>
+<h2 id="Executing-the-DSC-with-alternative-simulate-modules">Executing the DSC with alternative <code>simulate</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-alternative-simulate-modules">&#182;</a></h2><p>In our new mean estimation example, we define the <code>simulate</code> modules as follows:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
   mu: 0
@@ -352,6 +352,7 @@ t: R(x &lt;- mu + rt(n,df = 2))
   $data: x
   $true_mean: mu</code></pre>
 <p>The rest of the DSC remains unchanged from before.</p>
+<p>This new DSC is implemeted by file <code>simulate_data_twice.dsc</code> inside the <code>one_sample_location</code> vignette folder.</p>
 <p>To run the DSC benchmark, change the working directory (here we have assumed the dsc repository is stored in the git subdirectory of your home directory),</p>
 
 </div>
@@ -400,7 +401,7 @@ t: R(x &lt;- mu + rt(n,df = 2))
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">Rf</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">html</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">log</span> <span class="n">first_investigation</span>
@@ -415,14 +416,14 @@ t: R(x &lt;- mu + rt(n,df = 2))
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>then run 10 replicates of all the pipelines:</p>
+<p>then let's run 10 replicates of all the pipelines:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">simulate_data_twice</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span>
@@ -445,10 +446,10 @@ t: R(x &lt;- mu + rt(n,df = 2))
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">simulate_data_twice.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:51&lt;00:00,  2.49s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:47&lt;00:00,  2.37s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">53.970</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">49.815</span> seconds.
 </pre>
 </div>
 </div>
@@ -461,17 +462,14 @@ INFO: Elapsed time <span class="ansi-green-fg">53.970</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Comparing-the-DSC-result-with-n=100-and-n=1000">Comparing the DSC result with <code>n=100</code> and <code>n=1000</code><a class="anchor-link" href="#Comparing-the-DSC-result-with-n=100-and-n=1000">&#182;</a></h2><p><em>Add text here.</em></p>
-<ul>
-<li>The two modules have the same name, but they can be identified in the results by different values for <code>n</code>.</li>
-</ul>
+<h2 id="Inspecting-the-DSC-results-with-n=100-and-n=1000">Inspecting the DSC results with <code>n=100</code> and <code>n=1000</code><a class="anchor-link" href="#Inspecting-the-DSC-results-with-n=100-and-n=1000">&#182;</a></h2><p>Now we will view the DSC results in R. Change the R working directory to the location of the DSC file, and use the dscquery function from the <code>dscrutils</code> package to load the DSC results into R:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s2">&quot;~/git/dsc/vignettes/one_sample_location&quot;</span><span class="p">)</span>
@@ -497,7 +495,7 @@ INFO: Elapsed time <span class="ansi-green-fg">53.970</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpuFA2aT/file4a332912f0f6.csv -f --target simulate.n simulate.true_mean analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpU40I0r/file5f34164f5246.csv -f --target simulate.n simulate.true_mean analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_mean: extracted atomic values
@@ -526,14 +524,14 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Text goes here.</em></p>
+<p>The DSC command we ran above generated results for 10 replicates of 16 pipelines, doubling the number of pipelines we had before. This is expected because we now have 4 <code>simulate</code> modules (2 <code>normal</code> modules and 2 <code>t</code> modules), whereas before we had 2 <code>simulate</code> modules. To confirm this, we see that each of the <code>simulate</code> modules is run 40 times:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="k">with</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">simulate</span><span class="o">.</span><span class="n">n</span><span class="p">))</span>
@@ -571,18 +569,20 @@ simulate 100 1000
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Text goes here.</em></p>
+<p>We would expect that estimates improve with more data. We can quickly check this by comparing the average error (e.g., the squared error) in the pipelines with 100 samples against the average error in the pipelines with 1000 samples:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dat</span> <span class="o">&lt;-</span> <span class="n">subset</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">score</span> <span class="o">==</span> <span class="s2">&quot;sq_err&quot;</span><span class="p">)</span>
-<span class="k">as</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="k">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate</span><span class="o">.</span><span class="n">n</span><span class="p">),</span><span class="n">function</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="err">$</span><span class="n">score</span><span class="o">.</span><span class="n">error</span><span class="p">))))</span>
+<span class="k">as</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span>
+            <span class="k">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate</span><span class="o">.</span><span class="n">n</span><span class="p">)),</span>
+            <span class="n">function</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="err">$</span><span class="n">score</span><span class="o">.</span><span class="n">error</span><span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -616,7 +616,7 @@ median 0.015792 0.002163</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Text goes here.</em></p>
+<p>Indeed, based on the results from these 10 replicates, we see that the accuracy of both methods (mean and median) improves considerably with more data, on average, and in both cases the median is more accurate than the mean on average.</p>
 
 </div>
 </div>
