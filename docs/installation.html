@@ -365,7 +365,10 @@ Thank you for installing Miniconda3!</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">What do I do if I already have <code>conda</code>, but not python &gt;= 3.6?<a class="anchor-link" href="#What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">&#182;</a></h3><p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
-<p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
+<h4 id="Upgrade-to-Python-3.6">Upgrade to Python 3.6<a class="anchor-link" href="#Upgrade-to-Python-3.6">&#182;</a></h4><p>Run the following to upgrade your Python to 3.6:</p>
+
+<pre><code>conda install python=3.6.3</code></pre>
+<h4 id="Start-from-scratch">Start from scratch<a class="anchor-link" href="#Start-from-scratch">&#182;</a></h4><p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
 
 <pre><code>$ which python
 /home/osboxes/miniconda3/bin/python</code></pre>
@@ -373,9 +376,6 @@ Thank you for installing Miniconda3!</code></pre>
 
 <pre><code>rm -rf /home/osboxes/miniconda3</code></pre>
 <p>Then follow the provided instructions to install Anaconda or Miniconda.</p>
-<p>Alternatively, update Python to the latest version (currently version 3.6.3):</p>
-
-<pre><code>conda install python=3.6.3</code></pre>
 
 </div>
 </div>
