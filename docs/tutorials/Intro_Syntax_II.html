@@ -268,22 +268,22 @@ body {
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))
   $data: x
   $true_mean: 0</code></pre>
-<p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data is defined twice, once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors. It would be preferrable if we had a single variable that defines the mean of the data.</p>
-<p>In DSC, this can be done with a <em>module parameter</em>:</p>
+<p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data is defined twice, once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors. It would be preferrable if the mean of the data were defined once.</p>
+<p>In DSC, this can be accomplished with a <em>module parameter</em>:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = mu,sd = 1))
   mu: 0
   $data: x
   $true_mean: mu</code></pre>
-<p>Here, we defined a module parameter <code>mu</code>, and set it to the value zero. Once we have defined module parameter <code>mu</code>, any R code and module outputs within the <code>normal</code> module may refer to this module parameter. For example, here the second argument of <code>rnorm</code> is set to the value of <code>mu</code>.</p>
+<p>Here, we define a module parameter <code>mu</code>, and set its value zero. Once we have defined <code>mu</code>, any of the R code and module outputs inside the <code>normal</code> module may refer to this module parameter. For example, the second argument of <code>rnorm</code> is set to the value of <code>mu</code>.</p>
 <p>Now modifying the mean used to simulate the data only requires changing one line of code.</p>
-<p>Similarly, we can use a module parameter to specify the mean of the data that are simulated from a $t$ distribution:</p>
+<p>Similarly, we can use a module parameter to specify the mean of the data simulated from a $t$ distribution:</p>
 
 <pre><code>t: R(x &lt;- mu + rt(n = 100,df = 2))
-  mu: 3d
+  mu: 3
   $data: x
   $true_mean: mu</code></pre>
-<p>Note that there is no requirement that the module parameters for the <code>normal</code> and <code>t</code> modules have the same name, <code>mu</code>.</p>
+<p>Note that there is no requirement that the module parameters for the <code>normal</code> and <code>t</code> modules have the same name, <code>mu</code>, although consistent parameter names makes it easier to query the results.</p>
 
 </div>
 </div>
@@ -294,9 +294,9 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>Below, we will give some more elaborate examples using module parameters. Before continuing, please keep in mind these two points:</p>
 <ul>
-<li><p>A module parameter cannot depend on any of the module inputs or any other module parameters. In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters.</p>
+<li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters through use of the <code>raw</code> keyword (explained below). In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters (except when <code>raw</code> is used).</p>
 </li>
-<li><p>Module parameters are evaluated <em>before</em> the module script. The exact procedure for evaluating a module is as follows:</p>
+<li><p>Module parameters are evaluated <em>before</em> the module script (except whenever <code>raw</code> is used). The exact procedure for evaluating a module is as follows:</p>
 <ol>
 <li>Evaluate any R code used to determine the values of the module parameters.</li>
 <li>Set the values of the module parameters.</li>
