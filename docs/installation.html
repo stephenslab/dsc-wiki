@@ -217,7 +217,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Quick-Start">Quick Start<a class="anchor-link" href="#Quick-Start">&#182;</a></h1><p>Follow these steps to quickly get started using DSC. If you are familiar with <code>docker</code> and would like to try out DSC without installing, you can follow <a href="FAQ/DSC_Docker.html">instructions here</a> and jump directly to step 5 from there.</p>
+<h1 id="Installation-Guide">Installation Guide<a class="anchor-link" href="#Installation-Guide">&#182;</a></h1><p>Follow these steps to quickly get started using DSC. If you are familiar with <code>docker</code> and would like to try out DSC without installing, you can follow <a href="FAQ/DSC_Docker.html">instructions here</a> and jump directly to step 5 from there.</p>
 <p>If you encounter problems, please see <a href="#Troubleshooting">Troubleshooting</a> at the bottom of this page.</p>
 
 </div>
@@ -238,7 +238,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are automatically bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
+<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
 
 <pre><code>python --version
 pip --version</code></pre>
@@ -262,14 +262,12 @@ pip3 --version</code></pre>
 
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 
-<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
-                psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
 
 <pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 
-<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py \
-                psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
 
 </div>
