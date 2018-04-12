@@ -321,6 +321,79 @@ Core features in DSC are directly implemented in SoS whenever applicable. DSC al
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Installation-troubleshoot">Installation troubleshoot<a class="anchor-link" href="#Installation-troubleshoot">&#182;</a></h2><h4 id="I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">I am new to <code>conda</code>. Do you have advice for setting it up?<a class="anchor-link" href="#I-am-new-to-conda.-Do-you-have-advice-for-setting-it-up?">&#182;</a></h4><p>Here we provide some suggestions for installing <a href="https://conda.io/miniconda.html">Miniconda</a> with Python 3. (The instructions below worked for Miniconda3 4.4.10 -- future versions may have a different 
+installation procedure.)</p>
+<p>First, download the version Miniconda built for your operating system. On a Mac computer, for example, open up a terminal and run these commands:</p>
+
+<pre><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
+./Miniconda3-latest-MacOSX-x86_64.sh</code></pre>
+<p>Follow the prompt to install it (use <code>ctrl+F</code> a couple of times to quickly jump to the end of the Licenses if you have read them before). At the end of installation, the installer will ask you something like this:</p>
+
+<pre><code>Do you wish the installer to prepend the Miniconda3 install location
+to PATH in your /home/&lt;user_name&gt;/.bashrc ? [yes|no]
+[no] &gt;&gt;&gt;</code></pre>
+<p>If you are not familiar with <code>conda</code>, our recommendation is to type <code>no</code> for now. Then the installer would say something like:</p>
+
+<pre><code>You may wish to edit your .bashrc to prepend the Miniconda3 install location to PATH:
+export PATH=/&lt;path_to_conda&gt;/bin:$PATH
+Thank you for installing Miniconda3!</code></pre>
+<p>The next step is important: open an empty text file <code>~/.bash_conda</code>, copy the "<code>export PATH=...</code>" line <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type</p>
+
+<pre><code>source ~/.bash_conda</code></pre>
+<p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code>source</code> with this file</strong>. If you do this often, you may want to add this line to your <code>.bashrc</code> file.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">What do I do if I already have <code>conda</code>, but not python &gt;= 3.6?<a class="anchor-link" href="#What-do-I-do-if-I-already-have-conda,-but-not-python-&gt;=-3.6?">&#182;</a></h4><p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
+<h5 id="Upgrade-to-Python-3.6">Upgrade to Python 3.6<a class="anchor-link" href="#Upgrade-to-Python-3.6">&#182;</a></h5><p>Run the following to upgrade your Python to 3.6:</p>
+
+<pre><code>conda install python=3.6.3</code></pre>
+<h5 id="Start-from-scratch">Start from scratch<a class="anchor-link" href="#Start-from-scratch">&#182;</a></h5><p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
+
+<pre><code>$ which python
+/home/osboxes/miniconda3/bin/python</code></pre>
+<p>Next, remove <code>/home/osboxes/miniconda3</code>:</p>
+
+<pre><code>rm -rf /home/osboxes/miniconda3</code></pre>
+<p>Then follow the provided instructions to install Anaconda or Miniconda.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">What do I do when I do not have permission to install Python packages?<a class="anchor-link" href="#What-do-I-do-when-I-do-not-have-permission-to-install-Python-packages?">&#182;</a></h4><p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code>--user</code> switch to the <code>pip</code> command:</p>
+
+<pre><code>pip install --user dsc</code></pre>
+<p><strong>Important note:</strong> The <code>--user</code> switch will install packages to the <code>~/.local</code> hidden directory. This may cause problems if <code>dsc</code> is upgraded at a later date without the <code>--user</code> switch.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">What to do if I try to run <code>dscquery</code> in RStudio, and it complains that the <code>dsc-query</code> command is not found?<a class="anchor-link" href="#What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">&#182;</a></h4><p>If you are using DSC in RStudio, you will need to adjust your <code>~/.Renviron</code> settings, e.g. if your <code>dsc-query</code> is in <code>/home/osboxes/miniconda3/bin</code> (use <code>which dsc-query</code> to figure this out) then your <code>~/.Renviron</code> should look like:</p>
+
+<pre><code>$ cat ~/.Renviron
+PATH=/home/osboxes/miniconda3/bin:$PATH</code></pre>
+<p>and restart <code>R</code> to load the setting.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Contribute">Contribute<a class="anchor-link" href="#Contribute">&#182;</a></h2><h4 id="I-would-like-to-help-improve-DSC-documentation.-Where-should-I-start?">I would like to help improve DSC documentation. Where should I start?<a class="anchor-link" href="#I-would-like-to-help-improve-DSC-documentation.-Where-should-I-start?">&#182;</a></h4><p>The wiki is mostly written in Jupyter's <code>.ipynb</code> format for interactive documents that executes bash, R or Python codes. Markdown files (with suffix <code>.Rmd</code>) are also allowed. We welcome your contributions -- for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code>README</code></a> of the wiki source repo to set up the software environment for editing.</p>
 
 </div>
