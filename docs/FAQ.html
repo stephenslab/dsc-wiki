@@ -384,7 +384,7 @@ Thank you for installing Miniconda3!</code></pre>
 <h4 id="What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">What to do if I try to run <code>dscquery</code> in RStudio, and it complains that the <code>dsc-query</code> command is not found?<a class="anchor-link" href="#What-to-do-if-I-try-to-run-dscquery-in-RStudio,-and-it-complains-that-the-dsc-query-command-is-not-found?">&#182;</a></h4><p>If you are using DSC in RStudio, you will need to adjust your <code>~/.Renviron</code> settings, e.g. if your <code>dsc-query</code> is in <code>/home/osboxes/miniconda3/bin</code> (use <code>which dsc-query</code> to figure this out) then your <code>~/.Renviron</code> should look like:</p>
 
 <pre><code>$ cat ~/.Renviron
-PATH=/home/osboxes/miniconda3/bin:$PATH</code></pre>
+PATH=/home/osboxes/miniconda3/bin:${PATH}</code></pre>
 <p>and restart <code>R</code> to load the setting.</p>
 
 </div>
