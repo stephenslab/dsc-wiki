@@ -350,8 +350,20 @@ pip install -U --upgrade-strategy only-if-needed .</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Verify-installation-of-Python-module">5. Verify installation of Python module<a class="anchor-link" href="#5.-Verify-installation-of-Python-module">&#182;</a></h2>
+<h2 id="5.-Verify-installation-of-Python-module">5. Verify installation of Python module<a class="anchor-link" href="#5.-Verify-installation-of-Python-module">&#182;</a></h2><p>Check that the Python module is installed and recognized in your current shell environment by running this command:</p>
+
 <pre><code>pip show dsc</code></pre>
+<p>After running this command, you should see something like this:</p>
+
+<pre><code>Name: dsc
+Version: 0.2.7.2
+Summary: Implementation of Dynamic Statistical Comparisons
+Home-page: https://github.com/stephenslab/dsc
+Author: Gao Wang
+Author-email: gaow@uchicago.edu
+License: MIT
+Location: /home/jsmith/anaconda3/lib/python3.6/site-packages
+Requires: numpy, pandas, sympy, numexpr, sos, sos-pbs, h5py, pyarrow, sqlalchemy, msgpack-python</code></pre>
 
 </div>
 </div>
@@ -360,10 +372,24 @@ pip install -U --upgrade-strategy only-if-needed .</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.-Test-installation-of-Python-executables">6. Test installation of Python executables<a class="anchor-link" href="#6.-Test-installation-of-Python-executables">&#182;</a></h2><h3 id="4c.-Test-installation">4c. Test installation<a class="anchor-link" href="#4c.-Test-installation">&#182;</a></h3><p>Type in command prompt:</p>
+<h2 id="6.-Test-installation-of-Python-executables">6. Test installation of Python executables<a class="anchor-link" href="#6.-Test-installation-of-Python-executables">&#182;</a></h2><p>Run the following commands to verify that the Python executables are accessible in your current shell environment:</p>
 
-<pre><code>dsc -h</code></pre>
-<p>You should see the DSC <a href="reference/Command_Options.html">command interface</a> displayed.</p>
+<pre><code>dsc --version
+dsc-query --version</code></pre>
+<p>For both commands, you should see the software version number printed to the screen.</p>
+<p>If you get an error, and you have verified that the Python module has been successfully installed, the most likely explanation is that the Python executables are stored in a location that is not in your command search path. In particular, this location needs to be included in the <code>PATH</code> environment variable.</p>
+<p><em>NOTE: I think it would be better to move this to the FAQ Troubleshooting section, with title, "What do I do when it says that commands dsc or dsc-query cannot be found"?</em></p>
+<p>The most reliable is to way to find the location of the executables is to run these two commands:</p>
+
+<pre><code>pip show dsc
+pip show dsc --files | grep dsc-query</code></pre>
+<p>The first command gives the install location of the Python module, and the second command gives the install location of the executables <em>which may be relative to the Python module.</em> Based on this, you can run the following command in the bash shell to add the appropriate location to your command search path:</p>
+
+<pre><code>export PATH=&lt;python-exec-path&gt;:$PATH</code></pre>
+<p>where <code>&lt;python-exec-path&gt;</code> was identified from running the commands above. For example, in Anaconda the first and second install locations may look something like <code>/home/jsmith/anaconda3/lib/python3.6/site-packages</code> and <code>../../../bin/dsc-query</code>, in which case running</p>
+
+<pre><code>export PATH=/home/jsmith/anaconda3/lib:$PATH</code></pre>
+<p>should make the <code>dsc</code> and <code>dsc-query</code> commands accessible.</p>
 
 </div>
 </div>
@@ -372,7 +398,7 @@ pip install -U --upgrade-strategy only-if-needed .</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="7.-Install-R-(optional)">7. Install R (optional)<a class="anchor-link" href="#7.-Install-R-(optional)">&#182;</a></h2><p><em>Add instructions here.</em></p>
+<h2 id="7.-Install-R-(optional)">7. Install R (optional)<a class="anchor-link" href="#7.-Install-R-(optional)">&#182;</a></h2><p>R is optional, but highly recommended—it is useful for querying DSC results. It is also required for running any DSC benchmarks that run R code. Follow the instructions on the <a href="https://cran.r-project.org">CRAN website</a> to install R on your computer. DSC also works with <a href="http://rstudio.com">RStudio</a>, although an additional setup step may be required for RStudio.</p>
 
 </div>
 </div>
