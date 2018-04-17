@@ -286,8 +286,8 @@ pip3 --version</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Install-Python-dependencies">3. Install Python dependencies<a class="anchor-link" href="#3.-Install-Python-dependencies">&#182;</a></h2><p>DSC uses <a href="FAQ/Implementation_Details.html">several Python modules</a>. We provide two sets of installation instructions: Python installed with <code>conda</code>, and Python not installed with <code>conda</code>.</p>
-<h3 id="3a.-If-Python-is-installed-with-conda">3a. If Python is installed with <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda">&#182;</a></h3><p>Install the modules required by DSC. First run</p>
+<h2 id="3.-Install-Python-dependencies">3. Install Python dependencies<a class="anchor-link" href="#3.-Install-Python-dependencies">&#182;</a></h2><p>DSC uses <a href="FAQ/Implementation_Details.html">several Python modules</a>. We provide two sets of installation instructions: Python installed with <code>conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code>conda</code>.</p>
+<h3 id="3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">3a. If Python is installed with <code>conda</code> (Anaconda or Miniconda)<a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">&#182;</a></h3><p>Install the modules required by DSC. First run</p>
 
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 <p>then run</p>
@@ -307,13 +307,13 @@ conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3b.-If-Python-is-not-installed-by-conda">3b. If Python is not installed by <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-by-conda">&#182;</a></h3><p>In this case, you can skip this step because <code>pip</code> will automatically install the required packages. However, we caution that:</p>
+<h3 id="3b.-If-Python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-with-conda">&#182;</a></h3><p>In this case, you can skip this step because the <code>pip</code> command below will automatically install the required packages. However, we caution that:</p>
 <ul>
-<li><p>You must have <code>C</code> and <code>Fortran</code> compilers and libraries.</p>
+<li><p>You must have both <code>C</code> and <code>Fortran</code> compilers (and accompanying libraries).</p>
 </li>
-<li><p>Installation <em>will take time</em> because several packages will need to be built from source.</p>
+<li><p>The <code>pip</code> command may take a long time to run because several packages will need to be built from source.</p>
 </li>
-<li><p>Installation of some packages may fail. In so, please try running the command again; <em>sometimes running <code>pip</code> a second time works!</em></p>
+<li><p>Installation of some packages may fail. In so, try running the same command again; <em>sometimes running the same <code>pip</code> command a second time works!</em></p>
 </li>
 </ul>
 
@@ -324,33 +324,58 @@ conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Install-DSC">4. Install DSC<a class="anchor-link" href="#4.-Install-DSC">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>You may run this command to install DSC and all the remaining Python dependencies from source:</p>
+<h2 id="4.-Install-DSC">4. Install DSC<a class="anchor-link" href="#4.-Install-DSC">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>Run this command to install DSC (and any Python dependencies that remain uninstalled):</p>
 
 <pre><code>pip install dsc</code></pre>
-<p>To upgrade the DSC you previously have installed, run the following command:</p>
+<h3 id="4b.-Upgrade-to-latest-stable-release">4b. Upgrade to latest stable release<a class="anchor-link" href="#4b.-Upgrade-to-latest-stable-release">&#182;</a></h3><p>If you already have DSC on your computer, run this command to upgrade DSC to the latest release:</p>
 
 <pre><code>pip install -U --upgrade-strategy only-if-needed dsc</code></pre>
-<p>If you encounter errors, see the <a href="FAQ.html#Installation-troubleshoot">troubleshooting tips</a> below.</p>
-<h3 id="4b.-Install-development-version">4b. Install development version<a class="anchor-link" href="#4b.-Install-development-version">&#182;</a></h3><p>For more users, we recommend installing the most recent stable release following the instructions above. But you also have the option of installing the version in-development by following these steps.</p>
-<p>DSC is closely developed in parallel with the <a href="http://github.com/vatlab/sos">SoS library</a>. The development version (<code>master</code> branch on GitHub) typically requires the development version of SoS.</p>
-<p>First install the latest version of SoS:</p>
+<h3 id="4c.-Upgrade-to-latest-development-version">4c. Upgrade to latest development version<a class="anchor-link" href="#4c.-Upgrade-to-latest-development-version">&#182;</a></h3><p>For most users, we recommend using the most recent stable release following the instructions above. If you would like to install the most recent (unstable) development version, follow these steps.</p>
+<p>DSC is closely developed in parallel with <a href="http://github.com/vatlab/sos">SoS</a>. Therefore, the development version of DSC (maintained in the <code>master</code> branch of the GitHub repository) typically requires the development version of SoS.</p>
+<p>First, download the SoS repository and install the latest development version of SoS:</p>
 
 <pre><code>git clone https://github.com/vatlab/SoS.git
 cd SoS
 pip install -U --upgrade-strategy only-if-needed .</code></pre>
-<p>Then install the latest version of DSC:</p>
+<p>Next, download the DSC repository and install the latest version of DSC:</p>
 
 <pre><code>git clone https://github.com/stephenslab/dsc.git
 cd dsc
 pip install -U --upgrade-strategy only-if-needed .</code></pre>
-<p>If you are running R code within your DSC project, you may also want the latest development version of the <strong>dscrutils</strong> R package. This can be installed from GitHub by running the following code in R:</p>
-<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
-install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
-</pre></div>
-<h3 id="4c.-Test-installation">4c. Test installation<a class="anchor-link" href="#4c.-Test-installation">&#182;</a></h3><p>Type in command prompt:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Verify-installation-of-Python-module">5. Verify installation of Python module<a class="anchor-link" href="#5.-Verify-installation-of-Python-module">&#182;</a></h2>
+<pre><code>pip show dsc</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Test-installation-of-Python-executables">6. Test installation of Python executables<a class="anchor-link" href="#6.-Test-installation-of-Python-executables">&#182;</a></h2><h3 id="4c.-Test-installation">4c. Test installation<a class="anchor-link" href="#4c.-Test-installation">&#182;</a></h3><p>Type in command prompt:</p>
 
 <pre><code>dsc -h</code></pre>
 <p>You should see the DSC <a href="reference/Command_Options.html">command interface</a> displayed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="7.-Install-R-(optional)">7. Install R (optional)<a class="anchor-link" href="#7.-Install-R-(optional)">&#182;</a></h2><p>If you are running R code within your DSC project, you may also want the latest development version of the <strong>dscrutils</strong> R package. This can be installed from GitHub by running the following code in R:</p>
+<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>devtools<span class="p">)</span>
+install_github<span class="p">(</span><span class="s">&quot;stephenslab/dsc&quot;</span><span class="p">,</span>subdir <span class="o">=</span> <span class="s">&quot;dscrutils&quot;</span><span class="p">,</span>force <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
 
 </div>
 </div>
