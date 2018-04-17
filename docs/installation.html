@@ -217,9 +217,9 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Installation-Guide">Installation Guide<a class="anchor-link" href="#Installation-Guide">&#182;</a></h1><p>Follow these steps to quickly get started using DSC.</p>
-<p>If you encounter any problems during one of the installation steps, please see the <a href="FAQ.html#Installation-troubleshoot">"Troubleshooting installation"</a> section in the FAQ for possible solutions.</p>
-<p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a> and would like to try DSC without installing, you can follow the <a href="FAQ/DSC_Docker.html">Docker instructions</a> instead, then jump directly to Installation Step 5 below.</p>
+<h1 id="Installation-Guide">Installation Guide<a class="anchor-link" href="#Installation-Guide">&#182;</a></h1><p>Follow these steps to get started using DSC.</p>
+<p>If you encounter a problem during the installation procedure, please see the <a href="FAQ.html#Installation-troubleshoot">"Troubleshooting installation"</a> section in the FAQ for a possible solution.</p>
+<p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a>, you can follow the <a href="FAQ/DSC_Docker.html">Docker instructions</a> instead of installing DSC from source. Once you have completed the Docker instructinos, jump directly to Installation Step 5 below.</p>
 
 </div>
 </div>
@@ -228,17 +228,26 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Overview-of-the-DSC-components">Overview of the DSC components<a class="anchor-link" href="#Overview-of-the-DSC-components">&#182;</a></h2><p>DSC consists of several components that interact with each other. Before beginning the installation, it is helpful to first be aware of:</p>
+<h2 id="Overview-of-DSC-components">Overview of DSC components<a class="anchor-link" href="#Overview-of-DSC-components">&#182;</a></h2><p>DSC consists of several components that interact with each other. Before beginning the installation, it is helpful to know: (1) what is being installed, (2) where DSC is installed, and (3) what software is needed to run DSC successfully.</p>
+<p>To install DSC, you will need to have the following software on your computer:</p>
 <ol>
-<li><p>What is being installed.</p>
+<li><p><a href="http://python.org">Python</a> (version 3.6 or greater).</p>
 </li>
-<li><p>Where DSC is installed.</p>
+<li><p>Several Python modules, including NumPy and Pandas.</p>
 </li>
-<li><p>What software is needed to run DSC successfully.</p>
+<li><p>Optionally, <a href="https://www.r-project.org">R</a>. Although not required, to get the full benefit of DSC we recommend installing R.</p>
 </li>
 </ol>
-<p>The components of DSC are as follows:</p>
-<p>1.</p>
+<p>The DSC software consists of the following three components:</p>
+<ol>
+<li><p>A <a href="https://docs.python.org/3/tutorial/modules.html">Python module</a> called <code>dsc</code>. It is installed in the same location as other Python modules (unless you choose to override the standard choice).</p>
+</li>
+<li><p>Two Python executables, <code>dsc</code> and <code>dsc-query</code>, that can be run from the command-line shell. These executables are also installed and managed by the <code>pip</code> program. It is installed in the same location as other Python executables (unless you choose to override the standard choice).</p>
+</li>
+<li><p>An R package called <code>dscrutils</code> that provides an interface for querying DSC results in R, as well as tools to run R code inside a DSC program. It is installed in the same location as other R packages.</p>
+</li>
+</ol>
+<p>A complete installation of DSC not only involves installing these components, but also setting up your computing environment to ensure that these components can communicate with each other. We will explain how to do this in the steps below.</p>
 
 </div>
 </div>
@@ -247,9 +256,9 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Install-python-&gt;=-3.6">1. Install python &gt;= 3.6<a class="anchor-link" href="#1.-Install-python-&gt;=-3.6">&#182;</a></h2><p>To use DSC, you must have Python version 3.6 or greater. There are several accepted ways to install Python &gt;= 3.6 for DSC.</p>
-<p><strong>Our recommendation:</strong> install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you would like to start from scratch we recommand using <a href="https://conda.io/miniconda.html">Miniconda</a> due to its light-weight and consquently less complications. <a href="#Troubleshooting">Here</a> are some novice advice on installation and configuration.</p>
-<p><strong> Other options:</strong> DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>, and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code>conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
+<h2 id="1.-Install-python-&gt;=-3.6">1. Install python &gt;= 3.6<a class="anchor-link" href="#1.-Install-python-&gt;=-3.6">&#182;</a></h2><p>To use DSC, you must have Python version 3.6 or greater. There are several ways you can install Python &gt;= 3.6.</p>
+<p><strong>Our recommendation:</strong> Install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you are starting from scratch, we recommend <a href="https://conda.io/miniconda.html">Miniconda</a>. See <a href="#Troubleshooting">here</a> (<em>TO DO: fix this link</em>) for additional advice on installing and configuring Miniconda.</p>
+<p><strong> Other options:</strong> DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code>conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
 
 </div>
 </div>
@@ -258,7 +267,7 @@ $(document).ready(function () {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is frequently release to <a href="https://pypi.python.org/pypi/dsc">pypi</a> which can be accessed via command line tool <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6. To check, run:</p>
+<h2 id="2.-Check-your-Python-installation">2. Check your Python installation<a class="anchor-link" href="#2.-Check-your-Python-installation">&#182;</a></h2><p>DSC is distributed via <a href="https://pypi.python.org/pypi/dsc">pypi</a>. The simplest way to install a Python module from pypi is with <code>pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code>pip</code>, check that you are running the version bundled with Python &gt;= 3.6:</p>
 
 <pre><code>python --version
 pip --version</code></pre>
@@ -267,8 +276,8 @@ pip --version</code></pre>
 <pre><code>python3 --version
 pip3 --version</code></pre>
 <p>If the reported Python version is or greater than 3.6.0 and <code>pip</code> is reported to come from that version (eg. <code>pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
-<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code>python</code>, your pip (python 3.6+) executable is <code>pip</code>. However, you might need to replace <code>python</code> with <code>python3</code> and <code>pip</code> with <code>pip3</code> if they otherwise point to other versions</em></p>
-<p>If you already have some old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see instructions <a href="#Troubleshooting">here</a> for what to do.</p>
+<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code>python</code>, and your pip (python 3.6+) executable is <code>pip</code>. However, you might need to replace <code>python</code> with <code>python3</code> and <code>pip</code> with <code>pip3</code>.</em></p>
+<p>If you already have an old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see <a href="#Troubleshooting">here</a> (<em>TO DO: fix this link</em>) for advice on how to proceed.</p>
 
 </div>
 </div>
@@ -277,18 +286,19 @@ pip3 --version</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Install-dependencies">3. Install dependencies<a class="anchor-link" href="#3.-Install-dependencies">&#182;</a></h2><p>DSC depends on <a href="FAQ/Implementation_Details.html">a number of Python libraries</a>. We provide two sets of installation instructions for these dependencies: one for Python installed by <code>conda</code>, and the other for Python not installed by <code>conda</code>.</p>
-<h3 id="3a.-If-Python-is-installed-by-conda">3a. If Python is installed by <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-by-conda">&#182;</a></h3><p>Install the packages required by DSC:</p>
+<h2 id="3.-Install-Python-dependencies">3. Install Python dependencies<a class="anchor-link" href="#3.-Install-Python-dependencies">&#182;</a></h2><p>DSC uses <a href="FAQ/Implementation_Details.html">several Python modules</a>. We provide two sets of installation instructions: Python installed with <code>conda</code>, and Python not installed with <code>conda</code>.</p>
+<h3 id="3a.-If-Python-is-installed-with-conda">3a. If Python is installed with <code>conda</code><a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda">&#182;</a></h3><p>Install the modules required by DSC. First run</p>
 
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
+<p>then run</p>
 
-<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
-<p>Some of these packages may have already been installed, so make sure that you also run these commands to update any previously installed packages to the latest version:</p>
+<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
+conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
+<p>After running these <code>conda install</code> commands, run these commands to make sure you have the latest versions:</p>
 
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow</code></pre>
-
-<pre><code>conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
-<p>If you encounter errors, see the <a href="#Troubleshooting">troubleshooting tips</a> below.</p>
+<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow
+conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
+conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 
 </div>
 </div>
@@ -297,11 +307,13 @@ pip3 --version</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3b.-If-Python-is-not-installed-by-conda">3b. If Python is not installed by <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-by-conda">&#182;</a></h3><p>Then you can skip this step, because the Python installer <code>pip</code> will automatically take care of installing the required packages. However, we caution that:</p>
+<h3 id="3b.-If-Python-is-not-installed-by-conda">3b. If Python is not installed by <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-by-conda">&#182;</a></h3><p>In this case, you can skip this step because <code>pip</code> will automatically install the required packages. However, we caution that:</p>
 <ul>
-<li><p>Installation <em>will take some time</em> because many required packages will involve source compile. Also your system has to be equipped with <code>C</code> and <code>Fortran</code> compilers and libraries.</p>
+<li><p>You must have <code>C</code> and <code>Fortran</code> compilers and libraries.</p>
 </li>
-<li><p>Installation of some packages may fail. In this case, please try running the command again -- <em>sometimes running the installation command twice fixes the problem.</em></p>
+<li><p>Installation <em>will take time</em> because several packages will need to be built from source.</p>
+</li>
+<li><p>Installation of some packages may fail. In so, please try running the command again; <em>sometimes running <code>pip</code> a second time works!</em></p>
 </li>
 </ul>
 
