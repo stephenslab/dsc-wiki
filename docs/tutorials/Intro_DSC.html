@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-Dynamical-Statistical-Comparisons">Introduction to Dynamical Statistical Comparisons<a class="anchor-link" href="#Introduction-to-Dynamical-Statistical-Comparisons">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example.</p>
+<h1 id="Introduction-to-Dynamical-Statistical-Comparisons">Introduction to Dynamical Statistical Comparisons<a class="anchor-link" href="#Introduction-to-Dynamical-Statistical-Comparisons">&#182;</a></h1><p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example. This tutorial only explains the basic features <em>at a high level.</em> If you prefer to begin with a more precise (and more technical) overview of DSC concepts, see <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
 <p>All the modules in this example are implemented in R. Being familiar with R is certainly helpful, but not essential, as the R code used in the example is not complicated. DSC currently supports two programming languages: R and Python.</p>
 <p>This is a working example—optionally, you may <a href="../installation.html">install DSC</a>, and try running this example DSC program as you read through the tutorial. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">"one sample location" DSC vignette</a>.</p>
 
@@ -264,7 +264,8 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="An-illustration:-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern<a class="anchor-link" href="#An-illustration:-the-simulate-analyze-score-design-pattern">&#182;</a></h2><p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
+<h2 id="An-illustration:-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern<a class="anchor-link" href="#An-illustration:-the-simulate-analyze-score-design-pattern">&#182;</a></h2><p>We begin my considering a special case of DSC.</p>
+<p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
 <ul>
 <li><p>Predict the missing entries of a matrix;</p>
 </li>
@@ -282,7 +283,7 @@ body {
 <li><p>Score how well the method performed $I$ (e.g., by comparing the methods' estimates against the ground-truth provided by the simulation).</p>
 </li>
 </ol>
-<p>DSC can handle more complex settings than this, but this basic structure suffices to explain the key concepts. We call this basic structure the "simulate-analyze-score" design pattern.</p>
+<p>We call this basic structure the "simulate-analyze-score" design pattern. This is only one example of what DSC can handle—it can also handle much more complex settings than this—but this basic structure suffices to explain some of the key concepts.</p>
 
 </div>
 </div>
@@ -345,7 +346,7 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-DSC-file">The DSC file<a class="anchor-link" href="#The-DSC-file">&#182;</a></h2><p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
 can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">"one sample location" DSC vignette</a>.</p>
-<p>Here, we give only a high-level overview of the DSC file, <code>first_investigation.dsc</code>, deferring a more detailed explanation of the syntax to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a> and <a href="Intro_Syntax_II.html">DSC Basics, Part II</a>. This is the DSC file:</p>
+<p>All source code needed to define the DSC is given in a single text file, <code>first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a> and <a href="Intro_Syntax_II.html">DSC Basics, Part II</a>. <strong>For now, don't worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
 
 </div>
 </div>

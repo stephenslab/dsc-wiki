@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DSC-Basics,-Part-I">DSC Basics, Part I<a class="anchor-link" href="#DSC-Basics,-Part-I">&#182;</a></h1><p>This is a continuation of the <a href="Intro_DSC.html">Introduction to DSC</a>. Here we revisit the same example from the first part to illustrate key concepts of DSC, including <em>modules</em>, <em>groups</em> and <em>pipeline variables</em>. More advanced concepts will be introduced in <a href="Intro_Syntax_II.html">Part II</a>.</p>
+<h1 id="DSC-Basics,-Part-I">DSC Basics, Part I<a class="anchor-link" href="#DSC-Basics,-Part-I">&#182;</a></h1><p>This is a continuation of the <a href="Intro_DSC.html">Introduction to DSC</a>. Here we revisit the same example from the first part to explain key concepts in DSC, including <em>modules</em>, <em>groups</em> and <em>pipeline variables</em>. More advanced concepts will be introduced in <a href="Intro_Syntax_II.html">Part II</a>.</p>
 <p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. As before, you may choose to run this example DSC program as you read through the tutorial, but it is not required. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">"one sample location" DSC vignette</a>.</p>
 
 </div>
@@ -275,7 +275,8 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Planning-a-DSC-file">Planning a DSC file<a class="anchor-link" href="#Planning-a-DSC-file">&#182;</a></h2><p>The main aim of DSC is to make your benchmark, or computational experiment, easier to read, easier to maintain, and easier to extend. To achieve these aims, we recommend that you to start by planning out your DSC project.</p>
 <p>We suggest starting the planning by identifying the <em>module types</em> (the key computational steps in your benchmark) and the <em>pipeline variables</em> (the quantities being fed from one step to another). All pipeline variables should be given informative names (which must begin with a <code>$</code>). It is also helpful to give the modules informative names. (<em>Note:</em> unlike other programming languages such as R, names in DSC cannot have a period.)</p>
-<p>Recall, in our working example, that we compared methods for estimating a population mean from a simulated data sample. This example followed the <strong>simulate-analyze-score</strong> design pattern, meaning that the benchmark could be naturally decomposed into three module types:</p>
+<p>Recall, in our working example, that we compared methods for estimating a population mean from a simulated data sample. Although this example was very simple—DSC can handle much more complex settings than this—this example is useful for explaining the basic ideas behind DSC.</p>
+<p>This example followed the <strong>simulate-analyze-score</strong> design pattern, meaning that the benchmark could be naturally decomposed into three module types:</p>
 <ul>
 <li><p>A <code>simulate</code> module that generates a vector of simulated data (<code>$data</code>), and the population mean setting used to simulate these data (<code>$true_mean</code>).</p>
 </li>
