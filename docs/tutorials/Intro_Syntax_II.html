@@ -263,12 +263,28 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Defining-a-module-parameter">Defining a module parameter<a class="anchor-link" href="#Defining-a-module-parameter">&#182;</a></h2><p>In our example DSC, recall we defined the <code>normal</code> module as follows:</p>
+<h2 id="Adding-a-module-parameter-to-normal">Adding a module parameter to <code>normal</code><a class="anchor-link" href="#Adding-a-module-parameter-to-normal">&#182;</a></h2><p>In our example DSC, recall we defined the <code>normal</code> module as follows:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))
   $data: x
   $true_mean: 0</code></pre>
-<p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data was defined twice: once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors.</p>
+<p>Here we propose to make a slight improvement to this module by adding a <em>module parameter</em>, <code>n</code>:</p>
+
+<pre><code>normal: R(x &lt;- rnorm(n,mean = 0,sd = 1))
+  n: 100
+  $data: x
+  $true_mean: 0</code></pre>
+<p>We have defined a module parameter <code>n</code> and set its value to 100. Once we have defined <code>n</code>, any of the R code may refer to this module parameter. In the R code, the first argument of <code>rnorm</code> is set to the value of <code>n</code> (which is 100).</p>
+<p>In this first example, there is not much benefit to defining a module parameter <code>n</code>. In the examples below, the advantages of module parameters will become more apparent.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Adding-a-second-module-parameter-to-normal">Adding a second module parameter to <code>normal</code><a class="anchor-link" href="#Adding-a-second-module-parameter-to-normal">&#182;</a></h2><p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data was defined twice: once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors.</p>
 <p>It would be better if the mean of the data was defined once. In DSC, this can be accomplished with a <em>module parameter</em>:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n = 100,mean = mu,sd = 1))
@@ -279,7 +295,8 @@ body {
 <p>With this change to the module definition, modifying the mean used to simulate the data only requires editing one line of code instead of two.</p>
 <p>Likewise, we can use a module parameter to specify the mean of the data simulated from a $t$ distribution:</p>
 
-<pre><code>t: R(x &lt;- mu + rt(n = 100,df = 2))
+<pre><code>t: R(x &lt;- mu + rt(n,df = 2))
+  n: 100
   mu: 3
   $data: x
   $true_mean: mu</code></pre>
