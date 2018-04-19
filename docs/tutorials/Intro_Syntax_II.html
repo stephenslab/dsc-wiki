@@ -295,7 +295,7 @@ body {
 <p>Here, we have defined a second module parameter <code>mu</code>, and set its value zero. Now the <code>mean</code> argument of <code>rnorm</code> can be set to the value of <code>mu</code>.</p>
 <p>Additionally, since <code>mu</code> is also a script parameter, the module output <code>$true_mean</code> can be set to the value of (script parameter) <code>mu</code>. (In this example, the value of the module parameter happens to be the same as the value of the variable <code>mu</code> used in the R code, but in some cases the R code might modify the value of <code>mu</code>, in which case the module parameter and script parameter will be different. So it is important to keep these quantities distinct.)</p>
 <p>With this change to the module definition, modifying the mean used to simulate the data only requires editing one line of code instead of two.</p>
-<p>Likewise, we can use a module parameter to specify the mean of the data simulated from a $t$ distribution:</p>
+<p>Likewise, we can use a module parameter to specify the mean of the data simulated from a <em>t</em> distribution:</p>
 
 <pre><code>t: R(x &lt;- mu + rt(n,df = 2))
   n: 100
@@ -311,9 +311,9 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>Below, we will give some more elaborate examples with module parameters. Before continuing, it is important to keep in mind these two points:</p>
+<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>In the examples above, we informally introduced the notion of a <em>model parameter.</em> Below, we will give some more elaborate examples with module parameters, so here we take a moment to describe more formally how a module parameter behaves in relation to other components of a module:</p>
 <ul>
-<li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters through use of the <code>raw</code> keyword (this is explained below). In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters (except when <code>raw</code> is used).</p>
+<li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters through use of the <code>raw</code> keyword (this is explained below). In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters (again, the one exception is when <code>raw</code> is used).</p>
 </li>
 <li><p>Module parameters are evaluated before the module script (except when <code>raw</code> is used—see below). The exact procedure for evaluating a module is as follows:</p>
 <ol>
@@ -323,9 +323,9 @@ body {
 </li>
 <li><p>Initialize the module inputs according to the current stored values of the pipeline variables.</p>
 </li>
-<li><p>For each module parameter and module input, define a script variable in the global environment with the same name and same value as the  module parameter or input.</p>
+<li><p>For each module parameter and module input, define a <em>script variable</em> in the global environment in which the script is evaluated with the same name and same value as the module parameter or input.</p>
 </li>
-<li><p>Evaluate the module script or inline source code. All script variables—that is, all variables defined within the global environment in which the script is evaluated—are retained for resolving any module outputs.</p>
+<li><p>Evaluate the module script or inline source code. All script variables are retained for resolving any module outputs.</p>
 </li>
 <li><p>Set each module output to the stored value of the selected script variable.</p>
 </li>
