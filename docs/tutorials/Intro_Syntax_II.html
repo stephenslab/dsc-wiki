@@ -363,7 +363,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Executing-the-DSC-with-alternative-simulate-modules">Executing the DSC with alternative <code>simulate</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-alternative-simulate-modules">&#182;</a></h2><p>Let's go ahead and generate results from our new "mean estimation" DSC. In the new DSC, the <code>simulate</code> modules are defined by two module blocks:</p>
+<h2 id="Executing-the-DSC-with-four-simulate-modules">Executing the DSC with four <code>simulate</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-four-simulate-modules">&#182;</a></h2><p>Let's go ahead and generate results from our new "mean estimation" DSC. In the new DSC, the <code>simulate</code> modules are defined by two module blocks:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
   n: 100, 1000
@@ -661,23 +661,23 @@ median 0.015792 0.002163</pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Two-module-parameters-with-multiple-alternatives">Two module parameters with multiple alternatives<a class="anchor-link" href="#Two-module-parameters-with-multiple-alternatives">&#182;</a></h2><p>If you provide more than one value for multiple module parameters, DSC considers all combinations of the values.</p>
-<p>For example, suppose we want to evaluate estimators of the population mean when the data are simulated from the <em>t</em> distribution with different numbers of degrees of freedom. In DSC, this can be compactly expressed by defining another module parameter, <code>df</code>, with multiple values:</p>
+<p>For example, suppose we want to evaluate estimators of the population mean when the data are simulated from the <em>t</em> distribution with different numbers of degrees of freedom. In DSC, this can be succinctly expressed by defining another module parameter, <code>df</code>, with multiple values:</p>
 
 <pre><code>t: R(x &lt;- mu + rt(n,df))
+  n: 100, 1000
   mu: 3
   df: 2, 4, 10
-  n: 100, 1000
   $data: x
   $true_mean: mu</code></pre>
-<p>This defines 6 <code>t</code> modules from the 6 different ways of setting both the <code>n</code> and <code>df</code> parameters.</p>
-<p>Next, let's clear the previous results and run the new DSC benchmark:</p>
+<p>This new module block defines 6 <code>t</code> modules from the 6 different ways of setting both the <code>n</code> and <code>df</code> parameters.</p>
+<p>Let's clear the previous results and run the DSC benchmark with this new module:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">Rf</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">html</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">log</span> <span class="n">first_investigation</span>
@@ -701,10 +701,10 @@ median 0.015792 0.002163</pre>
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">simulate_multiple_dfs.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [01:55&lt;00:00,  6.08s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [01:36&lt;00:00,  6.44s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">118.543</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">99.327</span> seconds.
 </pre>
 </div>
 </div>
@@ -725,7 +725,7 @@ INFO: Elapsed time <span class="ansi-green-fg">118.543</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dscout2</span> <span class="o">&lt;-</span>
@@ -748,7 +748,7 @@ INFO: Elapsed time <span class="ansi-green-fg">118.543</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpU40I0r/file5f343992f15b.csv -f --target t.n t.df analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//Rtmpf4ksOv/file6bef555d6.csv -f --target t.n t.df analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
@@ -764,14 +764,14 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In total, we have results from 240 pipelines:</p>
+<p>In total, we have results from 240 pipelines, which we can break down as follows:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="k">with</span><span class="p">(</span><span class="n">dscout2</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="o">.</span><span class="n">df</span><span class="p">))</span>
@@ -809,7 +809,7 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Each of the 6 <code>t</code> modules was run 40 times: 2 analyze modules x 2 score modules x 10 replicates.</p>
+<p>Each of the six <code>t</code> modules was run 40 times: 2 analyze modules x 2 score modules x 10 replicates.</p>
 
 </div>
 </div>
@@ -818,17 +818,18 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Using-a-module-parameter-to-set-the-seed">Using a module parameter to set the seed<a class="anchor-link" href="#Using-a-module-parameter-to-set-the-seed">&#182;</a></h2><p>To ensure reproduceable results, it is often necessary to initialize the state, or "seed", for generating the sequence of pseudorandom numbers. DSC automatically provides a default setting for the seed in R, but you may want to override this choice. A common use of module parameters is to modules with different seeds.</p>
-<p>In this example, we define 10 modules that generate normally distributed data sets with 100 samples:</p>
+<h2 id="Using-a-module-parameter-to-set-the-seed">Using a module parameter to set the seed<a class="anchor-link" href="#Using-a-module-parameter-to-set-the-seed">&#182;</a></h2><p>A common use of module parameters is to define modules with different "seeds".</p>
+<p>To ensure reproducible results, it is often necessary to initialize the state, or seed, of the  pseudorandom number generator. (Note that DSC provides a default seed in R.)</p>
+<p>For example, we can define 10 modules that generate 10 normally distributed data sets:</p>
 
 <pre><code>normal: R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))
   seed: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-  mu: 0
   n: 100
+  mu: 0
   $data: x
   $true_mean: mu</code></pre>
 <p>The only difference in the 10 <code>normal</code> modules is the sequence of pseudorandom numbers used to simulate random draws from the normal distribution.</p>
-<p>See <code>multiple_seeds.dsc</code> in the <code>one_sample_location</code> directory for a working example.</p>
+<p>See <code>multiple_seeds.dsc</code> in the <code>one_sample_location</code> directory for the working example.</p>
 
 </div>
 </div>
@@ -838,13 +839,14 @@ t.n     2  4 10
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Combining-module-parameters-with-module-inputs">Combining module parameters with module inputs<a class="anchor-link" href="#Combining-module-parameters-with-module-inputs">&#182;</a></h2><p>It is also possible to combine module parameters with module inputs.</p>
-<p>Recall, in the <a href="Intro_DSC.html">introductory tutorial</a> we defined a third <code>analyze</code> module that implemented the "Winsorized" mean. The <code>trim</code> argument to <code>winsor.mean</code> determines the proportion of the data to "squish" from the top and bottom of the distributions. If we wanted to evaluate the impact that the trimming amount has on the accuracy of the estimate, we could introduce a module parameter <code>trim</code> with multiple settings:</p>
+<p>Recall, in the <a href="Intro_DSC.html">initial tutorial</a> we defined a third <code>analyze</code> module that implemented the "Winsorized" mean. The <code>trim</code> argument to <code>winsor.mean</code> determined what proportion of data to "squish" from the top and bottom of the distribution.</p>
+<p>Suppose we wanted to assess the impact of the trimming on the estimate accuracy. To do this, we could introduce a module parameter <code>trim</code> with multiple settings:</p>
 
 <pre><code>winsor: R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))
   trim: 0.1, 0.2
   x: $data
   $est_mean: y</code></pre>
-<p>For each data set generated by a <code>simulate</code> module, DSC will run two different <code>winsor</code> modules: one with <code>trim = 0.1</code>, and a second with <code>trim = 0.2</code>.</p>
+<p>Each time a data set <code>$data</code> is provided to the <code>simulate</code> module, DSC will run two different <code>winsor</code> modules: one with <code>trim = 0.1</code>, and a second with <code>trim = 0.2</code>.</p>
 <p>Intuitively, one may want to adjust the trim setting <em>dynamically</em> based on the data (e.g., based on the fit to the normal distribution). However, this is not possible in DSC because module parameters must be set independently of the module inputs.</p>
 
 </div>
@@ -854,7 +856,7 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Defining-more-complex-module-parameters-(incomplete)">Defining more complex module parameters (incomplete)<a class="anchor-link" href="#Defining-more-complex-module-parameters-(incomplete)">&#182;</a></h2><p>Above, we showed that DSC defines a module for each combination of the module parameters. Sometimes it is desirable to have finer control over which combinations are module parameters are used. One way to do this is to define a single module parameter that sets the value of multiple parameters used in the script. For example, suppose we wanted to simulate data from <em>t</em> distributions with these three settings of the mean (<code>mu</code>) and number of degrees of freedom (<code>df</code>):</p>
+<h2 id="Working-with-more-complex-module-parameters-(incomplete)">Working with more complex module parameters (incomplete)<a class="anchor-link" href="#Working-with-more-complex-module-parameters-(incomplete)">&#182;</a></h2><p>Above, we showed that DSC defines a module for each combination of the module parameters. Sometimes it is desirable to have finer control over which combinations are module parameters are used. One way to do this is to define a single module parameter that sets the value of multiple parameters used in the script. For example, suppose we wanted to simulate data from <em>t</em> distributions with these three settings of the mean (<code>mu</code>) and number of degrees of freedom (<code>df</code>):</p>
 
 <pre><code>mu  df
 --  --
