@@ -341,12 +341,12 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-single-module-parameter-with-multiple-alternative-values">A single module parameter with multiple alternative values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-alternative-values">&#182;</a></h2><p>Above, we gave a couple examples of defining module parameters. Here, we will demonstrate an important feature of module parameters: they can be used to define multiple modules that are similar to each other.</p>
+<h2 id="A-single-module-parameter-with-multiple-alternative-values">A single module parameter with multiple alternative values<a class="anchor-link" href="#A-single-module-parameter-with-multiple-alternative-values">&#182;</a></h2><p>Above, we gave a couple examples of defining module parameters. Here, we will demonstrate an important feature of module parameters: <em>they can be used to define multiple modules that are similar to each other.</em></p>
 <p>Our current definition of the <code>normal</code> module simulates 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code>n</code> that takes on two different values:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
-  mu: 0
   n: 100, 1000
+  mu: 0
   $data: x
   $true_mean: mu</code></pre>
 <p>The comma delimits the two possible values of model parameter <code>n</code>.</p>
@@ -366,18 +366,18 @@ body {
 <h2 id="Executing-the-DSC-with-alternative-simulate-modules">Executing the DSC with alternative <code>simulate</code> modules<a class="anchor-link" href="#Executing-the-DSC-with-alternative-simulate-modules">&#182;</a></h2><p>Let's go ahead and generate results from our new "mean estimation" DSC. In the new DSC, the <code>simulate</code> modules are defined by two module blocks:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
-  mu: 0
   n: 100, 1000
+  mu: 0
   $data: x
   $true_mean: mu
 
 t: R(x &lt;- mu + rt(n,df = 2))
-  mu: 3
   n: 100, 1000
+  mu: 3
   $data: x
   $true_mean: mu</code></pre>
 <p>The rest of the DSC remains unchanged from before.</p>
-<p>This new DSC is implemeted by <code>simulate_data_twice.dsc</code> inside the <code>one_sample_location</code> vignette folder.</p>
+<p>This new DSC is implemeted by <code>simulate_data_twice.dsc</code> inside the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">one_sample_location</a> vignette folder.</p>
 <p>To run the DSC benchmark, change the working directory (here we have assumed that the dsc repository is stored in the <code>git</code> subdirectory of your home directory),</p>
 
 </div>
@@ -441,7 +441,7 @@ t: R(x &lt;- mu + rt(n,df = 2))
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>then let's run 10 replicates of all the pipelines:</p>
+<p>then run 10 replicates of all the pipelines:</p>
 
 </div>
 </div>
@@ -468,13 +468,14 @@ t: R(x &lt;- mu + rt(n,df = 2))
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
+<pre><span class="ansi-green-intense-fg ansi-bold">INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...</span>
+INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">simulate_data_twice.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:47&lt;00:00,  2.37s/it]
+DSC: 100%|██████████████████████████████████████| 15/15 [00:48&lt;00:00,  2.29s/it]
 INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">49.815</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">51.498</span> seconds.
 </pre>
 </div>
 </div>
@@ -496,14 +497,14 @@ INFO: Elapsed time <span class="ansi-green-fg">49.815</span> seconds.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Inspecting-the-DSC-results-with-n=100-and-n=1000">Inspecting the DSC results with <code>n=100</code> and <code>n=1000</code><a class="anchor-link" href="#Inspecting-the-DSC-results-with-n=100-and-n=1000">&#182;</a></h2><p>Now we will view the DSC results in R. Change the R working directory to the location of the DSC file, and use the dscquery function from the <code>dscrutils</code> package to load the DSC results into R:</p>
+<h2 id="Comparing-the-DSC-results-with-n=100-and-n=1000">Comparing the DSC results with <code>n=100</code> and <code>n=1000</code><a class="anchor-link" href="#Comparing-the-DSC-results-with-n=100-and-n=1000">&#182;</a></h2><p>Now let's inspect the DSC results in R. Change the R working directory to the location of the DSC file, and use the dscquery function from the <code>dscrutils</code> package to load the DSC results into R:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">setwd</span><span class="p">(</span><span class="s2">&quot;~/git/dsc/vignettes/one_sample_location&quot;</span><span class="p">)</span>
@@ -529,10 +530,9 @@ INFO: Elapsed time <span class="ansi-green-fg">49.815</span> seconds.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running shell command:
-dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//RtmpU40I0r/file5f34164f5246.csv -f --target simulate.n simulate.true_mean analyze score.error 
+dsc-query first_investigation -o /var/folders/9b/ck4lp8s140lcksryyh4dppdr0000gn/T//Rtmpf4ksOv/file6b44f1968c.csv -f --target simulate.n analyze score.error 
 Loading dsc-query output from CSV file.
 Reading DSC outputs:
- - simulate.true_mean: extracted atomic values
  - score.error: extracted atomic values
 </pre>
 </div>
@@ -558,7 +558,7 @@ Reading DSC outputs:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The DSC command we ran above generated results for 10 replicates of 16 pipelines, doubling the number of pipelines we had before. This is expected because we now have 4 <code>simulate</code> modules (2 <code>normal</code> modules and 2 <code>t</code> modules), whereas before we had 2 <code>simulate</code> modules. To confirm this, we see that each of the <code>simulate</code> modules is run 40 times:</p>
+<p>The DSC command we ran above generated results for 10 replicates of 16 pipelines. We now have double the number of pipelines we had before, which is expected because we now have 4 <code>simulate</code> modules (2 <code>normal</code> modules and 2 <code>t</code> modules), whereas before we had 2 <code>simulate</code> modules. To confirm this, we see that each of the four <code>simulate</code> modules appears in 40 pipelines:</p>
 
 </div>
 </div>
@@ -603,7 +603,8 @@ simulate 100 1000
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We would expect that estimates improve with more data. We can quickly check this by comparing the average error (e.g., the squared error) in the pipelines with 100 samples against the average error in the pipelines with 1000 samples:</p>
+<p>The <code>"simulate.n"</code> column in the <code>dscout</code> data frame gives the value of module parameter <code>n</code> defined inside a <code>simulate</code> module.</p>
+<p>We would expect that population mean estimates improve with more data. We can quickly check this by comparing the average squared error in the pipelines with 100 samples against the average error in the pipelines with 1,000 samples:</p>
 
 </div>
 </div>
@@ -650,7 +651,7 @@ median 0.015792 0.002163</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Indeed, based on the results from these 10 replicates, we see that the accuracy of both methods (mean and median) improves considerably with more data, on average, and in both cases the median is more accurate than the mean on average.</p>
+<p>Indeed, based on the results from these 10 replicates, we observe that the accuracy of both methods (mean and median) improves considerably with more data (on average), and in both cases the median is more accurate than the mean on average.</p>
 
 </div>
 </div>
