@@ -284,14 +284,16 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Adding-a-second-module-parameter-to-normal">Adding a second module parameter to <code>normal</code><a class="anchor-link" href="#Adding-a-second-module-parameter-to-normal">&#182;</a></h2><p>In defining this module, we made an unfortunate design decision: the mean used to simulate the data was defined twice: once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decided to use a different mean to simulate the data, then we would have to be careful to change the code in two different places, otherwise this would lead to downstream errors.</p>
-<p>It would be better if the mean of the data was defined once. In DSC, this can be accomplished with a <em>module parameter</em>:</p>
+<h2 id="Adding-a-second-module-parameter-to-normal">Adding a second module parameter to <code>normal</code><a class="anchor-link" href="#Adding-a-second-module-parameter-to-normal">&#182;</a></h2><p>In our current design of <code>normal</code>, we made an unfortunate choice: the mean used to simulate the data is defined twice, once inside the call to <code>rnorm</code>, where we set <code>mean = 0</code>, and once when we set the module output <code>$true_mean</code> to zero. If we decide to use a different mean to simulate the data, then we would have to be careful to change the code in two different places.</p>
+<p>It would be better if the mean of the data was defined once. This can be accomplished with a module parameter, which we will name <code>mu</code> (the Greek letter conventionally used to denote the mean):</p>
 
-<pre><code>normal: R(x &lt;- rnorm(n = 100,mean = mu,sd = 1))
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  n: 100
   mu: 0
   $data: x
   $true_mean: mu</code></pre>
-<p>Here, we define a module parameter <code>mu</code>, and set its value zero. Once we have defined <code>mu</code>, any of the R code and module outputs inside the <code>normal</code> module may refer to this module parameter. In this example, the second argument of <code>rnorm</code> is set to the value of <code>mu</code>, and the module output <code>$true_mean</code> is also set to the value of <code>mu</code>.</p>
+<p>Here, we have defined a second module parameter <code>mu</code>, and set its value zero. Now the <code>mean</code> argument of <code>rnorm</code> can be set to the value of <code>mu</code>.</p>
+<p>Additionally, since <code>mu</code> is also a script parameter, the module output <code>$true_mean</code> can be set to the value of (script parameter) <code>mu</code>. (In this example, the value of the module parameter happens to be the same as the value of the variable <code>mu</code> used in the R code, but in some cases the R code might modify the value of <code>mu</code>, in which case the module parameter and script parameter will be different. So it is important to keep these quantities distinct.)</p>
 <p>With this change to the module definition, modifying the mean used to simulate the data only requires editing one line of code instead of two.</p>
 <p>Likewise, we can use a module parameter to specify the mean of the data simulated from a $t$ distribution:</p>
 
@@ -309,8 +311,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p><em>NOTE: I'm wondering if this section should be moved somewhere else on the page; I'm not sure this is the best place for it.</em></p>
-<p>Below, we will give some more elaborate examples with module parameters. Before continuing, it is important to keep in mind these two points:</p>
+<h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>Below, we will give some more elaborate examples with module parameters. Before continuing, it is important to keep in mind these two points:</p>
 <ul>
 <li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters through use of the <code>raw</code> keyword (this is explained below). In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters (except when <code>raw</code> is used).</p>
 </li>
