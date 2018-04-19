@@ -323,7 +323,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Defining-modules-in-a-DSC-file">Defining modules in a DSC file<a class="anchor-link" href="#Defining-modules-in-a-DSC-file">&#182;</a></h2><p>At its simplest, a DSC module definition consists of a name, a script (code) implementing the module, and details of how quantities are to be passed in and out of each script.</p>
+<h2 id="Defining-modules-in-a-DSC-file">Defining modules in a DSC file<a class="anchor-link" href="#Defining-modules-in-a-DSC-file">&#182;</a></h2><p>At its simplest, a DSC module consists of a name, a script (code) implementing the module, and details of how quantities are to be passed in and out of each script.</p>
 <p>Here we illustrate the syntax by explaining each module in our example. To keep the presentation focused on the key concepts, we use a slightly simplified version of the <a href="Intro_DSC.html">mean estimation example</a> that achieves the same
 result; see file <code>first_investigation_simpler.dsc</code> in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a> for the full example.</p>
 
@@ -442,7 +442,7 @@ abs_err: R(e &lt;- abs(x - y))
 </li>
 <li><p><code>define</code> is another keyword indicating that we are defining module groups.</p>
 </li>
-<li><p>We define three module groups: <code>simulate</code>, <code>analyze</code> and <code>score</code>. The defining characteristic of module groups is that they should have a similar function (and, in the simplest case, the same inputs and outputs, although this is not required).</p>
+<li><p>We define three module groups: <code>simulate</code>, <code>analyze</code> and <code>score</code>. The distinguishing characteristic of module groups is that they should have a similar function (and, in the simplest case, the same inputs and outputs, although this is not required).</p>
 </li>
 <li><p><code>run</code> is a keyword indicating that we are defining the computational pipelines (sequences of modules) to be executed.</p>
 </li>
