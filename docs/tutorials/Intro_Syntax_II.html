@@ -875,7 +875,29 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Defining-vector-valued-module-parameters-in-DSC">Defining vector-valued module parameters in DSC<a class="anchor-link" href="#Defining-vector-valued-module-parameters-in-DSC">&#182;</a></h3><p>Now suppose that we want to have finer control over which combinations of <code>sd</code> and <code>df</code> are used to simulate the data; in other words, we do not want to simulate data sets for all combinations of <code>sd</code> and <code>df</code>. One way to accomplish this is to define a new module parameter that stores the settings for <em>both</em> the standard deviation and the degrees of freedom. DSC permits the use of parentheses to define vector-valued module parameters:</p>
+<h3 id="Defining-vector-valued-module-parameters-in-DSC">Defining vector-valued module parameters in DSC<a class="anchor-link" href="#Defining-vector-valued-module-parameters-in-DSC">&#182;</a></h3><p>Now suppose that we want to have finer control over which combinations of <code>sd</code> and <code>df</code> are used to simulate the data; in other words, we do not want to simulate data sets for all combinations of <code>sd</code> and <code>df</code>. For example, suppose we want to simulate data from <em>t</em> distributions with these three settings of the standard deviation (<code>sd</code>) and degrees of freedom (<code>df</code>):</p>
+<table>
+<thead><tr>
+<th style="text-align:center">sd</th>
+<th style="text-align:right">df</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0.5</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td style="text-align:center">0.6</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td style="text-align:center">0.8</td>
+<td style="text-align:right">10</td>
+</tr>
+</tbody>
+</table>
+<p>One way to accomplish this is to define a new module parameter that stores the settings for <em>both</em> the standard deviation and the degrees of freedom. DSC permits the use of parentheses to define vector-valued module parameters:</p>
 
 <pre><code>t: R(x &lt;- mu + params[1] * rt(n,df = params[2]))
   n: 100, 1000
@@ -946,44 +968,18 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Defining-module-parameters-with-raw()">Defining module parameters with <code>raw()</code><a class="anchor-link" href="#Defining-module-parameters-with-raw()">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Sometimes it is desirable to have finer control over which combinations are module parameters are used. One way to do this is to define a single module parameter that sets the value of multiple parameters used in the script. For example, suppose we wanted to simulate data from <em>t</em> distributions with these three settings of the mean (<code>mu</code>) and number of degrees of freedom (<code>df</code>):</p>
+<h3 id="Defining-module-parameters-with-raw()">Defining module parameters with <code>raw()</code><a class="anchor-link" href="#Defining-module-parameters-with-raw()">&#182;</a></h3><p>A third option for defining a module parameter is to use the <code>raw</code> keyword. This is the best option for this example in terms of succinctness and readability, but we have introduced this option last because module parameters with the <code>raw</code> keyword behave quite a bit differently, and therefore <code>raw</code> requires a careful explanation.</p>
+<p>This is the new <code>t</code> module block using the <code>raw</code> keyword</p>
 
-<pre><code>mu  df
---  --
- 0   2
- 1   2
- 2   4</code></pre>
-<p>This cannot be achieved by setting the module parameters <code>mu</code> and <code>df</code> separately because it will automatically define modules for all combinations of <code>mu</code> and <code>df</code>. Instead, we can do something like this:</p>
-
-<pre><code>t: R(mu &lt;- par[1]; df &lt;- par[2]; x &lt;- mu + rt(n,df))
-  par: R(c(mu = 0,df = 2)),
-       R(c(mu = 1,df = 2)),
-       R(c(mu = 2,df = 4))
-  n: 100
+<pre><code>t: R(x &lt;- mu + params["sd"] * rt(n,df = params["df"]))
+  n: 100, 1000
+  mu: 0
+  params: raw(c(sd = 0.5, df = 4)),
+          raw(c(sd = 0.6, df = 6)),
+          raw(c(sd = 0.8, df = 10))
   $data: x
-  $true_mean: 3</code></pre>
-<p>In this example, <code>par</code> is a module parameter with 3 alternative settings, in which each alternative setting is a vector with two elements; the first vector element is the mean of the simulated data, and the second vector element is the number of degrees of freedom.</p>
-<p>Note that the text inside the <code>R()</code> is evaluated as R code.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Defining-module-parameters-with-many-alternative-values-(incomplete)">Defining module parameters with many alternative values (incomplete)<a class="anchor-link" href="#Defining-module-parameters-with-many-alternative-values-(incomplete)">&#182;</a></h2><p>Example for this section:</p>
-<p>Start with an example in which the different values of n are 10^1, 10^1.5, 10^2, etc, all defined within R().</p>
-<p>Then generate many simulated data sets with different values of n, from very small (10) to very large (1e6) using R{}.</p>
-<p>Finally, run the code and show that it works.</p>
+  $true_mean: mu</code></pre>
+<p>As before, ...</p>
 
 </div>
 </div>
