@@ -909,8 +909,8 @@ t.n     2  4 10
           R(c(sd = 0.8, df = 10))
   $data: x
   $true_mean: mu</code></pre>
-<p>In the <code>params: ...</code> statement, the code inside each <code>R(...)</code> is evaluated inside an R environment, then the outcome of each evaluation is used to assign a value to each setting of <code>params</code>. This achieves the same result as above, yet it is also a slight improvement because the intent of the first and second entries is now more clear from the code because the vector entries are labeled by <code>sd</code> and <code>df</code>.</p>
-<p>In general, <code>R()</code> provides much more flexibility in defining complex module parameters because it provides access to the many features of R. (The only restriction is that none of the module inputs can be referenced in the R code.)</p>
+<p>In the "<code>params: ...</code>" statement, the code inside each <code>R(...)</code> is evaluated inside an R environment, then the outcome of each evaluation is used to assign a value to each setting of <code>params</code>. This achieves the same result as above, yet it is also a slight improvement because the intent of the first and second entries is now more clear from the code because the vector entries are labeled by <code>sd</code> and <code>df</code>.</p>
+<p>In general, <code>R()</code> provides much more flexibility in defining complex module parameters because it provides access to the many features of R. (The only restriction is that none of the module inputs can be referenced within the R code.)</p>
 
 </div>
 </div>
@@ -919,7 +919,8 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Defining-module-parameters-with-R{}">Defining module parameters with <code>R{}</code><a class="anchor-link" href="#Defining-module-parameters-with-R{}">&#182;</a></h3>
+<h3 id="Defining-module-parameters-with-R{}">Defining module parameters with <code>R{}</code><a class="anchor-link" href="#Defining-module-parameters-with-R{}">&#182;</a></h3><p>Another option for defining module parameters with R code is to use <code>R{}</code>:</p>
+
 <pre><code>t: R(x &lt;- mu + params[1] * rt(n,df = params[2]))
   n: 100, 1000
   mu: 0
@@ -928,10 +929,15 @@ t.n     2  4 10
                  c(sd = 0.8, df = 10))}
   $data: x
   $true_mean: mu</code></pre>
-<p>Another example:</p>
+<p>The <code>R{}</code> statement evaluates the code given inside the curly braces, then subdivides the elements of the top-level sequence (vector or list) among multiple settings of the module parameters. In other words, a single <code>R{}</code> statement defines a <em>set of alternatives.</em> In this example, the R code evaluates to a list with 3 elements, in which each list element is a vector of length 2. Therefore, <code>params</code> is assigned 3 alternative values, in which each value is a vector of length 2.</p>
+<p>In this particular example, defining the module parameter with <code>R()</code> or <code>R{}</code> achieved the same result, and either way the code is equally understandable, so there is no particular advantage of one syntax over the other. The main utility of <code>R{}</code> is that it is able to succinctly define longer sets of alternative settings. For example, in the random seed example above, creating a module parameter that defines 10 different seeds was rather tedious. The same example using <code>R{}</code> is</p>
 
-<pre><code>seed: R{1:20}</code></pre>
-<p>we may want to simulate data with different degrees of freedom, and then set <code>sd</code> to <em>control for the variance of the simulated data</em>, <code>df/(df - 2)*sd^2</code>. This could be easily achieved</p>
+<pre><code>normal: R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))
+  seed: R{1:10}
+  n: 100
+  mu: 0
+  $data: x
+  $true_mean: mu</code></pre>
 
 </div>
 </div>
