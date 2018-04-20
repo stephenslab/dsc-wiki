@@ -979,7 +979,41 @@ t.n     2  4 10
           raw(c(sd = 0.8, df = 10))
   $data: x
   $true_mean: mu</code></pre>
-<p>As before, ...</p>
+<p>As before, this module block defines $2 \times 3 = 6$ modules, one for each combination of <code>n</code> and <code>params</code>. The end result is the same as the above and, aside from the appearance of <code>raw</code>, the code looks very similar to previous examples. However, there are some fundamental differences in this version:</p>
+<ul>
+<li><p>In each module, the <code>params</code> module parameter is not a vector of length 2; rather it is a "raw" value, which can be considered a character string containing the R expression inside the <code>raw()</code>, e.g., <code>"c(sd = 0.5, df = 4)"</code>.</p>
+</li>
+<li><p>In each module, the script parameter <code>params</code> is assigned to the value of expression evaluated in the R environment. In actual fact this is implemented by prepending R code inside the <code>raw</code> statement to the code inside the <code>R()</code> statement. Therefore, the module block with the <code>raw</code> module parameter <code>params</code> is (for the most part) equivalent to the following three module blocks in which the only difference between the modules is the <code>params</code> assignment inside the R code:</p>
+</li>
+</ul>
+
+<pre><code>t1: R(params &lt;- c(sd = 0.5, df = 4); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
+
+t2: R(params &lt;- c(sd = 0.6, df = 6); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
+
+t3: R(params &lt;- c(sd = 0.8, df = 10); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu</code></pre>
+<p>In this example, the <code>raw</code> keyword provides several advantages:</p>
+<ol>
+<li><p>The code remains succinct.</p>
+</li>
+<li><p>As before, the vector entries are labeled by <code>sd</code> and <code>df</code>, making the code more understandable.</p>
+</li>
+<li><p>Because the code is evaluated in the same R environment as the module script, the labels are retained, and so we can write <code>params$sd</code> and <code>params$df</code> instead of <code>params[1]</code> and <code>params[2]</code> to access the settings of the standard deviation and degrees of freedom.</p>
+</li>
+</ol>
+<p>In summary, the key advantage of <code>raw()</code> over <code>R()</code> is that the R expression is evaluated in the same environment as the module script, so all information about the R object is preserved. <em>Therefore, we generally recommend using <code>raw()</code>, except when it is more desirable to query on the evaluated expression, or when one needs to generate a larger number of parameter settings with <code>R{}</code>.</em></p>
 
 </div>
 </div>
@@ -988,7 +1022,9 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>Add recap here.</p>
+<h2 id="Recap">Recap<a class="anchor-link" href="#Recap">&#182;</a></h2><p>In this tutorial, we showed how module parameters can be used to succinctly define multiple similar modules.</p>
+<p>The multiple similar modules defined in a module block can be identified according to the name of the module and the module parameter settings.</p>
+<p>The keywords <code>raw()</code>, <code>R()</code> and <code>R{}</code> are useful for defining more complex-valued module parameters.</p>
 
 </div>
 </div>
@@ -997,7 +1033,7 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exploring-further">Exploring further<a class="anchor-link" href="#Exploring-further">&#182;</a></h2><p>In this tutorial, we introduced the most essential features of DSC that are sufficient to . There are many other features of DSC that we did not have a chance to mention in these introductory tutorial.</p>
+<h2 id="Exploring-further">Exploring further<a class="anchor-link" href="#Exploring-further">&#182;</a></h2><p>In this tutorial, we introduced the features of DSC that are most essential to developing your own DSC benchmark. There are many other features of DSC that we did not have a chance to explore in these introductory tutorials—to learn more, visit...</p>
 
 </div>
 </div>
