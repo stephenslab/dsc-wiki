@@ -856,8 +856,8 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="More-complex-module-parameters">More complex module parameters<a class="anchor-link" href="#More-complex-module-parameters">&#182;</a></h2><p>Above, we illustrated the use of module parameters to succinctly define multiple similar modules. All the above examples used module parameters with simple ("atomic") values, but in some situations you might what to define module parameters with more complex values (e.g., vectors). DSC provides a great deal of flexibility in defining complex module parameters, potentially with multiple alternative values. [<em>TO DO: Add link here to appropriate place in the DSC Reference Manual.</em>] Here we give just one example.</p>
-<p>For example, suppose we would like to simulate data sets from the <em>t</em> distribution with different numbers of degrees of freedom and variances. This could be easily done by defining two module parameters which multiple alternative settings, in which case DSC will define a module for each combination of the module settings:</p>
+<h2 id="More-complex-module-parameters">More complex module parameters<a class="anchor-link" href="#More-complex-module-parameters">&#182;</a></h2><p>Above, we illustrated the use of module parameters to succinctly define multiple similar modules. All the above examples used module parameters with simple ("atomic") values. Here we illustrate defining module parameters in DSC with more complex values. We focus on the case when the module parameter is a vector of length 2. [<em>TO DO: Add link here to appropriate place in the DSC Reference Manual.</em>]</p>
+<p>Suppose, for example, we would like to simulate data sets from the <em>t</em> distribution with different numbers of degrees of freedom and variances. This could be easily done by defining two module parameters which multiple alternative settings:</p>
 
 <pre><code>t: R(x &lt;- mu + sd * rt(n,df = 2))
   n: 100, 1000
@@ -866,7 +866,7 @@ t.n     2  4 10
   df: 4, 6, 8, 10
   $data: x
   $true_mean: mu</code></pre>
-<p>This module block defines $2 \times 3 \times 4 = 24$ modules, one for each combination of <code>n</code> (the number of samples), <code>sd</code> (the standard deviation) and <code>df</code> (the degrees of freedom).</p>
+<p>DSC will define a module for each combination of the module settings; specifically, this module block defines $2 \times 3 \times 4 = 24$ modules, one for each combination of <code>n</code> (the number of samples), <code>sd</code> (the standard deviation) and <code>df</code> (the degrees of freedom).</p>
 
 </div>
 </div>
