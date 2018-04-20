@@ -818,8 +818,8 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Using-a-module-parameter-to-set-the-seed">Using a module parameter to set the seed<a class="anchor-link" href="#Using-a-module-parameter-to-set-the-seed">&#182;</a></h2><p>A common use of module parameters is to define modules with different "seeds".</p>
-<p>To ensure reproducible results, it is often necessary to initialize the state, or seed, of the  pseudorandom number generator. (Note that DSC provides a default seed in R.)</p>
+<h2 id="Using-a-module-parameter-to-set-the-seed">Using a module parameter to set the seed<a class="anchor-link" href="#Using-a-module-parameter-to-set-the-seed">&#182;</a></h2><p>Here we illustrate another practical use of module parameters for defining modules with different "seeds".</p>
+<p>To ensure reproducible results, it is often necessary to initialize the state, or <em>seed</em>, of the  pseudorandom number generator. For example, in R the sequence of pseudorandom numbers is initialized by calling <code>set.seed(x)</code>, in which <code>x</code> is an integer. (Note that DSC provides a default seed setting in R.)</p>
 <p>For example, we can define 10 modules that generate 10 normally distributed data sets:</p>
 
 <pre><code>normal: R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))
@@ -856,7 +856,90 @@ t.n     2  4 10
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Working-with-more-complex-module-parameters-(incomplete)">Working with more complex module parameters (incomplete)<a class="anchor-link" href="#Working-with-more-complex-module-parameters-(incomplete)">&#182;</a></h2><p>Above, we showed that DSC defines a module for each combination of the module parameters. Sometimes it is desirable to have finer control over which combinations are module parameters are used. One way to do this is to define a single module parameter that sets the value of multiple parameters used in the script. For example, suppose we wanted to simulate data from <em>t</em> distributions with these three settings of the mean (<code>mu</code>) and number of degrees of freedom (<code>df</code>):</p>
+<h2 id="More-complex-module-parameters">More complex module parameters<a class="anchor-link" href="#More-complex-module-parameters">&#182;</a></h2><p>Above, we illustrated the use of module parameters to succinctly define multiple similar modules. All the above examples used module parameters with simple ("atomic") values, but in some situations you might what to define module parameters with more complex values (e.g., vectors). DSC provides a great deal of flexibility in defining complex module parameters, potentially with multiple alternative values. [<em>TO DO: Add link here to appropriate place in the DSC Reference Manual.</em>] Here we give just one example.</p>
+<p>For example, suppose we would like to simulate data sets from the <em>t</em> distribution with different numbers of degrees of freedom and variances. This could be easily done by defining two module parameters which multiple alternative settings, in which case DSC will define a module for each combination of the module settings:</p>
+
+<pre><code>t: R(x &lt;- mu + sd * rt(n,df = 2))
+  n: 100, 1000
+  mu: 0
+  sd: 0.2, 0.5, 1
+  df: 4, 6, 8, 10
+  $data: x
+  $true_mean: mu</code></pre>
+<p>This module block defines $2 \times 3 \times 4 = 24$ modules, one for each combination of <code>n</code> (the number of samples), <code>sd</code> (the standard deviation) and <code>df</code> (the degrees of freedom).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Defining-vector-valued-module-parameters-in-DSC">Defining vector-valued module parameters in DSC<a class="anchor-link" href="#Defining-vector-valued-module-parameters-in-DSC">&#182;</a></h3><p>Now suppose that we want to have finer control over which combinations of <code>sd</code> and <code>df</code> are used to simulate the data; in other words, we do not want to simulate data sets for all combinations of <code>sd</code> and <code>df</code>. One way to accomplish this is to define a new module parameter that stores the settings for <em>both</em> the standard deviation and the degrees of freedom. DSC allows the use of parentheses to define vector-valued module parameters:</p>
+
+<pre><code>t: R(x &lt;- mu + params[1] * rt(n,df = params[2]))
+  n: 100, 1000
+  mu: 0
+  params: (0.5, 4), (0.6, 6), (0.8, 10)
+  $data: x
+  $true_mean: mu</code></pre>
+<p>This module block defines $2 x 3$ modules, one for each combination of <code>n</code> and <code>params</code>. Each setting of <code>params</code> is a vector of length 2, in which the first vector entry specifies the standard deviation parameter, and the second entry specifies the degrees of freedom.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Defining-vector-valued-module-parameters-with-R()">Defining vector-valued module parameters with <code>R()</code><a class="anchor-link" href="#Defining-vector-valued-module-parameters-with-R()">&#182;</a></h3><p>This example has achieved our aim, but has two less desirable features:</p>
+<ol>
+<li><p>The <code>params</code> module parameter will now be more difficult to interpret when inspecting the results, because it is unclear what the first and second entries of the vector mean.</p>
+</li>
+<li><p>The R code is less readable because we have <code>params[1]</code> and <code>params[2]</code> in place of <code>sd</code> and <code>df</code>. This goes against the programming principle that variable names should help with understanding what the variables are for.</p>
+</li>
+</ol>
+<p>We can make the code a little bit more understandable using <code>R()</code>:</p>
+
+<pre><code>t: R(x &lt;- mu + params[1] * rt(n,df = params[2]))
+  n: 100, 1000
+  mu: 0
+  params: R(c(sd = 0.5, df = 4)),
+          R(c(sd = 0.6, df = 6)),
+          R(c(sd = 0.8, df = 10))
+  $data: x
+  $true_mean: mu</code></pre>
+<p>The code inside each <code>R(...)</code> statement in the module parameter definition is evaluated, and then the outcome is used to assign a value to each setting of <code>params</code>. This achieves the same as above, but is also a slight improvement because the intent of the first and second entries is now more clear from the code. This also illustrates the use of <code>R()</code> to define module parameters, which provides much more flexibility in defining complex module parameters (so long as none of the module inputs are referenced in the R code!).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Defining-vector-valued-module-parameters-with-R{}">Defining vector-valued module parameters with <code>R{}</code><a class="anchor-link" href="#Defining-vector-valued-module-parameters-with-R{}">&#182;</a></h3>
+<pre><code>t: R(x &lt;- mu + params[1] * rt(n,df = params[2]))
+  n: 100, 1000
+  mu: 0
+  params: R{list(c(sd = 0.5, df = 4),
+                 c(sd = 0.6, df = 6),
+                 c(sd = 0.8, df = 10))}
+  $data: x
+  $true_mean: mu</code></pre>
+<p>Another example:</p>
+
+<pre><code>seed: R{1:20}</code></pre>
+<p>we may want to simulate data with different degrees of freedom, and then set <code>sd</code> to <em>control for the variance of the simulated data</em>, <code>df/(df - 2)*sd^2</code>. This could be easily achieved</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes it is desirable to have finer control over which combinations are module parameters are used. One way to do this is to define a single module parameter that sets the value of multiple parameters used in the script. For example, suppose we wanted to simulate data from <em>t</em> distributions with these three settings of the mean (<code>mu</code>) and number of degrees of freedom (<code>df</code>):</p>
 
 <pre><code>mu  df
 --  --
