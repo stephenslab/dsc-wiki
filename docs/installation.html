@@ -330,18 +330,6 @@ conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <h3 id="4b.-Upgrade-to-latest-stable-release">4b. Upgrade to latest stable release<a class="anchor-link" href="#4b.-Upgrade-to-latest-stable-release">&#182;</a></h3><p>If you already have DSC on your computer, run this command to upgrade DSC to the latest release:</p>
 
 <pre><code>pip install -U --upgrade-strategy only-if-needed dsc</code></pre>
-<h3 id="4c.-Upgrade-to-latest-development-version">4c. Upgrade to latest development version<a class="anchor-link" href="#4c.-Upgrade-to-latest-development-version">&#182;</a></h3><p>For most users, we recommend using the most recent stable release following the instructions above. If you would like to install the most recent (unstable) development version, follow these steps.</p>
-<p>DSC is closely developed in parallel with <a href="http://github.com/vatlab/sos">SoS</a>. Therefore, the development version of DSC (maintained in the <code>master</code> branch of the GitHub repository) typically requires the development version of SoS.</p>
-<p>First, download the SoS repository and install the latest development version of SoS:</p>
-
-<pre><code>git clone https://github.com/vatlab/SoS.git
-cd SoS
-pip install -U --upgrade-strategy only-if-needed .</code></pre>
-<p>Next, download the DSC repository and install the latest version of DSC:</p>
-
-<pre><code>git clone https://github.com/stephenslab/dsc.git
-cd dsc
-pip install -U --upgrade-strategy only-if-needed .</code></pre>
 
 </div>
 </div>
