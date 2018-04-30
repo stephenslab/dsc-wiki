@@ -293,12 +293,12 @@ pip3 --version</code></pre>
 <pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
 <p>then run</p>
 
-<pre><code>conda install numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
+<pre><code>conda install cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
 conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 <p>After running these <code>conda install</code> commands, run these commands to make sure you have the latest versions:</p>
 
 <pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow
-conda update numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
+conda update cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
 conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 
 </div>
@@ -325,10 +325,7 @@ conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Install-DSC">4. Install DSC<a class="anchor-link" href="#4.-Install-DSC">&#182;</a></h2><h3 id="4a.-Install-released-version">4a. Install released version<a class="anchor-link" href="#4a.-Install-released-version">&#182;</a></h3><p>Run this command to install DSC (and any Python dependencies that remain uninstalled):</p>
-
-<pre><code>pip install dsc</code></pre>
-<h3 id="4b.-Upgrade-to-latest-stable-release">4b. Upgrade to latest stable release<a class="anchor-link" href="#4b.-Upgrade-to-latest-stable-release">&#182;</a></h3><p>If you already have DSC on your computer, run this command to upgrade DSC to the latest release:</p>
+<h2 id="4.-Install-(or-upgrade)-DSC">4. Install (or upgrade) DSC<a class="anchor-link" href="#4.-Install-(or-upgrade)-DSC">&#182;</a></h2><p>Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):</p>
 
 <pre><code>pip install -U --upgrade-strategy only-if-needed dsc</code></pre>
 
