@@ -327,12 +327,34 @@ body {
 </li>
 <li><p>Evaluate the module script or inline source code. All script variables are retained for resolving any module outputs.</p>
 </li>
-<li><p>Set each module output to the stored value of the selected script variable.</p>
+<li><p>Evaluate the expressions used to determine the values of the module outputs.</p>
 </li>
 </ol>
 </li>
 </ul>
-<p>If this evaluation procedure is unclear to you at this stage, it will will become more clear as we work through the examples below.</p>
+<p>To illustrate the evaluation procedure, consider the simple example of a module we gave above, repeated here for convenience:</p>
+
+<pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
+  n: 100
+  mu: 0
+  $data: x
+  $true_mean: mu</code></pre>
+<p>The steps in evaluating the module are as follows:</p>
+<ol>
+<li><p>The first step is skipped because no R code needs to be run to evaluate the module parameters.</p>
+</li>
+<li><p>The module parameters <code>n</code> and <code>mu</code> are set to 100 and 0, respectively.</p>
+</li>
+<li><p>The third step is skipped because no inputs are defined for this module.</p>
+</li>
+<li><p>In the global R environment, variables <code>n</code> and <code>mu</code> are defined and set to the values of the module parameters <code>n</code> and <code>mu</code> (in this case, 100 and 0).</p>
+</li>
+<li><p>The expression <code>x &lt;- rnorm(n,mean = mu,sd = 1)</code> is parsed and evaluated in the same global R environment.</p>
+</li>
+<li><p>Module output <code>$data</code> is assigned the value of R expression <code>x</code> (which is a vector of length 100), and module output <code>$true_mean</code> is assigned the value of R expresion <code>mu</code> (which is just zero because <code>mu</code> was unchanged when the R code was run). In both cases, the R expressions are simply variable names, but we point out that they can be more general R expressions.</p>
+</li>
+</ol>
+<p>We will refer back to this evaluation procedure in other examples below.</p>
 
 </div>
 </div>
