@@ -397,6 +397,7 @@ body {
 </ul>
 <p>For example for 100 module instances of <code>simulate</code> that each generates some data in under a minute, one can specify <code>time_per_instance: 1m</code> and <code>instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
 <p>Typically, <code>DSC</code> and <code>default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code>gaow</code> with their UChicago cnetID.</p>
+<p><strong>Please never use this template without configuring the required resources, particularly <code>time_per_instance</code> and <code>instance_per_job</code>. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on <code>instance_per_job</code>) and waste of resource (too high on <code>time_per_instance</code>)</strong></p>
 
 </div>
 </div>
@@ -439,10 +440,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Monitor-and-manage-jobs">Monitor and manage jobs<a class="anchor-link" href="#Monitor-and-manage-jobs">&#182;</a></h2><p>As specified in the job template (see above), the line:</p>
-
-<pre><code>    submit_cmd_output: "Submitted batch job {job_id}"</code></pre>
-<p>will result in practice in something like:</p>
+<h2 id="Monitor-and-manage-jobs">Monitor and manage jobs<a class="anchor-link" href="#Monitor-and-manage-jobs">&#182;</a></h2><p>When jobs are submitted, you should see on the screen something like:</p>
 
 <pre><code>INFO: M2_9eb9ad957cc31d50 submitted to midway2 with job id 45634260</code></pre>
 <p>So there is a task ID <code>M2_9eb9ad957cc31d50</code> and job ID <code>45634260</code>. This can also be observed from your system's job queue, for example:</p>
@@ -464,8 +462,8 @@ body {
           45633091   broadwl M2_56fa6     gaow  R       0:01      1 midway2-0070
           45633092   broadwl M2_4baac     gaow  R       0:01      1 midway2-0070</code></pre>
 <p>To check on one of the job, for example the first one:</p>
-
-<pre><code>sos status M2_2eac6 -v3</code></pre>
+<div class="highlight"><pre><span></span>sos status M2_2eac6 -v3
+</pre></div>
 <p>You will see information such as:</p>
 
 <pre><code>Started 27 min 13 sec ago
@@ -476,10 +474,10 @@ TAGS:
 e0b204d49b525c52 susie2_0 susie2_sparse_13_susie2_1 susie2_sparse_14_susie2_1
 
 ...</code></pre>
-<p>The <code>TAGS</code> line explains that the job comes from the module <code>susie2</code> and produces 2 files <code>susie2_sparse_13_susie2_1</code> and  <code>susie2_sparse_14_susie2_1</code>. That is, 2 module instances per job. There are also some other useful info on execution stats such as memory usage.</p>
+<p>The <code>TAGS</code> line explains that the job comes from the module <code>susie2</code> and produces 2 files <code>susie2/sparse_13_susie2_1</code> and  <code>susie2/sparse_14_susie2_1</code>. That is, 2 module instances per job. There are also some other useful info on execution stats such as memory usage.</p>
 <p>To have more details,</p>
-
-<pre><code>sos status M2_2eac6 -v4</code></pre>
+<div class="highlight"><pre><span></span>sos status M2_2eac6 -v4
+</pre></div>
 <p>and the output:</p>
 
 <pre><code>M2_2eac66b84134d3f8.err:
