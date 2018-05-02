@@ -387,7 +387,10 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The section <code>default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
 <ul>
-<li><code>queue</code>: name of the queue on the remote host to use, one of the various queues defined in <code>DSC</code> section.</li>
+<li><code>queue</code>: name of the queue on the remote host to use, one of the various queues defined in <code>DSC</code> section.<ul>
+<li>Here in the template it is set to <code>midway2</code>, which is a "On-Host" queue.</li>
+</ul>
+</li>
 <li><code>time_per_instance</code>: maximum computation time for each module instance.</li>
 <li><code>instance_per_job</code>: how many module instances to submit as one remote job. This is useful consolidating numerous light-weight module instances into one jobs submission. </li>
 <li><code>n_cpu</code> and <code>mem_per_cpu</code> specify the CPU and memory requirement of a module instance.</li>
@@ -419,14 +422,14 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Command</p>
+<p>If the <code>default</code> queue is a "On-Host" queue (<code>address: localhost</code>), then</p>
 
-<pre><code>dsc ... --host /path/to/config.yml</code></pre>
-<p>will load remote configuration in <code>/path/to/config.yml</code> and submit jobs.</p>
-<p>Additionally for the "Local-Host" mechanism,</p>
+<pre><code>dsc ... --host /path/to/config.yml -c 30</code></pre>
+<p>will configuration in <code>/path/to/config.yml</code> and submit jobs, in batches of 30.</p>
+<p>For the "Local-Host" mechanism (<code>default::address: &lt;some URL&gt;</code>),</p>
 
-<pre><code>dsc ... --host /path/to/config.yml --to-host file1 dir1 file2</code></pre>
-<p>will sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in <code>DSC::lib_path</code>).</p>
+<pre><code>dsc ... --host /path/to/config.yml --to-host file1 dir1 file2 -c 30</code></pre>
+<p>will additionally use <code>--to-host</code> to sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in <code>DSC::lib_path</code>).</p>
 <p>Caution that to successfully use <code>--to-host</code>, the command program <a href="https://rsync.samba.org"><code>rsync</code></a> have to be available from the local computer.</p>
 
 </div>
