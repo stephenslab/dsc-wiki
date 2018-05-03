@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Debugging-and-Prototyping">Debugging and Prototyping<a class="anchor-link" href="#Debugging-and-Prototyping">&#182;</a></h1>
+<h1 id="Debug-in-DSC">Debug in DSC<a class="anchor-link" href="#Debug-in-DSC">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -706,45 +706,6 @@ Traceback:
 <p>You can open up <a href="../tutorials/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
 <p><img src="../img/debug-tips-1.png" alt="debug-1"></p>
 <p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/abs_err_0_0_73c4c826.R</code> to an interactive session, fix it until <code>.sos/abs_err_0_0_73c4c826.R</code> works, and apply the knowledge learned to the original module line <code>mean: R(y &lt;- "meow")</code> in the DSC script.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prototype-with---target-and---truncate">Prototype with <code>--target</code> and <code>--truncate</code><a class="anchor-link" href="#Prototype-with---target-and---truncate">&#182;</a></h2><h3 id="Test-out-one-instance-of-every-pipeline">Test out one instance of every pipeline<a class="anchor-link" href="#Test-out-one-instance-of-every-pipeline">&#182;</a></h3><p>It is highly recommanded that these options be used to check the correctness of DSC benchmark as you develop them. Do not run the entire benchmark unless you have checked it bit by bit. <code>--truncate</code> will only run one instance from a module, thus enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed module by module using <code>--target</code>: the next module or module ensemble is only attedmpted when there is no obvious problem with the previous module. For example for a DSC benchmark:</p>
-
-<pre><code>DSC:
-  define: 
-      simulate: normal, t
-      estimate: median, mean
-  run: simulate * estimate * mse</code></pre>
-<p>When the benchmark is tested for the first time, one should at least run the following sequentially:</p>
-
-<pre><code>dcs file.dsc --target normal --truncate
-dcs file.dsc --target t --truncate
-dcs file.dsc --target "normal * mean" --truncate
-dcs file.dsc --target "normal * median" --truncate
-dcs file.dsc --target "normal * median * mse" --truncate</code></pre>
-<p>This will ensure all module are tested for at least one instance. Then you can run the benchmark knowing that the chances of errors has already been reduced.</p>
-
-<pre><code>dcs file.dsc</code></pre>
-<h3 id="Test-out-a-particular-module-downstream">Test out a particular module downstream<a class="anchor-link" href="#Test-out-a-particular-module-downstream">&#182;</a></h3><p><code>--target</code> can also accept temporary <code>run</code> flags. This is useful when testing out newly added modules downstream. For example in the DSC section below:</p>
-
-<pre><code>DSC:
-  define:
-    get_Y: original_Y
-    init: init_mnm
-    fit: fit_mnm, fit_susie, fit_varbvs, fit_finemap
-  run:
-    first_pass: get_data * get_Y * get_sumstats * init * fit
-    dap: get_data * get_Y * get_sumstats * init * fit_dap</code></pre>
-<p>Two <code>run</code> flags are defined: <code>first_pass</code> and <code>dap</code>. Clearly the difference between <code>first_pass</code> and <code>dap</code> is that <code>first_pass</code> does not have <code>fit_dap</code> in its <code>fit</code> group, but <code>dat</code> has only <code>fit_dap</code> not any other modules for <code>fit</code>. As their name suggests, <code>first_pass</code> are module that has been tested to work, as our first pass to a problem. <code>dap</code> include modules that we are currently working on, which is <code>fit_dap</code>. To prototype <code>fit_dap</code> exclusively:</p>
-
-<pre><code>dsc file.dsc --target dap</code></pre>
-<p>You can remove this flag if deemed necessary after prototyping.</p>
 
 </div>
 </div>
