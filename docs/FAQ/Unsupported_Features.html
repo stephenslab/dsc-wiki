@@ -391,18 +391,6 @@ DSC:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="ALIAS-operators">ALIAS operators<a class="anchor-link" href="#ALIAS-operators">&#182;</a></h2><p>As previously discussed, <code>List()</code> and <code>Dict()</code> are used in <code>@ALIAS</code> decorator to help construct variables of nested <code>List</code> or <code>dictionary</code> structures in <code>R</code> and <code>Python</code>. For example for <code>R</code> modules:</p>
-
-<pre><code>@ALIAS: args = List()</code></pre>
-<p>will convert all input / parameters the module has available, say <code>x,y,z</code> to <code>args &lt;- list(x = ..., y = ..., z = ...)</code>. Likewise, <code>List()</code> will convert parameters to <code>dictionary</code> in Python. Partial conversion is also supported, for example <code>args = List(x, y)</code> will only convert selected variables to R list which will be translated to R code <code>args &lt;- list(x = x, y = y)</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Named-DSC::run-pipelines">Named <code>DSC::run</code> pipelines<a class="anchor-link" href="#Named-DSC::run-pipelines">&#182;</a></h2>
 <pre><code>DSC:
   run: a * b * c, a * b * e</code></pre>
