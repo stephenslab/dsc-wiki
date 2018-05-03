@@ -286,22 +286,22 @@ body {
   run: simulate * estimate * mse</code></pre>
 <p>When the benchmark is tested for the first time, one should at least run the following to ensure the first 2 modules work well:</p>
 
-<pre><code>dcs file.dsc --target normal --truncate -o prototype
-dcs file.dsc --target t --truncate -o prototype</code></pre>
+<pre><code>dsc file.dsc --target normal --truncate -o prototype
+dsc file.dsc --target t --truncate -o prototype</code></pre>
 <p>Here option <code>-o</code> will write results to a separate folder called <code>prototype</code> (or any name you want to call it) that you can safely remove after done prototyping.</p>
 <p>Then move on to testing next modules:</p>
 
-<pre><code>dcs file.dsc --target "normal * mean" --truncate -o prototype
-dcs file.dsc --target "normal * median" --truncate -o prototype</code></pre>
+<pre><code>dsc file.dsc --target "normal * mean" --truncate -o prototype
+dsc file.dsc --target "normal * median" --truncate -o prototype</code></pre>
 <p>and finally:</p>
 
-<pre><code>dcs file.dsc --target "normal * median * mse" --truncate -o prototype</code></pre>
+<pre><code>dsc file.dsc --target "normal * median * mse" --truncate -o prototype</code></pre>
 <p>to test <code>mse</code>. When everything looks good, run:</p>
 
-<pre><code>dcs file.dsc</code></pre>
+<pre><code>dsc file.dsc</code></pre>
 <p>You can also use module groups in <code>--target</code>:</p>
 
-<pre><code>dcs file.dsc --target simulate --truncate -o prototype</code></pre>
+<pre><code>dsc file.dsc --target simulate --truncate -o prototype</code></pre>
 <p>will run both <code>normal</code> and <code>t</code> modules.</p>
 <h3 id="Option---truncate">Option <code>--truncate</code><a class="anchor-link" href="#Option---truncate">&#182;</a></h3><p><code>--truncate</code> allows one to run one instance from a module. For example, for this DSC:</p>
 
