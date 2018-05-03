@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Debugging-in-DSC">Debugging in DSC<a class="anchor-link" href="#Debugging-in-DSC">&#182;</a></h1>
+<h1 id="Debugging-and-Prototyping">Debugging and Prototyping<a class="anchor-link" href="#Debugging-and-Prototyping">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -297,7 +297,37 @@ body {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_debug</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_error_v1</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">o</span> <span class="n">dsc_result</span>
@@ -321,20 +351,16 @@ body {
 INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_error_v1.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC:  53%|████████████████████▊                  | 8/15 [00:03&lt;00:02,  2.54it/s]
-<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[566b788d-73de-4e34-85ed-b480227a3e5d]: [normal_0]: 
+DSC:   0%|                                               | 0/15 [00:00&lt;?, ?it/s]<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Command &#39;Rscript .sos/normal_0_0_5b69d818.R&#39; returned non-zero exit status 1.</span>
+DSC:  53%|████████████████████▊                  | 8/15 [00:02&lt;00:02,  3.33it/s]
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[90ab6bbc-4af3-45f0-9291-041f5b3e55af]: [normal_0]: 
+Failed to execute </span><span class="ansi-green-fg">Rscript .sos/normal_0_0_5b69d818.R</span><span class="ansi-red-intense-fg">
+exitcode=1, workdir=</span><span class="ansi-green-fg">/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/normal/normal_1.stderr</span><span class="ansi-red-intense-fg">
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-3186687848203597564 in &lt;module&gt;
-      
-      
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
-
-RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmp9arx3lf5.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/normal_0_0_a467d5c4.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/normal/normal_1.stderr</span><span class="ansi-red-intense-fg">)
 [DSC]: 7 pending steps: DSC_0, a_abs_err, b_sq_err, c_abs_err, d_sq_err, a_mean, c_median</span>
 <span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Files </span><span class="ansi-green-fg">in green</span><span class="ansi-magenta-intense-fg"> in the error prompt above contains codes and error info to help debug.
 Scripts upstream of the error can be found in </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg">.</span>
-INFO: Elapsed time <span class="ansi-green-fg">5.150</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">5.460</span> seconds.
 </pre>
 </div>
 </div>
@@ -374,7 +400,7 @@ INFO: Elapsed time <span class="ansi-green-fg">5.150</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="n">dsc_result</span><span class="o">/</span><span class="n">normal</span><span class="o">/</span><span class="n">normal_1</span><span class="o">.</span><span class="n">stderr</span>
@@ -415,10 +441,10 @@ Execution halted
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">normal_0_0_a467d5c4</span><span class="o">.</span><span class="n">R</span>
+<div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="o">.</span><span class="n">sos</span><span class="o">/</span><span class="n">normal_0_0_5b69d818</span><span class="o">.</span><span class="n">R</span>
 </pre></div>
 
 </div>
@@ -437,7 +463,6 @@ Execution halted
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>## r script UUID: 89241936
 
-dscrutils:::empty_text(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_result/normal/normal_1.stderr&#34;))
 DSC_REPLICATE &lt;- 1
 n &lt;- 100
 nu &lt;- 0
@@ -448,9 +473,7 @@ set.seed(DSC_REPLICATE + 89241936)
 x &lt;- rnorm(n,mean = mu,sd = 1)
 ## END DSC CORE
 
-saveRDS(list(data=x, true_mean=mu, DSC_DEBUG=list(time=proc.time() - TIC_C1997B87, script=dscrutils:::load_script(), replicate=DSC_REPLICATE, session=toString(sessionInfo()))), &#39;dsc_result/normal/normal_1.rds&#39;)
-dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_result/normal/normal_1.stderr&#34;))
-
+saveRDS(list(data=x, true_mean=mu, DSC_DEBUG=dscrutils::save_session(TIC_C1997B87, DSC_REPLICATE)), &#39;dsc_result/normal/normal_1.rds&#39;)
 
 </pre>
 </div>
@@ -465,7 +488,7 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It seems like the line <code>x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code>mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_debug/first_error_v1.dsc">DSC script</a> that we had set <code>nu</code> not <code>mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code>nu</code> to <code>mu</code> in the DSC script.</p>
-<p>In practice when you run into problems that you cannot immediately tell what is going on from <code>err</code> file or script file, you should load the problematic script <code>.sos/normal_0_0_a467d5c4.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
+<p>In practice when you run into problems that you cannot immediately tell what is going on from <code>err</code> file or script file, you should load the problematic script <code>.sos/normal_0_0_5b69d818.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you've learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
 
 </div>
 </div>
@@ -487,7 +510,7 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">dsc</span> <span class="n">first_error_v2</span><span class="o">.</span><span class="n">dsc</span> <span class="o">-</span><span class="n">o</span> <span class="n">dsc_result</span>
@@ -510,47 +533,31 @@ dscrutils:::rm_if_empty(c(&#34;dsc_result/normal/normal_1.stdout&#34;, &#34;dsc_
 <pre>INFO: DSC script exported to <span class="ansi-green-fg">dsc_result.html</span>
 INFO: Constructing DSC from <span class="ansi-green-fg">first_error_v2.dsc</span> ...
 INFO: Building execution graph &amp; running DSC ...
-DSC:  93%|███████████████████████████████████▍  | 14/15 [00:03&lt;00:00,  4.19it/s]
-<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[317e740e-7dea-478f-ae3d-cfec17674a99]: [abs_err_0]: 
+DSC:  47%|██████████████████▏                    | 7/15 [00:01&lt;00:02,  3.54it/s]<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Command &#39;Rscript .sos/abs_err_0_0_73c4c826.R&#39; returned non-zero exit status 1.</span>
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Command &#39;Rscript .sos/sq_err_0_0_f6e6638e.R&#39; returned non-zero exit status 1.</span>
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Command &#39;Rscript .sos/abs_err_0_0_a23c8f3f.R&#39; returned non-zero exit status 1.</span>
+DSC:  60%|███████████████████████▍               | 9/15 [00:01&lt;00:01,  4.09it/s]<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">Command &#39;Rscript .sos/sq_err_0_0_8c854e10.R&#39; returned non-zero exit status 1.</span>
+DSC:  93%|███████████████████████████████████▍  | 14/15 [00:02&lt;00:00,  5.69it/s]
+<span class="ansi-red-intense-fg">ERROR</span>: <span class="ansi-red-intense-fg">[28777a12-b243-4dab-b4af-f83b1b1b40a9]: [abs_err_0]: 
+Failed to execute </span><span class="ansi-green-fg">Rscript .sos/abs_err_0_0_73c4c826.R</span><span class="ansi-red-intense-fg">
+exitcode=1, workdir=</span><span class="ansi-green-fg">/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-6533540462407766879 in &lt;module&gt;
-      
-      
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
-
-RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpf1phv0qi.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/abs_err_0_0_909abdf6.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">)
-[ffc0b82c-f9da-42bf-ac5b-99141a1bcaa2]: [sq_err_0]: 
+[0ace8ea3-aeea-46cb-8d4b-9e1d5cb34e1e]: [sq_err_0]: 
+Failed to execute </span><span class="ansi-green-fg">Rscript .sos/sq_err_0_0_f6e6638e.R</span><span class="ansi-red-intense-fg">
+exitcode=1, workdir=</span><span class="ansi-green-fg">/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/normal_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-7940773457002835044 in &lt;module&gt;
-      
-      
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
-
-RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpt3tkk9_6.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/sq_err_0_0_42c75fd3.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/normal_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">)
-[fe2174d5-8e6c-40f2-81dd-8331983d2c67]: [abs_err_0]: 
+[922efd84-a17c-4f4a-94c5-d8ed74bb0805]: [abs_err_0]: 
+Failed to execute </span><span class="ansi-green-fg">Rscript .sos/abs_err_0_0_a23c8f3f.R</span><span class="ansi-red-intense-fg">
+exitcode=1, workdir=</span><span class="ansi-green-fg">/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/t_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-6533540462407766879 in &lt;module&gt;
-      
-      
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
-
-RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpqa9oq6l_.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/abs_err_0_0_5d4f02e1.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/abs_err/t_1_mean_1_abs_err_1.stderr</span><span class="ansi-red-intense-fg">)
-[d2016ae5-d9fc-4c83-8e9a-8962bdf88cca]: [sq_err_0]: 
+[b8db16b1-5576-4554-9849-3d7d132423a2]: [sq_err_0]: 
+Failed to execute </span><span class="ansi-green-fg">Rscript .sos/sq_err_0_0_8c854e10.R</span><span class="ansi-red-intense-fg">
+exitcode=1, workdir=</span><span class="ansi-green-fg">/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location_debug</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/t_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-script_-7940773457002835044 in &lt;module&gt;
-      
-      
-----&gt; &#34;&#34;&#34;, workdir = &#39;./&#39;, stderr = f&#34;{_output:n}.stderr&#34;, stdout = f&#34;{_output:n}.stdout&#34;)
-
-RuntimeError: Failed to execute commmand &#34;Rscript /tmp/tmpxaew1km1.R&#34; (ret=1, workdir=/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location, script now in </span><span class="ansi-green-fg">/home/gaow/Documents/TempDir/dsc/vignettes/one_sample_location/.sos/sq_err_0_0_8c068b57.R</span><span class="ansi-red-intense-fg">, err=</span><span class="ansi-green-fg">dsc_result/sq_err/t_1_mean_1_sq_err_1.stderr</span><span class="ansi-red-intense-fg">)
 [DSC]: 1 pending step: DSC_0</span>
 <span class="ansi-magenta-intense-fg">WARNING</span>: <span class="ansi-magenta-intense-fg">Files </span><span class="ansi-green-fg">in green</span><span class="ansi-magenta-intense-fg"> in the error prompt above contains codes and error info to help debug.
 Scripts upstream of the error can be found in </span><span class="ansi-green-fg">dsc_result.scripts.html</span><span class="ansi-magenta-intense-fg">.</span>
-INFO: Elapsed time <span class="ansi-green-fg">4.924</span> seconds.
+INFO: Elapsed time <span class="ansi-green-fg">4.609</span> seconds.
 </pre>
 </div>
 </div>
@@ -580,7 +587,7 @@ INFO: Elapsed time <span class="ansi-green-fg">4.924</span> seconds.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="n">cat</span> <span class="n">dsc_result</span><span class="o">/</span><span class="n">abs_err</span><span class="o">/</span><span class="n">normal_1_mean_1_abs_err_1</span><span class="o">.</span><span class="n">stderr</span>
@@ -614,21 +621,20 @@ Execution halted
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is not immediately clear what is going on, so we examine the code <code>.sos/abs_err_0_0_909abdf6.R</code> by adding a couple of <code>print</code> commands before the line in question:</p>
+<p>It is not immediately clear what is going on, so we examine the code <code>.sos/abs_err_0_0_73c4c826.R</code> by adding a couple of <code>print</code> commands before the line in question:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-sos"><pre><span></span><span class="c1">## r script UUID: 90107557</span>
-<span class="kn">dscrutils:</span><span class="p">::</span><span class="n">empty_text</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stdout&quot;</span><span class="p">,</span> <span class="s2">&quot;dsc_result/abs_err/normal_1_mean_1_abs_err_1.stderr&quot;</span><span class="p">))</span>
+
 <span class="n">DSC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="nb">list</span><span class="p">()</span>
-<span class="nb">input</span><span class="o">.</span><span class="n">files</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_result/normal/normal_1.rds&#39;</span><span class="p">,</span><span class="s1">&#39;dsc_result/mean/normal_1_mean_1.rds&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">length</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">))</span> <span class="n">DSC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="n">dscrutils</span><span class="p">:::</span><span class="n">merge_lists</span><span class="p">(</span><span class="n">DSC_A0BFA20F</span><span class="p">,</span> <span class="n">readRDS</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="n">DSC_A0BFA20F</span> <span class="o">&lt;-</span> <span class="n">dscrutils</span><span class="p">::</span><span class="n">load_inputs</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s1">&#39;dsc_result/normal/normal_1.rds&#39;</span><span class="p">,</span><span class="s1">&#39;dsc_result/mean/normal_1_mean_1.rds&#39;</span><span class="p">),</span> <span class="n">dscrutils</span><span class="p">::</span><span class="n">read_dsc</span><span class="p">)</span>
 <span class="n">DSC_REPLICATE</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">DSC_DEBUG</span><span class="err">$</span><span class="n">replicate</span>
 <span class="n">x</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">est_mean</span>
 <span class="n">y</span> <span class="o">&lt;-</span> <span class="n">DSC_A0BFA20F</span><span class="err">$</span><span class="n">true_mean</span>
@@ -699,7 +705,7 @@ Traceback:
 <h3 id="Debugging-with-upstream-scripts">Debugging with upstream scripts<a class="anchor-link" href="#Debugging-with-upstream-scripts">&#182;</a></h3><p>Now we want to find out what has produced the problematic <code>x</code> variable. That is, we want to find the module instance that generated <code>'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code>x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../tutorials/dsc_result.scripts_e2.html"><code>dsc_result.scripts.html</code></a>.</p>
 <p>You can open up <a href="../tutorials/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code>ctrl-F</code>) for the phrase <code>dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
 <p><img src="../img/debug-tips-1.png" alt="debug-1"></p>
-<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/abs_err_0_0_909abdf6.R</code> to an interactive session, fix it until <code>.sos/abs_err_0_0_909abdf6.R</code> works, and apply the knowledge learned to the original module line <code>mean: R(y &lt;- "meow")</code> in the DSC script.</p>
+<p>Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code>meow</code> string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code>.sos/abs_err_0_0_73c4c826.R</code> to an interactive session, fix it until <code>.sos/abs_err_0_0_73c4c826.R</code> works, and apply the knowledge learned to the original module line <code>mean: R(y &lt;- "meow")</code> in the DSC script.</p>
 
 </div>
 </div>
@@ -708,7 +714,7 @@ Traceback:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Debug-with---target-and---truncate">Debug with <code>--target</code> and <code>--truncate</code><a class="anchor-link" href="#Debug-with---target-and---truncate">&#182;</a></h2><p>It is highly recommanded that these options be used to check the correctness of DSC benchmark as you develop them. Do not run the entire benchmark unless you have checked it bit by bit. <code>--truncate</code> will only run one instance from a module, thus enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed module by module using <code>--target</code>: the next module or module ensemble is only attedmpted when there is no obvious problem with the previous module. For example for a DSC benchmark:</p>
+<h2 id="Prototype-with---target-and---truncate">Prototype with <code>--target</code> and <code>--truncate</code><a class="anchor-link" href="#Prototype-with---target-and---truncate">&#182;</a></h2><h3 id="Test-out-one-instance-of-every-pipeline">Test out one instance of every pipeline<a class="anchor-link" href="#Test-out-one-instance-of-every-pipeline">&#182;</a></h3><p>It is highly recommanded that these options be used to check the correctness of DSC benchmark as you develop them. Do not run the entire benchmark unless you have checked it bit by bit. <code>--truncate</code> will only run one instance from a module, thus enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Additionally it is suggested that a benchmark be executed module by module using <code>--target</code>: the next module or module ensemble is only attedmpted when there is no obvious problem with the previous module. For example for a DSC benchmark:</p>
 
 <pre><code>DSC:
   define: 
@@ -725,6 +731,28 @@ dcs file.dsc --target "normal * median * mse" --truncate</code></pre>
 <p>This will ensure all module are tested for at least one instance. Then you can run the benchmark knowing that the chances of errors has already been reduced.</p>
 
 <pre><code>dcs file.dsc</code></pre>
+<h3 id="Test-out-a-particular-module-downstream">Test out a particular module downstream<a class="anchor-link" href="#Test-out-a-particular-module-downstream">&#182;</a></h3><p><code>--target</code> can also accept temporary <code>run</code> flags. This is useful when testing out newly added modules downstream. For example in the DSC section below:</p>
+
+<pre><code>DSC:
+  define:
+    get_Y: original_Y
+    init: init_mnm
+    fit: fit_mnm, fit_susie, fit_varbvs, fit_finemap
+  run:
+    first_pass: get_data * get_Y * get_sumstats * init * fit
+    dap: get_data * get_Y * get_sumstats * init * fit_dap</code></pre>
+<p>Two <code>run</code> flags are defined: <code>first_pass</code> and <code>dap</code>. Clearly the difference between <code>first_pass</code> and <code>dap</code> is that <code>first_pass</code> does not have <code>fit_dap</code> in its <code>fit</code> group, but <code>dat</code> has only <code>fit_dap</code> not any other modules for <code>fit</code>. As their name suggests, <code>first_pass</code> are module that has been tested to work, as our first pass to a problem. <code>dap</code> include modules that we are currently working on, which is <code>fit_dap</code>. To prototype <code>fit_dap</code> exclusively:</p>
+
+<pre><code>dsc file.dsc --target dap</code></pre>
+<p>You can remove this flag if deemed necessary after prototyping.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="More-output-info">More output info<a class="anchor-link" href="#More-output-info">&#182;</a></h2><p>The run-time information are kept in greater when running DSC with verbosity level greater than <code>2</code>. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with <code>-v 4</code> and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics.</p>
 
 </div>
