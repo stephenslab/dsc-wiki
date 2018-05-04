@@ -689,6 +689,19 @@ $ find <span class="nb">test</span> -name <span class="s2">&quot;*.stdout&quot;<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Load-modules-from-other-files">Load modules from other files<a class="anchor-link" href="#Load-modules-from-other-files">&#182;</a></h2><p>We provide preliminary support to load modules from other files, using <code>%include</code>, eg.</p>
+
+<pre><code>%include /path/to/other/file1
+%include /path/to/other/file2</code></pre>
+<p>It will (recursively) load modules from other files. This feature is useful particularly in a collaborative development of a DSC that each developer can write their own module file and use a "master" DSC file to include them all.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Improving-DSC-script-readability">Improving DSC script readability<a class="anchor-link" href="#Improving-DSC-script-readability">&#182;</a></h2><h3 id="Use-comments">Use comments<a class="anchor-link" href="#Use-comments">&#182;</a></h3><p>As with many scripting languages (R, Python, shell), <code>#</code> can be used to make human-readable explanation to the contents of DSC script. We suggest using single <code>#</code> to distinguish between various types of syntax groups introduced in this document, and double <code>##</code> to annotate parameters. For example:</p>
 
 <pre><code># Various modules to estimate location parameter
