@@ -253,7 +253,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Share-DSC-via-docker">Share DSC via docker<a class="anchor-link" href="#Share-DSC-via-docker">&#182;</a></h1>
+<h1 id="Prototype-in-DSC">Prototype in DSC<a class="anchor-link" href="#Prototype-in-DSC">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -261,12 +261,14 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First you need to install and configure docker:</p>
+<p>Although DSC is a benchmarking tool, you might still be able to utilize DSC when you are in a "research mode", or the prototyping stage. Starting directly with DSC to build mini-benchmark for methods prototyping saves the efforts of having to migrate your code over to DSC down the line when you seriously consider expanding your initial comparisons.</p>
+<p>In prototyping stage, you might find command options <code>--target</code> and <code>--truncate</code> are of particular relevance. In brief, <code>--target</code> accepts:</p>
 <ul>
-<li>Follow <a href="https://www.docker.com/community-edition">Docker installation guild</a> until you can use <code>sudo docker</code> to print the "Hello World" example.</li>
-<li>Run <code>sudo usermod -aG docker $USER</code></li>
-<li>Log out and log back in</li>
+<li>A single or a sequence of modules</li>
+<li>A single or a sequence of module groups</li>
+<li>A single <code>run</code> flag</li>
 </ul>
+<p>and <code>--truncate</code> enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Please read on for details.</p>
 
 </div>
 </div>
@@ -275,11 +277,46 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We have provided a docker image for DSC which can be used to</p>
-<ul>
-<li>Run some of the DSC vignettes examples</li>
-<li>Serve as the base docker image to add to it your own benchmarks for others to reproduce.</li>
-</ul>
+<h2 id="Test-out-one-module-at-a-time">Test out one module at a time<a class="anchor-link" href="#Test-out-one-module-at-a-time">&#182;</a></h2><p>It is highly recommanded that you check the correctness of DSC modules as you develop them. Do not run the entire benchmark unless you have checked it module by module: that is, only add in the next module when you are sure the first module works well. Command options <code>--target</code> and <code>--truncate</code> can be used for this purpose, for example for a DSC benchmark:</p>
+
+<pre><code>DSC:
+  define: 
+      simulate: normal, t
+      estimate: median, mean
+  run: simulate * estimate * mse</code></pre>
+<p>When the benchmark is tested for the first time, one should at least run the following to ensure the first 2 modules work well:</p>
+
+<pre><code>dsc file.dsc --target normal --truncate -o prototype
+dsc file.dsc --target t --truncate -o prototype</code></pre>
+<p>Here option <code>-o</code> will write results to a separate folder called <code>prototype</code> (or any name you want to call it) that you can safely remove after done prototyping.</p>
+<p>Then move on to testing next modules:</p>
+
+<pre><code>dsc file.dsc --target "normal * mean" --truncate -o prototype
+dsc file.dsc --target "normal * median" --truncate -o prototype</code></pre>
+<p>and finally:</p>
+
+<pre><code>dsc file.dsc --target "normal * median * mse" --truncate -o prototype</code></pre>
+<p>to test <code>mse</code>. When everything looks good, run:</p>
+
+<pre><code>dsc file.dsc</code></pre>
+<p>You can also use module groups in <code>--target</code>:</p>
+
+<pre><code>dsc file.dsc --target simulate --truncate -o prototype</code></pre>
+<p>will run both <code>normal</code> and <code>t</code> modules.</p>
+<h3 id="Option---truncate">Option <code>--truncate</code><a class="anchor-link" href="#Option---truncate">&#182;</a></h3><p><code>--truncate</code> allows one to run one instance from a module. For example, for this DSC:</p>
+
+<pre><code>simulate: R(x=rnorm(n))
+  n: 100, 200, 300, 400
+
+DSC:
+  replicate: 20</code></pre>
+<p>Then running</p>
+
+<pre><code>dsc file.dsc --target simulate</code></pre>
+<p>will result in 4 different <code>n</code> values and 20 replicates, a total of 80 module instances. However with</p>
+
+<pre><code>dsc file.dsc --target simulate --truncate</code></pre>
+<p>It will only run the first <code>n</code> (n=100) with only 1 replicate.</p>
 
 </div>
 </div>
@@ -288,24 +325,20 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Run-DSC-base-docker-image">Run DSC base docker image<a class="anchor-link" href="#Run-DSC-base-docker-image">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>To use the docker image:</p>
-<div class="highlight"><pre><span></span>docker pull gaow/dsc
-docker run --rm --security-opt label:disable <span class="se">\</span>
-       -v <span class="nv">$USER</span>:/home/docker -v /tmp:/tmp -v <span class="nv">$PWD</span>:<span class="nv">$PWD</span> <span class="se">\</span>
-       -t -P -w <span class="nv">$PWD</span> -u <span class="nv">$UID</span>:<span class="si">${</span><span class="nv">GROUPS</span><span class="p">[0]</span><span class="si">}</span> gaow/dsc <span class="se">\</span>
-       dsc -h
-</pre></div>
-<p>You can add a shortcut to your shell configuration script (<code>~/.bashrc</code> on Linux and <code>~/.bash_profile</code> on Mac) to trigger docker based DSC:</p>
-<div class="highlight"><pre><span></span><span class="nb">alias</span> dsc-docker<span class="o">=</span><span class="s1">&#39;docker run --rm --security-opt label:disable -v $USER:/home/docker -v /tmp:/tmp -v $PWD:$PWD -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc dsc&#39;</span>
-</pre></div>
+<h2 id="Test-out-a-particular-module-downstream">Test out a particular module downstream<a class="anchor-link" href="#Test-out-a-particular-module-downstream">&#182;</a></h2><p><code>--target</code> can also accept temporary <code>run</code> flags. This is useful when testing out newly added modules downstream. For example in the DSC section below:</p>
+
+<pre><code>DSC:
+  define:
+    get_Y: original_Y
+    init: init_mnm
+    fit: fit_mnm, fit_susie, fit_varbvs, fit_finemap
+  run:
+    first_pass: get_data * get_Y * get_sumstats * init * fit
+    dap: get_data * get_Y * get_sumstats * init * fit_dap</code></pre>
+<p>Two <code>run</code> flags are defined: <code>first_pass</code> and <code>dap</code>. Clearly the difference between <code>first_pass</code> and <code>dap</code> is that <code>first_pass</code> does not have <code>fit_dap</code> in its <code>fit</code> group, but <code>dat</code> has only <code>fit_dap</code> not any other modules for <code>fit</code>. As their name suggests, <code>first_pass</code> are module that has been tested to work, as our first pass to a problem. <code>dap</code> include modules that we are currently working on, which is <code>fit_dap</code>. To prototype <code>fit_dap</code> exclusively:</p>
+
+<pre><code>dsc file.dsc --target dap</code></pre>
+<p>You can remove this flag if deemed necessary after prototyping.</p>
 
 </div>
 </div>
@@ -314,80 +347,10 @@ docker run --rm --security-opt label:disable <span class="se">\</span>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For example, to run the <a href="../tutorials/Intro_DSC.html">Introductory DSC tutorial</a>,</p>
+<h2 id="Test-locally-before-running-on-a-cluster-system">Test locally before running on a cluster system<a class="anchor-link" href="#Test-locally-before-running-on-a-cluster-system">&#182;</a></h2><p>If you are working with a cluster, we suggest that you have an interactive session on the cluster, and use <code>--target</code> &amp; <code>--truncate</code> as instructed above to test your modules out quickly; but do not use <code>--host</code> so your test DSC runs will be local to the interactive node and you get feedback quickly. Once you are confident everything works, you can submit DSC instances as cluster jobs using <code>--host</code> option, from either your computer or from the cluster's head node. See <a href="Remote_Computations.html">this tutorial</a> for details.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="o">~/</span><span class="n">GIT</span><span class="o">/</span><span class="n">dsc</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/home/gaow/Documents/GIT/dsc/vignettes/one_sample_location</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-sos"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">security</span><span class="o">-</span><span class="n">opt</span> <span class="n">label</span><span class="p">:</span><span class="n">disable</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">h</span> <span class="n">DSC</span> \
-    <span class="o">-</span><span class="n">w</span> <span class="err">$</span><span class="n">PWD</span> <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">HOME</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="err">$</span><span class="n">USER</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">tmp</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span> <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">PWD</span><span class="p">:</span><span class="err">$</span><span class="n">PWD</span> \
-    <span class="o">-</span><span class="n">u</span> <span class="err">$</span><span class="n">UID</span><span class="p">:</span><span class="err">$</span><span class="p">{</span><span class="n">GROUPS</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span> <span class="o">-</span><span class="n">e</span> <span class="n">HOME</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="err">$</span><span class="n">USER</span> <span class="o">-</span><span class="n">e</span> <span class="n">USER</span><span class="o">=</span><span class="err">$</span><span class="n">USER</span> <span class="n">gaow</span><span class="o">/</span><span class="n">dsc</span> \
-    <span class="n">dsc</span> <span class="n">first_investigation</span><span class="o">.</span><span class="n">dsc</span> <span class="o">--</span><span class="n">replicate</span> <span class="mi">10</span> <span class="o">-</span><span class="n">c</span> <span class="mi">2</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: DSC script exported to <span class="ansi-green-fg">first_investigation.html</span>
-INFO: Constructing DSC from <span class="ansi-green-fg">first_investigation.dsc</span> ...
-INFO: Building execution graph &amp; running DSC ...
-DSC: 100%|██████████████████████████████████████| 15/15 [00:16&lt;00:00,  1.23it/s]
-INFO: Building DSC database ...
-INFO: DSC complete!
-INFO: Elapsed time <span class="ansi-green-fg">18.142</span> seconds.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <hr>
 Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
