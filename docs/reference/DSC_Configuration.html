@@ -593,26 +593,16 @@ m: 2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Raw-string-indicator">Raw string indicator<a class="anchor-link" href="#Raw-string-indicator">&#182;</a></h3><p>In DSC file, numeric vs. string data-types are automatically determined and there is no need to add quotes (<code>'</code> or <code>"</code>) to strings. This is convenient in most cases but can be problematic when the input are automatically converted to quoted strings when in fact they should not -- such as cases when we want to input a chunk of R codes that will be executed only at runtime not when constructing DSC. <code>raw()</code> indicator will protect them from having quotes added. For example,</p>
+<h3 id="Raw-string-indicator">Raw string indicator<a class="anchor-link" href="#Raw-string-indicator">&#182;</a></h3><p>In cases when we want to input a chunk of scripts as un-quoted string that may conflict with DSC parser behavior, <code>raw()</code> indicator can be used to "protect" the input content from being processed by DSC, for example:</p>
 
-<pre><code>g: raw(normalmix(c(2/3,1/3),c(0,0),c(1,2)))</code></pre>
-<p>will result in the <code>R</code> code</p>
-<div class="highlight"><pre><span></span>g <span class="o">=</span> normalmix<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<pre><code>g: [1,2,3]</code></pre>
+<p>will result in the <code>Python</code> code</p>
+<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
-<p>which is what we'd expect. But without <code>raw()</code> it will result in <code>R</code> code</p>
-<div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="s">&quot;normalmix(c(2/3,1/3),c(0,0),c(1,2))&quot;</span>
+<p>because vector-like atomic types are converted to python "tuples" from DSC interface. But with <code>raw()</code> it will result in <code>R</code> code</p>
+<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
-<p>which is problematic.</p>
-<p>Since <code>raw()</code> protects its input from any type of conversions, it can be used to pass in <em>strings</em> verbatim, for example:</p>
-
-<pre><code>g: (1, 2, 3)
-k: ('1', '2', '3')
-l: (raw('1', '2', '3'))</code></pre>
-<p>will result in</p>
-<div class="highlight"><pre><span></span>g <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
-k <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">)</span>
-l <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&#39;1&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;2&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;3&#39;&quot;</span><span class="p">)</span>
-</pre></div>
+<p>as initially specified.</p>
 <p>Another example:</p>
 
 <pre><code>normal: R(x &lt;- rnorm(n,mean = mu,sd = 1))
