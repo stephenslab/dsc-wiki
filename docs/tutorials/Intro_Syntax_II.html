@@ -313,13 +313,13 @@ body {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-order-of-evaluation-inside-a-module">The order of evaluation inside a module<a class="anchor-link" href="#The-order-of-evaluation-inside-a-module">&#182;</a></h2><p>In the examples above, we informally introduced the notion of a <em>model parameter.</em> Below, we will give some more elaborate examples with module parameters, so here we take a moment to describe more formally how a module parameter behaves in relation to other components of a module:</p>
 <ul>
-<li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters through use of the <code>raw</code> keyword. In other words, it must be possible to evaluate the module parameter without knowing the values of the module inputs or the values of the other module parameters (again, the one exception is when <code>raw</code> is used).</p>
+<li><p>A module parameter cannot depend on any of the module inputs, and it can only depend on other module parameters previously specified.</p>
 </li>
-<li><p>Module parameters are evaluated before the module script (except when <code>raw</code> is used). The exact procedure for evaluating a module is as follows:</p>
+<li><p>Module parameters are evaluated before the module script. The exact procedure for evaluating a module is as follows:</p>
 <ol>
 <li><p>Evaluate any R code used to determine the values of the module parameters (we give an example of this below).</p>
 </li>
-<li><p>Set the values of the module parameters (except for module parameters defined with <code>raw</code>).</p>
+<li><p>Set the values of the module parameters.</p>
 </li>
 <li><p>Initialize the module inputs according to the current stored values of the pipeline variables.</p>
 </li>
