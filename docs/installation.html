@@ -290,16 +290,16 @@ pip3 --version</code></pre>
 <h2 id="3.-Install-Python-dependencies">3. Install Python dependencies<a class="anchor-link" href="#3.-Install-Python-dependencies">&#182;</a></h2><p>DSC uses <a href="FAQ/Implementation_Details.html">several Python modules</a>. We provide two sets of installation instructions: Python installed with <code>conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code>conda</code>.</p>
 <h3 id="3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">3a. If Python is installed with <code>conda</code> (Anaconda or Miniconda)<a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">&#182;</a></h3><p>Install the modules required by DSC. First run</p>
 
-<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow</code></pre>
+<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow billiard</code></pre>
 <p>then run</p>
 
 <pre><code>conda install cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
-conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
+conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio</code></pre>
 <p>After running these <code>conda install</code> commands, run these commands to make sure you have the latest versions:</p>
 
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow
+<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow billiard
 conda update cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
-conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect</code></pre>
+conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio</code></pre>
 
 </div>
 </div>
