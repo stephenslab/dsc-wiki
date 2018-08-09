@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="ipynb_website:version" content="0.9.4" />
+<meta name="ipynb_website:version" content="0.9.5" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" href="../css/jt.css">
@@ -330,10 +330,10 @@ body {
       <span class="no">#SBATCH --ntasks-per-node={cores}</span>
       <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
       <span class="no">#SBATCH --job-name={job_name}</span>
-      <span class="no">#SBATCH --output={cur_dir}/.sos/{job_name}.stdout</span>
-      <span class="no">#SBATCH --error={cur_dir}/.sos/{job_name}.stderr</span>
+      <span class="no">#SBATCH --output={cur_dir}/.sos/{job_name}.out</span>
+      <span class="no">#SBATCH --error={cur_dir}/.sos/{job_name}.err</span>
       <span class="no">cd {cur_dir}</span>
-      <span class="no">module load R/3.4.3</span>
+      <span class="no">module load R</span>
     <span class="l l-Scalar l-Scalar-Plain">partition</span><span class="p p-Indicator">:</span> <span class="s">&quot;SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl&quot;</span>
     <span class="l l-Scalar l-Scalar-Plain">account</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
     <span class="l l-Scalar l-Scalar-Plain">submit_cmd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sbatch {job_file}</span>
@@ -375,7 +375,7 @@ body {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The section <code>DSC</code> is required to provide various templates for a number of systems. Here <code>midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code>partition=broadwl</code>. Typically it has 40 cores per node, allows for maximum of 40 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the <code>max_*</code> values in the configuration.</p>
+<p>The section <code>DSC</code> is required to provide various templates for a number of systems. Here <code>midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code>partition=broadwl</code>. Typically it has 40 cores per node, allows for maximum of 60 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the <code>max_*</code> values in the configuration.</p>
 <p>There are also 2 "derived" queue: <code>stephenslab</code> is a special partition on <code>midway2</code> that allows for different configurations, thus it is derived from <code>midway2</code> via <code>based_on: midway2</code>. Also relevant is the <code>faraway2</code>, also <code>based_on: midway2</code>, but specifies the address of how to connect to <code>midway2</code>. Then DSC will assume that the request is made from a local computer and try to use the "local-host" mechanism to run jobs.</p>
 
 </div>

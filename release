@@ -7,7 +7,7 @@ parameter: pip = 'pip'
 [default_1 (Configure website): shared = ['conf', 'binders', 'notebook_files', 'rmd_files', 'index_files', 'pipeline_files', 'generated_files', 'password', 'status']]
 depends: Py_Module('bs4'), Py_Module('date_parser')
 DEFAULT_CONF = {
-           '__version__': '0.9.4',
+           '__version__': '0.9.5',
            '__about_commit__': 'https://stephenslab.github.io/ipynb-website/notes.html#Note-about-commit-ids',
            'name': 'A Pet Project',
            'repo': 'http://github.com/vatlab/jnbinder',
@@ -48,7 +48,7 @@ except Exception as e:
      raise RuntimeError('{}. You can try `pip install` to install the missing module.'.format(e))
 if len(glob.glob('.sos/*')) and os.path.isdir(".git"):
    update_gitignore()
-if compare_versions(SOS_VERSION, '0.9.13.2') < 0:
+if compare_versions(SOS_VERSION, '0.9.16.4') < 0:
   sos_run("upgrade-sos")
   status = 1
   fail_if(status, msg = 'Cannot generate documents due to obsolete SoS software. Though we have attempted to upgrade SoS (see above) you need to rerun this script to load the updates.')
@@ -78,7 +78,7 @@ else:
    if os.path.isfile(f'docs/site_libs/highlightjs/highlight.{conf["auto_highlight"]}.js'):
       conf['auto_highlight'] = (conf['auto_highlight'], 'jnbinder')
    else:
-      conf['auto_highlight'] = (pack, 'jnbinder')
+      conf['auto_highlight'] = ('pack', 'jnbinder')
 binders = [x for x in conf['include_dir'] if os.path.isdir(x)]
 # binders = [x for x in next(os.walk('./'))[1] if x not in conf['exclude_dir'] + ['docs'] and not x.startswith('.')]
 fail_if(len(binders) == 0, msg = err_msg)
@@ -154,7 +154,7 @@ if not os.path.isfile(conf['homepage']):
     f.write(make_empty_nb(conf['name']))
 
 [update-hp (Index HTML updater)]
-depends: sos_step("update-tpl"), sos_step("update-index"), executable('jupyter')
+depends: sos_step("update-tpl"), sos_step("update-index"), executable('jupyter'), Py_Module('jupyter_contrib_nbextensions')
 input: dynamic(index_files + [conf['homepage']]), group_by = 1, concurrent = True
 output: [f'docs/{x}.html' for x in binders if x not in conf['hide_navbar']] + ['docs/index.html'], group_by = 1
 bash: expand = "${ }", stderr = False
@@ -168,7 +168,7 @@ python: expand = "${ }", input = 'docs/jnbinder.py'
   get_sha1_files([(${_input:r}, ${_output:r})], [], ${password}, write = True)
 
 [update-nb (Notebook to HTML converter)]
-depends: sos_step("update-tpl"), executable('jupyter')
+depends: sos_step("update-tpl"), executable('jupyter'), Py_Module('jupyter_contrib_nbextensions')
 stop_if(len(notebook_files) == 0)
 from jnbinder import get_commit_info
 nb_info = [get_commit_info(x, conf) for x in notebook_files]
@@ -190,7 +190,7 @@ stop_if(len(pipeline_files) == 0)
 input: pipeline_files, group_by = 1, concurrent = True
 output: [f"docs/{x.replace('.sos', '.pipeline.html')}" for x in pipeline_files], group_by = 1
 bash: expand = "${ }", stdout = False, stderr = False
-  sos convert ${_input} ${_output} --style tango --lineno
+  sos convert ${_input} ${_output}
 
 [update-toc (TOC Javascript updater)]
 input: dynamic(notebook_files + index_files)
