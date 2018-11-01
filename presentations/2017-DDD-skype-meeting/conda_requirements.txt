@@ -6,7 +6,7 @@ bleach=1.5.0=py35_0
 click=6.7=py35_0
 decorator=4.1.2=py35_0
 entrypoints=0.2.3=py35_0
-flask=0.12.2=py35_0
+flask=0.12.3=py35_0
 html5lib=0.9999999=py35_0
 icu=54.1=0
 ipykernel=4.6.1=py35_0
