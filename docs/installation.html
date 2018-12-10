@@ -287,36 +287,23 @@ pip3 --version</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Install-Python-dependencies">3. Install Python dependencies<a class="anchor-link" href="#3.-Install-Python-dependencies">&#182;</a></h2><p>DSC uses <a href="FAQ/Implementation_Details.html">several Python modules</a>. We provide two sets of installation instructions: Python installed with <code>conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code>conda</code>.</p>
-<h3 id="3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">3a. If Python is installed with <code>conda</code> (Anaconda or Miniconda)<a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">&#182;</a></h3><p>Install the modules required by DSC. First run</p>
+<h2 id="3.-Install-(or-upgrade)-DSC">3. Install (or upgrade) DSC<a class="anchor-link" href="#3.-Install-(or-upgrade)-DSC">&#182;</a></h2><p>We provide two sets of installation instructions: Python installed with <code>conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code>conda</code>.</p>
+<h3 id="3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">3a. If Python is installed with <code>conda</code> (Anaconda or Miniconda)<a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">&#182;</a></h3><p>Using <code>conda</code>, install DSC from the conda-forge channel:</p>
 
-<pre><code>conda install -c conda-forge fasteners python-xxhash pyarrow billiard</code></pre>
-<p>then run</p>
+<pre><code>conda install -c conda-forge dsc</code></pre>
+<h3 id="3b.-If-Python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-with-conda">&#182;</a></h3><p>Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):</p>
 
-<pre><code>conda install cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
-conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio</code></pre>
-<p>After running these <code>conda install</code> commands, run these commands to make sure you have the latest versions:</p>
-
-<pre><code>conda update -c conda-forge fasteners python-xxhash pyarrow billiard
-conda update cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
-conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3b.-If-Python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-with-conda">&#182;</a></h3><p>In this case, you can skip this step because the <code>pip</code> command below will automatically install the required packages. However, we caution that:</p>
+<pre><code>pip install -U --upgrade-strategy only-if-needed dsc</code></pre>
+<p>However, we caution that:</p>
 <ul>
 <li><p>You must have both <code>C</code> and <code>Fortran</code> compilers (and accompanying libraries).</p>
 </li>
 <li><p>The <code>pip</code> command may take a long time to run because several packages will need to be built from source.</p>
 </li>
-<li><p>Installation of some packages may fail. In so, try running the same command again; <em>sometimes running the same <code>pip</code> command a second time works!</em></p>
+<li><p>Installation of some packages may fail. If so, try running the same command again; <em>sometimes running the same <code>pip</code> command a second time works!</em></p>
 </li>
 </ul>
+<p>If you are having difficulty installing DSC and its dependnencies directly from source, we recommend switching to using <code>conda</code>. Since <code>conda</code> installs binary packages that have already been compiled, this saves you from having to configure the correct compiler settings on your local machine.</p>
 
 </div>
 </div>
@@ -325,9 +312,13 @@ conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz ima
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Install-(or-upgrade)-DSC">4. Install (or upgrade) DSC<a class="anchor-link" href="#4.-Install-(or-upgrade)-DSC">&#182;</a></h2><p>Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):</p>
+<h2 id="4.-Install-modules-for-network-visualization-of-benchmarks-(optional)">4. Install modules for network visualization of benchmarks (optional)<a class="anchor-link" href="#4.-Install-modules-for-network-visualization-of-benchmarks-(optional)">&#182;</a></h2><p>If you'd like to be able to create a network visualization of your benchmarks, you'll need to install some additional Python modules. This is an entirely optional feature which will not affect the running of your DSC benchmarks.</p>
+<h3 id="3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">3a. If Python is installed with <code>conda</code> (Anaconda or Miniconda)<a class="anchor-link" href="#3a.-If-Python-is-installed-with-conda-(Anaconda-or-Miniconda)">&#182;</a></h3><p>Run the following:</p>
 
-<pre><code>pip install -U --upgrade-strategy only-if-needed dsc</code></pre>
+<pre><code>conda install -c conda-forge python-graphviz imageio pillow</code></pre>
+<h3 id="3b.-If-Python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code>conda</code><a class="anchor-link" href="#3b.-If-Python-is-not-installed-with-conda">&#182;</a></h3><p>Run the following:</p>
+
+<pre><code>pip install -U --upgrade-strategy only-if-needed graphviz imageio pillow</code></pre>
 
 </div>
 </div>
