@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Command-line reference</title>
+  <meta name="description" content="Command interface">
+
+  <link rel="canonical" href="https://gaow.github.io/dsc-book/reference/Command_Options.html">
+  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://gaow.github.io/dsc-book/feed.xml">
+
+  <meta property="og:url"         content="https://gaow.github.io/dsc-book/reference/Command_Options.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Command-line reference" />
+<meta property="og:description" content="Command interface" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://gaow.github.io/dsc-book/reference/Command_Options.html",
+  "headline":
+    "Command-line reference",
+  "datePublished":
+    "2019-01-06T23:26:59-06:00",
+  "dateModified":
+    "2019-01-06T23:26:59-06:00",
+  "description":
+    "Command interface",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gaow.github.io/dsc-book",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://gaow.github.io/dsc-book",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-book/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-book/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-book/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  <script src="https://unpkg.com/nbinteract-core" async></script>
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+  <!-- Google analytics -->
+  <script src="/dsc-book/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-book/assets/js/scripts.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-book/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    codeCell.insertAdjacentHTML('afterend', clipboardButton(id))
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-book/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-book/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  <script>
+/**
+  * To auto-embed hub URLs in interact links if given in a RESTful fashion
+ */
+
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+    
+function dict2param(dict) {
+    params = Object.keys(dict).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(dict[k])
+    });
+    return params.join('&')
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return dict2param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = document.querySelectorAll("a").forEach(function(link) {
+    var href = link.href;
+    // If the link is an internal link...
+    if (href.search("https://gaow.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + dict2param(params);
+      link.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+// Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = document.querySelectorAll("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          var hub_type = '';
+          if (hub_type === 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // If localhost, assume we're working from a local Jupyter server and remove `/hub`
+              first = [hubUrl, 'git-sync'].join('/')
+            } else {
+              first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            }
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("", hubUrl);
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // Assume we're working from a local Jupyter server and remove `/hub`
+              href = href.replace("/hub/user-redirect", "");
+            }
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          document.querySelectorAll("a.interact-button")[0].insertAdjacentHTML('afterend', '<div class="interact-context">on ' + hubUrlNoHttp + '</div>');
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+runWhenDOMLoaded(updateInteractLink)
+document.addEventListener('turbolinks:load', updateInteractLink)
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <img src="/dsc-book/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
+  <h2 class="c-sidebar__title">Dynamic Statistical Comparison</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/overview"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/installation"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/reference/reference"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Terminology"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Configuration"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Execution"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Filtering"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry c-sidebar__entry--active"
+                  href="/dsc-book/reference/Command_Options"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Road_Map"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Implementation_Details"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Unsupported_Features"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">DSC user guide</li>
+        
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/first_course/first_course"
+        >
+          
+          DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_DSC"
+                >
+                  
+                  First course in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_I"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_II"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Prototype_Tips"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Debug_Tips"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Syntax_Tips"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          Other DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_Python"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Data"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_RPY"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Multiple_Pipelines"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Rmd_Executable"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Remote_Computations"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Docker"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/examples"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_1"
+                >
+                  
+                  Intermedium R example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_2"
+                >
+                  
+                  Intermedium R example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      <!-- Shamelessly copied from minimal mistakes -->
+
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="onthispage">
+      <header><h4 class="nav__title"><i class="fa fa-list"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#dsc-main-program">DSC main program</a></li>
+  <li><a href="#dsc-query-program">DSC query program</a>
+    <ul>
+      <li><a href="#to-query-result">To query result</a></li>
+      <li><a href="#to-dump-single-file-from-dsc-benchmark-to-text">To dump single file from DSC benchmark to text</a></li>
+    </ul>
+  </li>
+</ul>
+    </nav>
+  </aside>
+
+
+
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+
+            <div class="c-textbook__content">
+              <h1 id="command-interface">Command interface</h1>
+
+<p>DSC implements 2 command programs, <code class="highlighter-rouge">dsc</code> and <code class="highlighter-rouge">dsc-query</code>, for executing DSC and extracting result from executed benchmarks, respectively.</p>
+
+<h2 id="dsc-main-program">DSC main program</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc <span class="nt">-h</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str]
+           [-s option] [--touch] [--clean option] [-c N] [--ignore-errors]
+           [-v {0,1,2,3,4}] [-p] [--host file] [--to-host dir [dir ...]]
+           [--version] [-h]
+           DSC script
+
+positional arguments:
+  DSC script            DSC script to execute.
+
+Customized execution:
+  --target str [str ...]
+                        This argument can be used in two contexts: 1) When
+                        used without "--clean" it overrides "DSC::run" in DSC
+                        file. Input should be quoted string(s) defining one or
+                        multiple valid DSC pipelines (multiple pipelines
+                        should be separated by space). 2) When used along with
+                        "--clean" it specifies one or more computational
+                        modules, separated by space, whose output are to be
+                        removed. Alternatively one can specify path(s) of
+                        particular DSC output files that needs to be removed.
+                        (default: None)
+  --truncate            When applied, DSC will only run one value per
+                        parameter. For example with "--truncate", "n: R{1:50}"
+                        will be truncated to "n: 1". This is useful in
+                        exploratory analysis and diagnostics, particularly
+                        when used in combination with "--target". (default:
+                        False)
+  --replicate N         Overrides "DSC::replicate" to set number of
+                        replicates. Will be set to 1 when "--truncate" is in
+                        action. (default: None)
+  -o str                Benchmark output. It overrides "DSC::output" defined
+                        in DSC file. (default: None)
+
+Maintenance:
+  -s option, --skip option
+                        Behavior of how DSC is executed in the presence of
+                        existing results. "default": skips modules whose
+                        "environment" has not been changed since previous
+                        execution. "none": executes DSC from scratch. "all":
+                        skips all execution yet build DSC database of what the
+                        specified benchmark is supposed to look like, thus
+                        making it possible to explore partial benchmark
+                        results. (default: default)
+  --touch               "Touch" output files if exist, to mark them "up-to-
+                        date". It will override "--skip" option. Note that
+                        time stamp is irrelevant to whether or not a file is
+                        up-to-date. Files will be considered to "exist" as
+                        long as module name, module parameters and variables,
+                        module script name and command arguments remain the
+                        same. Module script content do not matter. The output
+                        files will be "touched" to match with the current
+                        status of module code. (default: False)
+  --clean option        Behavior of how DSC cleans up output folder to save
+                        disk space. "purge" cleans up everything in folder
+                        "DSC::output" irrelevant to the most recent successful
+                        execution of the benchmark. "replace" deletes
+                        specified files, or files from specified (via "--
+                        target") modules, and put in placeholder files with
+                        "*.zapped" extension. When re-running pipelines these
+                        "zapped" files will not trigger rerun of their module
+                        unless they are directly required by a downstream
+                        module that needs re-execution. In other words this is
+                        useful to remove large yet unused intermediate module
+                        output. (default: None)
+
+Runtime behavior:
+  -c N                  Number of maximum cpu threads for local runs, or
+                        concurrent jobs for remote execution. (default: 4)
+  --ignore-errors       Bypass all errors from computational programs. This
+                        will keep the benchmark running but all results will
+                        be set to missing values and the problematic script
+                        will be saved when possible. (default: False)
+  -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
+                        Output error (0), warning (1), info (2), debug (3) and
+                        trace (4) information. (default: 2)
+  -p                    Print stdout and stderr to screen. Caution that
+                        running DSC with and without "-p" will trigger rerun
+                        unless "--touch" option is also used. (default: False)
+
+Remote execution:
+  --host file           Configuration file for remote computer. (default:
+                        None)
+  --to-host dir [dir ...]
+                        Files and directories to be sent to remote host for
+                        use in benchmark. (default: [])
+
+Other options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+
+</code></pre></div></div>
+
+<p>Here we elaborate on some of options we did not have space to elaborate on the interface:</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code class="highlighter-rouge">-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc/issues">github issue</a>.</p>
+  </li>
+  <li><code class="highlighter-rouge">--target</code>: this option takes multiple input.
+    <ul>
+      <li>
+        <p>When used without <code class="highlighter-rouge">--clean</code> it overrides <code class="highlighter-rouge">DSC::run</code>, where DSC benchmark is defined. For example, benchmark in DSC file</p>
+
+        <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * method * score</span>
+</code></pre></div>        </div>
+
+        <p>can be re-defined with, for example <code class="highlighter-rouge">--target "simulate * method"</code> so that the pipeline <code class="highlighter-rouge">simulate * target</code> will be executed instead. Using this option, one can execute DSC bit by bit to debug, eg, <code class="highlighter-rouge">"simulate"</code>, then <code class="highlighter-rouge">"simulate * method"</code> and finally <code class="highlighter-rouge">"simulate * method * score"</code>.</p>
+      </li>
+      <li>
+        <p>When used with <code class="highlighter-rouge">--clean</code> it specifies the module(s) whose output are to be “clean”-ed up (defined by behavior specified in <code class="highlighter-rouge">--clean</code>). Therefore only names of modules are valid input in this context.</p>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">--skip</code>: unlike with <code class="highlighter-rouge">Make</code> / <code class="highlighter-rouge">Snakemake</code> that determines whether or not to re-execute based on time stamps, DSC creates HASH for modules that takes into consideration all input parameter, input and output module variables, and the content of the module script if applicable. When all these information agree with a previous execution it will by default skip those runs. This behavior can be changed by this <code class="highlighter-rouge">--skip</code> option.
+    <ul>
+      <li><code class="highlighter-rouge">--skip none</code> will re-execute everything: it will remove and ignore any existing output files.</li>
+      <li><code class="highlighter-rouge">--skip all</code> will not perform any module computations. It will only construct the execution meta-data and create a DSC database that one can query from. That is, <code class="highlighter-rouge">dsc &lt;script&gt; --skip all</code> followed by <code class="highlighter-rouge">dsc-query &lt;output&gt; -o</code> will help one understand the expected results from specified DSC benchmark. This can also be used as sanity check when benchmark is only partially completed. If you are uncertain about the scale of the benchmark, for example, it is recommanded to run DSC with <code class="highlighter-rouge">--skip all</code> and use <code class="highlighter-rouge">dsc-query &lt;output&gt; -o</code> to view the benchmark structure.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">-c</code> configures parallel computing. Since DSC is designed to be executed in either local or remote computers, <code class="highlighter-rouge">-c</code> configures the number of CPU threads used when computing in local and number of jobs to be sent when computing on the remote computers, when used with <code class="highlighter-rouge">--host</code> option (which will override <code class="highlighter-rouge">max_running_jobs</code> in the configuration file). Default value is in fact set to using half of the local computers CPU threads. Thus the displayed default <code class="highlighter-rouge">4</code> CPUs in the documentation above is result of running <code class="highlighter-rouge">dsc -h</code> on a computer with a total of 8 CPU threads. This number should be specifically configured if one wants to use more (or less) computing power on a desktop; and should definitely be configured for remote job executions based on current queue status of the remote computing environment.</li>
+  <li><code class="highlighter-rouge">--ignore-errors</code> is a flag which, when added, will ignore errors from user provided scripts, thus keeps the benchmark running. There are often situations when we use other people’s software packages that produces errors in random corner cases that will interrupt the benchmark from moving forward; sometimes one cannot <code class="highlighter-rouge">try ... catch</code> them. With this option, instead of throwing an error, DSC will <strong>store the problematic chunk of code that resulted in an error to the output, creating a dummy output file that keeps DSC moving</strong>. These dummy output will natually result in a chain reaction of failure in every other module that depends on them. But the benchmark will therefore complete, after which one can check the output and trace back the most upstream dummy output as source of errors.</li>
+  <li><code class="highlighter-rouge">-p</code>: By default DSC saves <a href="https://en.wikipedia.org/wiki/Standard_streams">system stdout and stderr</a> to files <code class="highlighter-rouge">.stderr</code> and <code class="highlighter-rouge">.stdout</code> in the DSC result folder for all module instances. Using <code class="highlighter-rouge">-p</code> will instead print them to the screen to help debugging. However adding / removing <code class="highlighter-rouge">-p</code> will in fact change the way the scripts are executed, and as far as the workflow manager concerns, are different commands executed. As a result adding / removing <code class="highlighter-rouge">-p</code> will trigger rerun, unless <code class="highlighter-rouge">--touch</code> is also used when switching from with <code class="highlighter-rouge">-p</code> to without <code class="highlighter-rouge">-p</code>, and vice versa.</li>
+</ul>
+
+<h2 id="dsc-query-program">DSC query program</h2>
+
+<p>This is a companion program to <code class="highlighter-rouge">dsc</code> that can be used to extract results from benchmark.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc-query <span class="nt">-h</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
+                 [--description str [str ...]] [-t WHAT [WHAT ...]]
+                 [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]]
+                 [--language str] [--addon str [str ...]]
+                 [--rds {omit,overwrite}] [-v {0,1,2,3}]
+                 DSC output folder or a single output file
+
+An internal command to extract meta-table for DSC results (requires 'sos-
+essentials' package to use notebook output).
+
+positional arguments:
+  DSC output folder or a single output file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -o str                Output notebook / data file name. In query
+                        applications if file name ends with ".csv", ".ipynb"
+                        or ".xlsx" then only data file will be saved as result
+                        of query. Otherwise both data file in ".xlsx" format
+                        and a notebook that displays the data will be saved.
+                        (default: None)
+  --limit N             Number of rows to display for tables. Default is to
+                        display it for all rows (will result in very large
+                        HTML output for large benchmarks). (default: -1)
+  --title str           Title for notebook file. (default: DSC summary &amp;
+                        query)
+  --description str [str ...]
+                        Text to add under notebook title. Each string is a
+                        standalone paragraph. (default: None)
+  -t WHAT [WHAT ...], --target WHAT [WHAT ...]
+                        Query targets. (default: None)
+  -c WHERE [WHERE ...], --condition WHERE [WHERE ...]
+                        Query conditions. (default: None)
+  -g G:A,B [G:A,B ...], --groups G:A,B [G:A,B ...]
+                        Definition of module groups. (default: None)
+  --language str        Language kernel to switch to for follow up analysis in
+                        notebook generated. (default: None)
+  --addon str [str ...]
+                        Scripts to load to the notebooks for follow up
+                        analysis. Only usable in conjunction with "--
+                        language". (default: None)
+  --rds {omit,overwrite}
+                        Convert Python serialized files to R serialized files
+                        (default: None)
+  -v {0,1,2,3}, --verbosity {0,1,2,3}
+                        Output error (0), warning (1), info (2) and debug (3)
+                        information. (default: 2)
+
+</code></pre></div></div>
+
+<h3 id="to-query-result">To query result</h3>
+
+<p>The main goal of <code class="highlighter-rouge">dsc-query</code> is to extract results from benchmark given conditions. Although <code class="highlighter-rouge">dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it – the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
+
+<p>Currently supported languages specific libraries are:</p>
+
+<ul>
+  <li>R: <code class="highlighter-rouge">dsc_query</code> function for <a href="https://github.com/stephenslab/dsc/tree/master/dscrutils"><code class="highlighter-rouge">dscrutils</code> package</a>.</li>
+</ul>
+
+<h3 id="to-dump-single-file-from-dsc-benchmark-to-text">To dump single file from DSC benchmark to text</h3>
+
+<p><code class="highlighter-rouge">dsc-query</code> can also be used to convert to text file single benchmark output file in <code class="highlighter-rouge">rds</code> or <code class="highlighter-rouge">pkl</code> format, along with a scripts to reproduce the result. For example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc-query dsc_result/simulate/data_1.pkl <span class="nt">-o</span> data.out
+INFO: Loading database ...
+INFO: Data dumped to text files data.out and data.out.script.
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">*.out</code> file contains data in plain text, and <code class="highlighter-rouge">*.script</code> contains the script that generated the data as well as the time elapsed executing the script.</p>
+
+              <nav class="c-page__nav">
+  
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-book/reference/DSC_Filtering">
+      〈 <span class="u-margin-right-tiny"></span> Extracting DSC results
+    </a>
+  
+
+  
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-book/reference/Road_Map">
+      Development roadmap <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>

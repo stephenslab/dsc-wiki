@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Running DSC on remote computers</title>
+  <meta name="description" content="Running DSC on a remote computer">
+
+  <link rel="canonical" href="https://gaow.github.io/dsc-book/advanced_course/Remote_Computations.html">
+  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://gaow.github.io/dsc-book/feed.xml">
+
+  <meta property="og:url"         content="https://gaow.github.io/dsc-book/advanced_course/Remote_Computations.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Running DSC on remote computers" />
+<meta property="og:description" content="Running DSC on a remote computer" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://gaow.github.io/dsc-book/advanced_course/Remote_Computations.html",
+  "headline":
+    "Running DSC on remote computers",
+  "datePublished":
+    "2019-01-06T23:26:59-06:00",
+  "dateModified":
+    "2019-01-06T23:26:59-06:00",
+  "description":
+    "Running DSC on a remote computer",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gaow.github.io/dsc-book",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://gaow.github.io/dsc-book",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-book/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-book/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-book/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  <script src="https://unpkg.com/nbinteract-core" async></script>
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+  <!-- Google analytics -->
+  <script src="/dsc-book/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-book/assets/js/scripts.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-book/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    codeCell.insertAdjacentHTML('afterend', clipboardButton(id))
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-book/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-book/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  <script>
+/**
+  * To auto-embed hub URLs in interact links if given in a RESTful fashion
+ */
+
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+    
+function dict2param(dict) {
+    params = Object.keys(dict).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(dict[k])
+    });
+    return params.join('&')
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return dict2param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = document.querySelectorAll("a").forEach(function(link) {
+    var href = link.href;
+    // If the link is an internal link...
+    if (href.search("https://gaow.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + dict2param(params);
+      link.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+// Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = document.querySelectorAll("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          var hub_type = '';
+          if (hub_type === 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // If localhost, assume we're working from a local Jupyter server and remove `/hub`
+              first = [hubUrl, 'git-sync'].join('/')
+            } else {
+              first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            }
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("", hubUrl);
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // Assume we're working from a local Jupyter server and remove `/hub`
+              href = href.replace("/hub/user-redirect", "");
+            }
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          document.querySelectorAll("a.interact-button")[0].insertAdjacentHTML('afterend', '<div class="interact-context">on ' + hubUrlNoHttp + '</div>');
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+runWhenDOMLoaded(updateInteractLink)
+document.addEventListener('turbolinks:load', updateInteractLink)
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <img src="/dsc-book/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
+  <h2 class="c-sidebar__title">Dynamic Statistical Comparison</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/overview"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/installation"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/reference/reference"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Terminology"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Configuration"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Execution"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Filtering"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Command_Options"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Road_Map"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Implementation_Details"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Unsupported_Features"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">DSC user guide</li>
+        
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/first_course/first_course"
+        >
+          
+          DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_DSC"
+                >
+                  
+                  First course in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_I"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_II"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Prototype_Tips"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Debug_Tips"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Syntax_Tips"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          Other DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_Python"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Data"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_RPY"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Multiple_Pipelines"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Rmd_Executable"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry c-sidebar__entry--active"
+                  href="/dsc-book/advanced_course/Remote_Computations"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Docker"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/examples"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_1"
+                >
+                  
+                  Intermedium R example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_2"
+                >
+                  
+                  Intermedium R example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      <!-- Shamelessly copied from minimal mistakes -->
+
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="onthispage">
+      <header><h4 class="nav__title"><i class="fa fa-list"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#job-configuration-template-and-command-options">Job configuration template and command options</a></li>
+  <li><a href="#host-configuration-example">Host configuration example</a></li>
+  <li><a href="#control-number-of-jobs-to-submit">Control number of jobs to submit</a></li>
+  <li><a href="#run-remote-jobs">Run remote jobs</a></li>
+  <li><a href="#monitor-and-manage-jobs">Monitor and manage jobs</a></li>
+</ul>
+    </nav>
+  </aside>
+
+
+
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+
+            <div class="c-textbook__content">
+              <h1 id="running-dsc-on-a-remote-computer">Running DSC on a remote computer</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>DSC uses one additional configuration file and two command options (<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote computer (or “host”, hereafter). Here a remote computer can be:</p>
+
+<ol>
+  <li>A standalone desktop workstation without a job queue system</li>
+  <li>A system with a job queue manager, such as PBS-based cluster</li>
+</ol>
+
+<p>DSC facilicate two approaches to run remote tasks:</p>
+
+<ol>
+  <li>“On-Host”, the conventional way: log in to the host and run remote jobs. For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. For a cluster system this will automatically submit jobs to compute nodes based on provided template.</li>
+  <li>“Local-Host”, a host friendly way: do not log in to the host to run jobs. Rather, have a copy of DSC software installed to your local computer (Mac or Linux), and configure the host to have DSC and all required tools for benchmarking installed. Then run DSC from local computer with additional folders to be synced to the host specified by <code class="highlighter-rouge">--to-host</code> option. The local computer will serve as the job dispatcher and job monitor. This provides a way to run on hosts that has some policy constraints on long running jobs from the headnode, for example.</li>
+</ol>
+
+<p>Under the hood, DSC configures all modules and converts them to <a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Enthusiastic readers shall refer to <a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a> for details under the hood. Configuration here in DSC is further automated for benchmarking and thus simpler interface-wise.</p>
+
+<p>In this tutorial we’ll focus on discussing running jobs on a cluster with queue manager.</p>
+
+<h2 id="job-configuration-template-and-command-options">Job configuration template and command options</h2>
+
+<p>Using a template and command options, DSC allows users to:</p>
+
+<ol>
+  <li>Configure job submission on host.</li>
+  <li>Configure resource requirement per module.</li>
+</ol>
+
+<p>Using command options, users can</p>
+
+<ol>
+  <li>Submit the entire benchmark with controlled maximum job limits (command option <code class="highlighter-rouge">-c</code>).</li>
+  <li>When submitting from local to host computer, automatically send required files to the host for benchmarking (command option <code class="highlighter-rouge">--to-host</code>).</li>
+</ol>
+
+<p>Users can also use SoS utility tools to manage jobs. The end of documentation will briefly discuss a few SoS utility commands with examples.</p>
+
+<h2 id="host-configuration-example">Host configuration example</h2>
+
+<p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that specifies a <em>template</em> for remote jobs. <strong>We provide support to such configuration files on need-basis</strong>, because we (the DSC developers) can only verify and ensure the it works on system that we have access to and use on regular basis. For example, <a href="https://github.com/stephenslab/dsc-reg/blob/master/midway.yml">here is a template</a> for a system running PBS type of queue via Slurm Workload Manage:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">midway2</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway 2</span>
+    <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/gaow</span>
+    <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
+    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">60</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">40</span>
+    <span class="na">max_cores</span><span class="pi">:</span> <span class="s">40</span>
+    <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">36:00:00"</span>
+    <span class="na">max_mem</span><span class="pi">:</span> <span class="s">64G</span>
+    <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
+      <span class="no">#!/bin/bash</span>
+      <span class="no">#SBATCH --time={walltime}</span>
+      <span class="no">#{partition}</span>
+      <span class="no">#{account}</span>
+      <span class="no">#SBATCH --nodes=1</span>
+      <span class="no">#SBATCH --ntasks-per-node={cores}</span>
+      <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
+      <span class="no">#SBATCH --job-name={job_name}</span>
+      <span class="no">#SBATCH --output={cur_dir}/.sos/{job_name}.stdout</span>
+      <span class="no">#SBATCH --error={cur_dir}/.sos/{job_name}.stderr</span>
+      <span class="no">cd {cur_dir}</span>
+      <span class="no">module load R/3.4.3</span>
+    <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl"</span>
+    <span class="na">account</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+    <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
+    <span class="na">submit_cmd_output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Submitted</span><span class="nv"> </span><span class="s">batch</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">{job_id}"</span>
+    <span class="na">status_cmd</span><span class="pi">:</span> <span class="s">squeue --job {job_id}</span>
+    <span class="na">kill_cmd</span><span class="pi">:</span> <span class="s">scancel {job_id}</span>
+  <span class="na">faraway2</span><span class="pi">:</span>
+    <span class="na">based_on</span><span class="pi">:</span> <span class="s">midway2</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Submit and manage jobs to `midway2` from a local computer.</span>
+    <span class="na">address</span><span class="pi">:</span> <span class="s">gaow@midway2.rcc.uchicago.edu</span>
+  <span class="na">stephenslab</span><span class="pi">:</span>
+    <span class="na">based_on</span><span class="pi">:</span> <span class="s">midway2</span>
+    <span class="na">max_cores</span><span class="pi">:</span> <span class="s">28</span>
+    <span class="na">max_mem</span><span class="pi">:</span> <span class="s">128G</span>
+    <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">10d"</span>
+    <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=mstephens"</span>
+    <span class="na">account</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--account=pi-mstephens"</span>
+
+<span class="na">default</span><span class="pi">:</span>
+  <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
+  <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">10m</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="na">n_cpu</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">mem_per_cpu</span><span class="pi">:</span> <span class="s">2G</span>
+
+<span class="c1"># module specific configurations</span>
+<span class="c1"># mostly to consolidate small jobs</span>
+<span class="na">simulate</span><span class="pi">:</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+
+<span class="na">score</span><span class="pi">:</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+</code></pre></div></div>
+
+<p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a number of systems. Here <code class="highlighter-rouge">midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per node, allows for maximum of 40 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the <code class="highlighter-rouge">max_*</code> values in the configuration.</p>
+
+<p>There are also 2 “derived” queue: <code class="highlighter-rouge">stephenslab</code> is a special partition on <code class="highlighter-rouge">midway2</code> that allows for different configurations, thus it is derived from <code class="highlighter-rouge">midway2</code> via <code class="highlighter-rouge">based_on: midway2</code>. Also relevant is the <code class="highlighter-rouge">faraway2</code>, also <code class="highlighter-rouge">based_on: midway2</code>, but specifies the address of how to connect to <code class="highlighter-rouge">midway2</code>. Then DSC will assume that the request is made from a local computer and try to use the “local-host” mechanism to run jobs.</p>
+
+<p>The section <code class="highlighter-rouge">default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">queue</code>: name of the queue on the remote host to use, one of the various queues defined in <code class="highlighter-rouge">DSC</code> section.
+    <ul>
+      <li>Here in the template it is set to <code class="highlighter-rouge">midway2</code>, which is a “On-Host” queue.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">time_per_instance</code>: maximum computation time for each module instance.</li>
+  <li><code class="highlighter-rouge">instance_per_job</code>: how many module instances to submit as one remote job. This is useful consolidating numerous light-weight module instances into one jobs submission.</li>
+  <li><code class="highlighter-rouge">n_cpu</code> and <code class="highlighter-rouge">mem_per_cpu</code> specify the CPU and memory requirement of a module instance.</li>
+</ul>
+
+<p>For example for 100 module instances of <code class="highlighter-rouge">simulate</code> that each generates some data in under a minute, one can specify <code class="highlighter-rouge">time_per_instance: 1m</code> and <code class="highlighter-rouge">instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
+
+<p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code class="highlighter-rouge">gaow</code> with their UChicago cnetID.</p>
+
+<p><strong>Please never use this template without configuring the required resources, particularly <code class="highlighter-rouge">time_per_instance</code> and <code class="highlighter-rouge">instance_per_job</code>. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on <code class="highlighter-rouge">instance_per_job</code>) and waste of resource (too high on <code class="highlighter-rouge">time_per_instance</code>)</strong></p>
+
+<h2 id="control-number-of-jobs-to-submit">Control number of jobs to submit</h2>
+
+<p>In the configuration file, <code class="highlighter-rouge">max_running_jobs</code> confines the maximum number of jobs to run on the host. This is set to have a safe limit that prevents from harming the host sytem (and getting angry system emails). For each benchmark submitted, the command option <code class="highlighter-rouge">-c</code> should be used to customize the maximum number of jobs to have in the queue. Command <code class="highlighter-rouge">dsc -h</code> will show you the default value of this number. Since it is a shared command option with running jobs locally, the default is set to ~1/2 of the total available CPU threads on the computer that executes <code class="highlighter-rouge">dsc</code>. That is, for the “On-Host” submission the default number of jobs will be half of threads on the head node; for the “Local-Host” submission the default will be half of threads on a local computer, which can be quite small when running from, say, a regular laptop. It is thus advised to always specify <code class="highlighter-rouge">-c</code> option.</p>
+
+<h2 id="run-remote-jobs">Run remote jobs</h2>
+
+<p>If the <code class="highlighter-rouge">default</code> queue is a “On-Host” queue (<code class="highlighter-rouge">address: localhost</code>), then</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc ... <span class="nt">--host</span> /path/to/config.yml <span class="nt">-c</span> 30
+</code></pre></div></div>
+
+<p>will configuration in <code class="highlighter-rouge">/path/to/config.yml</code> and submit jobs, in batches of 30.</p>
+
+<p>For the “Local-Host” mechanism (<code class="highlighter-rouge">default::address: &lt;some URL&gt;</code>),</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc ... <span class="nt">--host</span> /path/to/config.yml <span class="nt">--to-host</span> file1 dir1 file2 <span class="nt">-c</span> 30
+</code></pre></div></div>
+
+<p>will additionally use <code class="highlighter-rouge">--to-host</code> to sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in <code class="highlighter-rouge">DSC::lib_path</code>).</p>
+
+<p>Caution that to successfully use <code class="highlighter-rouge">--to-host</code>, the command program <a href="https://rsync.samba.org"><code class="highlighter-rouge">rsync</code></a> have to be available from the local computer.</p>
+
+<h2 id="monitor-and-manage-jobs">Monitor and manage jobs</h2>
+
+<p>When jobs are submitted, you should see on the screen something like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: M2_9eb9ad957cc31d50 submitted to midway2 with job id 45634260
+</code></pre></div></div>
+
+<p>So there is a task ID <code class="highlighter-rouge">M2_9eb9ad957cc31d50</code> and job ID <code class="highlighter-rouge">45634260</code>. This can also be observed from your system’s job queue, for example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+          45633096   broadwl M2_2eac6     gaow PD       0:00      1 (Priority)
+          45633098   broadwl M2_c6ed0     gaow PD       0:00      1 (Priority)
+          45633099   broadwl M2_38e36     gaow PD       0:00      1 (Priority)
+          45633100   broadwl M2_8fea7     gaow PD       0:00      1 (Priority)
+          45633101   broadwl M2_829d4     gaow PD       0:00      1 (Priority)
+          45633102   broadwl M2_3ab21     gaow PD       0:00      1 (Priority)
+          45633103   broadwl M2_ed42e     gaow PD       0:00      1 (Priority)
+          45633104   broadwl M2_2966b     gaow PD       0:00      1 (Priority)
+          45633086   broadwl M2_13151     gaow  R       0:01      1 midway2-0033
+          45633087   broadwl M2_01df1     gaow  R       0:01      1 midway2-0033
+          45633088   broadwl M2_b8668     gaow  R       0:01      1 midway2-0033
+          45633089   broadwl M2_89a83     gaow  R       0:01      1 midway2-0070
+          45633090   broadwl M2_7cbdd     gaow  R       0:01      1 midway2-0070
+          45633091   broadwl M2_56fa6     gaow  R       0:01      1 midway2-0070
+          45633092   broadwl M2_4baac     gaow  R       0:01      1 midway2-0070
+</code></pre></div></div>
+
+<p>To check on one of the job, for example the first one:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M2_2eac6 <span class="nt">-v3</span>
+</code></pre></div></div>
+
+<p>You will see information such as:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Started 27 min 13 sec ago
+Duration 26 min 59 sec
+
+TAGS:
+=====
+e0b204d49b525c52 susie2_0 susie2_sparse_13_susie2_1 susie2_sparse_14_susie2_1
+
+...
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">TAGS</code> line explains that the job comes from the module <code class="highlighter-rouge">susie2</code> and produces 2 files <code class="highlighter-rouge">susie2/sparse_13_susie2_1</code> and  <code class="highlighter-rouge">susie2/sparse_14_susie2_1</code>. That is, 2 module instances per job. There are also some other useful info on execution stats such as memory usage.</p>
+
+<p>To have more details,</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M2_2eac6 <span class="nt">-v4</span>
+</code></pre></div></div>
+
+<p>and the output:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M2_2eac66b84134d3f8.err:
+========================
+2eac66b84134d3f8: completed
+2018-05-02 07:49:50,749: DEBUG: 2eac66b84134d3f8 ``started``
+2018-05-02 07:49:51,249: DEBUG: 2eac66b84134d3f8 ``completed``
+c9afa00936023dba: completed
+2018-05-02 07:49:51,299: DEBUG: c9afa00936023dba ``started``
+2018-05-02 07:49:51,788: DEBUG: c9afa00936023dba ``completed``
+
+M2_2eac66b84134d3f8.out:
+========================
+2eac66b84134d3f8: completed
+output: {file_target('benchmark/susie2/sparse_13_susie2_1.rds'): '12e0ebc6506e00e2'}
+c9afa00936023dba: completed
+output: {file_target('benchmark/susie2/sparse_14_susie2_1.rds'): '98adf711379a200e'}
+
+M2_2eac66b84134d3f8.sh:
+=======================
+#!/bin/bash
+#SBATCH --time=00:10:00
+#SBATCH --partition=broadwl
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=3
+#SBATCH --mem-per-cpu=4G
+#SBATCH --job-name=M2_2eac66b84134d3f8
+#SBATCH --output=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stdout
+#SBATCH --error=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stderr
+cd /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg
+module load R/3.4.3
+sos execute M2_2eac66b84134d3f8 -v 2 -s default
+</code></pre></div></div>
+
+<p>You will see the actual SBATCH script submitted. Of perticular interest is perhaps the <code class="highlighter-rouge">stderr</code> and <code class="highlighter-rouge">stdout</code>. They record screen output of a job. To check them out:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.err
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Note that the current default version of R is 3.4.3.
+Type "module help R" for advice on using R on midway.
+</code></pre></div></div>
+
+<p>So I get two lines of messages related to loading R modules and nothing else. This is perhaps a good sign that no error or warning messages were generated from my R-based jobs.</p>
+
+              <nav class="c-page__nav">
+  
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-book/advanced_course/Rmd_Executable">
+      〈 <span class="u-margin-right-tiny"></span> Using Rmd files as module executables
+    </a>
+  
+
+  
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-book/advanced_course/DSC_Docker">
+      Running DSC in Docker <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>

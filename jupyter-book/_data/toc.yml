@@ -13,95 +13,99 @@
 #   in the sidebar. All other values are ignored.
 
 - title: Home
-  url: /intro
+  url: /overview
+  not_numbered: true
+- title: Installation
+  url: /installation
+  not_numbered: true
+- title: FAQ
+  url: /faq
   not_numbered: true
 
-- title: Features
-  url: /features/features
+- title: Reference manual
+  url: /reference/reference
   not_numbered: true
   sections:
-  - title: Markdown files
-    url: /features/markdown
+  - title: Terminology
+    url: /reference/Terminology
     not_numbered: true
-  - title: Jupyter notebooks
-    url: /features/notebooks
+  - title: DSC configuration syntax
+    url: /reference/DSC_Configuration
     not_numbered: true
-  - title: Citations and bibliographies
-    url: /features/citations
+  - title: Running DSC
+    url: /reference/DSC_Execution
     not_numbered: true
-
-- title: Guide
-  url: /guide/01_overview
-  not_numbered: true
-  sections:
-  - title: Setup and Install
-    url: /guide/02_setup
+  - title: Extracting DSC results
+    url: /reference/DSC_Filtering
     not_numbered: true
-  - title: Prepare your book
-    url: /guide/03_prepare
+  - title: Command-line reference
+    url: /reference/Command_Options
     not_numbered: true
-  - title: Build your book
-    url: /guide/04_build
+  - title: Development roadmap
+    url: /reference/Road_Map
     not_numbered: true
-  - title: Publish your book
-    url: /guide/05_publish
-    not_numbered: true
-  - title: FAQ
-    url: /guide/06_faq
-    not_numbered: true
-  - title: How-to and advanced topics
-    url: /guide/07_advanced
+  - title: Implementation details
+    url: /reference/Implementation_Details
+  - title: Unsupported features
+    url: /reference/Unsupported_Features
 
 - divider: true
-- header: Demo textbook
+- header: DSC user guide
 
-- title: Data Science
-  url: /01/what-is-data-science
+- title: DSC tutorials
+  url: /first_course/first_course
+  not_numbered: true
   sections:
-  - title: Introduction
-    url: /01/1/intro
-  - title: Why Data Science?
-    url: /01/2/why-data-science
-  - title: Plotting the Classics
-    url: /01/3/Plotting_the_Classics
-    subsections:
-    - title: Subsection Demo 1
-      url: /01/3/subsection/subsections
-    - title: Subsection Demo 2
-      url: /01/3/subsection/subsectiontwo
-
-- title: Causality and Experiments
-  url: /02/causality-and-experiments
+  - title: First course in DSC
+    url: /first_course/Intro_DSC
+    not_numbered: true
+  - title: DSC basics, part I
+    url: /first_course/Intro_Syntax_I
+    not_numbered: true
+  - title: DSC basics, part II
+    url: /first_course/Intro_Syntax_II
+    not_numbered: true
+  - title: Developing benchmarks
+    url: /first_course/Prototype_Tips
+    not_numbered: true
+  - title: Debug in DSC
+    url: /first_course/Debug_Tips
+    not_numbered: true
+  - title: Syntax tips
+    url: /first_course/Syntax_Tips
+    not_numbered: true
+- title: Other DSC tutorials
+  url: /faq
+  not_numbered: true
   sections:
-  - title: John Snow and the Broad Street Pump
-    url: /02/1/observation-and-visualization-john-snow-and-the-broad-street-pump
-  - title: "Snow\u2019s \u201CGrand Experiment\u201D"
-    url: /02/2/snow-s-grand-experiment
-  - title: Establishing Causality
-    url: /02/3/establishing-causality
-  - title: Randomization
-    url: /02/4/randomization
-  - title: Endnote
-    url: /02/5/endnote
-
-- title: Programming in Python
-  url: /03/programming-in-python
+  - title: Working with Python
+    url: /advanced_course/5_Minutes_Python
+    not_numbered: true
+  - title: DSC data flow
+    url: /advanced_course/DSC_Data
+    not_numbered: true
+  - title: Working with R and Python
+    url: /advanced_course/5_Minutes_RPY
+    not_numbered: true
+  - title: Running multiple pipelines
+    url: /advanced_course/Multiple_Pipelines
+    not_numbered: true
+  - title: Using Rmd files as module executables
+    url: /advanced_course/Rmd_Executable
+    not_numbered: true
+  - title: Running DSC on remote computers
+    url: /advanced_course/Remote_Computations
+    not_numbered: true
+  - title: Running DSC in Docker
+    url: /advanced_course/DSC_Docker
+    not_numbered: true
+- title: Benchmark examples
+  url: /examples
+  not_numbered: true
   sections:
-  - title: Expressions
-    url: /03/1/Expressions
-  - title: Names
-    url: /03/2/Names
-  - title: Call Expressions
-    url: /03/3/Calls
-  - title: Introduction to Tables
-    url: /03/4/Introduction_to_Tables
-
-- title: Data Types
-  url: /04/Types
-  sections:
-  - title: Numbers
-    url: /04/1/Numbers
-  - title: Strings
-    url: /04/2/Strings
-  - title: Comparisons
-    url: /04/3/Comparison
+  - title: Intermedium R example 1
+    url: /examples/Intermedium_R_1
+    not_numbered: true
+  - title: Intermedium R example 2
+    url: /examples/Intermedium_R_2
+    not_numbered: true

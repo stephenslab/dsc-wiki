@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>DSC basics, part I</title>
+  <meta name="description" content="DSC Basics, Part I">
+
+  <link rel="canonical" href="https://gaow.github.io/dsc-book/first_course/Intro_Syntax_I.html">
+  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://gaow.github.io/dsc-book/feed.xml">
+
+  <meta property="og:url"         content="https://gaow.github.io/dsc-book/first_course/Intro_Syntax_I.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="DSC basics, part I" />
+<meta property="og:description" content="DSC Basics, Part I" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://gaow.github.io/dsc-book/first_course/Intro_Syntax_I.html",
+  "headline":
+    "DSC basics, part I",
+  "datePublished":
+    "2019-01-06T23:26:59-06:00",
+  "dateModified":
+    "2019-01-06T23:26:59-06:00",
+  "description":
+    "DSC Basics, Part I",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gaow.github.io/dsc-book",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://gaow.github.io/dsc-book",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-book/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-book/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-book/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  <script src="https://unpkg.com/nbinteract-core" async></script>
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+  <!-- Google analytics -->
+  <script src="/dsc-book/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-book/assets/js/scripts.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-book/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    codeCell.insertAdjacentHTML('afterend', clipboardButton(id))
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-book/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-book/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  <script>
+/**
+  * To auto-embed hub URLs in interact links if given in a RESTful fashion
+ */
+
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+    
+function dict2param(dict) {
+    params = Object.keys(dict).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(dict[k])
+    });
+    return params.join('&')
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return dict2param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = document.querySelectorAll("a").forEach(function(link) {
+    var href = link.href;
+    // If the link is an internal link...
+    if (href.search("https://gaow.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + dict2param(params);
+      link.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+// Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = document.querySelectorAll("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          var hub_type = '';
+          if (hub_type === 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // If localhost, assume we're working from a local Jupyter server and remove `/hub`
+              first = [hubUrl, 'git-sync'].join('/')
+            } else {
+              first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            }
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("", hubUrl);
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // Assume we're working from a local Jupyter server and remove `/hub`
+              href = href.replace("/hub/user-redirect", "");
+            }
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          document.querySelectorAll("a.interact-button")[0].insertAdjacentHTML('afterend', '<div class="interact-context">on ' + hubUrlNoHttp + '</div>');
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+runWhenDOMLoaded(updateInteractLink)
+document.addEventListener('turbolinks:load', updateInteractLink)
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <img src="/dsc-book/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
+  <h2 class="c-sidebar__title">Dynamic Statistical Comparison</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/overview"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/installation"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/reference/reference"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Terminology"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Configuration"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Execution"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Filtering"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Command_Options"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Road_Map"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Implementation_Details"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Unsupported_Features"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">DSC user guide</li>
+        
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/first_course/first_course"
+        >
+          
+          DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_DSC"
+                >
+                  
+                  First course in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry c-sidebar__entry--active"
+                  href="/dsc-book/first_course/Intro_Syntax_I"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_II"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Prototype_Tips"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Debug_Tips"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Syntax_Tips"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          Other DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_Python"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Data"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_RPY"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Multiple_Pipelines"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Rmd_Executable"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Remote_Computations"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Docker"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/examples"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_1"
+                >
+                  
+                  Intermedium R example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_2"
+                >
+                  
+                  Intermedium R example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      <!-- Shamelessly copied from minimal mistakes -->
+
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="onthispage">
+      <header><h4 class="nav__title"><i class="fa fa-list"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#pipeline-variables">Pipeline variables</a></li>
+  <li><a href="#planning-a-dsc-file">Planning a DSC file</a></li>
+  <li><a href="#two-important-notes-about-pipeline-variables">Two important notes about pipeline variables</a></li>
+  <li><a href="#defining-modules-in-a-dsc-file">Defining modules in a DSC file</a>
+    <ul>
+      <li><a href="#the-normal-module">The normal module</a></li>
+      <li><a href="#the-t-module">The t module</a></li>
+      <li><a href="#the-two-analyze-modules">The two analyze modules</a></li>
+      <li><a href="#the-two-score-modules">The two score modules</a></li>
+    </ul>
+  </li>
+  <li><a href="#defining-groups-and-pipelines">Defining groups and pipelines</a></li>
+  <li><a href="#executing-the-dsc-benchmark">Executing the DSC benchmark</a></li>
+  <li><a href="#inspecting-the-results-of-the-dsc-benchmark">Inspecting the results of the DSC benchmark</a></li>
+  <li><a href="#pipeline-evaluation-and-alternatives">Pipeline evaluation, and alternatives</a></li>
+  <li><a href="#recap">Recap</a></li>
+  <li><a href="#next-steps">Next steps</a></li>
+</ul>
+    </nav>
+  </aside>
+
+
+
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+<div class="buttons">
+
+
+
+
+</div>
+
+
+            <div class="c-textbook__content">
+              <h1 id="dsc-basics-part-i">DSC Basics, Part I</h1>
+
+<p>This is a continuation of the <a href="Intro_DSC.html">Introduction to DSC</a>. Here we revisit the same example from the first part to explain key concepts in DSC, including <em>modules</em>, <em>groups</em> and <em>pipeline variables</em>. More advanced concepts will be introduced in <a href="Intro_Syntax_II.html">Part II</a>.</p>
+
+<p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. As before, you may choose to run this example DSC program as you read through the tutorial, but it is not required. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
+
+<h2 id="pipeline-variables">Pipeline variables</h2>
+
+<p>In DSC, all information is passed from one module to another through <em>pipeline variables</em>. All pipeline variables are indicated with a <code class="highlighter-rouge">$</code> as the first character, as in <code class="highlighter-rouge">$data</code> or <code class="highlighter-rouge">$mean_test_error</code>.</p>
+
+<p>Under the hood, when a module outputs a pipeline variable, the value of this variable is saved to a file; and when a pipeline variable is provided as input to a module, the value of this variable is read from a file. You will never need to access these files directly; DSC provides a user interface that allows you to access (<em>i.e.</em>, query) the pipeline variables without having to know where or how they are stored. In the previous tutorial we illustrated how the pipeline variables can be queried in R.</p>
+
+<h2 id="planning-a-dsc-file">Planning a DSC file</h2>
+
+<p>The main aim of DSC is to make your benchmark, or computational experiment, easier to read, easier to maintain, and easier to extend. To achieve these aims, we recommend that you to start by planning out your DSC project.</p>
+
+<p>We suggest starting the planning by identifying the <em>module types</em> (the key computational steps in your benchmark) and the <em>pipeline variables</em> (the quantities being fed from one step to another). All pipeline variables should be given informative names (which must begin with a <code class="highlighter-rouge">$</code>). It is also helpful to give the modules informative names. (<em>Note:</em> unlike other programming languages such as R, names in DSC cannot have a period.)</p>
+
+<p>Recall, in our working example, that we compared methods for estimating a population mean from a simulated data sample. Although this example was very simple—DSC can handle much more complex settings than this—this example is useful for explaining the basic ideas behind DSC.</p>
+
+<p>This example followed the <strong>simulate-analyze-score</strong> design pattern, meaning that the benchmark could be naturally decomposed into three module types:</p>
+
+<ul>
+  <li>
+    <p>A <code class="highlighter-rouge">simulate</code> module that generates a vector of simulated data (<code class="highlighter-rouge">$data</code>), and the population mean setting used to simulate these data (<code class="highlighter-rouge">$true_mean</code>).</p>
+  </li>
+  <li>
+    <p>An <code class="highlighter-rouge">analyze</code> module that accepts <code class="highlighter-rouge">$data</code> as input, and outputs an estimate of the population mean (<code class="highlighter-rouge">$est_mean</code>).</p>
+  </li>
+  <li>
+    <p>A <code class="highlighter-rouge">score</code> module that accepts inputs <code class="highlighter-rouge">$est_mean</code> and <code class="highlighter-rouge">$true_mean</code>, and outputs an error measure (<code class="highlighter-rouge">$error</code>).</p>
+  </li>
+</ul>
+
+<p>Therefore, our DSC has four pipeline variables: <code class="highlighter-rouge">$data</code>, <code class="highlighter-rouge">$true_mean</code>, <code class="highlighter-rouge">$est_mean</code> and <code class="highlighter-rouge">$error</code>.</p>
+
+<p>For clarity, we have summarized this information in the comments at the top of the DSC file (the <code class="highlighter-rouge">#</code> character indicates a comment in a DSC file—anything after a <code class="highlighter-rouge">#</code> is ignored by DSC):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># PIPELINE VARIABLES
+# $data       simulated data (vector)
+# $true_mean  population mean used to simulate $data (scalar)
+# $est_mean   population mean estimate (scalar)
+# $error      error in the estimate (scalar)
+
+# MODULE TYPES
+# name     inputs                outputs
+# ----     ------                -------
+# simulate none                  $data, $true_mean
+# analyze  $data                 $est_mean
+# score:   $est_mean, $true_mean $error
+</code></pre></div></div>
+
+<h2 id="two-important-notes-about-pipeline-variables">Two important notes about pipeline variables</h2>
+
+<ol>
+  <li>
+    <p>The variables outputted by modules should also include the parts of your benchmark that you want stored for future use. For example, <code class="highlighter-rouge">$error</code> is here considered a module output since we would like to use this quantity to study the results of the experiment.</p>
+  </li>
+  <li>
+    <p><em>The pipeline variables are the only way that modules can communicate with one another.</em> So if a module requires access to a piece of information generated by a previous module, then this must be a pipeline variable. For example, a <code class="highlighter-rouge">score</code> module requires access to the true mean used to generate the data, so here this quantity is assigned to a pipeline variable <code class="highlighter-rouge">$true_mean</code> from a <code class="highlighter-rouge">simulate</code> module.</p>
+  </li>
+</ol>
+
+<p>In summary, <em>all information in a DSC program is local to each module unless it is defined as a module output and assigned to a pipeline variable using the <code class="highlighter-rouge">$</code> character.</em></p>
+
+<h2 id="defining-modules-in-a-dsc-file">Defining modules in a DSC file</h2>
+
+<p>At its simplest, a DSC module consists of a name, a script (code) implementing the module, and details of how quantities are to be passed in and out of each script.</p>
+
+<p>Here we illustrate the syntax by explaining each module in our example. To keep the presentation focused on the key concepts, we use a slightly simplified version of the <a href="Intro_DSC.html">mean estimation example</a> that achieves the same
+result; see file <code class="highlighter-rouge">first_investigation_simpler.dsc</code> in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a> for the full example.</p>
+
+<h3 id="the-normal-module">The <code class="highlighter-rouge">normal</code> module</h3>
+
+<p>The first module defined in the DSC file is the <code class="highlighter-rouge">normal</code> module:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))</span>
+  <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">0</span>
+</code></pre></div></div>
+
+<p>(Again, this code is simplified slightly from the previous tutorial, but it achieves the same result.)</p>
+
+<p>This code tells DSC three things:</p>
+
+<ol>
+  <li>
+    <p>The name of the module is “normal”.</p>
+  </li>
+  <li>
+    <p>The R script implementing the module is a single line of code: <code class="highlighter-rouge">x &lt;- rnorm(n,mean = 100,sd = 1)</code>. Here, <code class="highlighter-rouge">R()</code> tells DSC that this code should be parsed and evaluated as an R script. For longer code, this should be replaced with the name of a file containing the R code. Any global variables (that is, variables that are not local to a function) defined inside a script are called “script variables”; in this module, one script variable is defined, <code class="highlighter-rouge">x</code>.</p>
+  </li>
+  <li>
+    <p>After running the script, the pipeline variable <code class="highlighter-rouge">$data</code> is set to the value of script variable <code class="highlighter-rouge">x</code>. A second pipeline variable, <code class="highlighter-rouge">$true_mean</code>, is set to 0.</p>
+  </li>
+</ol>
+
+<h3 id="the-t-module">The <code class="highlighter-rouge">t</code> module</h3>
+
+<p>The <code class="highlighter-rouge">t</code> module has the same outputs as the <code class="highlighter-rouge">normal</code> module, but generates <code class="highlighter-rouge">$data</code> from a <em>t</em> distribution with a mean of 3 and 2 degrees of freedom. After running the script, the pipeline variable <code class="highlighter-rouge">$data</code> is assigned the value of script variable <code class="highlighter-rouge">x</code>, and <code class="highlighter-rouge">$true_mean</code> is set to 0.</p>
+
+<p>Here is the code:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- 3 + rt(n = 100,df = 2))</span>
+  <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">3</span>
+</code></pre></div></div>
+
+<h3 id="the-two-analyze-modules">The two <code class="highlighter-rouge">analyze</code> modules</h3>
+
+<p>Our example has two <code class="highlighter-rouge">analyze</code> modules: the <code class="highlighter-rouge">mean</code> module estimates the population mean by the sample mean, and the <code class="highlighter-rouge">median</code> module estimates the population mean by the sample median.</p>
+
+<p>They are defined in the DSC file as follows:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mean</span><span class="pi">:</span> <span class="s">R(y &lt;- mean(x))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
+
+<span class="na">median</span><span class="pi">:</span> <span class="s">R(y &lt;- median(x))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
+</code></pre></div></div>
+
+<p>These modules differ from the <code class="highlighter-rouge">simulate</code> modules in that they have inputs in addition to outputs:</p>
+
+<ul>
+  <li>
+    <p>The line <code class="highlighter-rouge">x: $data</code> specifies a module input. It tells DSC that, before running the R code, it should define a new global variable <code class="highlighter-rouge">x</code> in the R environment, and set the value of <code class="highlighter-rouge">x</code> to the value of the pipeline variable <code class="highlighter-rouge">$data</code>. The value of <code class="highlighter-rouge">$data</code> is given by the most recently run module in the pipeline that assigned a value to <code class="highlighter-rouge">$data</code>.</p>
+  </li>
+  <li>
+    <p>The line <code class="highlighter-rouge">$est_mean: y</code> specifies a module output. It tells DSC that after running the script it should set the value of the pipeline variable <code class="highlighter-rouge">$est_mean</code> to the value of the script variable <code class="highlighter-rouge">y</code>.</p>
+  </li>
+</ul>
+
+<p><strong>Important note:</strong> Although the R code in the <code class="highlighter-rouge">normal</code>, <code class="highlighter-rouge">t</code>, <code class="highlighter-rouge">median</code> and <code class="highlighter-rouge">mean</code> modules all define a script variable <code class="highlighter-rouge">x</code>, these variables are distinct (<em>i.e.</em>, they are <em>local</em> to each module), and we must use a pipeline variable (here we use <code class="highlighter-rouge">$data</code>) to pass the information on <code class="highlighter-rouge">x</code> from one script to another.</p>
+
+<p>In summary, all script variables are local to each module, and information can flow from one module to another only through pipeline variables.</p>
+
+<h3 id="the-two-score-modules">The two <code class="highlighter-rouge">score</code> modules</h3>
+
+<p>Finally, we create two <code class="highlighter-rouge">score</code> modules that measure error in the estimate, one based on squared differences (<code class="highlighter-rouge">sq_err</code>) and another based on absolute differences (<code class="highlighter-rouge">abs_err</code>):</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">sq_err</span><span class="pi">:</span> <span class="s">R(e &lt;- (x - y)^2)</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$est_mean</span>
+  <span class="s">y</span><span class="pi">:</span> <span class="s">$true_mean</span>
+  <span class="s">$error</span><span class="pi">:</span> <span class="s">e</span>
+
+<span class="na">abs_err</span><span class="pi">:</span> <span class="s">R(e &lt;- abs(x - y))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$est_mean</span>
+  <span class="s">y</span><span class="pi">:</span> <span class="s">$true_mean</span>
+  <span class="s">$error</span><span class="pi">:</span> <span class="s">e</span>
+</code></pre></div></div>
+
+<p>The inputs to both modules are <code class="highlighter-rouge">$est_mean</code> and <code class="highlighter-rouge">$true_mean</code>, and the output is <code class="highlighter-rouge">$error</code>.</p>
+
+<p>In each of these modules, there are three script variables:</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">x</code> is set to the current value of pipeline variable <code class="highlighter-rouge">$est_mean</code>.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">y</code> is set to the current value of pipeline variable <code class="highlighter-rouge">$true_mean</code>.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">e</code> is determined by the R code, and its value is assigned to pipeline variable <code class="highlighter-rouge">$error</code>.</p>
+  </li>
+</ol>
+
+<p>This completes the module definitions.</p>
+
+<h2 id="defining-groups-and-pipelines">Defining groups and pipelines</h2>
+
+<p>So far, we have defined the modules—that is, the individual computational steps of the DSC experiment—but we have not yet described how these modules relate to each other, and how they are used to build pipelines. This is the purpose of the <code class="highlighter-rouge">DSC</code> block in the DSC file; the key components of the <code class="highlighter-rouge">DSC</code> block are the <code class="highlighter-rouge">define</code> and <code class="highlighter-rouge">run</code> statements.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">define</span><span class="pi">:</span>
+    <span class="na">simulate</span><span class="pi">:</span> <span class="s">normal, t</span>
+    <span class="na">analyze</span><span class="pi">:</span> <span class="s">mean, median</span>
+    <span class="na">score</span><span class="pi">:</span> <span class="s">abs_err, sq_err</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * analyze * score</span>
+</code></pre></div></div>
+
+<p>This code does the following:</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">DSC</code> is a special keyword indicating that we are defining the module groups and pipelines (that is, we are not defining a module).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">define</code> is another keyword indicating that we are defining module groups.</p>
+  </li>
+  <li>
+    <p>We define three module groups: <code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code>. The distinguishing characteristic of module groups is that they should have a similar function (and, in the simplest case, the same inputs and outputs, although this is not required).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">run</code> is a keyword indicating that we are defining the computational pipelines (sequences of modules) to be executed.</p>
+  </li>
+  <li>
+    <p>The <code class="highlighter-rouge">A * B</code> notation asks DSC to generate all possible sequences of modules from groups <code class="highlighter-rouge">A</code> and <code class="highlighter-rouge">B</code>; that is, all sequences of the form (<code class="highlighter-rouge">a</code>, <code class="highlighter-rouge">b</code>) where <code class="highlighter-rouge">a</code> is a module in group <code class="highlighter-rouge">A</code> and <code class="highlighter-rouge">b</code> is a module in a group <code class="highlighter-rouge">B</code>. So, in this example, <code class="highlighter-rouge">simulate * analyze * score</code> generates all pipelines that consist of a module from the <code class="highlighter-rouge">simulate</code> group (<code class="highlighter-rouge">normal</code> or <code class="highlighter-rouge">t</code>), followed by a module from the <code class="highlighter-rouge">analyze</code> group (<code class="highlighter-rouge">mean</code> or <code class="highlighter-rouge">median</code>), and then a module from the <code class="highlighter-rouge">score</code> group (<code class="highlighter-rouge">sq_err</code> or <code class="highlighter-rouge">abs_err</code>). <strong>In this example, there are $2 \times 2 \times 2 = 8$ different pipelines defined by this <code class="highlighter-rouge">run</code> statement.</strong></p>
+  </li>
+</ol>
+
+<h2 id="executing-the-dsc-benchmark">Executing the DSC benchmark</h2>
+
+<p>Up to this point, all we have is a bunch of code stored in a text file; the DSC file doesn’t do anything unless it is interpreted and executed by the <code class="highlighter-rouge">dsc</code> program.</p>
+
+<p>The <code class="highlighter-rouge">dsc</code> program will run all 8 pipelines, keeping track of the values of all the script variables and pipeline variables generated in each pipeline, and it will store the values of all the module outputs, which we will retrieve for analysis in R.</p>
+
+<p>To run the DSC benchmark, change the working directory to the location of the <code class="highlighter-rouge">first_investigation_simpler.dsc</code> file. (Here we assume the <code class="highlighter-rouge">dsc</code> repository is stored in the <code class="highlighter-rouge">git</code> subdirectory of your home directory. If you are running the example yourself, please move to the appropriate directory on your computer.)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/git/dsc/vignettes/one_sample_location
+</code></pre></div></div>
+
+<p>Let’s also remove any previously generated results.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+</code></pre></div></div>
+
+<p>To keep this example as simple as possible, generate only a single replicate for each of the pipelines, and execute in parallel at most 2 modules at any one time:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation_simpler.dsc <span class="nt">--replicate</span> 1 <span class="nt">-c</span> 2
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+INFO: Constructing DSC from first_investigation_simpler.dsc ...
+INFO: Building execution graph &amp; running DSC ...
+[#############################] 29 steps processed (29 jobs completed)
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time 6.206 seconds.
+</code></pre></div></div>
+
+<h2 id="inspecting-the-results-of-the-dsc-benchmark">Inspecting the results of the DSC benchmark</h2>
+
+<p>To inspect the outcomes generated by each of the 8 pipelines, change the R working directory to the location of the DSC file, and use the <code class="highlighter-rouge">dscquery</code> function from the <code class="highlighter-rouge">dscrutils</code> package to load the DSC results into R:</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
+</span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
+  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+           </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_mean"</span><span class="p">,</span><span class="s2">"analyze.est_mean"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+</span><span class="n">dscout</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+Reading DSC outputs:
+ - simulate.true_mean: extracted atomic values
+ - analyze.est_mean: extracted atomic values
+ - score.error: extracted atomic values
+
+</code></pre></div></div>
+
+<div class="output output_html">
+<table>
+<thead><tr>&lt;th scope=col&gt;DSC&lt;/th&gt;&lt;th scope=col&gt;simulate&lt;/th&gt;&lt;th scope=col&gt;simulate.true_mean&lt;/th&gt;&lt;th scope=col&gt;analyze&lt;/th&gt;&lt;th scope=col&gt;analyze.est_mean&lt;/th&gt;&lt;th scope=col&gt;score&lt;/th&gt;&lt;th scope=col&gt;score.error&lt;/th&gt;</tr></thead>
+<tbody>
+	<tr><td>1           </td><td>normal      </td><td>0           </td><td>mean        </td><td>0.1088874   </td><td>abs_err     </td><td>1.088874e-01</td></tr>
+	<tr><td>1           </td><td>normal      </td><td>0           </td><td>median      </td><td>0.1139092   </td><td>abs_err     </td><td>1.139092e-01</td></tr>
+	<tr><td>1           </td><td>t           </td><td>3           </td><td>mean        </td><td>2.4245601   </td><td>abs_err     </td><td>5.754399e-01</td></tr>
+	<tr><td>1           </td><td>t           </td><td>3           </td><td>median      </td><td>2.9918614   </td><td>abs_err     </td><td>8.138572e-03</td></tr>
+	<tr><td>1           </td><td>normal      </td><td>0           </td><td>mean        </td><td>0.1088874   </td><td>sq_err      </td><td>1.185646e-02</td></tr>
+	<tr><td>1           </td><td>normal      </td><td>0           </td><td>median      </td><td>0.1139092   </td><td>sq_err      </td><td>1.297530e-02</td></tr>
+	<tr><td>1           </td><td>t           </td><td>3           </td><td>mean        </td><td>2.4245601   </td><td>sq_err      </td><td>3.311311e-01</td></tr>
+	<tr><td>1           </td><td>t           </td><td>3           </td><td>median      </td><td>2.9918614   </td><td>sq_err      </td><td>6.623636e-05</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<p>The results in this table illustrate a few essential features of a DSC program:</p>
+
+<ol>
+  <li>Looking at the “simulate”, “analyze” and “score” table columns, we can confirm that DSC has run 8 different pipelines. Each pipeline runs a different combination of the <code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code> modules.</li>
+</ol>
+
+<ul>
+  <li>
+    <p><strong>In DSC, each module input and output is assigned a different value within each pipeline.</strong> This is very different from most programs where each variable is assigned a single value. For example, <code class="highlighter-rouge">score.error</code> has 8 different values for each of the 8 different pipelines. (We did not include the <code class="highlighter-rouge">simulate.data</code> module output in this table because it is too large to show here, but its can value can be extracted like the other outputs.)</p>
+  </li>
+  <li>
+    <p><strong>Information flows between modules within the same pipeline.</strong> In the first pipeline (the first row of the table), for example, the error in the <code class="highlighter-rouge">abs_err</code> module (0.05858) is calculated from (1) the value of the true mean, which was set to 0 in the <code class="highlighter-rouge">normal</code> module, and (2) from the estimated mean, which was set to 0.05858 in the <code class="highlighter-rouge">mean</code> module.</p>
+  </li>
+</ul>
+
+<h2 id="pipeline-evaluation-and-alternatives">Pipeline evaluation, and <em>alternatives</em></h2>
+
+<p>In the previous section, we observed that DSC generated 8 pipelines, in which each 8 pipeline is different combination of modules, and contains a different set of results. Now we explain at a high level how DSC produced these results.</p>
+
+<ol>
+  <li>
+    <p>DSC runs the two <code class="highlighter-rouge">simulate</code> modules, <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code>, then stores the values assigned to <code class="highlighter-rouge">$true_mean</code> and <code class="highlighter-rouge">$data</code>. Therefore, the module outputs <code class="highlighter-rouge">$true_mean</code> and <code class="highlighter-rouge">$data</code> have two <strong>alternative values</strong>: the value assigned by running the <code class="highlighter-rouge">normal</code> module, and the value assigned by running the <code class="highlighter-rouge">t</code> module. (For example, the alternative values of <code class="highlighter-rouge">$true_mean</code> are 0 and 3.) <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code> are <strong>alternative modules</strong> in the <code class="highlighter-rouge">simulate</code> group. Therefore, although the <code class="highlighter-rouge">normal</code> module appears in 4 pipelines, and the <code class="highlighter-rouge">t</code> module also appears in 4 pipelines, each <code class="highlighter-rouge">simulate</code> module only needs to be run once.</p>
+  </li>
+  <li>
+    <p>DSC runs the two <code class="highlighter-rouge">analyze</code> modules, <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code>, then stores the values assigned to the  module output, <code class="highlighter-rouge">$est_mean</code>. The <code class="highlighter-rouge">mean</code> module is run twice, once for each alternative value of <code class="highlighter-rouge">$data</code> (the value of <code class="highlighter-rouge">$data</code> is assigned to module input <code class="highlighter-rouge">x</code> in the <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code> modules). Likewise, the <code class="highlighter-rouge">median</code> module is run twice, once for each alternative value of <code class="highlighter-rouge">$data$</code>. Therefore, the <code class="highlighter-rouge">analyze</code> step is evaluated 4 times in total, and the module output <code class="highlighter-rouge">$est_mean</code> has 4 alternative values. If you look closely at the <code class="highlighter-rouge">dscout</code> data frame above, you will see that the <code class="highlighter-rouge">analyze.est_mean</code> contains 4 unique values.</p>
+  </li>
+  <li>
+    <p>DSC runs the two <code class="highlighter-rouge">score</code> modules, <code class="highlighter-rouge">sq_err</code> and <code class="highlighter-rouge">abs_err</code>. These modules both accept two pipeline variables as input, <code class="highlighter-rouge">$est_mean</code> and <code class="highlighter-rouge">$true_mean</code>. Since there are 4 alternative assignments to both <code class="highlighter-rouge">$est_mean</code> and <code class="highlighter-rouge">$true_mean</code>, each <code class="highlighter-rouge">score</code> module is evaluated 4 times, so in the end DSC stores 8 different values for the final module output, <code class="highlighter-rouge">$error</code>.</p>
+  </li>
+</ol>
+
+<p>A naive approach would have been to run the <code class="highlighter-rouge">simulate</code> step 8 times, the <code class="highlighter-rouge">analyze</code> step 8 times, and the <code class="highlighter-rouge">score</code> step 8 times, but that would have been a waste of time, since many of the computations would be redundant. DSC performs the minimum amount of computation needed to generate the results for all the pipelines by generalizing the steps described here. Although wasted computation will have little noticeable effect on a small experiment such as this, this could be very important when large data sets are being simulated and analyzed.</p>
+
+<p>Note that, under the hood, the order of evaluation may not be exactly as we described it here—for example, the <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code> modules might be evaluated with the output from <code class="highlighter-rouge">mean</code> before the <code class="highlighter-rouge">t</code> module is availabled—but the exact order of evaluation is unimportant for understanding how the DSC results are generated.</p>
+
+<h2 id="recap">Recap</h2>
+
+<p>In this tutorial, we learned how the DSC file is used to define the key components of a DSC experiment:</p>
+
+<ol>
+  <li>
+    <p>Module inputs and outputs (pipeline variables);</p>
+  </li>
+  <li>
+    <p>Module scripts and script variables.</p>
+  </li>
+  <li>
+    <p>Module groups; and</p>
+  </li>
+  <li>
+    <p>Module sequences (pipelines).</p>
+  </li>
+</ol>
+
+<p>We also learned:</p>
+
+<ol>
+  <li>
+    <p>How information flows between modules executed in a pipeline;</p>
+  </li>
+  <li>
+    <p>How values are assigned to pipeline variables separately in each pipeline.</p>
+  </li>
+  <li>
+    <p>How modules are evaluated, and how alternative values of module outputs are stored.</p>
+  </li>
+</ol>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>In <a href="Intro_Syntax_II.html">Part II</a>, we will
+extend this example and introduce a few other useful DSC features.</p>
+
+<!-- You can think of a pipeline variable as a variable whose value
+may change as a pipeline is run. For example, in a pipeline `a-b-c`,
+with modules `a`, `b` and `c`, if module `a` outputs a pipeline
+variable `$data`, and then module `b` outputs `$data` with a new
+value, then if module `c` inputs `$data` its value will be the one
+output by `b` and not the one output by `a`. -->
+
+
+              <nav class="c-page__nav">
+  
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-book/first_course/Intro_DSC">
+      〈 <span class="u-margin-right-tiny"></span> First course in DSC
+    </a>
+  
+
+  
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-book/first_course/Intro_Syntax_II">
+      DSC basics, part II <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>

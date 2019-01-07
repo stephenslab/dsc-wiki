@@ -1,0 +1,134 @@
+[normal]
+parameter: normal_output_files = list
+parameter: seed = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+parameter: n = [1000]
+parameter: true_mean = [0, 1]
+input: for_each = ['seed', 'n', 'true_mean'], concurrent = True
+output: normal_output_files, group_by = 1
+R: expand = "${ }", workdir = './', stderr = None, stdout = None
+   set.seed(${_seed})
+   x=rnorm(${_n},mean=${_true_mean})
+   saveRDS(list(x=x, true_mean=${_true_mean}), ${_output:r})
+
+[t]
+parameter: t_output_files = list
+parameter: seed = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+parameter: n = [1000]
+parameter: true_mean = [0, 1]
+input: for_each = ['seed', 'n', 'true_mean'], concurrent = True
+output: t_output_files, group_by = 1
+R: expand = "${ }", workdir = './', stderr = None, stdout = None
+   set.seed(${_seed})
+   x=rt(${_n}, df = 2) + ${_true_mean}
+   saveRDS(list(x=x, true_mean=${_true_mean}), ${_output:r})
+
+[mean]
+parameter: mean_output_files = list
+parameter: mean_input_files = list
+input: dynamic(mean_input_files) , group_by = 1, concurrent = True
+output: mean_output_files, group_by = 1
+R: expand = "${ }", workdir = './', stderr = None, stdout = None
+   dat = readRDS("${_input}")
+   mean = mean(dat$x)
+   saveRDS(list(mean=mean), ${_output:r})
+
+[mse]
+parameter: mse_output_files = list
+parameter: mse_input_files = list
+input: dynamic(mse_input_files) , group_by = 2, concurrent = True
+output: mse_output_files, group_by = 1
+R: expand = "${ }", workdir = './', stderr = None, stdout = None
+   merge_lists = function (x, y, ...) {
+    if (length(x) == 0) 
+        return(y)
+    if (length(y) == 0) 
+        return(x)
+    for (i in 1:length(names(y))) x[names(y)[i]] = y[i]
+    return(x)
+   }
+   dat <- list()
+   input.files <- c(${_input:r,})
+   for (i in 1:length(input.files))
+       dat <- merge_lists(dat, readRDS(input.files[i]))
+   mse = (dat$mean - dat$true_mean)^2
+   saveRDS(list(mse=mse), ${_output:r})
+
+[median]
+parameter: median_output_files = list
+parameter: median_input_files = list
+input: dynamic(median_input_files) , group_by = 1, concurrent = True
+output: median_output_files, group_by = 1
+R: expand = "${ }", workdir = './', stderr = None, stdout = None
+   dat = readRDS("${_input}")
+   mean = median(dat$x)
+   saveRDS(list(mean=mean), ${_output:r})
+
+[a_normal (normal)]
+fo = [f'normal_{x+1}.rds' for x in range(20)] 
+output: fo
+sos_run('normal', normal_output_files = fo, normal_input_files = [])
+
+[a_mean (mean)]
+depends: sos_step('a_normal')
+fi = [f'normal_{x+1}.rds' for x in range(20)] 
+fo = ['normal_1_mean_1.rds', 'normal_3_mean_2.rds', 'normal_4_mean_2.rds', 'normal_5_mean_2.rds', 'normal_6_mean_2.rds', 'normal_7_mean_2.rds', 'normal_8_mean_2.rds', 'normal_9_mean_2.rds', 'normal_10_mean_2.rds', 'normal_11_mean_2.rds', 'normal_2_mean_1.rds', 'normal_12_mean_2.rds', 'normal_13_mean_2.rds', 'normal_14_mean_2.rds', 'normal_15_mean_2.rds', 'normal_16_mean_2.rds', 'normal_17_mean_2.rds', 'normal_18_mean_2.rds', 'normal_19_mean_2.rds', 'normal_20_mean_2.rds']
+output: fo
+sos_run('mean', mean_output_files = fo, mean_input_files = fi)
+
+[a_mse (mse)]
+depends: sos_step('a_normal'), sos_step('a_mean')
+fi = ['normal_1.rds', 'normal_1_mean_1.rds', 'normal_3.rds', 'normal_3_mean_2.rds', 'normal_4.rds', 'normal_4_mean_2.rds', 'normal_5.rds', 'normal_5_mean_2.rds', 'normal_6.rds', 'normal_6_mean_2.rds', 'normal_7.rds', 'normal_7_mean_2.rds', 'normal_8.rds', 'normal_8_mean_2.rds', 'normal_9.rds', 'normal_9_mean_2.rds', 'normal_10.rds', 'normal_10_mean_2.rds', 'normal_11.rds', 'normal_11_mean_2.rds', 'normal_2.rds', 'normal_2_mean_1.rds', 'normal_12.rds', 'normal_12_mean_2.rds', 'normal_13.rds', 'normal_13_mean_2.rds', 'normal_14.rds', 'normal_14_mean_2.rds', 'normal_15.rds', 'normal_15_mean_2.rds', 'normal_16.rds', 'normal_16_mean_2.rds', 'normal_17.rds', 'normal_17_mean_2.rds', 'normal_18.rds', 'normal_18_mean_2.rds', 'normal_19.rds', 'normal_19_mean_2.rds', 'normal_20.rds', 'normal_20_mean_2.rds']
+fo = ['normal_1_mean_1_mse_1.rds', 'normal_3_mean_2_mse_2.rds', 'normal_4_mean_2_mse_2.rds', 'normal_5_mean_2_mse_2.rds', 'normal_6_mean_2_mse_2.rds', 'normal_7_mean_2_mse_2.rds', 'normal_8_mean_2_mse_2.rds', 'normal_9_mean_2_mse_2.rds', 'normal_10_mean_2_mse_2.rds', 'normal_11_mean_2_mse_2.rds', 'normal_2_mean_1_mse_1.rds', 'normal_12_mean_2_mse_2.rds', 'normal_13_mean_2_mse_2.rds', 'normal_14_mean_2_mse_2.rds', 'normal_15_mean_2_mse_2.rds', 'normal_16_mean_2_mse_2.rds', 'normal_17_mean_2_mse_2.rds', 'normal_18_mean_2_mse_2.rds', 'normal_19_mean_2_mse_2.rds', 'normal_20_mean_2_mse_2.rds'] 
+output: fo 
+sos_run('mse', mse_output_files = fo, mse_input_files = fi)
+
+[b_median (median)]
+depends: sos_step('a_normal')
+fi = [f'normal_{x+1}.rds' for x in range(20)] 
+fo = ['normal_1_median_1.rds', 'normal_3_median_2.rds', 'normal_4_median_2.rds', 'normal_5_median_2.rds', 'normal_6_median_2.rds', 'normal_7_median_2.rds', 'normal_8_median_2.rds', 'normal_9_median_2.rds', 'normal_10_median_2.rds', 'normal_11_median_2.rds', 'normal_2_median_1.rds', 'normal_12_median_2.rds', 'normal_13_median_2.rds', 'normal_14_median_2.rds', 'normal_15_median_2.rds', 'normal_16_median_2.rds', 'normal_17_median_2.rds', 'normal_18_median_2.rds', 'normal_19_median_2.rds', 'normal_20_median_2.rds'] 
+output: fo 
+sos_run('median', median_output_files = fo, median_input_files = fi)
+
+[b_mse (mse)]
+depends: sos_step('a_normal'), sos_step('b_median')
+fi = ['normal_1.rds', 'normal_1_median_1.rds', 'normal_3.rds', 'normal_3_median_2.rds', 'normal_4.rds', 'normal_4_median_2.rds', 'normal_5.rds', 'normal_5_median_2.rds', 'normal_6.rds', 'normal_6_median_2.rds', 'normal_7.rds', 'normal_7_median_2.rds', 'normal_8.rds', 'normal_8_median_2.rds', 'normal_9.rds', 'normal_9_median_2.rds', 'normal_10.rds', 'normal_10_median_2.rds', 'normal_11.rds', 'normal_11_median_2.rds', 'normal_2.rds', 'normal_2_median_1.rds', 'normal_12.rds', 'normal_12_median_2.rds', 'normal_13.rds', 'normal_13_median_2.rds', 'normal_14.rds', 'normal_14_median_2.rds', 'normal_15.rds', 'normal_15_median_2.rds', 'normal_16.rds', 'normal_16_median_2.rds', 'normal_17.rds', 'normal_17_median_2.rds', 'normal_18.rds', 'normal_18_median_2.rds', 'normal_19.rds', 'normal_19_median_2.rds', 'normal_20.rds', 'normal_20_median_2.rds']
+fo = ['normal_1_median_1_mse_1.rds', 'normal_3_median_2_mse_2.rds', 'normal_4_median_2_mse_2.rds', 'normal_5_median_2_mse_2.rds', 'normal_6_median_2_mse_2.rds', 'normal_7_median_2_mse_2.rds', 'normal_8_median_2_mse_2.rds', 'normal_9_median_2_mse_2.rds', 'normal_10_median_2_mse_2.rds', 'normal_11_median_2_mse_2.rds', 'normal_2_median_1_mse_1.rds', 'normal_12_median_2_mse_2.rds', 'normal_13_median_2_mse_2.rds', 'normal_14_median_2_mse_2.rds', 'normal_15_median_2_mse_2.rds', 'normal_16_median_2_mse_2.rds', 'normal_17_median_2_mse_2.rds', 'normal_18_median_2_mse_2.rds', 'normal_19_median_2_mse_2.rds', 'normal_20_median_2_mse_2.rds'] 
+output: fo
+sos_run('mse', mse_output_files = fo, mse_input_files = fi)
+
+[c_t (t)]
+fo = [f't_{x+1}.rds' for x in range(20)] 
+output: fo
+sos_run('t', t_output_files = fo, t_input_files = [])
+
+[c_mean (mean)]
+depends: sos_step('c_t')
+fi = [f't_{x+1}.rds' for x in range(20)]
+fo = ['t_1_mean_1.rds', 't_3_mean_2.rds', 't_4_mean_2.rds', 't_5_mean_2.rds', 't_6_mean_2.rds', 't_7_mean_2.rds', 't_8_mean_2.rds', 't_9_mean_2.rds', 't_10_mean_2.rds', 't_11_mean_2.rds', 't_2_mean_1.rds', 't_12_mean_2.rds', 't_13_mean_2.rds', 't_14_mean_2.rds', 't_15_mean_2.rds', 't_16_mean_2.rds', 't_17_mean_2.rds', 't_18_mean_2.rds', 't_19_mean_2.rds', 't_20_mean_2.rds']
+output: fo
+sos_run('mean', mean_output_files = fo, mean_input_files = fi)
+
+[c_mse (mse)]
+depends: sos_step('c_t'), sos_step('c_mean')
+fi = ['t_1.rds', 't_1_mean_1.rds', 't_3.rds', 't_3_mean_2.rds', 't_4.rds', 't_4_mean_2.rds', 't_5.rds', 't_5_mean_2.rds', 't_6.rds', 't_6_mean_2.rds', 't_7.rds', 't_7_mean_2.rds', 't_8.rds', 't_8_mean_2.rds', 't_9.rds', 't_9_mean_2.rds', 't_10.rds', 't_10_mean_2.rds', 't_11.rds', 't_11_mean_2.rds', 't_2.rds', 't_2_mean_1.rds', 't_12.rds', 't_12_mean_2.rds', 't_13.rds', 't_13_mean_2.rds', 't_14.rds', 't_14_mean_2.rds', 't_15.rds', 't_15_mean_2.rds', 't_16.rds', 't_16_mean_2.rds', 't_17.rds', 't_17_mean_2.rds', 't_18.rds', 't_18_mean_2.rds', 't_19.rds', 't_19_mean_2.rds', 't_20.rds', 't_20_mean_2.rds']
+fo = ['t_1_mean_1_mse_1.rds', 't_3_mean_2_mse_2.rds', 't_4_mean_2_mse_2.rds', 't_5_mean_2_mse_2.rds', 't_6_mean_2_mse_2.rds', 't_7_mean_2_mse_2.rds', 't_8_mean_2_mse_2.rds', 't_9_mean_2_mse_2.rds', 't_10_mean_2_mse_2.rds', 't_11_mean_2_mse_2.rds', 't_2_mean_1_mse_1.rds', 't_12_mean_2_mse_2.rds', 't_13_mean_2_mse_2.rds', 't_14_mean_2_mse_2.rds', 't_15_mean_2_mse_2.rds', 't_16_mean_2_mse_2.rds', 't_17_mean_2_mse_2.rds', 't_18_mean_2_mse_2.rds', 't_19_mean_2_mse_2.rds', 't_20_mean_2_mse_2.rds']
+output: fo
+sos_run('mse', mse_output_files = fo, mse_input_files = fi)
+
+[d_median (median)]
+depends: sos_step('c_t')
+fi = [f't_{x+1}.rds' for x in range(20)]
+fo = ['t_1_median_1.rds', 't_3_median_2.rds', 't_4_median_2.rds', 't_5_median_2.rds', 't_6_median_2.rds', 't_7_median_2.rds', 't_8_median_2.rds', 't_9_median_2.rds', 't_10_median_2.rds', 't_11_median_2.rds', 't_2_median_1.rds', 't_12_median_2.rds', 't_13_median_2.rds', 't_14_median_2.rds', 't_15_median_2.rds', 't_16_median_2.rds', 't_17_median_2.rds', 't_18_median_2.rds', 't_19_median_2.rds', 't_20_median_2.rds']
+output: fo
+sos_run('median', median_output_files = fo, median_input_files = fi)
+
+[d_mse (mse)]
+depends: sos_step('c_t'), sos_step('d_median')
+fi = ['t_1.rds', 't_1_median_1.rds', 't_3.rds', 't_3_median_2.rds', 't_4.rds', 't_4_median_2.rds', 't_5.rds', 't_5_median_2.rds', 't_6.rds', 't_6_median_2.rds', 't_7.rds', 't_7_median_2.rds', 't_8.rds', 't_8_median_2.rds', 't_9.rds', 't_9_median_2.rds', 't_10.rds', 't_10_median_2.rds', 't_11.rds', 't_11_median_2.rds', 't_2.rds', 't_2_median_1.rds', 't_12.rds', 't_12_median_2.rds', 't_13.rds', 't_13_median_2.rds', 't_14.rds', 't_14_median_2.rds', 't_15.rds', 't_15_median_2.rds', 't_16.rds', 't_16_median_2.rds', 't_17.rds', 't_17_median_2.rds', 't_18.rds', 't_18_median_2.rds', 't_19.rds', 't_19_median_2.rds', 't_20.rds', 't_20_median_2.rds']
+fo = ['t_1_median_1_mse_1.rds', 't_3_median_2_mse_2.rds', 't_4_median_2_mse_2.rds', 't_5_median_2_mse_2.rds', 't_6_median_2_mse_2.rds', 't_7_median_2_mse_2.rds', 't_8_median_2_mse_2.rds', 't_9_median_2_mse_2.rds', 't_10_median_2_mse_2.rds', 't_11_median_2_mse_2.rds', 't_2_median_1_mse_1.rds', 't_12_median_2_mse_2.rds', 't_13_median_2_mse_2.rds', 't_14_median_2_mse_2.rds', 't_15_median_2_mse_2.rds', 't_16_median_2_mse_2.rds', 't_17_median_2_mse_2.rds', 't_18_median_2_mse_2.rds', 't_19_median_2_mse_2.rds', 't_20_median_2_mse_2.rds']
+output: fo
+sos_run('mse', mse_output_files = fo, mse_input_files = fi)
+
+[default]
+depends: sos_step('a_mse'), sos_step('b_mse'), sos_step('c_mse'), sos_step('d_mse')
+output: ['normal_1_mean_1_mse_1.rds', 'normal_3_mean_2_mse_2.rds', 'normal_4_mean_2_mse_2.rds', 'normal_5_mean_2_mse_2.rds', 'normal_6_mean_2_mse_2.rds', 'normal_7_mean_2_mse_2.rds', 'normal_8_mean_2_mse_2.rds', 'normal_9_mean_2_mse_2.rds', 'normal_10_mean_2_mse_2.rds', 'normal_11_mean_2_mse_2.rds', 'normal_2_mean_1_mse_1.rds', 'normal_12_mean_2_mse_2.rds', 'normal_13_mean_2_mse_2.rds', 'normal_14_mean_2_mse_2.rds', 'normal_15_mean_2_mse_2.rds', 'normal_16_mean_2_mse_2.rds', 'normal_17_mean_2_mse_2.rds', 'normal_18_mean_2_mse_2.rds', 'normal_19_mean_2_mse_2.rds', 'normal_20_mean_2_mse_2.rds', 'normal_1_median_1_mse_1.rds', 'normal_3_median_2_mse_2.rds', 'normal_4_median_2_mse_2.rds', 'normal_5_median_2_mse_2.rds', 'normal_6_median_2_mse_2.rds', 'normal_7_median_2_mse_2.rds', 'normal_8_median_2_mse_2.rds', 'normal_9_median_2_mse_2.rds', 'normal_10_median_2_mse_2.rds', 'normal_11_median_2_mse_2.rds', 'normal_2_median_1_mse_1.rds', 'normal_12_median_2_mse_2.rds', 'normal_13_median_2_mse_2.rds', 'normal_14_median_2_mse_2.rds', 'normal_15_median_2_mse_2.rds', 'normal_16_median_2_mse_2.rds', 'normal_17_median_2_mse_2.rds', 'normal_18_median_2_mse_2.rds', 'normal_19_median_2_mse_2.rds', 'normal_20_median_2_mse_2.rds', 't_1_mean_1_mse_1.rds', 't_3_mean_2_mse_2.rds', 't_4_mean_2_mse_2.rds', 't_5_mean_2_mse_2.rds', 't_6_mean_2_mse_2.rds', 't_7_mean_2_mse_2.rds', 't_8_mean_2_mse_2.rds', 't_9_mean_2_mse_2.rds', 't_10_mean_2_mse_2.rds', 't_11_mean_2_mse_2.rds', 't_2_mean_1_mse_1.rds', 't_12_mean_2_mse_2.rds', 't_13_mean_2_mse_2.rds', 't_14_mean_2_mse_2.rds', 't_15_mean_2_mse_2.rds', 't_16_mean_2_mse_2.rds', 't_17_mean_2_mse_2.rds', 't_18_mean_2_mse_2.rds', 't_19_mean_2_mse_2.rds', 't_20_mean_2_mse_2.rds', 't_1_median_1_mse_1.rds', 't_3_median_2_mse_2.rds', 't_4_median_2_mse_2.rds', 't_5_median_2_mse_2.rds', 't_6_median_2_mse_2.rds', 't_7_median_2_mse_2.rds', 't_8_median_2_mse_2.rds', 't_9_median_2_mse_2.rds', 't_10_median_2_mse_2.rds', 't_11_median_2_mse_2.rds', 't_2_median_1_mse_1.rds', 't_12_median_2_mse_2.rds', 't_13_median_2_mse_2.rds', 't_14_median_2_mse_2.rds', 't_15_median_2_mse_2.rds', 't_16_median_2_mse_2.rds', 't_17_median_2_mse_2.rds', 't_18_median_2_mse_2.rds', 't_19_median_2_mse_2.rds', 't_20_median_2_mse_2.rds']

@@ -16,14 +16,14 @@
 
 #######################################################################################
 # Jekyll site settings
-title: Jupyter Book
-author: The Jupyter Book Community
-email: choldgraf@berkeley.edu
+title: Dynamic Statistical Comparison
+author: Stephens Lab, University of Chicago
+email: gaow@uchicago.edu
 description: >- # this means to ignore newlines until "baseurl:"
-  This is an example book built with Jupyter Books.
+  Documentation for Dynamic Statistical Comparison software
 
-baseurl: "/jupyter-book" # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
-url: "https://predictablynoisy.com" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/dsc-book" # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
+url: "https://gaow.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 
 #######################################################################################
@@ -34,9 +34,11 @@ hide_cell_text            : "# HIDDEN"  # When building the textbook, any cells 
 hide_code_text            : "# NO CODE"  # When building the textbook, any cells with this text inside will have *only* their output shown (no code)
 
 # Sidebar settings
-collapse_inactive_chapters: true  # Whether to collapse the inactive chapters in the sidebar
-textbook_logo             : images/logo/logo.png  # A logo to be displayed at the top of your textbook sidebar
-sidebar_footer_text       : 'Powered by <a href="https://github.com/choldgraf/jupyter-book">Jupyter Book</a>'
+collapse_inactive_chapters: false  # Whether to collapse the inactive chapters in the sidebar
+# I got DSC logo from freelogodesign.org
+textbook_logo             : images/logo.png  # A logo to be displayed at the top of your textbook sidebar
+sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
+# sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.'
 
 #######################################################################################
 # Interact link settings
@@ -50,16 +52,16 @@ jupyterhub_url                   : ""  # The URL for your JupyterHub.
 jupyterhub_interact_text         : "Interact"  # The text that interact buttons will contain.
 
 # Binder link settings
-use_binder_button                : true  # If 'true', add a binder button for interactive links
+use_binder_button                : false  # If 'true', add a binder button for interactive links
 binderhub_url                    : "https://mybinder.org"  # The URL for your BinderHub.
 binder_repo_base                 : "https://github.com/"  # The site on which the textbook repository is hosted
-binder_repo_org                  : "choldgraf"  # The username or organization that owns this repository
+binder_repo_org                  : "gaow"  # The username or organization that owns this repository
 binder_repo_name                 : "jupyter-book"  # The name of the repository on the web
 binder_repo_branch               : "master"  # The branch on which your textbook is hosted.
 binderhub_interact_text          : "Interact"  # The text that interact buttons will contain.
 
 # Thebelab settings
-use_thebelab_button              : true  # If 'true', display a button to allow in-page running code cells with Thebelab
+use_thebelab_button              : false  # If 'true', display a button to allow in-page running code cells with Thebelab
 thebelab_button_text             : "Thebelab"  # The text to display inside the Thebelab initialization button
 
 
@@ -94,7 +96,7 @@ defaults:
       toc_label: "  On this page"
       toc_icon: "list-ul"
 
-favicon_path: "images/logo/favicon.ico"
+favicon_path: "images/favicon.ico"
 
 # Markdown Processing
 markdown: kramdown

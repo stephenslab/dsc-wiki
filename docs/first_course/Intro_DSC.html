@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>First course in DSC</title>
+  <meta name="description" content="Introduction to Dynamical Statistical Comparisons">
+
+  <link rel="canonical" href="https://gaow.github.io/dsc-book/first_course/Intro_DSC.html">
+  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://gaow.github.io/dsc-book/feed.xml">
+
+  <meta property="og:url"         content="https://gaow.github.io/dsc-book/first_course/Intro_DSC.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="First course in DSC" />
+<meta property="og:description" content="Introduction to Dynamical Statistical Comparisons" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://gaow.github.io/dsc-book/first_course/Intro_DSC.html",
+  "headline":
+    "First course in DSC",
+  "datePublished":
+    "2019-01-06T23:26:59-06:00",
+  "dateModified":
+    "2019-01-06T23:26:59-06:00",
+  "description":
+    "Introduction to Dynamical Statistical Comparisons",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gaow.github.io/dsc-book",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://gaow.github.io/dsc-book",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-book/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-book/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-book/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  <script src="https://unpkg.com/nbinteract-core" async></script>
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+  <!-- Google analytics -->
+  <script src="/dsc-book/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-book/assets/js/scripts.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-book/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    codeCell.insertAdjacentHTML('afterend', clipboardButton(id))
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-book/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-book/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  <script>
+/**
+  * To auto-embed hub URLs in interact links if given in a RESTful fashion
+ */
+
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+    
+function dict2param(dict) {
+    params = Object.keys(dict).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(dict[k])
+    });
+    return params.join('&')
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return dict2param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = document.querySelectorAll("a").forEach(function(link) {
+    var href = link.href;
+    // If the link is an internal link...
+    if (href.search("https://gaow.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + dict2param(params);
+      link.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+// Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = document.querySelectorAll("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          var hub_type = '';
+          if (hub_type === 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // If localhost, assume we're working from a local Jupyter server and remove `/hub`
+              first = [hubUrl, 'git-sync'].join('/')
+            } else {
+              first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            }
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("", hubUrl);
+            if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
+              // Assume we're working from a local Jupyter server and remove `/hub`
+              href = href.replace("/hub/user-redirect", "");
+            }
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          document.querySelectorAll("a.interact-button")[0].insertAdjacentHTML('afterend', '<div class="interact-context">on ' + hubUrlNoHttp + '</div>');
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+runWhenDOMLoaded(updateInteractLink)
+document.addEventListener('turbolinks:load', updateInteractLink)
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <img src="/dsc-book/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
+  <h2 class="c-sidebar__title">Dynamic Statistical Comparison</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/overview"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/installation"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/reference/reference"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Terminology"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Configuration"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Execution"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/DSC_Filtering"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Command_Options"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Road_Map"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Implementation_Details"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/reference/Unsupported_Features"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">DSC user guide</li>
+        
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/first_course/first_course"
+        >
+          
+          DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry c-sidebar__entry--active"
+                  href="/dsc-book/first_course/Intro_DSC"
+                >
+                  
+                  First course in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_I"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Intro_Syntax_II"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Prototype_Tips"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Debug_Tips"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/first_course/Syntax_Tips"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/faq"
+        >
+          
+          Other DSC tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_Python"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Data"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/5_Minutes_RPY"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Multiple_Pipelines"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Rmd_Executable"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/Remote_Computations"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/advanced_course/DSC_Docker"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-book/examples"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_1"
+                >
+                  
+                  Intermedium R example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-book/examples/Intermedium_R_2"
+                >
+                  
+                  Intermedium R example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      <!-- Shamelessly copied from minimal mistakes -->
+
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="onthispage">
+      <header><h4 class="nav__title"><i class="fa fa-list"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#an-illustration-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern</a></li>
+  <li><a href="#the-dsc-building-blocks-modules-groups-and-pipelines">The DSC building blocks: modules, groups and pipelines</a></li>
+  <li><a href="#running-a-dsc-benchmark">Running a DSC benchmark</a></li>
+  <li><a href="#example">Example</a></li>
+  <li><a href="#the-dsc-file">The DSC file</a></li>
+  <li><a href="#run-dsc">Run DSC</a></li>
+  <li><a href="#query-the-results">Query the results</a></li>
+  <li><a href="#visualize-the-results">Visualize the results</a></li>
+  <li><a href="#expand-the-experiment">Expand the experiment</a></li>
+  <li><a href="#add-a-new-method-to-the-dsc-benchmark">Add a new method to the DSC benchmark</a></li>
+  <li><a href="#recap">Recap</a></li>
+  <li><a href="#next-steps">Next steps</a></li>
+</ul>
+    </nav>
+  </aside>
+
+
+
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+<div class="buttons">
+
+
+
+
+</div>
+
+
+            <div class="c-textbook__content">
+              <h1 id="introduction-to-dynamical-statistical-comparisons">Introduction to Dynamical Statistical Comparisons</h1>
+
+<p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example. This tutorial only explains the basic features <em>at a high level.</em> If you prefer to begin with a more precise (and more technical) overview of DSC concepts, see <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
+
+<p>All the modules in this example are implemented in R. Being familiar with R is certainly helpful, but not essential, as the R code used in the example is not complicated. DSC currently supports two programming languages: R and Python.</p>
+
+<p>This is a working example—optionally, you may <a href="../installation.html">install DSC</a>, and try running this example DSC program as you read through the tutorial. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
+
+<h2 id="an-illustration-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern</h2>
+
+<p>We begin my considering a special case of DSC.</p>
+
+<p>Suppose we want to compare several methods for a particular inference task, denoted by $I$. For example, $I$ could be:</p>
+
+<ul>
+  <li>
+    <p>Predict the missing entries of a matrix;</p>
+  </li>
+  <li>
+    <p>Estimate a covariance matrix from a data sample;</p>
+  </li>
+  <li>
+    <p>Estimate a regression function relating outcome $Y$ to covariates (features) $X$.</p>
+  </li>
+</ul>
+
+<p>For these three tasks, and others, we could conduct a benchmarking experiment to compare methods to perform $I$ by repeating the following three steps:</p>
+
+<ol>
+  <li>
+    <p>Simulate some data suitable for performing $I$.</p>
+  </li>
+  <li>
+    <p>Analyze the data with a method designed to perform $I$.</p>
+  </li>
+  <li>
+    <p>Score how well the method performed $I$ (e.g., by comparing the methods’ estimates against the ground-truth provided by the simulation).</p>
+  </li>
+</ol>
+
+<p>We call this basic structure the “simulate-analyze-score” design pattern. This is only one example of what DSC can handle—it can also handle much more complex settings than this—but this basic structure suffices to explain some of the key concepts.</p>
+
+<h2 id="the-dsc-building-blocks-modules-groups-and-pipelines">The DSC building blocks: modules, groups and pipelines</h2>
+
+<p>Typically we will want to try different ways of implementating steps 1–3; that is, different ways to simulate the data, different ways to analyze the data, and different ways to score how well a method performed.</p>
+
+<p>In DSC, each different way of implementing a step is expressed as a “module”. A “group of modules” defines the collection of alternative implementations of a step.</p>
+
+<p>In our example, we define:</p>
+
+<ol>
+  <li>
+    <p>A group of <code class="highlighter-rouge">simulate</code> modules, each of which can perform step 1;</p>
+  </li>
+  <li>
+    <p>A group of <code class="highlighter-rouge">analyze</code> modules, each of which can perform step 2; and</p>
+  </li>
+  <li>
+    <p>A group of <code class="highlighter-rouge">score</code> modules, each of which can perform step 3.</p>
+  </li>
+</ol>
+
+<p>Running the benchmark then consists of running sequences of modules—called “pipelines” in DSC—and each pipeline invokes one module from the <code class="highlighter-rouge">simulate</code> group, followed by a module from the <code class="highlighter-rouge">analyze</code> group, then a module from the <code class="highlighter-rouge">score</code> group.</p>
+
+<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design of DSC makes it easy to extend benchmarks (e.g., by defining a new <code class="highlighter-rouge">analyze</code> module)—hence the <em>Dynamic</em> in Dynamic Statistical Comparisons.</p>
+
+<p>Also, DSC efficiently uses the available computational resources by running modules in parallel when possible; for example, once a <code class="highlighter-rouge">simulate</code> module has created a dataset, DSC may run multiple <code class="highlighter-rouge">analyze</code> modules in parallel.</p>
+
+<h2 id="running-a-dsc-benchmark">Running a DSC benchmark</h2>
+
+<p>There are three essential ingredients to a DSC benchmark:</p>
+
+<ol>
+  <li>
+    <p>A “DSC file”, which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>).</p>
+  </li>
+  <li>
+    <p>A call to the <code class="highlighter-rouge">dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
+  </li>
+  <li>
+    <p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into a data frame in R. We also provide a command-line tool, <code class="highlighter-rouge">dsc-query</code>, which is demonstrated in other tutorials.</p>
+  </li>
+</ol>
+
+<h2 id="example">Example</h2>
+
+<p>We now illustrate how DSC can be used to implement a simple benchmark.</p>
+
+<p>In this example, we have a simple task: <em>estimate the mean of a population given a random sample from the population.</em></p>
+
+<p>We compare two methods for estimating the population mean: the sample mean and the sample median.</p>
+
+<p>We simulate under two different population distributions: a <em>t</em> distribution and a normal distribution.</p>
+
+<p>And we compute accuracy of the estimates using two different metrics: squared error, and absolute error.</p>
+
+<h2 id="the-dsc-file">The DSC file</h2>
+
+<p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
+can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
+
+<p>All source code needed to define the DSC is given in a single text file, <code class="highlighter-rouge">first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a> and <a href="Intro_Syntax_II.html">DSC Basics, Part II</a>. <strong>For now, don’t worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Simulate samples from the normal distribution with mean 0 and</span>
+<span class="c1"># standard deviation 1.</span>
+<span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
+  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
+
+<span class="c1"># Simulate samples from the non-centered t-distribution with 2 degrees</span>
+<span class="c1"># of freedom.</span>
+<span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df = 2))</span>
+  <span class="s">mu</span><span class="pi">:</span> <span class="s">3</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
+
+<span class="c1"># Estimate the population mean by computing the mean value of the</span>
+<span class="c1"># provided sample.</span>
+<span class="na">mean</span><span class="pi">:</span> <span class="s">R(y &lt;- mean(x))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
+
+<span class="c1"># Estimate the population mean by computing the median value of the</span>
+<span class="c1"># provided sample.</span>
+<span class="na">median</span><span class="pi">:</span> <span class="s">R(y &lt;- median(x))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
+
+<span class="c1"># Compute the error in the estimated mean by taking the squared</span>
+<span class="c1"># difference between the true mean and the estimated mean.</span>
+<span class="na">sq_err</span><span class="pi">:</span> <span class="s">R(e &lt;- (x - y)^2)</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$est_mean</span>
+  <span class="s">y</span><span class="pi">:</span> <span class="s">$true_mean</span>
+  <span class="s">$error</span><span class="pi">:</span> <span class="s">e</span>
+
+<span class="c1"># Compute the error in the estimated mean by taking the absolute</span>
+<span class="c1"># difference between the true mean and the estimated mean.</span>
+<span class="na">abs_err</span><span class="pi">:</span> <span class="s">R(e &lt;- abs(x - y))</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$est_mean</span>
+  <span class="s">y</span><span class="pi">:</span> <span class="s">$true_mean</span>
+  <span class="s">$error</span><span class="pi">:</span> <span class="s">e</span>
+
+<span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">define</span><span class="pi">:</span>
+    <span class="na">simulate</span><span class="pi">:</span> <span class="s">normal, t</span>
+    <span class="na">analyze</span><span class="pi">:</span> <span class="s">mean, median</span>
+    <span class="na">score</span><span class="pi">:</span> <span class="s">abs_err, sq_err</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * analyze * score</span>
+</code></pre></div></div>
+
+<p>This DSC file defines six modules:</p>
+
+<ul>
+  <li>
+    <p>two <code class="highlighter-rouge">simulate</code> modules  (<code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code>),</p>
+  </li>
+  <li>
+    <p>two <code class="highlighter-rouge">analyze</code> modules (<code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code>), and</p>
+  </li>
+  <li>
+    <p>two <code class="highlighter-rouge">score</code> modules (<code class="highlighter-rouge">sq_err</code> and <code class="highlighter-rouge">abs_err</code>).</p>
+  </li>
+</ul>
+
+<p>Each module in this example involves only one line of R code (for more complex modules, the code can live in separate files).</p>
+
+<p>The DSC file then defines the module groups (<code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code>) and the pipelines to run; <code class="highlighter-rouge">simulate * analyze * score</code> indicates that all sequences of the <code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code> modules should be run.</p>
+
+<h2 id="run-dsc">Run DSC</h2>
+
+<p>To run DSC, we first change the working directory to the location of the <code class="highlighter-rouge">first_investigation.dsc</code> file. (Here we assume the <code class="highlighter-rouge">dsc</code> repository is stored in the <code class="highlighter-rouge">git</code> subdirectory of your home directory. If you are running the example yourself, please move to the appropriate directory on your computer.)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/git/dsc/vignettes/one_sample_location
+</code></pre></div></div>
+
+<p>If there are any previously generated results, let’s remove them before moving on.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+</code></pre></div></div>
+
+<p>Before executing the benchmark, we can use the <code class="highlighter-rouge">dsc</code> command-line program to get a summary of what this benchmark includes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">-h</span>
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: MODULES
++------------------------------------------------------------------+
+|                         Group [simulate]                         |
+|        | - parameters - | - input - |    - output -   | - type - |
+| normal |     mu, n      |           | data, true_mean |    R     |
+|   t    |     mu, n      |           | data, true_mean |    R     |
+
++-------------------------------------------------------------+
+|                       Group [analyze]                       |
+|        | - parameters - | - input - | - output - | - type - |
+|  mean  |                |    data   |  est_mean  |    R     |
+| median |                |    data   |  est_mean  |    R     |
+
++------------------------------------------------------------------------+
+|                             Group [score]                              |
+|         | - parameters - |      - input -      | - output - | - type - |
+| abs_err |                | est_mean, true_mean |   error    |    R     |
+|  sq_err |                | est_mean, true_mean |   error    |    R     |
+
+INFO: PIPELINES
+1: simulate -&gt; analyze -&gt; score
+
+INFO: PIPELINES EXPANDED
+1: normal * mean * abs_err
+2: normal * mean * sq_err
+3: normal * median * abs_err
+4: normal * median * sq_err
+5: t * mean * abs_err
+6: t * mean * sq_err
+7: t * median * abs_err
+8: t * median * sq_err
+</code></pre></div></div>
+
+<p>Now we run 10 replicates of this benchmark (each replicate uses a different sequence of pseudorandom numbers to simulate the data), with 2 threads:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">--replicate</span> 10 <span class="nt">-c</span> 2
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+INFO: Constructing DSC from first_investigation.dsc ...
+INFO: Building execution graph &amp; running DSC ...
+[#############################] 29 steps processed (155 jobs completed)
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time 30.451 seconds.
+</code></pre></div></div>
+
+<p>(For first time users of DSC, a companion <code class="highlighter-rouge">R</code> package <code class="highlighter-rouge">dscrutils</code> should automatically installed at this point.)</p>
+
+<p>When run, DSC will create results files in the folder <code class="highlighter-rouge">first_investigation</code> (this is the default folder name, and it can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
+
+<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code class="highlighter-rouge">first_investigation.html</code>). This file allows you to conveniently browse the DSC file, the executed pipelines, and the corresponding source code.</p>
+
+<h2 id="query-the-results">Query the results</h2>
+
+<p>Next, we will read the results into R using the <code class="highlighter-rouge">dscquery</code> function from the <code class="highlighter-rouge">dscrutils</code> package. To do so, change the working directory in R to the location of the <code class="highlighter-rouge">first_investigation.dsc</code> file.</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame interactively in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code class="highlighter-rouge">help(dscquery)</code> in R for more information.</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
+</span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+                   </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+Reading DSC outputs:
+ - score.error: extracted atomic values
+
+</code></pre></div></div>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_html">
+<table>
+<thead><tr>&lt;th scope=col&gt;DSC&lt;/th&gt;&lt;th scope=col&gt;simulate&lt;/th&gt;&lt;th scope=col&gt;simulate.output.file&lt;/th&gt;&lt;th scope=col&gt;analyze&lt;/th&gt;&lt;th scope=col&gt;analyze.output.file&lt;/th&gt;&lt;th scope=col&gt;score&lt;/th&gt;&lt;th scope=col&gt;score.error&lt;/th&gt;</tr></thead>
+<tbody>
+	<tr><td>1                   </td><td>normal              </td><td>normal/normal_1     </td><td>mean                </td><td>mean/normal_1_mean_1</td><td>abs_err             </td><td>0.10888737          </td></tr>
+	<tr><td>2                   </td><td>normal              </td><td>normal/normal_2     </td><td>mean                </td><td>mean/normal_2_mean_2</td><td>abs_err             </td><td>0.03069816          </td></tr>
+	<tr><td>3                   </td><td>normal              </td><td>normal/normal_3     </td><td>mean                </td><td>mean/normal_3_mean_2</td><td>abs_err             </td><td>0.01103557          </td></tr>
+	<tr><td>4                   </td><td>normal              </td><td>normal/normal_4     </td><td>mean                </td><td>mean/normal_4_mean_2</td><td>abs_err             </td><td>0.09652497          </td></tr>
+	<tr><td>5                   </td><td>normal              </td><td>normal/normal_5     </td><td>mean                </td><td>mean/normal_5_mean_2</td><td>abs_err             </td><td>0.03163502          </td></tr>
+	<tr><td>6                   </td><td>normal              </td><td>normal/normal_6     </td><td>mean                </td><td>mean/normal_6_mean_2</td><td>abs_err             </td><td>0.01020676          </td></tr>
+</tbody>
+</table>
+
+</div>
+
+<p>Once the results are in an R data frame like this, we can easily use standard functions in R to investigate them further.</p>
+
+<p>For example, we can generate an informative summary of the results using the <code class="highlighter-rouge">aggregate</code> function, followed by a call to the <code class="highlighter-rouge">order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscsummary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aggregate</span><span class="p">(</span><span class="n">score.error</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">simulate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">analyze</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="n">dscout</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span><span class="w">
+</span><span class="n">dscsummary</span><span class="p">[</span><span class="n">with</span><span class="p">(</span><span class="n">dscsummary</span><span class="p">,</span><span class="n">order</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">score</span><span class="p">)),]</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_html">
+<table>
+<thead><tr><th></th>&lt;th scope=col&gt;simulate&lt;/th&gt;&lt;th scope=col&gt;analyze&lt;/th&gt;&lt;th scope=col&gt;score&lt;/th&gt;&lt;th scope=col&gt;score.error&lt;/th&gt;</tr></thead>
+<tbody>
+	<tr>&lt;th scope=row&gt;1&lt;/th&gt;<td>normal    </td><td>mean      </td><td>abs_err   </td><td>0.07110604</td></tr>
+	<tr>&lt;th scope=row&gt;3&lt;/th&gt;<td>normal    </td><td>median    </td><td>abs_err   </td><td>0.10803587</td></tr>
+	<tr>&lt;th scope=row&gt;5&lt;/th&gt;<td>normal    </td><td>mean      </td><td>sq_err    </td><td>0.00727960</td></tr>
+	<tr>&lt;th scope=row&gt;7&lt;/th&gt;<td>normal    </td><td>median    </td><td>sq_err    </td><td>0.01452696</td></tr>
+	<tr>&lt;th scope=row&gt;2&lt;/th&gt;<td>t         </td><td>mean      </td><td>abs_err   </td><td>0.19000217</td></tr>
+	<tr>&lt;th scope=row&gt;4&lt;/th&gt;<td>t         </td><td>median    </td><td>abs_err   </td><td>0.11355026</td></tr>
+	<tr>&lt;th scope=row&gt;6&lt;/th&gt;<td>t         </td><td>mean      </td><td>sq_err    </td><td>0.05736588</td></tr>
+	<tr>&lt;th scope=row&gt;8&lt;/th&gt;<td>t         </td><td>median    </td><td>sq_err    </td><td>0.02186425</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<p>In this small experiment with 10 replicates (most likely too small to draw any meaningful conclusions!), we see that the median is a more accurate estimate of the population mean for <em>t</em>-distributed data (on average), and it is also a better estimate for normally distributed data judging as measured by the absolute error—but it is not better if we look at the squared differences.</p>
+
+<h2 id="visualize-the-results">Visualize the results</h2>
+
+<p>Next, we demonstrate use of the <code class="highlighter-rouge">ggplot2</code> package to create a visual summary the squared-error results:</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the ggplot2 package and set up graphics within the Jupyter environment.</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">repr</span><span class="p">)</span><span class="w">
+</span><span class="n">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3.5</span><span class="p">,</span><span class="n">repr.plot.height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2.5</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># This function selects the DSC results with the squared-error metric only, </span><span class="w">
+</span><span class="c1"># removing unusually large errors, then creates a combined violin and dotplot </span><span class="w">
+</span><span class="c1"># summarizing the accuracy of the two analysis methods ("mean" and "median").</span><span class="w">
+</span><span class="n">create.boxplot</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">dat</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">pdat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"sq_err"</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">score.error</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w">
+  </span><span class="nf">return</span><span class="p">(</span><span class="n">qplot</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">simulate</span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">score.error</span><span class="p">,</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdat</span><span class="p">,</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analyze</span><span class="p">,</span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"boxplot"</span><span class="p">,</span><span class="w">
+               </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"analysis method"</span><span class="p">,</span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"squared error"</span><span class="p">,</span><span class="w">
+               </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"results from normal &amp; t simulations"</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="output output_png"><img src="../images/first_course/Intro_DSC_24_1.png" alt="png" /></p>
+
+<p>Based on the results from the 10 replicates, we see that the median is substantially more accurate than the mean in the normal simulations, on average, and it yields only slightly worse accuracy in the <em>t</em> simulations.</p>
+
+<h2 id="expand-the-experiment">Expand the experiment</h2>
+
+<p>Above, we compared different ways to estimate the population mean from a sample, and examined the results of this comparison. We observed that the median estimate tends to be more accurate than the mean estimate. However, this observation was based on very few data—we only ran 10 replicates.</p>
+
+<p>Here, we increase the number of replicates to 20.</p>
+
+<p>We will see that DSC does this efficiently; it determines the minimum effort needed to produce the new results, and only runs scripts if they are needed to generate new results.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">--replicate</span> 20 <span class="nt">-c</span> 2
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+INFO: Constructing DSC from first_investigation.dsc ...
+INFO: Building execution graph &amp; running DSC ...
+[#############################] 29 steps processed (155 jobs completed, 140 jobs ignored)
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time 29.287 seconds.
+</code></pre></div></div>
+
+<p>From this summary, we see that 155 new jobs (including pipeline meta jobs and jobs executing module instances) are executed in this DSC run, and 140 module outputs are unchanged from the previous run, and therefore did not need to be generated again. Although the benefit is not particularly noticeable for this toy example, avoiding unnecessary computations can yield a huge payoff when running complex analyses or when working with very large data sets.</p>
+
+<p>Let’s now load the results from our expanded DSC run.</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+                    </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+Reading DSC outputs:
+ - score.error: extracted atomic values
+
+</code></pre></div></div>
+
+<p>Comparing to the previous <code class="highlighter-rouge">dscquery</code> output, we confirm that the new DSC run generated twice as many results.</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+</span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_html">
+80
+</div>
+
+<div class="output output_html">
+160
+</div>
+
+<h2 id="add-a-new-method-to-the-dsc-benchmark">Add a new method to the DSC benchmark</h2>
+
+<p>Another commonly used approach to estimate a population mean is the “Winsorized” estimator; this approach is more robust to unusually large and unusually small values because top and bottom value are trimmed. Here we use the Winsorized mean implemented in the <a href="https://cran.r-project.org/package=psych">psych package</a>.</p>
+
+<p>To compare the Winsorized mean against the regular mean and median estimates, we add the following lines to our DSC file:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Estimate the population mean by computing the Winsorized mean; the</span>
+<span class="c1"># mean is computed after trimming the top and bottom 10% quantiles.</span>
+<span class="na">winsor</span><span class="pi">:</span> <span class="s">R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))</span>
+  <span class="s">trim</span><span class="pi">:</span> <span class="s">0.1</span>
+  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
+</code></pre></div></div>
+
+<p>This module is similar in structure to the <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">t</code> modules; the main difference is the R code inside the <code class="highlighter-rouge">R()</code>.</p>
+
+<p>To include the Winsorized mean method in our benchmark, we also need to add the winsor module to the “analyze” module group:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">define</span><span class="pi">:</span>
+    <span class="na">simulate</span><span class="pi">:</span> <span class="s">normal, t</span>
+    <span class="na">analyze</span><span class="pi">:</span> <span class="s">mean, median, winsor</span>
+    <span class="na">score</span><span class="pi">:</span> <span class="s">abs_err, sq_err</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * analyze * score</span>
+  <span class="na">output</span><span class="pi">:</span> <span class="s">first_investigation</span>
+</code></pre></div></div>
+
+<p>Similar to adding new replicates, we will see that DSC does the minimum computation needed to augment the benchmark with the Winsorized mean method.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc add_winsor_method1.dsc <span class="nt">--replicate</span> 20 <span class="nt">-c</span> 2
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library psych ...
+INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
+INFO: DSC script exported to first_investigation.html
+INFO: Constructing DSC from add_winsor_method1.dsc ...
+INFO: Building execution graph &amp; running DSC ...
+[#########################################] 41 steps processed (141 jobs completed, 280 jobs ignored)
+INFO: Building DSC database ...
+INFO: DSC complete!
+INFO: Elapsed time 33.921 seconds.
+</code></pre></div></div>
+
+<p>Since the addition of the <code class="highlighter-rouge">winsor</code> module has no effect on the results generated using the mean and median methods, the DSC program automatically determines that the previously generated results for these methods are still valid, and does not re-run the R code.</p>
+
+<p>Let’s load the results from our new benchmark into R.</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+                    </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+Reading DSC outputs:
+ - score.error: extracted atomic values
+
+</code></pre></div></div>
+
+<p>As before, we can easily create a visual summary of the squared-error results:</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout3</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="output output_png"><img src="../images/first_course/Intro_DSC_37_1.png" alt="png" /></p>
+
+<p>From this plot, we observe that the Winsorized mean estimate is more accurate than both the standard mean and median on the <em>t</em>-distributed data.</p>
+
+<h2 id="recap">Recap</h2>
+
+<p>In this tutorial, we presented a very simple example of a DSC benchmark. Despite its simplicity, this example was useful for illustrating some of the essential features of DSC:</p>
+
+<ol>
+  <li>
+    <p>A DSC experiment can be decomposed into <em>modules</em>;</p>
+  </li>
+  <li>
+    <p>The modules can be organized into <em>module groups</em>;</p>
+  </li>
+  <li>
+    <p>The modules and module groups and combined in sequence, forming <em>pipelines</em>;</p>
+  </li>
+  <li>
+    <p>Pipelines can easily be replicated with different pseudorandom number sequences;</p>
+  </li>
+  <li>
+    <p>The results of a DSC experiment can be conveniently loaded into a data frame in R, and the results can be examined using standard tools and packages in R.</p>
+  </li>
+  <li>
+    <p>When updating or extending a benchmark, DSC generates the results <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamically</a>—that is, DSC determines the minimum computational effort needed to update or extend the results.</p>
+  </li>
+</ol>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>To learn more about the syntax of the DSC file so that you can develop your own DSCs, move to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
+
+              <nav class="c-page__nav">
+  
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-book/first_course/first_course">
+      〈 <span class="u-margin-right-tiny"></span> DSC tutorials
+    </a>
+  
+
+  
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-book/first_course/Intro_Syntax_I">
+      DSC basics, part I <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>
