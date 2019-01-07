@@ -3,3 +3,7 @@ presentations/*.pdf
 **/.ipynb_checkpoints
 **/.DS_store
 docs/__pycache__/*
+**/Gemfile.lock
+**/_build
+**/_site
+**/content

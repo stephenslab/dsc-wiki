@@ -1,0 +1,59 @@
+#!/usr/bin/env sos-runner
+#fileformat=SOS1.0
+
+[setup]
+bash:
+	rm -rf jupyter-book
+	git clone https://github.com/choldgraf/jupyter-book
+	rm -rf jupyter-book/.git
+	rm -rf jupyter-book/_build
+	rm -rf jupyter-book/_site
+	rm -rf jupyter-book/content
+
+[execute]
+bash: workdir = 'jupyter-book'
+	python scripts/execute_all_notebooks.py
+
+[clean]
+bash: workdir = 'jupyter-book'
+	python scripts/clean.py
+
+[build_1]
+depends: Py_Module('nbclean'), executable('rsync')
+input: list(path('src').rglob("*.md")) + list(path('src').rglob("*.ipynb"))
+for item in _input:
+	built_file = path(f'jupyter-book/_build/{item.relative_to("src")}').with_suffix('.md')
+	if built_file.is_file() and item.stat().st_mtime > built_file.stat().st_mtime:
+		print(f"Modified: {item}")
+		built_file.unlink()
+ 	
+bash: workdir = 'jupyter-book'
+	mkdir -p content
+	rsync -auz --delete ../src/* ./content/
+	cp ../cfg/toc.yml _data/
+	cp ../cfg/_config.yml _config.yml
+  	python scripts/license.py --path ./content
+	python scripts/generate_book.py
+
+[build_2]
+bash:  workdir = 'jupyter-book', container='jekyll-book'
+	rm -f Gemfile.lock
+	bundle exec jekyll build
+
+[build_3]
+bash: 
+	mkdir -p docs
+	rsync -auz --delete jupyter-book/_site/* docs/
+	rm -rf docs/tmp*
+	echo "Deployed to the docs/ folder"
+
+[serve]
+bash:  workdir = 'jupyter-book', container='jekyll-book'
+	bundle exec guard
+
+[docker_image]
+docker_build: workdir = 'jupyter-book', tag = 'jekyll-book'
+	FROM jekyll/jekyll:3.8.4
+	COPY Gemfile .
+	RUN apk --update add make gcc g++ libc-dev
+	RUN bundler install
