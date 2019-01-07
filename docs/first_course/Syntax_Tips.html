@@ -8,10 +8,10 @@
   <title>Syntax tips</title>
   <meta name="description" content="Tips and Tricks">
 
-  <link rel="canonical" href="https://gaow.github.io/dsc-book/first_course/Syntax_Tips.html">
-  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://gaow.github.io/dsc-book/feed.xml">
+  <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/first_course/Syntax_Tips.html">
+  <link rel="alternate" type="application/rss+xml" title="Dynamic Statistical Comparison" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
 
-  <meta property="og:url"         content="https://gaow.github.io/dsc-book/first_course/Syntax_Tips.html" />
+  <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/first_course/Syntax_Tips.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Syntax tips" />
 <meta property="og:description" content="Tips and Tricks" />
@@ -23,13 +23,13 @@
   "@context": "http://schema.org",
   "@type": "NewsArticle",
   "mainEntityOfPage":
-    "https://gaow.github.io/dsc-book/first_course/Syntax_Tips.html",
+    "https://stephenslab.github.io/dsc-wiki/first_course/Syntax_Tips.html",
   "headline":
     "Syntax tips",
   "datePublished":
-    "2019-01-06T23:33:20-06:00",
+    "2019-01-06T23:39:15-06:00",
   "dateModified":
-    "2019-01-06T23:33:20-06:00",
+    "2019-01-06T23:39:15-06:00",
   "description":
     "Tips and Tricks",
   "author": {
@@ -41,21 +41,21 @@
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://gaow.github.io/dsc-book",
+      "url": "https://stephenslab.github.io/dsc-wiki",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "https://gaow.github.io/dsc-book",
+    "url": "https://stephenslab.github.io/dsc-wiki",
     "height": 60,
     "width": 60
   }
 }
 
   </script>
-  <link rel="stylesheet" href="/dsc-book/assets/css/styles.css">
+  <link rel="stylesheet" href="/dsc-wiki/assets/css/styles.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
   <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
@@ -74,7 +74,7 @@
   <meta name="theme-color" content="#233947">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/dsc-book/images/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-wiki/images/favicon.ico">
 
   <!-- MathJax Config -->
   <!-- Allow inline math using $ and automatically break long math lines -->
@@ -118,7 +118,7 @@ initFunction = function(myfunc) {
 
   <!-- Include Turbolinks to make page loads fast -->
   <!-- https://github.com/turbolinks/turbolinks -->
-  <script src="/dsc-book/assets/js/turbolinks.js" async></script>
+  <script src="/dsc-wiki/assets/js/turbolinks.js" async></script>
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
@@ -129,13 +129,13 @@ initFunction = function(myfunc) {
 
 
   <!-- Google analytics -->
-  <script src="/dsc-book/assets/js/ga.js" async></script>
+  <script src="/dsc-wiki/assets/js/ga.js" async></script>
 
   <!-- Clipboard copy button -->
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
 
   <!-- Load custom website scripts -->
-  <script src="/dsc-book/assets/js/scripts.js" async></script>
+  <script src="/dsc-wiki/assets/js/scripts.js" async></script>
 
   <!-- Load JS that depends on site variables -->
   <script>
@@ -146,7 +146,7 @@ const codeCellId = index => `codecell${index}`
 
 const clipboardButton = id =>
   `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
-    <img src="/dsc-book/assets/images/copy-button.svg" alt="Copy to clipboard">
+    <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
   </a>`
 
 // Clears selected text since ClipboardJS will select the text when copying
@@ -200,8 +200,8 @@ initFunction(addCopyButtonToCodeCells);
 </script>
 
   <!-- Load custom user CSS and JS  -->
-  <script src="/dsc-book/assets/custom/custom.js" async></script>
-  <link rel="stylesheet" href="/dsc-book/assets/custom/custom.css">
+  <script src="/dsc-wiki/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/custom/custom.css">
 
   <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   <script>
@@ -264,7 +264,7 @@ function addParamToInternalLinks(hub) {
   var links = document.querySelectorAll("a").forEach(function(link) {
     var href = link.href;
     // If the link is an internal link...
-    if (href.search("https://gaow.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+    if (href.search("https://stephenslab.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
       // Assume we're an internal link, add the hub param to it
       var params = getJsonFromUrl(href);
       if (params !== false) {
@@ -338,7 +338,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
 
 <nav id="js-sidebar" class="c-textbook__sidebar">
-  <img src="/dsc-book/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
+  <img src="/dsc-wiki/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/>
   <h2 class="c-sidebar__title">Dynamic Statistical Comparison</h2>
   <ul class="c-sidebar__chapters">
     
@@ -350,7 +350,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/overview"
+          href="/dsc-wiki/overview"
         >
           
           Home
@@ -369,7 +369,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/installation"
+          href="/dsc-wiki/installation"
         >
           
           Installation
@@ -388,7 +388,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/faq"
+          href="/dsc-wiki/faq"
         >
           
           FAQ
@@ -407,7 +407,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/reference/reference"
+          href="/dsc-wiki/reference/reference"
         >
           
           Reference manual
@@ -429,7 +429,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/Terminology"
+                  href="/dsc-wiki/reference/Terminology"
                 >
                   
                   Terminology
@@ -446,7 +446,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/DSC_Configuration"
+                  href="/dsc-wiki/reference/DSC_Configuration"
                 >
                   
                   DSC configuration syntax
@@ -463,7 +463,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/DSC_Execution"
+                  href="/dsc-wiki/reference/DSC_Execution"
                 >
                   
                   Running DSC
@@ -480,7 +480,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/DSC_Filtering"
+                  href="/dsc-wiki/reference/DSC_Filtering"
                 >
                   
                   Extracting DSC results
@@ -497,7 +497,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/Command_Options"
+                  href="/dsc-wiki/reference/Command_Options"
                 >
                   
                   Command-line reference
@@ -514,7 +514,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/Road_Map"
+                  href="/dsc-wiki/reference/Road_Map"
                 >
                   
                   Development roadmap
@@ -531,7 +531,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/Implementation_Details"
+                  href="/dsc-wiki/reference/Implementation_Details"
                 >
                   
                   Implementation details
@@ -548,7 +548,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/reference/Unsupported_Features"
+                  href="/dsc-wiki/reference/Unsupported_Features"
                 >
                   
                   Unsupported features
@@ -582,7 +582,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/first_course/first_course"
+          href="/dsc-wiki/first_course/first_course"
         >
           
           DSC tutorials
@@ -604,7 +604,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/first_course/Intro_DSC"
+                  href="/dsc-wiki/first_course/Intro_DSC"
                 >
                   
                   First course in DSC
@@ -621,7 +621,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/first_course/Intro_Syntax_I"
+                  href="/dsc-wiki/first_course/Intro_Syntax_I"
                 >
                   
                   DSC basics, part I
@@ -638,7 +638,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/first_course/Intro_Syntax_II"
+                  href="/dsc-wiki/first_course/Intro_Syntax_II"
                 >
                   
                   DSC basics, part II
@@ -655,7 +655,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/first_course/Prototype_Tips"
+                  href="/dsc-wiki/first_course/Prototype_Tips"
                 >
                   
                   Developing benchmarks
@@ -672,7 +672,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/first_course/Debug_Tips"
+                  href="/dsc-wiki/first_course/Debug_Tips"
                 >
                   
                   Debug in DSC
@@ -689,7 +689,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry c-sidebar__entry--active"
-                  href="/dsc-book/first_course/Syntax_Tips"
+                  href="/dsc-wiki/first_course/Syntax_Tips"
                 >
                   
                   Syntax tips
@@ -715,7 +715,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/faq"
+          href="/dsc-wiki/faq"
         >
           
           Other DSC tutorials
@@ -737,7 +737,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/5_Minutes_Python"
+                  href="/dsc-wiki/advanced_course/5_Minutes_Python"
                 >
                   
                   Working with Python
@@ -754,7 +754,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/DSC_Data"
+                  href="/dsc-wiki/advanced_course/DSC_Data"
                 >
                   
                   DSC data flow
@@ -771,7 +771,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/5_Minutes_RPY"
+                  href="/dsc-wiki/advanced_course/5_Minutes_RPY"
                 >
                   
                   Working with R and Python
@@ -788,7 +788,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/Multiple_Pipelines"
+                  href="/dsc-wiki/advanced_course/Multiple_Pipelines"
                 >
                   
                   Running multiple pipelines
@@ -805,7 +805,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/Rmd_Executable"
+                  href="/dsc-wiki/advanced_course/Rmd_Executable"
                 >
                   
                   Using Rmd files as module executables
@@ -822,7 +822,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/Remote_Computations"
+                  href="/dsc-wiki/advanced_course/Remote_Computations"
                 >
                   
                   Running DSC on remote computers
@@ -839,7 +839,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/advanced_course/DSC_Docker"
+                  href="/dsc-wiki/advanced_course/DSC_Docker"
                 >
                   
                   Running DSC in Docker
@@ -865,7 +865,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-book/examples"
+          href="/dsc-wiki/examples"
         >
           
           Benchmark examples
@@ -887,7 +887,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/examples/Intermedium_R_1"
+                  href="/dsc-wiki/examples/Intermedium_R_1"
                 >
                   
                   Intermedium R example 1
@@ -904,7 +904,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-book/examples/Intermedium_R_2"
+                  href="/dsc-wiki/examples/Intermedium_R_2"
                 >
                   
                   Intermedium R example 2
@@ -1031,13 +1031,13 @@ parameter names, even when the scripts use different script variables.</p>
 
               <nav class="c-page__nav">
   
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-book/first_course/Debug_Tips">
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/first_course/Debug_Tips">
       〈 <span class="u-margin-right-tiny"></span> Debug in DSC
     </a>
   
 
   
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-book/faq">
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/faq">
       Other DSC tutorials <span class="u-margin-right-tiny"></span> 〉
     </a>
   
