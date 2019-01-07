@@ -50,13 +50,13 @@
     url: /reference/Unsupported_Features
 
 - divider: true
-- header: DSC user guide
+- header: User guide
 
-- title: DSC tutorials
+- title: First course on DSC
   url: /first_course/first_course
   not_numbered: true
   sections:
-  - title: First course in DSC
+  - title: A brief introduction to DSC
     url: /first_course/Intro_DSC
     not_numbered: true
   - title: DSC basics, part I
@@ -74,7 +74,7 @@
   - title: Syntax tips
     url: /first_course/Syntax_Tips
     not_numbered: true
-- title: Other DSC tutorials
+- title: Other tutorials
   url: /faq
   not_numbered: true
   sections:

@@ -16,7 +16,7 @@
 
 #######################################################################################
 # Jekyll site settings
-title: Dynamic Statistical Comparison
+title: DSC
 author: Stephens Lab, University of Chicago
 email: gaow@uchicago.edu
 description: >- # this means to ignore newlines until "baseurl:"
@@ -37,7 +37,7 @@ hide_code_text            : "# NO CODE"  # When building the textbook, any cells
 collapse_inactive_chapters: false  # Whether to collapse the inactive chapters in the sidebar
 # I got DSC logo from freelogodesign.org
 textbook_logo             : images/logo.png  # A logo to be displayed at the top of your textbook sidebar
-sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
+sidebar_footer_text       : 'Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
 # sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.'
 
 #######################################################################################
