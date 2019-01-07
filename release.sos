@@ -45,6 +45,7 @@ bash:
 	mkdir -p docs
 	rsync -auz --delete jupyter-book/_site/* docs/
 	rm -rf docs/tmp*
+	cp src/index.html docs/index.html
 	echo "Deployed to the docs/ folder"
 
 [serve]

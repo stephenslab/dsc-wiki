@@ -1,15 +1,3 @@
----
-interact_link: content/installation.ipynb
-title: 'Installation'
-prev_page:
-  url: /overview
-  title: 'Home'
-next_page:
-  url: /faq
-  title: 'FAQ'
-comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
----
-
 # DSC Installation Guide
 
 Follow these steps to get started using DSC. 
@@ -54,14 +42,14 @@ To use DSC, you must have Python version 3.6 or greater. There are several ways 
 
 DSC is distributed via [pypi](https://pypi.python.org/pypi/dsc). The simplest way to install a Python module from pypi is with `pip`. [All recent Python versions are by default bundled with pip](https://pip.pypa.io/en/stable/installing). Before running `pip`, check that you are running the version bundled with Python >= 3.6:
 
-```
+```bash
 python --version
 pip --version
 ```
 
 or 
 
-```
+```bash
 python3 --version
 pip3 --version
 ```
@@ -72,57 +60,64 @@ If the reported Python version is or greater than 3.6.0 and `pip` is reported to
 
 If you already have an old version of Miniconda or Anaconda installed, but you do not have Python >= 3.6, see [here](#Troubleshooting) (*TO DO: fix this link*) for advice on how to proceed.
 
-## 3. Install Python dependencies
+## 3. Install (or upgrade) DSC
 
-DSC uses [several Python modules](FAQ/Implementation_Details.html). We provide two sets of installation instructions: Python installed with `conda` (*i.e.*, Anaconda or Miniconda), and Python not installed with `conda`. 
+We provide two sets of installation instructions: Python installed with `conda` (*i.e.*, Anaconda or Miniconda), and Python not installed with `conda`.
 
 
 ### 3a. If Python is installed with `conda` (Anaconda or Miniconda)
 
-Install the modules required by DSC. First run
+Using `conda`, install DSC from the conda-forge channel:
 
-```
-conda install -c conda-forge fasteners python-xxhash pyarrow billiard
-```
-
-then run
-
-```
-conda install cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py 
-conda install psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio
-```
-
-After running these `conda install` commands, run these commands to make sure you have the latest versions:
-
-```
-conda update -c conda-forge fasteners python-xxhash pyarrow billiard
-conda update cython numpy pandas sqlalchemy msgpack-python sympy numexpr h5py
-conda update psutil networkx pydotplus pyyaml tqdm pygments pexpect graphviz imageio
+```bash
+conda install -c conda-forge dsc
 ```
 
 ### 3b. If Python is *not* installed with `conda`
 
-In this case, you can skip this step because the `pip` command below will automatically install the required packages. However, we caution that:
+Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):
+
+```bash
+pip install -U --upgrade-strategy only-if-needed dsc
+```
+
+However, we caution that:
 
 * You must have both `C` and `Fortran` compilers (and accompanying libraries).
 
 * The `pip` command may take a long time to run because several packages will need to be built from source. 
 
-* Installation of some packages may fail. In so, try running the same command again; *sometimes running the same `pip` command a second time works!*
+* Installation of some packages may fail. If so, try running the same command again; *sometimes running the same `pip` command a second time works!*
 
-## 4. Install (or upgrade) DSC
+If you are having difficulty installing DSC and its dependnencies directly from source, we recommend switching to using `conda`. Since `conda` installs binary packages that have already been compiled, this saves you from having to configure the correct compiler settings on your local machine.
 
-Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):
+## 4. Install modules for network visualization of benchmarks (optional)
 
+If you'd like to be able to create a network visualization of your benchmarks, you'll need to install some additional Python modules. This is an entirely optional feature which will not affect the running of your DSC benchmarks.
+
+
+### 3a. If Python is installed with `conda` (Anaconda or Miniconda)
+
+Run the following:
+
+```bash
+conda install -c conda-forge python-graphviz imageio pillow
 ```
-pip install -U --upgrade-strategy only-if-needed dsc
+
+### 3b. If Python is *not* installed with `conda`
+
+Run the following:
+
+```bash
+pip install -U --upgrade-strategy only-if-needed graphviz imageio pillow
 ```
+
 
 ## 5. Verify installation of Python module
 
 Check that the Python module is installed and recognized in your current shell environment by running this command:
 
-```
+```bash
 pip show dsc
 ```
 
@@ -144,7 +139,7 @@ Requires: numpy, pandas, sympy, numexpr, sos, sos-pbs, h5py, pyarrow, sqlalchemy
 
 Run the following commands to verify that the Python executables are accessible in your current shell environment:
 
-```
+```bash
 dsc --version
 dsc-query --version
 ```
@@ -157,20 +152,20 @@ If you get an error, and you have verified that the Python module has been succe
 
 The most reliable is to way to find the location of the executables is to run these two commands:
 
-```
+```bash
 pip show dsc
 pip show dsc --files | grep dsc-query
 ```
 
 The first command gives the install location of the Python module, and the second command gives the install location of the executables *which may be relative to the Python module.* Based on this, you can run the following command in the bash shell to add the appropriate location to your command search path:
 
-```
+```bash
 export PATH=<python-exec-path>:$PATH
 ```
 
 where `<python-exec-path>` was identified from running the commands above. For example, in Anaconda the first and second install locations may look something like `/home/jsmith/anaconda3/lib/python3.6/site-packages` and `../../../bin/dsc-query`, in which case running
 
-```
+```bash
 export PATH=/home/jsmith/anaconda3/lib:$PATH
 ```
 
@@ -198,7 +193,7 @@ In a previous step, you verified that `dsc-query` can be run from the command-li
 
 Start up R or RStudio, and run
 
-```
+```R
 system("dsc-query --version")
 ```
 
