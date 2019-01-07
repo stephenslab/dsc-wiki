@@ -1,6 +1,8 @@
 #!/usr/bin/env sos-runner
 #fileformat=SOS1.0
 
+[global]
+
 [setup]
 bash:
 	rm -rf jupyter-book
@@ -21,11 +23,17 @@ bash: workdir = 'jupyter-book'
 [build_1]
 depends: Py_Module('nbclean'), executable('rsync')
 input: list(path('src').rglob("*.md")) + list(path('src').rglob("*.ipynb"))
-for item in _input:
-	built_file = path(f'jupyter-book/_build/{item.relative_to("src")}').with_suffix('.md')
-	if built_file.is_file() and item.stat().st_mtime > built_file.stat().st_mtime:
-		print(f"Modified: {item}")
-		built_file.unlink()
+
+from sos.utils import env
+print(env.config['sig_mode'])
+if env.config['sig_mode'] == 'force':
+	sos_run('clean')
+else:
+	for item in _input:
+		built_file = path(f'jupyter-book/_build/{item.relative_to("src")}').with_suffix('.md')
+		if built_file.is_file() and item.stat().st_mtime > built_file.stat().st_mtime:
+			print(f"Modified: {item}")
+			built_file.unlink()
  	
 bash: workdir = 'jupyter-book'
 	mkdir -p content

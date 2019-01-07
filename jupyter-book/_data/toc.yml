@@ -103,9 +103,9 @@
   url: /examples
   not_numbered: true
   sections:
-  - title: Intermedium R example 1
-    url: /examples/Intermedium_R_1
+  - title: R Example 1
+    url: /examples/R_Example_1
     not_numbered: true
-  - title: Intermedium R example 2
-    url: /examples/Intermedium_R_2
+  - title: R Example 2
+    url: /examples/R_Example_2
     not_numbered: true
