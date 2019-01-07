@@ -28,6 +28,10 @@ and start editing. You may find [this page](http://jupyter-notebook.readthedocs.
 
 After editing, you should save the notebook before exit.
 
+## Edit website organization
+
+Use a text editor to modify the file `src/toc.yml`. 
+
 ## Update website
 
 To build the site for the first time on your computer you need to create the docker image for relevant tools. To do so, run
