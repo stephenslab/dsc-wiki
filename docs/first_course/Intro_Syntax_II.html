@@ -27,9 +27,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-01-06T23:45:56-06:00",
+    "2019-01-07T10:39:06-06:00",
   "dateModified":
-    "2019-01-06T23:45:56-06:00",
+    "2019-01-07T10:39:06-06:00",
   "description":
     "DSC Basics, Part II",
   "author": {
@@ -1249,29 +1249,25 @@ median 0.018195606 0.001767654
 
 <p>Let’s clear the previous results and run the DSC benchmark with this new module:</p>
 
-<p>``bash
-rm -Rf first_investigation.html first_investigation.log first_investigation
-dsc simulate_multiple_dfs.dsc –replicate 10</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+dsc simulate_multiple_dfs.dsc <span class="nt">--replicate</span> 10
 </code></pre></div></div>
-<p>INFO: DSC script exported to first_investigation.html
-INFO: Constructing DSC from simulate_multiple_dfs.dsc …
-INFO: Building execution graph &amp; running DSC …
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+INFO: Constructing DSC from simulate_multiple_dfs.dsc ...
+INFO: Building execution graph &amp; running DSC ...
 [#############################] 29 steps processed (575 jobs completed)
-INFO: Building DSC database …
+INFO: Building DSC database ...
 INFO: DSC complete!
-INFO: Elapsed time 57.557 seconds.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Now let's load all the results generated with the *t*-simulated data:
-
-
-
-{:.input_area}
-```R
-dscout2 &lt;-
-  dscquery(dsc.outdir = "first_investigation",
-           targets = c("t.n","t.df","analyze","score.error"))
+INFO: Elapsed time 57.557 seconds.
 </code></pre></div></div>
+
+<p>Now let’s load all the results generated with the <em>t</em>-simulated data:</p>
+
+<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
+  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+           </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t.n"</span><span class="p">,</span><span class="s2">"t.df"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
 
 <div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
