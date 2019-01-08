@@ -1,17 +1,3 @@
----
-redirect_from:
-  - "/"
-interact_link: content/overview.ipynb
-title: 'Home'
-prev_page:
-  url: 
-  title: ''
-next_page:
-  url: /installation
-  title: 'Installation'
-comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
----
-
 # DSC: Dynamic Statistical Comparisons
 
 ## Overview of DSC

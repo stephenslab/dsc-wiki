@@ -1,15 +1,3 @@
----
-interact_link: content/examples.ipynb
-title: 'Benchmark examples'
-prev_page:
-  url: /advanced_course/DSC_Docker
-  title: 'Running DSC in Docker'
-next_page:
-  url: /examples/Intermedium_R_1
-  title: 'Intermedium R example 1'
-comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
----
-
 ## DSC examples
 
 [Linear regression](https://github.com/stephenslab/dsc-reg) by Matthew Stephens<br>

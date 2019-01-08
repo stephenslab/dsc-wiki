@@ -22,26 +22,14 @@ bash: workdir = 'jupyter-book'
 
 [build_1]
 depends: Py_Module('nbclean'), executable('rsync')
-input: list(path('src').rglob("*.md")) + list(path('src').rglob("*.ipynb"))
-
 from sos.utils import env
-print(env.config['sig_mode'])
-if env.config['sig_mode'] == 'force':
-	sos_run('clean')
-else:
-	for item in _input:
-		built_file = path(f'jupyter-book/_build/{item.relative_to("src")}').with_suffix('.md')
-		if built_file.is_file() and item.stat().st_mtime > built_file.stat().st_mtime:
-			print(f"Modified: {item}")
-			built_file.unlink()
- 	
-bash: workdir = 'jupyter-book'
+bash: workdir = 'jupyter-book', expand = True
 	mkdir -p content
 	rsync -auz --delete ../src/* ./content/
 	cp ../cfg/toc.yml _data/
 	cp ../cfg/_config.yml _config.yml
   	python scripts/license.py --path ./content
-	python scripts/generate_book.py
+	python scripts/generate_book.py {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
 bash:  workdir = 'jupyter-book', container='jekyll-book'

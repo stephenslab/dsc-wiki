@@ -1,15 +1,3 @@
----
-interact_link: content/faq.ipynb
-title: 'FAQ'
-prev_page:
-  url: /installation
-  title: 'Installation'
-next_page:
-  url: /reference/reference
-  title: 'Reference manual'
-comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
----
-
 # FAQ
 
 ## Other DSC features
