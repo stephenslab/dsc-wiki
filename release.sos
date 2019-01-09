@@ -32,11 +32,18 @@ bash: workdir = 'jupyter-book', expand = True
 	python scripts/generate_book.py {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
+for x in glob.glob('src/*/[!_]*.ipynb'):
+	# a hack for https://github.com/choldgraf/jupyter-book/issues/72
+	x = path(f"jupyter-book/_build/{path(x).relative_to('src'):n}.md")
+	if x.is_file():
+		run(f'''sed -i 's/scope=col/scope="col"/g' {x}''', stderr=False, stdout=False)
+
+[build_3]
 bash:  workdir = 'jupyter-book', container='jekyll-book'
 	rm -f Gemfile.lock
 	bundle exec jekyll build
 
-[build_3]
+[build_4]
 bash: 
 	mkdir -p docs
 	rsync -auz --delete jupyter-book/_site/* docs/
