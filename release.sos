@@ -32,8 +32,8 @@ bash: workdir = 'jupyter-book', expand = True
 	python scripts/generate_book.py {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
+# a hack for https://github.com/choldgraf/jupyter-book/issues/72
 for x in glob.glob('src/*/[!_]*.ipynb'):
-	# a hack for https://github.com/choldgraf/jupyter-book/issues/72
 	x = path(f"jupyter-book/_build/{path(x).relative_to('src'):n}.md")
 	if x.is_file():
 		run(f'''sed -i 's/scope=col/scope="col"/g' {x}''', stderr=False, stdout=False)
@@ -61,3 +61,6 @@ docker_build: workdir = 'jupyter-book', tag = 'jekyll-book'
 	COPY Gemfile .
 	RUN apk --update add make gcc g++ libc-dev
 	RUN bundler install
+
+[default]
+sos_run('build')

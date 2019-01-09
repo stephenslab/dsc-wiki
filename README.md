@@ -45,7 +45,7 @@ This command requires that you have `docker` installed and configured on your co
 Then to build the site, simply type:
 
 ```
-./release.sos build
+./release.sos
 ```
 
 ## Work with Jupyter Notebooks

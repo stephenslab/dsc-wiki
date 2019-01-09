@@ -27,9 +27,9 @@
   "headline":
     "Implementation details",
   "datePublished":
-    "2019-01-08T23:50:12-06:00",
+    "2019-01-09T00:05:34-06:00",
   "dateModified":
-    "2019-01-08T23:50:12-06:00",
+    "2019-01-09T00:05:34-06:00",
   "description":
     "Implementation details",
   "author": {
@@ -957,19 +957,18 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 <p>DSC is implemented in Python 3. It relies on a number of libraries:</p>
 
 <ul>
-  <li><a href="https://github.com/vatlab/SoS"><code class="highlighter-rouge">SoS</code></a> library supports the execution of steps in DSC, which implements job dispatch and management via <a href="https://networkx.github.io/"><code class="highlighter-rouge">networkx</code></a> and, different from other timestamp-based workflow tools, a file signature system via <a href="https://cyan4973.github.io/xxHash/"><code class="highlighter-rouge">xxHash</code></a>. Development of DSC is contributed directly to <code class="highlighter-rouge">SoS</code> whenever approperate.</li>
+  <li>DSC relies intensely on codes from <a href="https://github.com/vatlab/SoS"><code class="highlighter-rouge">SoS</code></a> project for the execution of modules, which implements job dispatch and management via <a href="https://networkx.github.io/"><code class="highlighter-rouge">networkx</code></a> and, different from other timestamp-based workflow tools, a file signature system via <a href="https://cyan4973.github.io/xxHash/"><code class="highlighter-rouge">xxHash</code></a>. Development of DSC is contributed directly to <code class="highlighter-rouge">SoS</code> whenever approperate.</li>
   <li><a href="http://www.sympy.org/en/index.html"><code class="highlighter-rouge">sympy</code></a> is used to expand DSC benchmark specification into pipelines, and to expand logic for <code class="highlighter-rouge">@FILTER</code> decorator.</li>
   <li><a href="http://pandas.pydata.org/"><code class="highlighter-rouge">pandas</code></a> is used to ensure proper conversion between R and Python data frames. It is also used to manipulate output data.</li>
   <li><a href="https://www.scipy.org"><code class="highlighter-rouge">scipy</code></a> provides a <code class="highlighter-rouge">sparse</code> module that supports storing <code class="highlighter-rouge">scipy.sparse</code> type of matrix to DSC default storage format for Python.</li>
   <li><a href="http://www.pytables.org"><code class="highlighter-rouge">pytables</code></a> provides support to HDF5 format for hierarchical data storage as DSC default storage format for Python.</li>
   <li><a href="https://www.sqlalchemy.org"><code class="highlighter-rouge">sqlalchemy</code></a> supports <code class="highlighter-rouge">dsc-query</code> via SQL-like syntax.</li>
-  <li>The DSC script partially uses <a href="http://yaml.readthedocs.io/en/latest/"><code class="highlighter-rouge">ruamel.yaml</code></a>, a YAML 1.2 loader, for parsing DSC configuration (although DSC configuration format is not compatible with YAML).</li>
 </ul>
 
 <p>In addition,</p>
 
 <ul>
-  <li>Preliminary cross-language communication for R and Python is implemented in <a href="https://rpy2.bitbucket.io/"><code class="highlighter-rouge">rpy2</code></a>. This may soon be changed to using HDF5 format in version 0.3.x.</li>
+  <li>Preliminary cross-language communication from R to Python is implemented in <a href="https://rpy2.bitbucket.io/"><code class="highlighter-rouge">rpy2</code></a>, and from Python to R using <a href="https://github.com/rstudio/reticulate"><code class="highlighter-rouge">reticulate</code></a>. This might be replaced in future versions with some data bus implementation in the SoS project.</li>
 </ul>
 
               <nav class="c-page__nav">
