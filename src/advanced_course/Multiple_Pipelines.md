@@ -1,6 +1,6 @@
 # Multiple DSC pipelines
 
-In this tutorial we further expand benchmark of the DSC problem described in [DSC Introduction](../tutorials/Intro_DSC.html), to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in [DSC vignettes repo](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_winsor).
+In this tutorial we further expand benchmark of the DSC problem described in [DSC Introduction](../first_course/Intro_DSC), to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in [DSC vignettes repo](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_winsor).
 
 ## Configuration
 The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under *t* distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an **optional** `transform` step where we provide two methods for *Winsorization*. This results in two DSC pipelines:

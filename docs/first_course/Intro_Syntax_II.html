@@ -27,9 +27,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "dateModified":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "description":
     "DSC Basics, Part II",
   "author": {
@@ -955,7 +955,7 @@ initFunction(initHiddenCells);
             <div class="c-textbook__content">
               <h1 id="dsc-basics-part-ii">DSC Basics, Part II</h1>
 
-<p>This is the second part of the “DSC Basics” tutorial. Before working through this tutorial, you should have already read <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>. Here we build on the mean estimation example from the previous part to illustrate new concepts and syntax in DSC, with an emphasis on the use of <em>module parameters</em>.</p>
+<p>This is the second part of the “DSC Basics” tutorial. Before working through this tutorial, you should have already read <a href="Intro_Syntax_I">DSC Basics, Part I</a>. Here we build on the mean estimation example from the previous part to illustrate new concepts and syntax in DSC, with an emphasis on the use of <em>module parameters</em>.</p>
 
 <p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. As before, you may choose to run this example DSC program as you read through the tutorial, but this is not required. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
 
@@ -1279,7 +1279,7 @@ t.n     2  4 10
 
 <p>It is also possible to combine module parameters with module inputs.</p>
 
-<p>Recall, in the <a href="Intro_DSC.html">initial tutorial</a> we defined a third <code class="highlighter-rouge">analyze</code> module that implemented the “Winsorized” mean. The <code class="highlighter-rouge">trim</code> argument to <code class="highlighter-rouge">winsor.mean</code> determined what proportion of data to “squish” from the top and bottom of the distribution.</p>
+<p>Recall, in the <a href="Intro_DSC">initial tutorial</a> we defined a third <code class="highlighter-rouge">analyze</code> module that implemented the “Winsorized” mean. The <code class="highlighter-rouge">trim</code> argument to <code class="highlighter-rouge">winsor.mean</code> determined what proportion of data to “squish” from the top and bottom of the distribution.</p>
 
 <p>Suppose we wanted to assess the impact of the trimming on the estimate accuracy. To do this, we could introduce a module parameter <code class="highlighter-rouge">trim</code> with multiple settings:</p>
 

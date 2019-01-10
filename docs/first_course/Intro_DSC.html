@@ -27,9 +27,9 @@
   "headline":
     "A brief introduction to DSC",
   "datePublished":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "dateModified":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "description":
     "Introduction to Dynamical Statistical Comparisons",
   "author": {
@@ -948,11 +948,11 @@ initFunction(initHiddenCells);
             <div class="c-textbook__content">
               <h1 id="introduction-to-dynamical-statistical-comparisons">Introduction to Dynamical Statistical Comparisons</h1>
 
-<p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example. This tutorial only explains the basic features <em>at a high level.</em> If you prefer to begin with a more precise (and more technical) overview of DSC concepts, see <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
+<p>In this tutorial, you will get acquainted with the basic features of DSC through a simple example. This tutorial only explains the basic features <em>at a high level.</em> If you prefer to begin with a more precise (and more technical) overview of DSC concepts, see <a href="Intro_Syntax_I">DSC Basics, Part I</a>.</p>
 
 <p>All the modules in this example are implemented in R. Being familiar with R is certainly helpful, but not essential, as the R code used in the example is not complicated. DSC currently supports two programming languages: R and Python.</p>
 
-<p>This is a working example—optionally, you may <a href="../installation.html">install DSC</a>, and try running this example DSC program as you read through the tutorial. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
+<p>This is a working example—optionally, you may <a href="../installation">install DSC</a>, and try running this example DSC program as you read through the tutorial. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
 
 <h2 id="an-illustration-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern</h2>
 
@@ -1020,7 +1020,7 @@ initFunction(initHiddenCells);
 
 <ol>
   <li>
-    <p>A “DSC file”, which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>).</p>
+    <p>A “DSC file”, which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I">DSC Basics, Part I</a>).</p>
   </li>
   <li>
     <p>A call to the <code class="highlighter-rouge">dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
@@ -1047,7 +1047,7 @@ initFunction(initHiddenCells);
 <p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
 can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
 
-<p>All source code needed to define the DSC is given in a single text file, <code class="highlighter-rouge">first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a> and <a href="Intro_Syntax_II.html">DSC Basics, Part II</a>. <strong>For now, don’t worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
+<p>All source code needed to define the DSC is given in a single text file, <code class="highlighter-rouge">first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I">DSC Basics, Part I</a> and <a href="Intro_Syntax_II">DSC Basics, Part II</a>. <strong>For now, don’t worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Simulate samples from the normal distribution with mean 0 and</span>
 <span class="c1"># standard deviation 1.</span>
@@ -1236,14 +1236,14 @@ Reading DSC outputs:
 <table>
 <thead><tr><th></th><th scope="col">simulate</th><th scope="col">analyze</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
 <tbody>
-	<tr>&lt;th scope=row&gt;1&lt;/th&gt;<td>normal    </td><td>mean      </td><td>abs_err   </td><td>0.07110604</td></tr>
-	<tr>&lt;th scope=row&gt;3&lt;/th&gt;<td>normal    </td><td>median    </td><td>abs_err   </td><td>0.10803587</td></tr>
-	<tr>&lt;th scope=row&gt;5&lt;/th&gt;<td>normal    </td><td>mean      </td><td>sq_err    </td><td>0.00727960</td></tr>
-	<tr>&lt;th scope=row&gt;7&lt;/th&gt;<td>normal    </td><td>median    </td><td>sq_err    </td><td>0.01452696</td></tr>
-	<tr>&lt;th scope=row&gt;2&lt;/th&gt;<td>t         </td><td>mean      </td><td>abs_err   </td><td>0.19000217</td></tr>
-	<tr>&lt;th scope=row&gt;4&lt;/th&gt;<td>t         </td><td>median    </td><td>abs_err   </td><td>0.11355026</td></tr>
-	<tr>&lt;th scope=row&gt;6&lt;/th&gt;<td>t         </td><td>mean      </td><td>sq_err    </td><td>0.05736588</td></tr>
-	<tr>&lt;th scope=row&gt;8&lt;/th&gt;<td>t         </td><td>median    </td><td>sq_err    </td><td>0.02186425</td></tr>
+	<tr><th scope="row">1</th><td>normal    </td><td>mean      </td><td>abs_err   </td><td>0.07110604</td></tr>
+	<tr><th scope="row">3</th><td>normal    </td><td>median    </td><td>abs_err   </td><td>0.10803587</td></tr>
+	<tr><th scope="row">5</th><td>normal    </td><td>mean      </td><td>sq_err    </td><td>0.00727960</td></tr>
+	<tr><th scope="row">7</th><td>normal    </td><td>median    </td><td>sq_err    </td><td>0.01452696</td></tr>
+	<tr><th scope="row">2</th><td>t         </td><td>mean      </td><td>abs_err   </td><td>0.19000217</td></tr>
+	<tr><th scope="row">4</th><td>t         </td><td>median    </td><td>abs_err   </td><td>0.11355026</td></tr>
+	<tr><th scope="row">6</th><td>t         </td><td>mean      </td><td>sq_err    </td><td>0.05736588</td></tr>
+	<tr><th scope="row">8</th><td>t         </td><td>median    </td><td>sq_err    </td><td>0.02186425</td></tr>
 </tbody>
 </table>
 

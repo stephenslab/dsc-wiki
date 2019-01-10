@@ -27,9 +27,9 @@
   "headline":
     "Debug in DSC",
   "datePublished":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "dateModified":
-    "2019-01-09T22:26:01-06:00",
+    "2019-01-09T23:08:13-06:00",
   "description":
     "Debug in DSC",
   "author": {
@@ -943,7 +943,7 @@ initFunction(initHiddenCells);
 
 <h2 id="module-executable-and-generated-script">Module executable and generated script</h2>
 
-<p>As seen from previous tutorials, the <a href="../tutorials/dsc_result.html">module executables in DSC</a> are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
+<p>As seen from previous tutorials, <a href="../external/dsc_results.html">module executables in DSC</a> are in fact incomplete code chunks due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:</p>
 
 <ol>
   <li>Inconsistency between DSC interface and module executables</li>
@@ -996,6 +996,7 @@ WARNING: Files in green in the error prompt above contains codes and error info 
 Scripts upstream of the error can be found in dsc_result.scripts.html.
 INFO: Elapsed time 4.896 seconds.
 </code></pre></div></div>
+
 <p>The error message is a bit wordy but the part most relevant to debugging are highlighted in green color on your terminal. In this case multiple generated scripts have failed, but the cause is likely the same. You can try to resolve the problem starting from the last error message and see if the fix will help with other errors.</p>
 
 <p>You can also see that a file called <code class="highlighter-rouge">dsc_result.scripts.html</code> is generated. It bundles generated scripts from all module instances involved in the benchmark up to the point the errors occur.</p>
@@ -1124,11 +1125,11 @@ Traceback:
 
 <h3 id="debugging-with-upstream-scripts">Debugging with upstream scripts</h3>
 
-<p>Now we want to find out what has produced the problematic <code class="highlighter-rouge">x</code> variable. That is, we want to find the module instance that generated <code class="highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code class="highlighter-rouge">x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../tutorials/dsc_result.scripts_e2.html"><code class="highlighter-rouge">dsc_result.scripts.html</code></a>.</p>
+<p>Now we want to find out what has produced the problematic <code class="highlighter-rouge">x</code> variable. That is, we want to find the module instance that generated <code class="highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code class="highlighter-rouge">x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../external/dsc_result.scripts_e2.html"><code class="highlighter-rouge">dsc_result.scripts.html</code></a>.</p>
 
-<p>You can open up <a href="../tutorials/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code class="highlighter-rouge">ctrl-F</code>) for the phrase <code class="highlighter-rouge">dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
+<p>You can open up <a href="../external/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code class="highlighter-rouge">ctrl-F</code>) for the phrase <code class="highlighter-rouge">dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
 
-<p><img src="../img/debug-tips-1.png" alt="debug-1" /></p>
+<p><img src="../images/debug-tips-1.png" alt="debug-1" /></p>
 
 <p>Unsurprisingly, running these code by itself produces no error message – this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code class="highlighter-rouge">meow</code> string somehow 🐱 replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code class="highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> to an interactive session, fix it until <code class="highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> works, and apply the knowledge learned to the original module line <code class="highlighter-rouge">mean: R(y &lt;- "meow")</code> in the DSC script.</p>
 

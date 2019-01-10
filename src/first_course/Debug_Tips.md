@@ -2,7 +2,7 @@
 
 ## Module executable and generated script
 
-As seen from previous tutorials, the [module executables in DSC](../tutorials/dsc_result.html) are in fact incomplete due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:
+As seen from previous tutorials, [module executables in DSC](../external/dsc_results.html) are in fact incomplete code chunks due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors:
 
 1. Inconsistency between DSC interface and module executables
 2. Error from module executables as provided
@@ -59,6 +59,7 @@ WARNING: Files in green in the error prompt above contains codes and error info 
 Scripts upstream of the error can be found in dsc_result.scripts.html.
 INFO: Elapsed time 4.896 seconds.
 ```
+
 The error message is a bit wordy but the part most relevant to debugging are highlighted in green color on your terminal. In this case multiple generated scripts have failed, but the cause is likely the same. You can try to resolve the problem starting from the last error message and see if the fix will help with other errors.
 
 You can also see that a file called `dsc_result.scripts.html` is generated. It bundles generated scripts from all module instances involved in the benchmark up to the point the errors occur.
@@ -201,11 +202,11 @@ It looks like `x`, instead of being a number, is a string `meow`. Therefore the 
 
 ### Debugging with upstream scripts
 
-Now we want to find out what has produced the problematic `x` variable. That is, we want to find the module instance that generated `'dsc_result/mean/normal_1_mean_1.rds'` from which `x` is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in [`dsc_result.scripts.html`](../tutorials/dsc_result.scripts_e2.html).
+Now we want to find out what has produced the problematic `x` variable. That is, we want to find the module instance that generated `'dsc_result/mean/normal_1_mean_1.rds'` from which `x` is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in [`dsc_result.scripts.html`](../external/dsc_result.scripts_e2.html).
 
-You can open up [this file](../tutorials/dsc_result.scripts_e2.html) in your web browser, and *search* (`ctrl-F`) for the phrase `dsc_result/mean/normal_1_mean_1.rds`. This leads you to the following: 
+You can open up [this file](../external/dsc_result.scripts_e2.html) in your web browser, and *search* (`ctrl-F`) for the phrase `dsc_result/mean/normal_1_mean_1.rds`. This leads you to the following: 
 
-![debug-1](../img/debug-tips-1.png)
+![debug-1](../images/debug-tips-1.png)
 
 Unsurprisingly, running these code by itself produces no error message -- this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the `meow` string somehow &#128049; replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous `.sos/abs_err_0_0_73c4c826.R` to an interactive session, fix it until `.sos/abs_err_0_0_73c4c826.R` works, and apply the knowledge learned to the original module line `mean: R(y <- "meow")` in the DSC script.
 

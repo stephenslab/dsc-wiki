@@ -1,6 +1,6 @@
 # DSC in 5 Minutes with Python
 
-This tutorials shows re-implementation of the [DSC Introduction](../tutorials/Intro_DSC.html) in Python. Source code to run this example can be found [here](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python).
+This tutorials shows re-implementation of the [DSC Introduction](../first_course/Intro_DSC) in Python. Source code to run this example can be found [here](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python).
 
 The DSC script mostly the same as the Quick Start example:
 

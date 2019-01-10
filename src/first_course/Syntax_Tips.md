@@ -1,6 +1,6 @@
 # Tips and Tricks
 
-Once you have completed the [Introduction to DSC](../tutorials/Intro_DSC.html), 
+Once you have completed the [Introduction to DSC](Intro_DSC), 
 you should be ready to write your own DSC.
 
 This file introduces you

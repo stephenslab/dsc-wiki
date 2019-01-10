@@ -8,7 +8,7 @@ DSC variables are module input and output. Since a module input is always output
 
 When working in pure R or Python environments users do not have to worry about how module outputs are stored, because all data objects will flow across modules without loss of information using serialized files. Specifically we use [`RDS`](http://www.inside-r.org/r-doc/base/saverds) for R, and `pickle` for Python. Under the hood one such file is generated per module instance to include all output variables.
 
-For mixed languages, currently for R and Python, our solution is to use an `rpy2` interface to convert between `RDS` and `pickle` data to communicate between modules. Caution that information exchanges is no longer loss-less (see [these codes](https://github.com/stephenslab/dsc/blob/master/src/dsc_io.py#L33) for how it works -- we will continue to improve these utility functions to support more type exchanges). In the future we may switch to `HDF5` to support more languages. 
+For mixed languages, currently for R and Python, our solution is to use an `rpy2` interface to convert between `RDS` and `pickle` data to communicate between modules. Caution that information exchanges is no longer loss-less (see [these codes](https://github.com/stephenslab/dsc/blob/ad84ac2254204e955d2ec575ef48e7b27436be76/src/dsc_io.py#L35) for how it works -- we will continue to improve these utility functions to support more type exchanges). In the future we may switch to `HDF5` to support more languages. 
 
 In sum, for R and Python scripts users do not need to worry about files when thinking about DSC variables, though bearing in mind the caveat that mixed language communication is not loss-less and only "shareable" types of objects should be used to communicated cross language. 
 

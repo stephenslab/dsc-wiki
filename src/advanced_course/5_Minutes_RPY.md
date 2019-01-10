@@ -1,6 +1,6 @@
 # DSC in 5 Minutes with R & Python mix
 
-This tutorials shows re-implementation of the [DSC Introduction](../tutorials/Intro_DSC.html) mixing R and Python implementations. Source code to run this example can be found [here](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python).
+This tutorials shows re-implementation of the [DSC Introduction](../first_course/Intro_DSC) mixing R and Python implementations. Source code to run this example can be found [here](https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python).
 
 If you are reading this page and are in need of R & Python communications, I suppose you might have experience interacting between R and Python, and appreciate the challenges. Data transfer between R and Python currently depends on `rpy2`. This has 2 implications: 1) information flow is no longer lossless because it is impossible to support the Python counter part for any arbitary R object (and vise versa) and 2) installation of `rpy2` and get it to work can be challenging. While I cannot provide support for `rpy2` installation, here is a [personal note](https://gist.github.com/gaow/39902e16603ffbe185ae38ff062fa266) on how I got it work on my system, possibly the hard way, but might be of interest to those who are in the same situation as I did. Additionally, 3) there is noticible performance overhead at the data transfer interface.
 

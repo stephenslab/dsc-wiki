@@ -1,6 +1,6 @@
 # DSC syntax: basics of benchmark execution
 
-This document is continuation of discussion in [DSC syntax: basics of modules](DSC_Configuration). We will use toy DSC examples (including breaking down [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc)) to introduce a special syntax block called `DSC` that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword `DSC` and is required for all DSC scripts. In this document we refer to its contents by `DSC::<key>` where `<key>` is the identifier on the left side of `:` in each line of the `DSC` block.
+This document is continuation of discussion in [DSC syntax: basics of modules](DSC_Configuration). We will use toy DSC examples (including breaking down [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/first_investigation.dsc)) to introduce a special syntax block called `DSC` that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword `DSC` and is required for all DSC scripts. In this document we refer to its contents by `DSC::<key>` where `<key>` is the identifier on the left side of `:` in each line of the `DSC` block.
 
 ## Benchmark logic operators
 

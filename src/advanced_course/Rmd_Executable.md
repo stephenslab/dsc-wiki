@@ -32,7 +32,7 @@ DSC:
 
 Take `simulate_*@intro_mash.Rmd` for example: it means the module executable comes from code chunks matching `simulate_*` pattern in file `intro_mash.Rmd`. The code chunk matching pattern follows from [UNIX wildcard](http://www.robelle.com/smugbook/wildcard.html) convention. When only the Rmarkdown filename (the part after `@`) is specified, all code chunks in the Rmarkdown file will be loaded.
 
-The extracted code can be found in DSC code browser [`mash_result.html`](mash_result.html). To run the benchmark:
+The extracted code can be found in DSC code browser [`mash_result.html`](../external/mash_result.html). To run the benchmark:
 
 ```bash
 cd ~/GIT/dsc/vignettes/mash
