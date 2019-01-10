@@ -14,11 +14,11 @@ DSC is implemented in [Python 3](http://python.org), building on the [SoS framew
 
 ## Getting started with DSC
 
-If you are new to DSC, we recommend taking a look at the [introductory DSC tutorial](tutorials/Intro_DSC.html). This tutorial  gives an overview of DSC's main features, and illustrates how DSC can be used to quickly implement a simple computational experiment.
+If you are new to DSC, we recommend taking a look at the [introductory DSC tutorial](first_course/Intro_DSC). This tutorial  gives an overview of DSC's main features, and illustrates how DSC can be used to quickly implement a simple computational experiment.
 
-If you would like to try DSC for yourself, follow the [installation instructions](installation.html) to download and set up DSC on your computer. Then return to the [introductory tutorial](tutorials/Intro_DSC.html) and try implementing the example on your computer.
+If you would like to try DSC for yourself, follow the [installation instructions](installation.html) to download and set up DSC on your computer. Then return to the [introductory tutorial](first_course/Intro_DSC) and try implementing the example on your computer.
 
-If you would like to use DSC for your project, start by reading through the [Introduction to DSC Syntax Part I](tutorials/Intro_Syntax_I.html) and [Part II](tutorials/Intro_Syntax_II.html). To learn more, we provide [additional tutorials on other DSC topics](tutorials.html), a [DSC reference manual](reference.html), and [extended examples](examples.html) illustrating how DSC can be used to implement a variety of computational experiments.
+If you would like to use DSC for your project, start by reading through the [Introduction to DSC Syntax Part I](first_course/Intro_Syntax_I) and [Part II](first_course/Intro_Syntax_I). To learn more, we provide [additional tutorials on other DSC topics](first_course/first_course), an [FAQ page](faq), a [DSC reference manual](reference/reference), and [some complete DSC examples](examples) illustrating how DSC can be used to implement a variety of computational experiments.
 
 If you have any questions or want to share some information with the developer / user community, please open a [github issue](https://github.com/stephenslab/dsc/issues).
 

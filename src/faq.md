@@ -4,63 +4,63 @@
 
 #### I'm done with the DSC introductory tutorials. What next?
 
-[This document](FAQ/Syntax_Tips.html) demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
-You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our [Reference Manual](reference.html).
+[This document](first_course/Syntax_Tips) demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
+You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our [Reference Manual](reference/reference).
 
 ####  My DSC run failed with an error. What should I do?
 
 Well, the bug is either ours or yours. DSC software is still under active development. If you catch one of our bug please [post an issue](https://github.com/stephenslab/dsc/issues) with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first.
 
-If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as [demonstrated on this page](FAQ/Debug_Tips.html).
+If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as [demonstrated on this page](first_course/Debug_Tips).
 
 #### The introductory tutorials are benchmarks implemented in R. Can I work with other languages?
 
 Current implementation of DSC works with R, Python and Shell, and provides implicit data handling for R and Python modules. 
-You can find in [here](FAQ/5_Minutes_Python.html) a Python example, and [here](FAQ/5_Minutes_RPY.html) preliminary support to mixing R and Python
+You can find in [here](advanced_course/5_Minutes_Python) a Python example, and [here](advanced_course/5_Minutes_RPY) preliminary support to mixing R and Python
 codes in benchmark.
 
-Additionally DSC provides experimental support for Rmd files to run R benchmarks, see [this tutorial](FAQ/Rmd_Executable.html) for details.
+Additionally DSC provides experimental support for Rmd files to run R benchmarks, see [this tutorial](advanced_course/Rmd_Executable) for details.
 
 #### My benchmark is more complicated than the 3-step paradigm ("simulate", "analyze" and "score"). Can I still use DSC?
 
-Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC's term, modules), as demonstrated in [this toy example](FAQ/Multiple_Pipelines.html).
+Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC's term, modules), as demonstrated in [this toy example](advanced_course/Multiple_Pipelines).
 
 #### Can I use DSC to prototype my methods at the "research stage" so that I do not have to migrate code to DSC late?
 
-Possibly yes, if you work with DSC in certain fashion, as demonstrated in this [prototyping tutorial](FAQ/Prototype_Tips.html).
+Possibly yes, if you work with DSC in certain fashion, as demonstrated in this [prototyping tutorial](first_course/Prototype_Tips).
 
 #### Can I load module developed for another DSC project into my current DSC project without copying the code?
 
-Yes, we have a preliminary `%include` feature to achieve it. Please find it in the [reference manual](reference/DSC_Configuration.html) for details.
+Yes, we have a preliminary `%include` feature to achieve it. Please find it in the [reference manual](reference/DSC_Configuration) for details.
 
 #### I wish DSC has feature *X* to make my benchmarking easier. Can you do that for me?
 
-Before you [file a feature request](https://github.com/stephenslab/dsc/issues) please take a look at our [Unsupported Features](FAQ/Unsupported_Features.html) page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.
+Before you [file a feature request](https://github.com/stephenslab/dsc/issues) please take a look at our [Unsupported Features](reference/Unsupported_Features) page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.
 
 ## Running DSC benchmarks
 
 #### How do I run DSC on a remote computer?
 
-[Here is a tutorial](FAQ/Remote_Computations.html) for running DSC on a remote computer such as HPC cluster.
+[Here is a tutorial](advanced_course/Remote_Computations) for running DSC on a remote computer such as HPC cluster.
 
 #### I want to share my benchmark for my manuscript that allows others to reproduce with little hassle. What's the best way to do it?
 
-We suggest using Docker. [Here](FAQ/DSC_Docker.html) is a tutorial on dockerizing your benchmark.
+We suggest using Docker. [Here](advanced_course/DSC_Docker) is a tutorial on dockerizing your benchmark.
 
 #### I notice that simple benchmarks are a lot slower to run in DSC than in, say, a pure R implementation. What is going on?
 
-In short, there are data communication and workflow overhead. Please read a discussion on performance on [this page](FAQ/DSC_Data.html).
+In short, there are data communication and workflow overhead. Please read a discussion on performance on [this page](advanced_course/DSC_Data).
 
 ## DSC under the hood
 
 #### I'm curious how DSC handles data implicitly. How does it work?
 
-[This page](FAQ/DSC_Data.html) has a discussion on how  DSC handles data communication and storage for R and Python languages.
+[This page](advanced_course/DSC_Data) has a discussion on how  DSC handles data communication and storage for R and Python languages.
 
 #### Why is DSC written in Python?
 
 DSC relies heavily on [Script of Scripts (SoS)](https://github.com/vatlab/SOS) project, a Python-based workflow system. 
-Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages [listed here](FAQ/Implementation_Details.html).
+Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages [listed here](reference/Implementation_Details).
 
 ## Installation troubleshoot
 
@@ -154,4 +154,4 @@ and restart `R` to load the setting.
 
 #### I would like to help improve DSC documentation. Where should I start?
 
-The wiki is mostly written in Jupyter's `.ipynb` format for interactive documents that executes bash, R or Python codes. Markdown files (with suffix `.Rmd`) are also allowed. We welcome your contributions -- for starters please follow the [`README`](https://github.com/stephenslab/dsc-wiki/blob/master/README.md) of the wiki source repo to set up the software environment for editing.
+The wiki is mostly written in Markdown format with suffix `.md`. Jupyter's `.ipynb` format for interactive documents are also when necessary. We welcome your contributions -- for starters please follow the [`README`](https://github.com/stephenslab/dsc-wiki/blob/master/README.md) of the wiki source repo to set up the software environment for editing.

@@ -27,9 +27,9 @@
   "headline":
     "Installation",
   "datePublished":
-    "2019-01-09T18:47:42-06:00",
+    "2019-01-09T20:27:12-06:00",
   "dateModified":
-    "2019-01-09T18:47:42-06:00",
+    "2019-01-09T20:27:12-06:00",
   "description":
     "DSC Installation Guide",
   "author": {
@@ -952,9 +952,9 @@ initFunction(initHiddenCells);
 
 <p>Follow these steps to get started using DSC.</p>
 
-<p>If you encounter a problem during the installation procedure, please see the <a href="FAQ.html#Installation-troubleshoot">“Troubleshooting installation”</a> section in the FAQ for a possible solution.</p>
+<p>If you encounter a problem during the installation procedure, please see the <a href="faq#installation-troubleshoot">“Troubleshooting installation”</a> section in the FAQ for a possible solution.</p>
 
-<p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a>, you can follow the <a href="FAQ/DSC_Docker.html">Docker instructions</a> instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.</p>
+<p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a>, you can follow the <a href="advanced_course/DSC_Docker">Docker instructions</a> instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.</p>
 
 <p><em>Note to developers:</em> Please refer to the installation instructions in the <code class="highlighter-rouge">README</code> of the <a href="https://github.com/stephenslab/dsc">dsc repository</a>.</p>
 
@@ -996,7 +996,7 @@ initFunction(initHiddenCells);
 
 <p>To use DSC, you must have Python version 3.6 or greater. There are several ways you can install Python &gt;= 3.6.</p>
 
-<p><strong>Our recommendation:</strong> Install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you are starting from scratch, we recommend <a href="https://conda.io/miniconda.html">Miniconda</a>. See <a href="#Troubleshooting">here</a> (<em>TO DO: fix this link</em>) for additional advice on installing and configuring Miniconda.</p>
+<p><strong>Our recommendation:</strong> Install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you are starting from scratch, we recommend <a href="https://conda.io/miniconda.html">Miniconda</a>. See <a href="faq#installation-troubleshoot">here</a> for additional advice on installing and configuring Miniconda.</p>
 
 <p>** Other options:** DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code class="highlighter-rouge">conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
 
@@ -1018,7 +1018,7 @@ pip3 <span class="nt">--version</span>
 
 <p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code class="highlighter-rouge">python</code>, and your pip (python 3.6+) executable is <code class="highlighter-rouge">pip</code>. However, you might need to replace <code class="highlighter-rouge">python</code> with <code class="highlighter-rouge">python3</code> and <code class="highlighter-rouge">pip</code> with <code class="highlighter-rouge">pip3</code>.</em></p>
 
-<p>If you already have an old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see <a href="#Troubleshooting">here</a> (<em>TO DO: fix this link</em>) for advice on how to proceed.</p>
+<p>If you already have an old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see <a href="faq#installation-troubleshoot">here</a> for advice on how to proceed.</p>
 
 <h2 id="3-install-or-upgrade-dsc">3. Install (or upgrade) DSC</h2>
 
@@ -1148,13 +1148,13 @@ pip show dsc <span class="nt">--files</span> | <span class="nb">grep </span>dsc-
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">system</span><span class="p">(</span><span class="s2">"dsc-query --version"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>If this outputs a version number, then you are ready to use the <code class="highlighter-rouge">dscrutils</code> package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the <a href="FAQ.html#Installation-troubleshoot">Troubleshooting</a> section of the FAQ page for instructions on how to do this.</p>
+<p>If this outputs a version number, then you are ready to use the <code class="highlighter-rouge">dscrutils</code> package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the <a href="faq#installation-troubleshoot">Troubleshooting</a> section of the FAQ page for instructions on how to do this.</p>
 
 <h2 id="10-start-your-first-dsc-project">10. Start your first DSC project</h2>
 
 <p><em>If you have reached this point, you have everything you need to start working with DSC.</em></p>
 
-<p>Start from <a href="tutorials/Intro_DSC.html">here</a> for a first course on DSC. See <a href="tutorials.html">here</a> for more introductory tutorials.</p>
+<p>Start from <a href="first_course/Intro_Syntax_I">here</a> for a first course on DSC. See <a href="first_course/first_course">here</a> for more introductory tutorials.</p>
 
               <nav class="c-page__nav">
   

@@ -27,9 +27,9 @@
   "headline":
     "FAQ",
   "datePublished":
-    "2019-01-09T18:47:42-06:00",
+    "2019-01-09T20:27:12-06:00",
   "dateModified":
-    "2019-01-09T18:47:42-06:00",
+    "2019-01-09T20:27:12-06:00",
   "description":
     "FAQ",
   "author": {
@@ -938,63 +938,63 @@ initFunction(initHiddenCells);
 
 <h4 id="im-done-with-the-dsc-introductory-tutorials-what-next">I’m done with the DSC introductory tutorials. What next?</h4>
 
-<p><a href="FAQ/Syntax_Tips.html">This document</a> demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
-You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our <a href="reference.html">Reference Manual</a>.</p>
+<p><a href="first_course/Syntax_Tips">This document</a> demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
+You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our <a href="reference/reference">Reference Manual</a>.</p>
 
 <h4 id="my-dsc-run-failed-with-an-error-what-should-i-do">My DSC run failed with an error. What should I do?</h4>
 
 <p>Well, the bug is either ours or yours. DSC software is still under active development. If you catch one of our bug please <a href="https://github.com/stephenslab/dsc/issues">post an issue</a> with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first.</p>
 
-<p>If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as <a href="FAQ/Debug_Tips.html">demonstrated on this page</a>.</p>
+<p>If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as <a href="first_course/Debug_Tips">demonstrated on this page</a>.</p>
 
 <h4 id="the-introductory-tutorials-are-benchmarks-implemented-in-r-can-i-work-with-other-languages">The introductory tutorials are benchmarks implemented in R. Can I work with other languages?</h4>
 
 <p>Current implementation of DSC works with R, Python and Shell, and provides implicit data handling for R and Python modules. 
-You can find in <a href="FAQ/5_Minutes_Python.html">here</a> a Python example, and <a href="FAQ/5_Minutes_RPY.html">here</a> preliminary support to mixing R and Python
+You can find in <a href="advanced_course/5_Minutes_Python">here</a> a Python example, and <a href="advanced_course/5_Minutes_RPY">here</a> preliminary support to mixing R and Python
 codes in benchmark.</p>
 
-<p>Additionally DSC provides experimental support for Rmd files to run R benchmarks, see <a href="FAQ/Rmd_Executable.html">this tutorial</a> for details.</p>
+<p>Additionally DSC provides experimental support for Rmd files to run R benchmarks, see <a href="advanced_course/Rmd_Executable">this tutorial</a> for details.</p>
 
 <h4 id="my-benchmark-is-more-complicated-than-the-3-step-paradigm-simulate-analyze-and-score-can-i-still-use-dsc">My benchmark is more complicated than the 3-step paradigm (“simulate”, “analyze” and “score”). Can I still use DSC?</h4>
 
-<p>Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC’s term, modules), as demonstrated in <a href="FAQ/Multiple_Pipelines.html">this toy example</a>.</p>
+<p>Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC’s term, modules), as demonstrated in <a href="advanced_course/Multiple_Pipelines">this toy example</a>.</p>
 
 <h4 id="can-i-use-dsc-to-prototype-my-methods-at-the-research-stage-so-that-i-do-not-have-to-migrate-code-to-dsc-late">Can I use DSC to prototype my methods at the “research stage” so that I do not have to migrate code to DSC late?</h4>
 
-<p>Possibly yes, if you work with DSC in certain fashion, as demonstrated in this <a href="FAQ/Prototype_Tips.html">prototyping tutorial</a>.</p>
+<p>Possibly yes, if you work with DSC in certain fashion, as demonstrated in this <a href="first_course/Prototype_Tips">prototyping tutorial</a>.</p>
 
 <h4 id="can-i-load-module-developed-for-another-dsc-project-into-my-current-dsc-project-without-copying-the-code">Can I load module developed for another DSC project into my current DSC project without copying the code?</h4>
 
-<p>Yes, we have a preliminary <code class="highlighter-rouge">%include</code> feature to achieve it. Please find it in the <a href="reference/DSC_Configuration.html">reference manual</a> for details.</p>
+<p>Yes, we have a preliminary <code class="highlighter-rouge">%include</code> feature to achieve it. Please find it in the <a href="reference/DSC_Configuration">reference manual</a> for details.</p>
 
 <h4 id="i-wish-dsc-has-feature-x-to-make-my-benchmarking-easier-can-you-do-that-for-me">I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?</h4>
 
-<p>Before you <a href="https://github.com/stephenslab/dsc/issues">file a feature request</a> please take a look at our <a href="FAQ/Unsupported_Features.html">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
+<p>Before you <a href="https://github.com/stephenslab/dsc/issues">file a feature request</a> please take a look at our <a href="reference/Unsupported_Features">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
 
 <h2 id="running-dsc-benchmarks">Running DSC benchmarks</h2>
 
 <h4 id="how-do-i-run-dsc-on-a-remote-computer">How do I run DSC on a remote computer?</h4>
 
-<p><a href="FAQ/Remote_Computations.html">Here is a tutorial</a> for running DSC on a remote computer such as HPC cluster.</p>
+<p><a href="advanced_course/Remote_Computations">Here is a tutorial</a> for running DSC on a remote computer such as HPC cluster.</p>
 
 <h4 id="i-want-to-share-my-benchmark-for-my-manuscript-that-allows-others-to-reproduce-with-little-hassle-whats-the-best-way-to-do-it">I want to share my benchmark for my manuscript that allows others to reproduce with little hassle. What’s the best way to do it?</h4>
 
-<p>We suggest using Docker. <a href="FAQ/DSC_Docker.html">Here</a> is a tutorial on dockerizing your benchmark.</p>
+<p>We suggest using Docker. <a href="advanced_course/DSC_Docker">Here</a> is a tutorial on dockerizing your benchmark.</p>
 
 <h4 id="i-notice-that-simple-benchmarks-are-a-lot-slower-to-run-in-dsc-than-in-say-a-pure-r-implementation-what-is-going-on">I notice that simple benchmarks are a lot slower to run in DSC than in, say, a pure R implementation. What is going on?</h4>
 
-<p>In short, there are data communication and workflow overhead. Please read a discussion on performance on <a href="FAQ/DSC_Data.html">this page</a>.</p>
+<p>In short, there are data communication and workflow overhead. Please read a discussion on performance on <a href="advanced_course/DSC_Data">this page</a>.</p>
 
 <h2 id="dsc-under-the-hood">DSC under the hood</h2>
 
 <h4 id="im-curious-how-dsc-handles-data-implicitly-how-does-it-work">I’m curious how DSC handles data implicitly. How does it work?</h4>
 
-<p><a href="FAQ/DSC_Data.html">This page</a> has a discussion on how  DSC handles data communication and storage for R and Python languages.</p>
+<p><a href="advanced_course/DSC_Data">This page</a> has a discussion on how  DSC handles data communication and storage for R and Python languages.</p>
 
 <h4 id="why-is-dsc-written-in-python">Why is DSC written in Python?</h4>
 
 <p>DSC relies heavily on <a href="https://github.com/vatlab/SOS">Script of Scripts (SoS)</a> project, a Python-based workflow system. 
-Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages <a href="FAQ/Implementation_Details.html">listed here</a>.</p>
+Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages <a href="reference/Implementation_Details">listed here</a>.</p>
 
 <h2 id="installation-troubleshoot">Installation troubleshoot</h2>
 
@@ -1079,7 +1079,7 @@ PATH=/home/osboxes/miniconda3/bin:${PATH}
 
 <h4 id="i-would-like-to-help-improve-dsc-documentation-where-should-i-start">I would like to help improve DSC documentation. Where should I start?</h4>
 
-<p>The wiki is mostly written in Jupyter’s <code class="highlighter-rouge">.ipynb</code> format for interactive documents that executes bash, R or Python codes. Markdown files (with suffix <code class="highlighter-rouge">.Rmd</code>) are also allowed. We welcome your contributions – for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code class="highlighter-rouge">README</code></a> of the wiki source repo to set up the software environment for editing.</p>
+<p>The wiki is mostly written in Markdown format with suffix <code class="highlighter-rouge">.md</code>. Jupyter’s <code class="highlighter-rouge">.ipynb</code> format for interactive documents are also when necessary. We welcome your contributions – for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code class="highlighter-rouge">README</code></a> of the wiki source repo to set up the software environment for editing.</p>
 
               <nav class="c-page__nav">
   

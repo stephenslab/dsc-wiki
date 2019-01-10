@@ -2,9 +2,9 @@
 
 Follow these steps to get started using DSC. 
 
-If you encounter a problem during the installation procedure, please see the ["Troubleshooting installation"](FAQ.html#Installation-troubleshoot) section in the FAQ for a possible solution.
+If you encounter a problem during the installation procedure, please see the ["Troubleshooting installation"](faq#installation-troubleshoot) section in the FAQ for a possible solution.
 
-*Note:* If you have [Docker](https://www.docker.com), you can follow the [Docker instructions](FAQ/DSC_Docker.html) instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.
+*Note:* If you have [Docker](https://www.docker.com), you can follow the [Docker instructions](advanced_course/DSC_Docker) instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.
 
 *Note to developers:* Please refer to the installation instructions in the `README` of the [dsc repository](https://github.com/stephenslab/dsc).
 
@@ -34,7 +34,7 @@ A complete installation of DSC not only involves installing these components, bu
 
 To use DSC, you must have Python version 3.6 or greater. There are several ways you can install Python >= 3.6.
 
-**Our recommendation:** Install Python via a [conda](https://conda.io/docs)-based package manager such as [Miniconda](https://conda.io/miniconda.html) or [Anaconda](https://anaconda.org/). If you are starting from scratch, we recommend [Miniconda](https://conda.io/miniconda.html). See [here](#Troubleshooting) (*TO DO: fix this link*) for additional advice on installing and configuring Miniconda.
+**Our recommendation:** Install Python via a [conda](https://conda.io/docs)-based package manager such as [Miniconda](https://conda.io/miniconda.html) or [Anaconda](https://anaconda.org/). If you are starting from scratch, we recommend [Miniconda](https://conda.io/miniconda.html). See [here](faq#installation-troubleshoot) for additional advice on installing and configuring Miniconda.
 
 ** Other options:** DSC will also work with standalone distributions of Python (e.g., downloaded from [Python.org](https://www.python.org)), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend `conda` because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.
 
@@ -58,7 +58,7 @@ If the reported Python version is or greater than 3.6.0 and `pip` is reported to
 
 **Important:** *In the instructions below, we assume your Python 3.6+ executable is `python`, and your pip (python 3.6+) executable is `pip`. However, you might need to replace `python` with `python3` and `pip` with `pip3`.* 
 
-If you already have an old version of Miniconda or Anaconda installed, but you do not have Python >= 3.6, see [here](#Troubleshooting) (*TO DO: fix this link*) for advice on how to proceed.
+If you already have an old version of Miniconda or Anaconda installed, but you do not have Python >= 3.6, see [here](faq#installation-troubleshoot) for advice on how to proceed.
 
 ## 3. Install (or upgrade) DSC
 
@@ -197,10 +197,10 @@ Start up R or RStudio, and run
 system("dsc-query --version")
 ```
 
-If this outputs a version number, then you are ready to use the `dscrutils` package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the [Troubleshooting](FAQ.html#Installation-troubleshoot) section of the FAQ page for instructions on how to do this.
+If this outputs a version number, then you are ready to use the `dscrutils` package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the [Troubleshooting](faq#installation-troubleshoot) section of the FAQ page for instructions on how to do this.
 
 ## 10. Start your first DSC project
 
 *If you have reached this point, you have everything you need to start working with DSC.*
 
-Start from [here](tutorials/Intro_DSC.html) for a first course on DSC. See [here](tutorials.html) for more introductory tutorials.
+Start from [here](first_course/Intro_Syntax_I) for a first course on DSC. See [here](first_course/first_course) for more introductory tutorials.
