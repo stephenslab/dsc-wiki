@@ -27,9 +27,9 @@
   "headline":
     "Running DSC",
   "datePublished":
-    "2019-01-09T20:27:12-06:00",
+    "2019-01-09T22:26:01-06:00",
   "dateModified":
-    "2019-01-09T20:27:12-06:00",
+    "2019-01-09T22:26:01-06:00",
   "description":
     "DSC syntax: basics of benchmark execution",
   "author": {
@@ -939,7 +939,7 @@ initFunction(initHiddenCells);
             <div class="c-textbook__content">
               <h1 id="dsc-syntax-basics-of-benchmark-execution">DSC syntax: basics of benchmark execution</h1>
 
-<p>This document is continuation of discussion in <a href="DSC_Configuration.html">DSC syntax: basics of modules</a>. We will use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) to introduce a special syntax block called <code class="highlighter-rouge">DSC</code> that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword <code class="highlighter-rouge">DSC</code> and is required for all DSC scripts. In this document we refer to its contents by <code class="highlighter-rouge">DSC::&lt;key&gt;</code> where <code class="highlighter-rouge">&lt;key&gt;</code> is the identifier on the left side of <code class="highlighter-rouge">:</code> in each line of the <code class="highlighter-rouge">DSC</code> block.</p>
+<p>This document is continuation of discussion in <a href="DSC_Configuration">DSC syntax: basics of modules</a>. We will use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a>) to introduce a special syntax block called <code class="highlighter-rouge">DSC</code> that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword <code class="highlighter-rouge">DSC</code> and is required for all DSC scripts. In this document we refer to its contents by <code class="highlighter-rouge">DSC::&lt;key&gt;</code> where <code class="highlighter-rouge">&lt;key&gt;</code> is the identifier on the left side of <code class="highlighter-rouge">:</code> in each line of the <code class="highlighter-rouge">DSC</code> block.</p>
 
 <h2 id="benchmark-logic-operators">Benchmark logic operators</h2>
 
@@ -1025,7 +1025,7 @@ initFunction(initHiddenCells);
 </code></pre></div></div>
 
 <h2 id="command-interface-to-dsc-benchmark">Command interface to DSC benchmark</h2>
-<p>By default, DSC will execute all pipelines defined in <code class="highlighter-rouge">DSC::run</code>. But one can override pipelines from <a href="Command_Options.html">command line</a>. For example to execute the complete <code class="highlighter-rouge">Example 1</code></p>
+<p>By default, DSC will execute all pipelines defined in <code class="highlighter-rouge">DSC::run</code>. But one can override pipelines from <a href="Command_Options">command line</a>. For example to execute the complete <code class="highlighter-rouge">Example 1</code></p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> <span class="s2">"simulate * estimate * score"</span>
 </code></pre></div></div>
@@ -1054,7 +1054,7 @@ dsc file.dsc <span class="nt">--target</span> simulate
   <li><code class="highlighter-rouge">python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
   <li><code class="highlighter-rouge">work_dir</code>: work directory where benchmarking will take place.</li>
   <li><code class="highlighter-rouge">output</code>: folder name to store benchmark output files.</li>
-  <li><code class="highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="DSC_Configuration.html#Variable-wildcard-131">variable wildcard</a> <code class="highlighter-rouge">$()</code>.</li>
+  <li><code class="highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="Unsupported_Features#wildcard-operators">variable wildcard</a> <code class="highlighter-rouge">$()</code>.</li>
   <li><code class="highlighter-rouge">replicate</code>: number of replicate to run the benchmark (default is 1).</li>
 </ul>
 
@@ -1092,12 +1092,12 @@ dsc file.dsc <span class="nt">--target</span> simulate
 
 <ul>
   <li><code class="highlighter-rouge">lib_path</code> when specified under <code class="highlighter-rouge">@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code class="highlighter-rouge">R</code> or <code class="highlighter-rouge">Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
-  <li><code class="highlighter-rouge">R_libs</code> when specified under <code class="highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use DSC::R_libs instead if this is not the desired behavior</strong>.</li>
+  <li><code class="highlighter-rouge">R_libs</code> when specified under <code class="highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>.</li>
 </ul>
 
 <h2 id="run-dsc-on-hpc-cluster-or-other-remote-computaters">Run DSC on HPC cluster or other remote computaters</h2>
 
-<p>See <a href="../FAQ/Remote_Computations.html">this documentation</a> for a discussion.</p>
+<p>See <a href="../advanced_course/Remote_Computations">this documentation</a> for a discussion.</p>
 
               <nav class="c-page__nav">
   

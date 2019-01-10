@@ -27,9 +27,9 @@
   "headline":
     "DSC configuration syntax",
   "datePublished":
-    "2019-01-09T20:27:12-06:00",
+    "2019-01-09T22:26:01-06:00",
   "dateModified":
-    "2019-01-09T20:27:12-06:00",
+    "2019-01-09T22:26:01-06:00",
   "description":
     "DSC syntax: basics of modules",
   "author": {
@@ -962,11 +962,11 @@ initFunction(initHiddenCells);
             <div class="c-textbook__content">
               <h1 id="dsc-syntax-basics-of-modules">DSC syntax: basics of modules</h1>
 
-<p>In this document we mainly use partial DSC examples (along the lines of <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a> but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find <a href="../tutorials.html">DSC introduction tutorials</a> a useful first-read to help better understand DSC syntax.</p>
+<p>In this document we mainly use partial DSC examples (along the lines of <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc">this toy</a> but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find <a href="../first_course/first_course">DSC introduction tutorials</a> a useful first-read to help better understand DSC syntax.</p>
 
 <p>We endeavor to maintain DSC syntax simple and intuitive. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools, using DSC in exploratory phase of research projects, and working with remote computers or HPC clusters for large scale computation. (<strong>FIXME: create these tutorials and add links to them</strong>)</p>
 
-<p>A DSC file consists of one or more syntax blocks to configure <em>modules</em>, and one block to configure <em>pipelines</em> and <em>benchmark</em>. Here we focus on discussing modules. DSC pipelines and benchmark execution will be discussed in <a href="DSC_Execution.html">a separate document</a>.</p>
+<p>A DSC file consists of one or more syntax blocks to configure <em>modules</em>, and one block to configure <em>pipelines</em> and <em>benchmark</em>. Here we focus on discussing modules. DSC pipelines and benchmark execution will be discussed in <a href="DSC_Execution">a separate document</a>.</p>
 
 <h2 id="modules">Modules</h2>
 
@@ -1011,7 +1011,7 @@ initFunction(initHiddenCells);
 
 <p>will load <code class="highlighter-rouge">utils.R</code> followed by <code class="highlighter-rouge">main.R</code>.</p>
 
-<p><a href="#Tuple-operator-132">Tuple operator</a> <code class="highlighter-rouge">()</code> can be used in conjuction with <code class="highlighter-rouge">+</code> to expand the logic of concatenation, as a shorthand to define multiple compound executables. For example:</p>
+<p><a href="#tuple-operator">Tuple operator</a> <code class="highlighter-rouge">()</code> can be used in conjuction with <code class="highlighter-rouge">+</code> to expand the logic of concatenation, as a shorthand to define multiple compound executables. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">method1, method2</span><span class="pi">:</span> <span class="s">(utils1.R, utils2.R) + main.R</span>
 </code></pre></div></div>
@@ -1020,7 +1020,7 @@ initFunction(initHiddenCells);
 
 <h4 id="inline-executables">Inline executables</h4>
 
-<p>Instead of having to use scripts to specify module executables, <a href="#Language-interpreters-133">language interpreter</a> operators can be used to define codes for modules inline. For example:</p>
+<p>Instead of having to use scripts to specify module executables, <a href="#language-interpreters">language interpreter</a> operators can be used to define codes for modules inline. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x = rnorm(n))</span>
     <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
@@ -1102,9 +1102,9 @@ initFunction(initHiddenCells);
     <span class="na">p</span><span class="pi">:</span> <span class="s">0.1, 0.2</span>
 </code></pre></div></div>
 
-<p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <a href="#Decorator-FILTER-123"><code class="highlighter-rouge">@FILTER</code></a> decorator. In the example above each module will take 4 sets of parameters : <code class="highlighter-rouge">(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
+<p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <a href="#decorator-filter"><code class="highlighter-rouge">@FILTER</code></a> decorator. In the example above each module will take 4 sets of parameters : <code class="highlighter-rouge">(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
 
-<p>To get “paired” parameters instead, the <a href="#Tuple-operator-132">Tuple operator</a> can be used on both sides of the property. For example,</p>
+<p>To get “paired” parameters instead, the <a href="#tuple-operator">Tuple operator</a> can be used on both sides of the property. For example,</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">(n, p)</span><span class="pi">:</span> <span class="s">(10, 0.1), (20, 0.2)</span>
 </code></pre></div></div>
@@ -1126,7 +1126,7 @@ initFunction(initHiddenCells);
 
 <p>Language specific syntax can be used to extract specific data from objects for use as module output. For example <code class="highlighter-rouge">$beta: data$meta_info$beta</code> extracts <code class="highlighter-rouge">beta</code> from an <code class="highlighter-rouge">R</code> nested list and save it directly as module output <code class="highlighter-rouge">beta</code>.</p>
 
-<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. In the above example, <code class="highlighter-rouge">x</code> is not a module parameter. For command-line executables module output will have to be files (see <a href="#File-generator"><code class="highlighter-rouge">file()</code> operator</a> below).</p>
+<p>For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. In the above example, <code class="highlighter-rouge">x</code> is not a module parameter. For command-line executables module output will have to be files (see <a href="#file-generator"><code class="highlighter-rouge">file()</code> operator</a> below).</p>
 
 <h3 id="module-input">Module input</h3>
 
@@ -1263,7 +1263,7 @@ initFunction(initHiddenCells);
 
 <h3 id="decorator-filter">Decorator FILTER</h3>
 
-<p><code class="highlighter-rouge">@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code class="highlighter-rouge">@FILTER</code> syntax is the same as the <code class="highlighter-rouge">condition</code> statement in <code class="highlighter-rouge">dsc-query</code> command; both <a href="DSC_Filtering.html">documented elsewhere</a>. Here we elaborate on some examples:</p>
+<p><code class="highlighter-rouge">@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code class="highlighter-rouge">@FILTER</code> syntax is the same as the <code class="highlighter-rouge">condition</code> statement in <code class="highlighter-rouge">dsc-query</code> command; both <a href="DSC_Filtering">documented elsewhere</a>. Here we elaborate on some examples:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">normal.R, t.R</span>
     <span class="s">n</span><span class="pi">:</span> <span class="s">100, 200, 300, 400, 500</span>
@@ -1290,7 +1290,7 @@ initFunction(initHiddenCells);
 
 <h3 id="decorator-conf">Decorator CONF</h3>
 
-<p><code class="highlighter-rouge">@CONF</code> provides interface to override certain properties in benchmark configuration section (<code class="highlighter-rouge">DSC</code> section), including <code class="highlighter-rouge">work_dir</code>, <code class="highlighter-rouge">exec_path</code>, <code class="highlighter-rouge">lib_path</code>. See <a href="DSC_Execution.html">this document</a> for more details.</p>
+<p><code class="highlighter-rouge">@CONF</code> provides interface to override certain properties in benchmark configuration section (<code class="highlighter-rouge">DSC</code> section), including <code class="highlighter-rouge">work_dir</code>, <code class="highlighter-rouge">exec_path</code>, <code class="highlighter-rouge">lib_path</code>. See <a href="DSC_Execution">this document</a> for more details.</p>
 
 <h2 id="operators">Operators</h2>
 
@@ -1303,13 +1303,13 @@ initFunction(initHiddenCells);
 
 <p>With <code class="highlighter-rouge">()</code>, <code class="highlighter-rouge">(1,2,3)</code> will be translated as a group to <code class="highlighter-rouge">c(1, 2, 3)</code> in <code class="highlighter-rouge">R</code>, <code class="highlighter-rouge">(1,2,3)</code> in <code class="highlighter-rouge">Python</code>, or space separated argument sequence <code class="highlighter-rouge">1 2 3</code> for command-line tools. Values will be assigned in groups defined by <code class="highlighter-rouge">()</code> instead of separately.</p>
 
-<p>When used to define <a href="#Compound-module-executables">module executables</a>, in conjunction with concatenating operator <code class="highlighter-rouge">+</code> it helps matching compound executables to each module in the same block.</p>
+<p>When used to define <a href="#module-property">module executables</a>, in conjunction with concatenating operator <code class="highlighter-rouge">+</code> it helps matching compound executables to each module in the same block.</p>
 
 <h3 id="language-interpreters">Language interpreters</h3>
 
 <p>Currently <code class="highlighter-rouge">R()/R{}</code>, <code class="highlighter-rouge">Python()/Python{}</code>, and <code class="highlighter-rouge">Shell()/Shell{}</code> are supported to specify module parameters. Codes inside these operators will be interpreted while DSC parses the configuration file; output will be evaluated as parameter values. For example <code class="highlighter-rouge">n: R((1:5)*10)</code> results in <code class="highlighter-rouge">n: (10, 20, 30, 40, 50)</code> and <code class="highlighter-rouge">n: R{(1:5)*10}</code> results in <code class="highlighter-rouge">n: 10, 20, 30, 40, 50</code>. This provides handy tool for generating input parameters with R, Python or Shell languages.</p>
 
-<p><code class="highlighter-rouge">R()</code> and <code class="highlighter-rouge">Python()</code> can also be used to <a href="#Inline-executables">create inline module executables</a>. They will be interpreted at runtime as part of the module executable scripts.</p>
+<p><code class="highlighter-rouge">R()</code> and <code class="highlighter-rouge">Python()</code> can also be used to <a href="#module-property">create inline module executables</a>. They will be interpreted at runtime as part of the module executable scripts.</p>
 
 <h3 id="raw-string-indicator">Raw string indicator</h3>
 
