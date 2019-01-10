@@ -93,7 +93,7 @@ defaults:
     values:
       layout: "default"
       toc: true
-      toc_label: "  On this page"
+      toc_label: "  Contents"
       toc_icon: "list-ul"
 
 favicon_path: "images/favicon.ico"
