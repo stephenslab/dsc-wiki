@@ -11,7 +11,7 @@ dsc -h
 ```
 usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str]
            [-s option] [--touch] [--clean option] [-c N] [--ignore-errors]
-           [-v {0,1,2,3,4}] [-p] [--host file] [--to-host dir [dir ...]]
+           [-v {0,1,2,3,4}] [-d] [--host file] [--to-host dir [dir ...]]
            [--version] [-h]
            DSC script
 
@@ -76,7 +76,7 @@ Maintenance:
 
 Runtime behavior:
   -c N                  Number of maximum cpu threads for local runs, or
-                        concurrent jobs for remote execution. (default: 4)
+                        concurrent jobs for remote execution. (default: 20)
   --ignore-errors       Bypass all errors from computational programs. This
                         will keep the benchmark running but all results will
                         be set to missing values and the problematic script
@@ -84,9 +84,8 @@ Runtime behavior:
   -v {0,1,2,3,4}, --verbosity {0,1,2,3,4}
                         Output error (0), warning (1), info (2), debug (3) and
                         trace (4) information. (default: 2)
-  -p                    Print stdout and stderr to screen. Caution that
-                        running DSC with and without "-p" will trigger rerun
-                        unless "--touch" option is also used. (default: False)
+  -d                    Output benchmark execution graph animation in HTML
+                        format. (default: False)
 
 Remote execution:
   --host file           Configuration file for remote computer. (default:
@@ -98,7 +97,6 @@ Remote execution:
 Other options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
-
 ```
 
 Here we elaborate on some of options we did not have space to elaborate on the interface:

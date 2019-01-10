@@ -1,10 +1,10 @@
 # Unsupported features
 
-As a continuation of the [DSC syntax documentation](../reference/DSC_Configuration.html) this page documents existing DSC features that are possibly useful yet adds complexity to DSC syntax and burden of support. We believe that DSC is well versed to handle most user cases without these features. We may formally discuss and support some of these features in the future when we deem them truly helpful to users.
+As a continuation of the [DSC syntax documentation](DSC_Configuration) this page documents existing DSC features that are possibly useful yet adds complexity to DSC syntax and burden of support. We believe that DSC is well versed to handle most user cases without these features. We may formally discuss and support some of these features in the future when we deem them truly helpful to users.
 
 ## Rmarkdown based modules
 
-See [this tutorial](Rmd_Executable.html) for detailed introduction with an example.
+See [this tutorial](../advanced_course/Rmd_Executable) for detailed introduction with an example.
 
 ## Wildcard operators
 

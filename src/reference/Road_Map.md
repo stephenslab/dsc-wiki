@@ -55,7 +55,7 @@ Add these related discussions to documentation
 - [] Add a tutorial for benchmark output managing, eg, remove / rerun specified steps and moving project from one computer to another
    - Explain how DSC signature works
 - [] Add a documentation page on remote execution, and a tutorial for it (`ash` example)
-- [x] Add a doucmentation for `dscrutils`, and a tutorial on data extraction using [`one_sample_location` example](https://stephenslab.github.io/dsc-wiki/tutorials/Explore_Output.html); and update [`ash` example](https://stephenslab.github.io/dsc-wiki/tutorials/Intermediate_R_1.html) to include result exploration
+- [x] Add a doucmentation for `dscrutils`, and a tutorial on data extraction using `one_sample_location` example; and update `ash` example to include result exploration
 
 ## Engineering
 

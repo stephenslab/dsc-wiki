@@ -1,6 +1,6 @@
 # Terminology
 
-This document defines a list of DSC jargons. We will use these terms throughout the DSC documentation. Here we focus on fundamental concepts. Other jargons, particularly a whole class of various *operators*, will be defined and explained at the same time in [DSC modules](DSC_Configuration.html) and [DSC benchmark](DSC_Execution.html) documentations.
+This document defines a list of DSC jargons. We will use these terms throughout the DSC documentation. Here we focus on fundamental concepts. Other jargons, particularly a whole class of various *operators*, will be defined and explained at the same time in [DSC modules](DSC_Configuration) and [DSC benchmark](DSC_Execution) documentations.
 
 ## DSC file (or DSC script)
 A [YAML](http://yaml.org) flavored text file (yet not YAML compatible!) that configures DSC **modules** and **benchmark**.
@@ -63,4 +63,4 @@ Any output variable from any module in the pipeline (will often also be an *inpu
 
 DSC benchmark is a collective term for all pipelines specified in a DSC file (or via `dsc` command line interface).
 
-You may glance over some [sample DSC scripts](../tutorials.html#Intermediate-examples) to have an idea of DSC syntax. It is also recommended that you read the [DSC design concept](Design_and_Features.html) before diving into the details throughout the rest of the documentation on this site.
+You may glance over some [sample DSC scripts](../examples#advanced-examples) to have an idea of DSC syntax. It is also recommended that you read the [DSC introduction](../first_course/Intro_DSC) before diving into the details throughout the rest of the documentation on this site.

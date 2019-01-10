@@ -1,10 +1,10 @@
 # DSC syntax: basics of modules
 
-In this document we mainly use partial DSC examples (along the lines of [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc) but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find [DSC introduction tutorials](../tutorials.html) a useful first-read to help better understand DSC syntax. 
+In this document we mainly use partial DSC examples (along the lines of [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc) but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find [DSC introduction tutorials](../first_course/first_course) a useful first-read to help better understand DSC syntax. 
 
 We endeavor to maintain DSC syntax simple and intuitive. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools, using DSC in exploratory phase of research projects, and working with remote computers or HPC clusters for large scale computation. (**FIXME: create these tutorials and add links to them**)
 
-A DSC file consists of one or more syntax blocks to configure *modules*, and one block to configure *pipelines* and *benchmark*. Here we focus on discussing modules. DSC pipelines and benchmark execution will be discussed in [a separate document](DSC_Execution.html).
+A DSC file consists of one or more syntax blocks to configure *modules*, and one block to configure *pipelines* and *benchmark*. Here we focus on discussing modules. DSC pipelines and benchmark execution will be discussed in [a separate document](DSC_Execution).
 
 ## Modules
 
@@ -51,7 +51,7 @@ method: utils.R + main.R
 
 will load `utils.R` followed by `main.R`.
 
-[Tuple operator](#Tuple-operator-132) `()` can be used in conjuction with `+` to expand the logic of concatenation, as a shorthand to define multiple compound executables. For example:
+[Tuple operator](#tuple-operator) `()` can be used in conjuction with `+` to expand the logic of concatenation, as a shorthand to define multiple compound executables. For example:
 
 ```yaml
 method1, method2: (utils1.R, utils2.R) + main.R
@@ -61,7 +61,7 @@ will load `utils1.R` followed by `main.R` for module `method1`, `utils2.R` follo
 
 #### Inline executables
 
-Instead of having to use scripts to specify module executables, [language interpreter](#Language-interpreters-133) operators can be used to define codes for modules inline. For example:
+Instead of having to use scripts to specify module executables, [language interpreter](#language-interpreters) operators can be used to define codes for modules inline. For example:
 
 ```yaml
 normal: R(x = rnorm(n))
@@ -150,9 +150,9 @@ When multiple parameters are specified, eg:
     p: 0.1, 0.2
 ```
 
-Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via [`@FILTER`](#Decorator-FILTER-123) decorator. In the example above each module will take 4 sets of parameters : `(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)`.
+Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via [`@FILTER`](#decorator-filter) decorator. In the example above each module will take 4 sets of parameters : `(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)`.
 
-To get "paired" parameters instead, the [Tuple operator](#Tuple-operator-132) can be used on both sides of the property. For example,
+To get "paired" parameters instead, the [Tuple operator](#tuple-operator) can be used on both sides of the property. For example,
 
 ```yaml
 (n, p): (10, 0.1), (20, 0.2)
@@ -176,7 +176,7 @@ normal, t: rnorm.R, rt.R
 
 Language specific syntax can be used to extract specific data from objects for use as module output. For example `$beta: data$meta_info$beta` extracts `beta` from an `R` nested list and save it directly as module output `beta`.
 
-For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. In the above example, `x` is not a module parameter. For command-line executables module output will have to be files (see [`file()` operator](#File-generator) below).
+For modules whose executables are R or Python scripts, a module output can match any arbitary variable name inside the script, thus may or may not appear in module parameters. In the above example, `x` is not a module parameter. For command-line executables module output will have to be files (see [`file()` operator](#file-generator) below).
 
 ### Module input
 
@@ -325,7 +325,7 @@ normal, t, rcauchy: rnorm.R, rt.R, rcauchy.R
 
 ### Decorator FILTER
 
-`@FILTER` can be used to modify default logic that all parameters are combined the Cartesian product style. The `@FILTER` syntax is the same as the `condition` statement in `dsc-query` command; both [documented elsewhere](DSC_Filtering.html). Here we elaborate on some examples:
+`@FILTER` can be used to modify default logic that all parameters are combined the Cartesian product style. The `@FILTER` syntax is the same as the `condition` statement in `dsc-query` command; both [documented elsewhere](DSC_Filtering). Here we elaborate on some examples:
 
 ```yaml
 normal, t: normal.R, t.R
@@ -356,7 +356,7 @@ then for `t` we restrict `n` to `300`, and for all other modules we set `n` to l
 
 ### Decorator CONF
 
-`@CONF` provides interface to override certain properties in benchmark configuration section (`DSC` section), including `work_dir`, `exec_path`, `lib_path`. See [this document](DSC_Execution.html) for more details.
+`@CONF` provides interface to override certain properties in benchmark configuration section (`DSC` section), including `work_dir`, `exec_path`, `lib_path`. See [this document](DSC_Execution) for more details.
 
 ## Operators
 
@@ -370,13 +370,13 @@ method: method.R
 
 With `()`, `(1,2,3)` will be translated as a group to `c(1, 2, 3)` in `R`, `(1,2,3)` in `Python`, or space separated argument sequence `1 2 3` for command-line tools. Values will be assigned in groups defined by `()` instead of separately.
 
-When used to define [module executables](#Compound-module-executables), in conjunction with concatenating operator `+` it helps matching compound executables to each module in the same block.
+When used to define [module executables](#module-property), in conjunction with concatenating operator `+` it helps matching compound executables to each module in the same block.
 
 ### Language interpreters
 
 Currently `R()/R{}`, `Python()/Python{}`, and `Shell()/Shell{}` are supported to specify module parameters. Codes inside these operators will be interpreted while DSC parses the configuration file; output will be evaluated as parameter values. For example `n: R((1:5)*10)` results in `n: (10, 20, 30, 40, 50)` and `n: R{(1:5)*10}` results in `n: 10, 20, 30, 40, 50`. This provides handy tool for generating input parameters with R, Python or Shell languages.
 
-`R()` and `Python()` can also be used to [create inline module executables](#Inline-executables). They will be interpreted at runtime as part of the module executable scripts.
+`R()` and `Python()` can also be used to [create inline module executables](#module-property). They will be interpreted at runtime as part of the module executable scripts.
 
 ### Raw string indicator
 

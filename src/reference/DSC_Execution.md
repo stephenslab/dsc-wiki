@@ -1,6 +1,6 @@
 # DSC syntax: basics of benchmark execution
 
-This document is continuation of discussion in [DSC syntax: basics of modules](DSC_Configuration.html). We will use toy DSC examples (including breaking down [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc)) to introduce a special syntax block called `DSC` that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword `DSC` and is required for all DSC scripts. In this document we refer to its contents by `DSC::<key>` where `<key>` is the identifier on the left side of `:` in each line of the `DSC` block.
+This document is continuation of discussion in [DSC syntax: basics of modules](DSC_Configuration). We will use toy DSC examples (including breaking down [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc)) to introduce a special syntax block called `DSC` that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword `DSC` and is required for all DSC scripts. In this document we refer to its contents by `DSC::<key>` where `<key>` is the identifier on the left side of `:` in each line of the `DSC` block.
 
 ## Benchmark logic operators
 
@@ -91,7 +91,7 @@ run: simulate * sqrt * RUV * DESeq * score,
 ```
 
 ## Command interface to DSC benchmark
-By default, DSC will execute all pipelines defined in `DSC::run`. But one can override pipelines from [command line](Command_Options.html). For example to execute the complete `Example 1`
+By default, DSC will execute all pipelines defined in `DSC::run`. But one can override pipelines from [command line](Command_Options). For example to execute the complete `Example 1`
 
 ```bash
 dsc file.dsc --target "simulate * estimate * score"
@@ -122,7 +122,7 @@ These parameters are specified in the rest of `DSC` block:
 * `python_modules`: check required Python3 modules, and install from pip if not available.
 * `work_dir`: work directory where benchmarking will take place.
 * `output`: folder name to store benchmark output files.
-* `global`: defines global variables which can be used in definition of module parameters through [variable wildcard](DSC_Configuration.html#Variable-wildcard-131) `$()`.
+* `global`: defines global variables which can be used in definition of module parameters through [variable wildcard](Unsupported_Features#wildcard-operators) `$()`.
 * `replicate`: number of replicate to run the benchmark (default is 1).
 
 ### Override runtime options in modules with `@CONF`
@@ -159,8 +159,8 @@ simulate: simulate.R
 `@CONF` is designed not only to "fine-tune" the runtime environment of a module, but, as a "decorator", will change behavior of a module's execution. Specifically:
 
 - `lib_path` when specified under `@CONF`, all relevant scripts (of the same type as the executable, eg. `R` or `Py`) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.
-- `R_libs` when specified under `@CONF` will automatically load all listed libraries via `library(...)` prior to running the module script. **Please use DSC::R_libs instead if this is not the desired behavior**.
+- `R_libs` when specified under `@CONF` will automatically load all listed libraries via `library(...)` prior to running the module script. **Please use `DSC::R_libs` instead if this is not the desired behavior**.
 
 ## Run DSC on HPC cluster or other remote computaters
 
-See [this documentation](../FAQ/Remote_Computations.html) for a discussion.
+See [this documentation](../advanced_course/Remote_Computations) for a discussion.
