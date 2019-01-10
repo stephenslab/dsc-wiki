@@ -1,4 +1,5 @@
 # dsc-wiki
+
 Wiki site & writeup for Dynamic Statistical Comparison
 https://stephenslab.github.io/dsc-wiki
 
@@ -32,7 +33,9 @@ After editing, you should save the notebook before exit.
 
 Use a text editor to modify the file `src/toc.yml`. 
 
-## Update website
+## Build the website
+
+### First time build
 
 To build the site for the first time on your computer you need to create the docker image for relevant tools. To do so, run
 
@@ -42,7 +45,15 @@ To build the site for the first time on your computer you need to create the doc
 
 This command requires that you have `docker` installed and configured on your computer.
 
-Then to build the site, simply type:
+You will also need to download the `jupyter-book` template,
+
+```
+./release.sos setup
+```
+
+### Update website
+
+To build the site, simply type:
 
 ```
 ./release.sos
