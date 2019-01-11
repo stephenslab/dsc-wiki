@@ -6,7 +6,7 @@
 [setup]
 bash:
 	rm -rf jupyter-book
-	git clone https://github.com/choldgraf/jupyter-book
+	git clone https://github.com/jupyter/jupyter-book
 	rm -rf jupyter-book/.git
 	rm -rf jupyter-book/_build
 	rm -rf jupyter-book/_site
@@ -32,7 +32,7 @@ bash: workdir = 'jupyter-book', expand = True
 	python scripts/generate_book.py {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
-# a hack for https://github.com/choldgraf/jupyter-book/issues/72
+# a hack for https://github.com/jupyter/jupyter-book/issues/72
 for x in glob.glob('src/*/[!_]*.ipynb'):
 	x = path(f"jupyter-book/_build/{path(x).relative_to('src'):n}.md")
 	if x.is_file():
