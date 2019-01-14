@@ -31,7 +31,7 @@ After editing, you should save the notebook before exit.
 
 ## Edit website organization
 
-Use a text editor to modify the file `src/toc.yml`. 
+Use a text editor to modify the file `cfg/toc.yml`. 
 
 ## Build the website
 
