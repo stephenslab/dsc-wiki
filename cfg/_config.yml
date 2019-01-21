@@ -42,6 +42,9 @@ textbook_logo_link        : https://github.com/stephenslab/dsc  # A link for the
 sidebar_footer_text       : 'Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
 # sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.'
 
+# Search settings
+search_max_words_in_content : 100  # In the search function, use at most this many words (too many words will make search slow)
+
 #######################################################################################
 # Interact link settings
 

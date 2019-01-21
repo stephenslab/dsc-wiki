@@ -27,9 +27,9 @@
   "headline":
     "Implementation details",
   "datePublished":
-    "2019-01-13T18:06:51-06:00",
+    "2019-01-21T14:37:50-06:00",
   "dateModified":
-    "2019-01-13T18:06:51-06:00",
+    "2019-01-21T14:37:50-06:00",
   "description":
     "Implementation details",
   "author": {
@@ -121,6 +121,16 @@ initFunction = function(myfunc) {
     const site_basename = '/dsc-wiki';
   </script>
 
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="/dsc-wiki/assets/js/anchor.min.js"  type="text/javascript"></script>
+  <script>
+
+initFunction(function () {
+    anchors.add("main h1, main h2, main h3, main h4")
+});
+
+</script>
+
   <!-- Include Turbolinks to make page loads fast -->
   <!-- https://github.com/turbolinks/turbolinks -->
   <script src="/dsc-wiki/assets/js/turbolinks.js" async></script>
@@ -202,7 +212,7 @@ const addCopyButtonToCodeCells = () => {
 
 initFunction(addCopyButtonToCodeCells);
 </script>
-  
+
   <!-- Hide cell code -->
   
 <script>
@@ -295,6 +305,94 @@ initFunction(initHiddenCells);
 
   <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="/dsc-wiki/assets/js/lunr/lunr.min.js" type="text/javascript"></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
 </head>
 
   <body>
@@ -315,9 +413,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/overview"
+          href="/dsc-wiki/overview.html"
         >
           
           Home
@@ -334,9 +434,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/installation"
+          href="/dsc-wiki/installation.html"
         >
           
           Installation
@@ -353,9 +455,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/faq"
+          href="/dsc-wiki/faq.html"
         >
           
           FAQ
@@ -372,9 +476,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/reference/reference"
+          href="/dsc-wiki/reference/reference.html"
         >
           
           Reference manual
@@ -396,7 +502,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/Terminology"
+                  href="/dsc-wiki/reference/Terminology.html"
                 >
                   
                   Terminology
@@ -413,7 +519,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/DSC_Configuration"
+                  href="/dsc-wiki/reference/DSC_Configuration.html"
                 >
                   
                   DSC configuration syntax
@@ -430,7 +536,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/DSC_Execution"
+                  href="/dsc-wiki/reference/DSC_Execution.html"
                 >
                   
                   Running DSC
@@ -447,7 +553,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/DSC_Filtering"
+                  href="/dsc-wiki/reference/DSC_Filtering.html"
                 >
                   
                   Extracting DSC results
@@ -464,7 +570,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/Command_Options"
+                  href="/dsc-wiki/reference/Command_Options.html"
                 >
                   
                   Command-line reference
@@ -481,7 +587,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/Road_Map"
+                  href="/dsc-wiki/reference/Road_Map.html"
                 >
                   
                   Development roadmap
@@ -498,7 +604,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry c-sidebar__entry--active"
-                  href="/dsc-wiki/reference/Implementation_Details"
+                  href="/dsc-wiki/reference/Implementation_Details.html"
                 >
                   
                   Implementation details
@@ -515,7 +621,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/reference/Unsupported_Features"
+                  href="/dsc-wiki/reference/Unsupported_Features.html"
                 >
                   
                   Unsupported features
@@ -547,9 +653,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/first_course/first_course"
+          href="/dsc-wiki/first_course/first_course.html"
         >
           
           First course on DSC
@@ -571,7 +679,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Intro_DSC"
+                  href="/dsc-wiki/first_course/Intro_DSC.html"
                 >
                   
                   A brief introduction to DSC
@@ -588,7 +696,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Intro_Syntax_I"
+                  href="/dsc-wiki/first_course/Intro_Syntax_I.html"
                 >
                   
                   DSC basics, part I
@@ -605,7 +713,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Intro_Syntax_II"
+                  href="/dsc-wiki/first_course/Intro_Syntax_II.html"
                 >
                   
                   DSC basics, part II
@@ -622,7 +730,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Prototype_Tips"
+                  href="/dsc-wiki/first_course/Prototype_Tips.html"
                 >
                   
                   Developing benchmarks
@@ -639,7 +747,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Debug_Tips"
+                  href="/dsc-wiki/first_course/Debug_Tips.html"
                 >
                   
                   Debug in DSC
@@ -656,7 +764,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/first_course/Syntax_Tips"
+                  href="/dsc-wiki/first_course/Syntax_Tips.html"
                 >
                   
                   Syntax tips
@@ -680,9 +788,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/faq"
+          href="/dsc-wiki/faq.html"
         >
           
           Other tutorials
@@ -704,7 +814,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/5_Minutes_Python"
+                  href="/dsc-wiki/advanced_course/5_Minutes_Python.html"
                 >
                   
                   Working with Python
@@ -721,7 +831,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/DSC_Data"
+                  href="/dsc-wiki/advanced_course/DSC_Data.html"
                 >
                   
                   DSC data flow
@@ -738,7 +848,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/5_Minutes_RPY"
+                  href="/dsc-wiki/advanced_course/5_Minutes_RPY.html"
                 >
                   
                   Working with R and Python
@@ -755,7 +865,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/Multiple_Pipelines"
+                  href="/dsc-wiki/advanced_course/Multiple_Pipelines.html"
                 >
                   
                   Running multiple pipelines
@@ -772,7 +882,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/Rmd_Executable"
+                  href="/dsc-wiki/advanced_course/Rmd_Executable.html"
                 >
                   
                   Using Rmd files as module executables
@@ -789,7 +899,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/Remote_Computations"
+                  href="/dsc-wiki/advanced_course/Remote_Computations.html"
                 >
                   
                   Running DSC on remote computers
@@ -806,7 +916,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/advanced_course/DSC_Docker"
+                  href="/dsc-wiki/advanced_course/DSC_Docker.html"
                 >
                   
                   Running DSC in Docker
@@ -830,9 +940,11 @@ initFunction(initHiddenCells);
       
       
 
+      
+      
       <li class="c-sidebar__chapter">
         <a class="c-sidebar__entry "
-          href="/dsc-wiki/examples"
+          href="/dsc-wiki/examples.html"
         >
           
           Benchmark examples
@@ -854,7 +966,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/examples/R_Example_1"
+                  href="/dsc-wiki/examples/R_Example_1.html"
                 >
                   
                   R Example 1
@@ -871,7 +983,7 @@ initFunction(initHiddenCells);
 
               <li class="c-sidebar__section">
                 <a class="c-sidebar__entry "
-                  href="/dsc-wiki/examples/R_Example_2"
+                  href="/dsc-wiki/examples/R_Example_2.html"
                 >
                   
                   R Example 2
@@ -893,6 +1005,7 @@ initFunction(initHiddenCells);
   <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
 </nav>
 
+      
       <!-- Shamelessly copied from minimal mistakes -->
 
 
@@ -900,7 +1013,7 @@ initFunction(initHiddenCells);
 
 
 
-
+      
       <main class="c-textbook__page" tabindex="-1">
           <div class="o-wrapper">
             <div class="c-sidebar-toggle">

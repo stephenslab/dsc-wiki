@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Search the site</title>
+  <meta name="description" content="Documentation for Dynamic Statistical Comparison software">
+
+  <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/search">
+  <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
+
+  <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/search" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Search the site" />
+<meta property="og:description" content="Documentation for Dynamic Statistical Comparison software" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://stephenslab.github.io/dsc-wiki/search",
+  "headline":
+    "Search the site",
+  "datePublished":
+    "2019-01-21T14:37:50-06:00",
+  "dateModified":
+    "2019-01-21T14:37:50-06:00",
+  "description":
+    "Documentation for Dynamic Statistical Comparison software",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://stephenslab.github.io/dsc-wiki",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://stephenslab.github.io/dsc-wiki",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-wiki/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '/dsc-wiki';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="/dsc-wiki/assets/js/anchor.min.js"  type="text/javascript"></script>
+  <script>
+
+initFunction(function () {
+    anchors.add("main h1, main h2, main h3, main h4")
+});
+
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-wiki/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  <script src="https://unpkg.com/nbinteract-core" async></script>
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+  <!-- Google analytics -->
+  <script src="/dsc-wiki/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.querySelector(`pre#${id} + a`) == null) {
+      codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
+    }
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+  <!-- Hide cell code -->
+  
+<script>
+/**
+Add buttons to hide code cells
+*/
+
+
+var setCodeCellVisibility = function(inputField, kind) {
+    // Update the image and class for hidden
+    var id = inputField.getAttribute('data-id');
+    var codeCell = document.querySelector(`#${id}`);
+
+    if (kind === "visible") {
+        codeCell.classList.remove('hidden');
+        inputField.checked = true;
+    } else {
+        codeCell.classList.add('hidden');
+        inputField.checked = false;
+    }
+}
+
+var toggleCodeCellVisibility = function (event) {
+    // The label is clicked, and now we decide what to do based on the input field's clicked status
+    if (event.target.tagName === "LABEL") {
+        var inputField = event.target.previousElementSibling;
+    } else {
+        // It is the span inside the target
+        var inputField = event.target.parentElement.previousElementSibling;
+    }
+
+    if (inputField.checked === true) {
+        setCodeCellVisibility(inputField, "visible");
+    } else {
+        setCodeCellVisibility(inputField, "hidden");
+    }
+}
+
+
+// Button constructor
+const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+var addHideButton = function () {
+  // If a hide button is already added, don't add another
+  if (document.querySelector('div.hidecode input') !== null) {
+      return;
+  }
+
+  // Find the input cells and add a hide button
+  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
+    if (!item.parentElement.classList.contains("hidecode")) {
+        // Skip the cell if it doesn't have a hidecode class
+        return;
+    }
+
+    const id = codeCellId(index)
+    item.setAttribute('id', id);
+    item.insertAdjacentHTML('afterend', hideCodeButton(id))
+
+    // Set up the visibility toggle
+    hideLink = document.querySelector(`#${id} + input + label`);
+    hideLink.addEventListener('click', toggleCodeCellVisibility)
+  });
+}
+
+
+// Initialize the hide buttos
+var initHiddenCells = function () {
+    // Add hide buttons to the cells
+    addHideButton();
+
+    // Toggle the code cells that should be hidden
+    document.querySelectorAll('div.hidecode input').forEach(function (item) {
+        setCodeCellVisibility(item, 'hidden');
+        item.checked = true;
+    })
+}
+
+initFunction(initHiddenCells);
+
+</script>
+
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-wiki/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-wiki/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="/dsc-wiki/assets/js/lunr/lunr.min.js" type="text/javascript"></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://github.com/stephenslab/dsc"><img src="/dsc-wiki/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">DSC</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/overview.html"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/installation.html"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/reference/reference.html"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Terminology.html"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Configuration.html"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Execution.html"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Filtering.html"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Command_Options.html"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Road_Map.html"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Implementation_Details.html"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Unsupported_Features.html"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">User guide</li>
+        
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/first_course/first_course.html"
+        >
+          
+          First course on DSC
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_DSC.html"
+                >
+                  
+                  A brief introduction to DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_I.html"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_II.html"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Prototype_Tips.html"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Debug_Tips.html"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Syntax_Tips.html"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          Other tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_Python.html"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Data.html"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_RPY.html"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Multiple_Pipelines.html"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Rmd_Executable.html"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Remote_Computations.html"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Docker.html"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/examples.html"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_1.html"
+                >
+                  
+                  R Example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_2.html"
+                >
+                  
+                  R Example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+
+            <div class="c-textbook__content">
+              <div class="search-content__inner-wrap">
+    <input type="text" id="lunr_search" class="search-input" tabindex="-1" placeholder="'Enter your search term...''" />
+    <div id="results" class="results"></div>
+</div>
+
+<script>
+    // Add the lunr store since we will now search it
+    var store = [{
+        "title": "Working with Python",
+        
+        "excerpt":
+            "DSC in 5 Minutes with Python This tutorials shows re-implementation of the DSC Introduction in Python. Source code to run this example can be found here. The DSC script mostly the same as the Quick Start example: #!/usr/bin/env dsc normal: normal.py n: 100 $data: x $true_mean: 0 t: t.py n: 100 df: 2 $data: x $true_mean: 3 mean: mean.py x: $data $est_mean: y median: median.py x: $data $est_mean: y sq_err: sq.py a: $est_mean b: $true_mean $error: e abs_err: abs.py a: $est_mean b: $true_mean $error: e DSC: define: simulate: normal, t analyze: mean, median score: abs_err, sq_err run: simulate * analyze...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/5_Minutes_Python.html",
+        "teaser":null},{
+        "title": "Working with R and Python",
+        
+        "excerpt":
+            "DSC in 5 Minutes with R &amp; Python mix This tutorials shows re-implementation of the DSC Introduction mixing R and Python implementations. Source code to run this example can be found here. If you are reading this page and are in need of R &amp; Python communications, I suppose you might have experience interacting between R and Python, and appreciate the challenges. Data transfer between R and Python currently depends on rpy2. This has 2 implications: 1) information flow is no longer lossless because it is impossible to support the Python counter part for any arbitary R object (and vise...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/5_Minutes_RPY.html",
+        "teaser":null},{
+        "title": "DSC data flow",
+        
+        "excerpt":
+            "DSC data storage This documentation discusses how DSC variables and parameters are handled and stored. The former is relevant to how one think about data flow when developing the benchmark; the latter is relevant to how parameters are used in 1) user provided scripts when executing benchmark and 2) user specified filter conditions when making queries on results. DSC variables DSC variables are module input and output. Since a module input is always output from another module we focus our discussion on handling of module outputs. When working in pure R or Python environments users do not have to worry...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/DSC_Data.html",
+        "teaser":null},{
+        "title": "Running DSC in Docker",
+        
+        "excerpt":
+            "Share DSC via docker First you need to install and configure docker: Follow Docker installation guild until you can use sudo docker to print the “Hello World” example. Run sudo usermod -aG docker $USER Log out and log back in We have provided a docker image for DSC which can be used to Run some of the DSC vignettes examples Serve as the base docker image to add to it your own benchmarks for others to reproduce. Run DSC base docker image To use the docker image: docker pull gaow/dsc docker run --rm --security-opt label:disable \\ -v $USER:/home/docker -v /tmp:/tmp...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/DSC_Docker.html",
+        "teaser":null},{
+        "title": "Running multiple pipelines",
+        
+        "excerpt":
+            "Multiple DSC pipelines In this tutorial we further expand benchmark of the DSC problem described in DSC Introduction, to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in DSC vignettes repo. Configuration The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under t distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an optional transform step where we provide two methods for Winsorization. This results...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/Multiple_Pipelines.html",
+        "teaser":null},{
+        "title": "Running DSC on remote computers",
+        
+        "excerpt":
+            "Running DSC on a remote computer Overview DSC uses one additional configuration file and two command options (--host and --to-host) to run on a remote computer (or “host”, hereafter). Here a remote computer can be: A standalone desktop workstation without a job queue system A system with a job queue manager, such as PBS-based cluster DSC facilicate two approaches to run remote tasks: “On-Host”, the conventional way: log in to the host and run remote jobs. For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. For a cluster system this...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations.html",
+        "teaser":null},{
+        "title": "Using Rmd files as module executables",
+        
+        "excerpt":
+            "Convert existing Rmarkdown file to DSC executables This tutorial demonstrates a convenient way to construct DSC based on Rmarkdown files being used in Rstudio interactive sessions. Material used can be found in DSC vignettes repository. Caution that running DSC with source code provided from Rmarkdown files is meant to ease DSC development, but is more error prone because users may make more mistakes matching variables or code chunks between DSC interface and Rmarkdown documents. This feature is therefore intended to only prototyping a benchmark. Users will be discouraged with a DSC warning message to use Rmd files in finalized benchmark....",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/advanced_course/Rmd_Executable.html",
+        "teaser":null},{
+        "title": "Benchmark examples",
+        
+        "excerpt":
+            "DSC examples Linear regression by Matthew Stephens     High-dimensional regression and variable selection Under development Intermedium examples An R example: ashr benchmark     An illustration of inline codes, variable alias, R library installation and query demos Reimplementation of “quick start” example from simulator R package     A more modular implementation illustrating compound and inline module executables Advanced examples Covariance estimation by Wei Wang and Gao Wang     A benchmark on methods estimating covariance matrix from data Bayesian regression in genomic prediction by Xiang Zhu     Bayesian linear model fitting procedures and their applications in genetic...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/examples.html",
+        "teaser":null},{
+        "title": "R Example 1",
+        
+        "excerpt":
+            "An R example: ashr benchmark This is a more advanced application of DSC with R scripts. We demonstrate in this tutorial features of DSC including: Inline code as parameters @ALIAS decorator R library installation and version check Use dscrutils to query results limited to given conditions DSC Problem The DSC problem is based on the ASH example of DSCR (R Markdown version and HTML version). Material to run this tutorial can be found in DSC vignettes repo. Description below is copied from the DSCR vignette: To illustrate we consider the problem of shrinkage, which is tackled by the ashr package...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/examples/R_Example_1.html",
+        "teaser":null},{
+        "title": "R Example 2",
+        
+        "excerpt":
+            "Reproducing simulator package Quick Start This tutorial reimplements the execution part of Getting Started with Simulator example. We demonstrate in this tutorial how compound module executables are specified with scripts and inline executables. Material to run this tutorial can be found in DSC vignettes repo. It also contains the code to reproduce the original simulator simulation. DSC Specification The problem is fully specified in DSC syntax below: simulate: model.R + R(m = simulate(n, prob)) seed: R(1:10) n: 50 prob: R(seq(0,1,length=6)) $model: m my_method, their_method: (my.R, their.R) + R(fit = method($(model)$x)$fit) $fit: fit abs, mse: (herloss.R, hisloss.R) + R(score = metric($(model)$mu,...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/examples/R_Example_2.html",
+        "teaser":null},{
+        "title": "FAQ",
+        
+        "excerpt":
+            "FAQ Other DSC features I’m done with the DSC introductory tutorials. What next? This document demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our Reference Manual. My DSC run failed with an error. What should I do? Well, the bug is either ours or yours. DSC software is still under active development. If you catch one of our bug please post an issue...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/faq.html",
+        "teaser":null},{
+        "title": "Debug in DSC",
+        
+        "excerpt":
+            "Debug in DSC Module executable and generated script As seen from previous tutorials, module executables in DSC are in fact incomplete code chunks due to lack of input data and parameter specifications to run. Under the hood, DSC generates R, Python or Shell scripts based on module executable scripts, adding to it specification of module parameters and pipeline variables, then executes the complete script. This generated script is subject to two types of errors: Inconsistency between DSC interface and module executables Error from module executables as provided In the presence of errors DSC will fail. However the automatically generated script...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html",
+        "teaser":null},{
+        "title": "A brief introduction to DSC",
+        
+        "excerpt":
+            "Introduction to Dynamical Statistical Comparisons In this tutorial, you will get acquainted with the basic features of DSC through a simple example. This tutorial only explains the basic features at a high level. If you prefer to begin with a more precise (and more technical) overview of DSC concepts, see DSC Basics, Part I. All the modules in this example are implemented in R. Being familiar with R is certainly helpful, but not essential, as the R code used in the example is not complicated. DSC currently supports two programming languages: R and Python. This is a working example—optionally, you...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC.html",
+        "teaser":null},{
+        "title": "DSC basics, part I",
+        
+        "excerpt":
+            "DSC Basics, Part I This is a continuation of the Introduction to DSC. Here we revisit the same example from the first part to explain key concepts in DSC, including modules, groups and pipeline variables. More advanced concepts will be introduced in Part II. Materials used in this tutorial can be found in the DSC vignettes repository. As before, you may choose to run this example DSC program as you read through the tutorial, but it is not required. For more details, consult the README in the “one sample location” DSC vignette. Pipeline variables In DSC, all information is passed...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html",
+        "teaser":null},{
+        "title": "DSC basics, part II",
+        
+        "excerpt":
+            "DSC Basics, Part II This is the second part of the “DSC Basics” tutorial. Before working through this tutorial, you should have already read DSC Basics, Part I. Here we build on the mean estimation example from the previous part to illustrate new concepts and syntax in DSC, with an emphasis on the use of module parameters. Materials used in this tutorial can be found in the DSC vignettes repository. As before, you may choose to run this example DSC program as you read through the tutorial, but this is not required. For more details, consult the README in the...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_II.html",
+        "teaser":null},{
+        "title": "Developing benchmarks",
+        
+        "excerpt":
+            "Prototype in DSC Although DSC is a benchmarking tool, you might still be able to utilize DSC when you are in a “research mode”, or the prototyping stage. Starting directly with DSC to build mini-benchmark for methods prototyping saves the efforts of having to migrate your code over to DSC down the line when you seriously consider expanding your initial comparisons. In prototyping stage, you might find command options --target and --truncate are of particular relevance. In brief, --target accepts: A single or a sequence of modules A single or a sequence of module groups A single run flag and...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html",
+        "teaser":null},{
+        "title": "Syntax tips",
+        
+        "excerpt":
+            "Tips and Tricks Once you have completed the Introduction to DSC, you should be ready to write your own DSC. This file introduces you to some of the most convenient syntax short-cuts we have implemented to make DSCs easier to write and read. Combining definitions of similar modules Sometimes modules share much of their definition. For example: mean: R(y = mean(x)) x: $data $est_mean: y median: R(y = median(x)) x: $data $est_mean: y Here DSC allows a shorthand syntax to define both modules: mean, median: R(y = mean(x)), R(y=median(x)) x: $data $est_mean: y Aliasing Renaming a parameter This feature allows...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/Syntax_Tips.html",
+        "teaser":null},{
+        "title": "First course on DSC",
+        
+        "excerpt":
+            "First course in DSC  Introduction to Dynamic Statistical Comparisons      An introduction to the basic features of DSC through an illustrative example.   DSC Basics, Part I      A tutorial on essential DSC concepts, including modules, module groups and pipeline variables.   DSC Basics, Part II      A tutorial on more advanced concepts in DSC, including module parameters.   DSC Syntax tips      Tips and tricks on syntax to make your DSC implementation easier.  ",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/first_course/first_course.html",
+        "teaser":null},{
+        "title": "Installation",
+        
+        "excerpt":
+            "DSC Installation Guide Follow these steps to get started using DSC. If you encounter a problem during the installation procedure, please see the “Troubleshooting installation” section in the FAQ for a possible solution. Note: If you have Docker, you can follow the Docker instructions instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below. Note to developers: Please refer to the installation instructions in the README of the dsc repository. Overview of DSC components DSC consists of several components that interact with each other. Before beginning the installation, it is...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/installation.html",
+        "teaser":null},{
+        "title": "Home",
+        
+        "excerpt":
+            "DSC: Dynamic Statistical Comparisons Overview of DSC DSC provides a framework for managing computational benchmarking experiments that compare several competing methods for a task across datasets or simulation scenarios. DSC helps execute such comparisons in an organized and reproducible way, and provides convenient ways to query the results. DSC is designed to help make these comparisons dynamic — that is, it is easy to extend by adding new methods or simulation scenarios. Hence the name, Dynamic Statistical Comparisons. DSC is able to run benchmarks written in most languages that can be compiled or run as executables. DSC is particularly well-suited...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/overview.html",
+        "teaser":null},{
+        "title": "Command-line reference",
+        
+        "excerpt":
+            "Command interface DSC implements 2 command programs, dsc and dsc-query, for executing DSC and extracting result from executed benchmarks, respectively. DSC main program dsc -h usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str] [-s option] [--touch] [--clean option] [-c N] [--ignore-errors] [-v {0,1,2,3,4}] [-d] [--host file] [--to-host dir [dir ...]] [--version] [-h] DSC script positional arguments: DSC script DSC script to execute. Customized execution: --target str [str ...] This argument can be used in two contexts: 1) When used without \"--clean\" it overrides \"DSC::run\" in DSC file. Input should be quoted string(s) defining one or multiple valid...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/Command_Options.html",
+        "teaser":null},{
+        "title": "DSC configuration syntax",
+        
+        "excerpt":
+            "DSC syntax: basics of modules In this document we mainly use partial DSC examples (along the lines of this toy but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find DSC introduction tutorials a useful first-read to help better understand DSC syntax. We endeavor to maintain DSC syntax simple and intuitive. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools, using DSC in exploratory phase of...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/DSC_Configuration.html",
+        "teaser":null},{
+        "title": "Running DSC",
+        
+        "excerpt":
+            "DSC syntax: basics of benchmark execution This document is continuation of discussion in DSC syntax: basics of modules. We will use toy DSC examples (including breaking down this toy) to introduce a special syntax block called DSC that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword DSC and is required for all DSC scripts. In this document we refer to its contents by DSC::&lt;key&gt; where &lt;key&gt; is the identifier on the left side of : in each line of the DSC block. Benchmark logic operators In building a DSC...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/DSC_Execution.html",
+        "teaser":null},{
+        "title": "Extracting DSC results",
+        
+        "excerpt":
+            "DSC filter syntax This document specifically focus on the syntax of @FILTER in dsc (for users) and -c option in dsc-query (for developers). For users DSC filtering syntax, when applied in @FILTER, selects parameter combinations to allow for only a subset of modules can stem from a module definition. The basic structure for a filtering statement @FILTER is C_i = {parameter}_i {condition operator} {value} C = C_1 {logic operator} C_2 {logic operator} ... Where we support condition operators: =, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in logic operators: AND, OR, NOT, or derived compound logic, eg ((NOT (a AND b)...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/DSC_Filtering.html",
+        "teaser":null},{
+        "title": "Implementation details",
+        
+        "excerpt":
+            "Implementation details DSC is implemented in Python 3. It relies on a number of libraries: DSC relies intensely on codes from SoS project for the execution of modules, which implements job dispatch and management via networkx and, different from other timestamp-based workflow tools, a file signature system via xxHash. Development of DSC is contributed directly to SoS whenever approperate. sympy is used to expand DSC benchmark specification into pipelines, and to expand logic for @FILTER decorator. pandas is used to ensure proper conversion between R and Python data frames. It is also used to manipulate output data. scipy provides a...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/Implementation_Details.html",
+        "teaser":null},{
+        "title": "Development roadmap",
+        
+        "excerpt":
+            "Release 1.0 roadmap Unit tests Module names module name cannot start with pipeline_ [?] module names have to be SQL friendly [!] modules that are identical in every way except names module names match number of executables Parser [] More tests to @FILTER More tests to @ALIAS More tests to @CONF Module inherit omitting exec No multiple module input $x, $y or any mixture of them with module parameters [!] All module output in the same block should have same name (a required good practice) [] DSC::run we support only () * and , Module names / parameters cannot start...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/Road_Map.html",
+        "teaser":null},{
+        "title": "Terminology",
+        
+        "excerpt":
+            "Terminology This document defines a list of DSC jargons. We will use these terms throughout the DSC documentation. Here we focus on fundamental concepts. Other jargons, particularly a whole class of various operators, will be defined and explained at the same time in DSC modules and DSC benchmark documentations. DSC file (or DSC script) A YAML flavored text file (yet not YAML compatible!) that configures DSC modules and benchmark. Code block (or block) A piece of code that starts at (and includes) a line where there is no indentation and ends at (and excludes) another line where there is no...",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/Terminology.html",
+        "teaser":null},{
+        "title": "Unsupported features",
+        
+        "excerpt":
+            "Unsupported features As a continuation of the DSC syntax documentation this page documents existing DSC features that are possibly useful yet adds complexity to DSC syntax and burden of support. We believe that DSC is well versed to handle most user cases without these features. We may formally discuss and support some of these features in the future when we deem them truly helpful to users. Rmarkdown based modules See this tutorial for detailed introduction with an example. Wildcard operators Global variable wildcard The global variable wildcard ${}, when used to specify module parameters, refers to variables defined in DSC::global....",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/Unsupported_Features.html",
+        "teaser":null},{
+        "title": "Reference manual",
+        
+        "excerpt":
+            "Syntax   Configuration   Execution   Filtering       Complete reference to DSC syntax   User interactions   Command interface      DSC program command interface   Developers zone   Release roadmap      Status of development and goal towards the next stable release   Terminology      A list of jargons created and consistently used to explain DSC  ",
+        "categories": [],
+        "tags": [],
+        "url": "https://stephenslab.github.io/dsc-wiki/reference/reference.html",
+        "teaser":null},]
+</script>
+              <nav class="c-page__nav">
+  
+
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>
