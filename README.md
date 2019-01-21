@@ -40,16 +40,10 @@ Use a text editor to modify the file `cfg/toc.yml`.
 To build the site for the first time on your computer you need to create the docker image for relevant tools. To do so, run
 
 ```
-./release.sos docker_image
+./release.sos setup
 ```
 
 This command requires that you have `docker` installed and configured on your computer.
-
-You will also need to download the `jupyter-book` template,
-
-```
-./release.sos setup
-```
 
 ### Update website
 

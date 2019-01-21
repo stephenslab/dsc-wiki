@@ -11,6 +11,7 @@ bash:
 	rm -rf jupyter-book/_build
 	rm -rf jupyter-book/_site
 	rm -rf jupyter-book/content
+sos_run('docker_image')
 
 [execute]
 bash: workdir = 'jupyter-book'
