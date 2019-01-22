@@ -27,9 +27,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-01-22T08:39:40-06:00",
+    "2019-01-22T16:56:52-06:00",
   "dateModified":
-    "2019-01-22T08:39:40-06:00",
+    "2019-01-22T16:56:52-06:00",
   "description":
     "Running DSC on a remote computer",
   "author": {
@@ -1115,8 +1115,8 @@ initFunction(initQuery);
       <span class="no">#SBATCH --ntasks-per-node={cores}</span>
       <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
       <span class="no">#SBATCH --job-name={job_name}</span>
-      <span class="no">#SBATCH --output={cur_dir}/.sos/{job_name}.stdout</span>
-      <span class="no">#SBATCH --error={cur_dir}/.sos/{job_name}.stderr</span>
+      <span class="no">#SBATCH --output={cur_dir}/{job_name}.stdout</span>
+      <span class="no">#SBATCH --error={cur_dir}/{job_name}.stderr</span>
       <span class="no">cd {cur_dir}</span>
       <span class="no">module load R/3.4.3</span>
     <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl"</span>
