@@ -37,7 +37,7 @@ Use a text editor to modify the file `cfg/toc.yml`.
 
 ### First time build
 
-To build the site for the first time on your computer you need to create the docker image for relevant tools. To do so, run
+To build the site for the first time on your computer you need to download [`jupyter-book`](https://github.com/jupyter/jupyter-book) and create the docker image for relevant tools to compile it. To do so, run
 
 ```
 ./release.sos setup

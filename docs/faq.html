@@ -27,9 +27,9 @@
   "headline":
     "FAQ",
   "datePublished":
-    "2019-01-21T15:11:07-06:00",
+    "2019-01-22T08:24:09-06:00",
   "dateModified":
-    "2019-01-21T15:11:07-06:00",
+    "2019-01-22T08:24:09-06:00",
   "description":
     "FAQ",
   "author": {
@@ -1055,20 +1055,19 @@ initFunction(initQuery);
 
 <h4 id="im-done-with-the-dsc-introductory-tutorials-what-next">I’m done with the DSC introductory tutorials. What next?</h4>
 
-<p><a href="first_course/Syntax_Tips">This document</a> demonstrates some of the most useful syntax not covered with introductory tutorials. We believe it is a good next read. 
-You can then read the rest of this FAQ page to read about other topics that interest you, or, to take a quick look at our <a href="reference/reference">Reference Manual</a>.</p>
+<p><a href="first_course/Syntax_Tips">This document</a> demonstrates some of the most useful syntax not covered in introductory tutorials. We believe it is a good next read. 
+You can then read the rest of this FAQ page for other topics that interest you, or, to take a quick look at our <a href="reference/reference">Reference Manual</a>.</p>
 
 <h4 id="my-dsc-run-failed-with-an-error-what-should-i-do">My DSC run failed with an error. What should I do?</h4>
 
-<p>Well, the bug is either ours or yours. DSC software is still under active development. If you catch one of our bug please <a href="https://github.com/stephenslab/dsc/issues">post an issue</a> with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first.</p>
+<p>Well, the bug might be yours or ours. DSC software is still under active development. If you catch one of our bug please <a href="https://github.com/stephenslab/dsc/issues">post an issue</a> with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first. If it is difficult to come up with a minimal working example it is also helpful if you could upload your DSC file for us to diagnose.</p>
 
 <p>If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as <a href="first_course/Debug_Tips">demonstrated on this page</a>.</p>
 
 <h4 id="the-introductory-tutorials-are-benchmarks-implemented-in-r-can-i-work-with-other-languages">The introductory tutorials are benchmarks implemented in R. Can I work with other languages?</h4>
 
 <p>Current implementation of DSC works with R, Python and Shell, and provides implicit data handling for R and Python modules. 
-You can find in <a href="advanced_course/5_Minutes_Python">here</a> a Python example, and <a href="advanced_course/5_Minutes_RPY">here</a> preliminary support to mixing R and Python
-codes in benchmark.</p>
+You can find in <a href="advanced_course/5_Minutes_Python">here</a> a Python example, and <a href="advanced_course/5_Minutes_RPY">here</a> preliminary support to mixing R and Python codes in benchmark.</p>
 
 <p>Additionally DSC provides experimental support for Rmd files to run R benchmarks, see <a href="advanced_course/Rmd_Executable">this tutorial</a> for details.</p>
 
@@ -1078,7 +1077,7 @@ codes in benchmark.</p>
 
 <h4 id="can-i-use-dsc-to-prototype-my-methods-at-the-research-stage-so-that-i-do-not-have-to-migrate-code-to-dsc-late">Can I use DSC to prototype my methods at the “research stage” so that I do not have to migrate code to DSC late?</h4>
 
-<p>Possibly yes, if you work with DSC in certain fashion, as demonstrated in this <a href="first_course/Prototype_Tips">prototyping tutorial</a>.</p>
+<p>Possibly yes, as demonstrated in this <a href="first_course/Prototype_Tips">prototyping tutorial</a>.</p>
 
 <h4 id="can-i-load-module-developed-for-another-dsc-project-into-my-current-dsc-project-without-copying-the-code">Can I load module developed for another DSC project into my current DSC project without copying the code?</h4>
 
@@ -1086,7 +1085,7 @@ codes in benchmark.</p>
 
 <h4 id="i-wish-dsc-has-feature-x-to-make-my-benchmarking-easier-can-you-do-that-for-me">I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?</h4>
 
-<p>Before you <a href="https://github.com/stephenslab/dsc/issues">file a feature request</a> please take a look at our <a href="reference/Unsupported_Features">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
+<p>Before you <a href="https://github.com/stephenslab/dsc/issues">make a feature request</a> please take a look at our <a href="reference/Unsupported_Features">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
 
 <h2 id="running-dsc-benchmarks">Running DSC benchmarks</h2>
 
@@ -1098,7 +1097,7 @@ codes in benchmark.</p>
 
 <p>We suggest using Docker. <a href="advanced_course/DSC_Docker">Here</a> is a tutorial on dockerizing your benchmark.</p>
 
-<h4 id="i-notice-that-simple-benchmarks-are-a-lot-slower-to-run-in-dsc-than-in-say-a-pure-r-implementation-what-is-going-on">I notice that simple benchmarks are a lot slower to run in DSC than in, say, a pure R implementation. What is going on?</h4>
+<h4 id="i-notice-that-simple-benchmarks-are-a-lot-slower-to-run-in-dsc-than-in-say-an-equivalent-r-script-what-is-going-on">I notice that simple benchmarks are a lot slower to run in DSC than in, say, an equivalent R script. What is going on?</h4>
 
 <p>In short, there are data communication and workflow overhead. Please read a discussion on performance on <a href="advanced_course/DSC_Data">this page</a>.</p>
 
