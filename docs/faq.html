@@ -27,9 +27,9 @@
   "headline":
     "FAQ",
   "datePublished":
-    "2019-01-22T08:24:09-06:00",
+    "2019-01-22T08:39:40-06:00",
   "dateModified":
-    "2019-01-22T08:24:09-06:00",
+    "2019-01-22T08:39:40-06:00",
   "description":
     "FAQ",
   "author": {
@@ -1053,68 +1053,68 @@ initFunction(initQuery);
 
 <h2 id="other-dsc-features">Other DSC features</h2>
 
-<h4 id="im-done-with-the-dsc-introductory-tutorials-what-next">I’m done with the DSC introductory tutorials. What next?</h4>
+<p><strong>I’m done with the DSC introductory tutorials. What next?</strong></p>
 
 <p><a href="first_course/Syntax_Tips">This document</a> demonstrates some of the most useful syntax not covered in introductory tutorials. We believe it is a good next read. 
 You can then read the rest of this FAQ page for other topics that interest you, or, to take a quick look at our <a href="reference/reference">Reference Manual</a>.</p>
 
-<h4 id="my-dsc-run-failed-with-an-error-what-should-i-do">My DSC run failed with an error. What should I do?</h4>
+<p><strong>My DSC run failed with an error. What should I do?</strong></p>
 
 <p>Well, the bug might be yours or ours. DSC software is still under active development. If you catch one of our bug please <a href="https://github.com/stephenslab/dsc/issues">post an issue</a> with a minimal example of DSC file and command executed that allows us to reproduce the bug. It is difficult to fix an issue without being able to reproduce it on our end first. If it is difficult to come up with a minimal working example it is also helpful if you could upload your DSC file for us to diagnose.</p>
 
 <p>If it is a bug on your end, DSC should raise a complaint and ask you to fix the issue, as <a href="first_course/Debug_Tips">demonstrated on this page</a>.</p>
 
-<h4 id="the-introductory-tutorials-are-benchmarks-implemented-in-r-can-i-work-with-other-languages">The introductory tutorials are benchmarks implemented in R. Can I work with other languages?</h4>
+<p><strong>The introductory tutorials are benchmarks implemented in R. Can I work with other languages?</strong></p>
 
 <p>Current implementation of DSC works with R, Python and Shell, and provides implicit data handling for R and Python modules. 
 You can find in <a href="advanced_course/5_Minutes_Python">here</a> a Python example, and <a href="advanced_course/5_Minutes_RPY">here</a> preliminary support to mixing R and Python codes in benchmark.</p>
 
 <p>Additionally DSC provides experimental support for Rmd files to run R benchmarks, see <a href="advanced_course/Rmd_Executable">this tutorial</a> for details.</p>
 
-<h4 id="my-benchmark-is-more-complicated-than-the-3-step-paradigm-simulate-analyze-and-score-can-i-still-use-dsc">My benchmark is more complicated than the 3-step paradigm (“simulate”, “analyze” and “score”). Can I still use DSC?</h4>
+<p><strong>My benchmark is more complicated than the 3-step paradigm (“simulate”, “analyze” and “score”). Can I still use DSC?</strong></p>
 
 <p>Most likely yes. DSC should allow you to run multiple legit pipelines with one or many steps (in DSC’s term, modules), as demonstrated in <a href="advanced_course/Multiple_Pipelines">this toy example</a>.</p>
 
-<h4 id="can-i-use-dsc-to-prototype-my-methods-at-the-research-stage-so-that-i-do-not-have-to-migrate-code-to-dsc-late">Can I use DSC to prototype my methods at the “research stage” so that I do not have to migrate code to DSC late?</h4>
+<p><strong>Can I use DSC to prototype my methods at the “research stage” so that I do not have to migrate code to DSC late?</strong></p>
 
 <p>Possibly yes, as demonstrated in this <a href="first_course/Prototype_Tips">prototyping tutorial</a>.</p>
 
-<h4 id="can-i-load-module-developed-for-another-dsc-project-into-my-current-dsc-project-without-copying-the-code">Can I load module developed for another DSC project into my current DSC project without copying the code?</h4>
+<p><strong>Can I load module developed for another DSC project into my current DSC project without copying the code?</strong></p>
 
 <p>Yes, we have a preliminary <code class="highlighter-rouge">%include</code> feature to achieve it. Please find it in the <a href="reference/DSC_Configuration">reference manual</a> for details.</p>
 
-<h4 id="i-wish-dsc-has-feature-x-to-make-my-benchmarking-easier-can-you-do-that-for-me">I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?</h4>
+<p><strong>I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?</strong></p>
 
 <p>Before you <a href="https://github.com/stephenslab/dsc/issues">make a feature request</a> please take a look at our <a href="reference/Unsupported_Features">Unsupported Features</a> page. These are features we have implemented but decided to keep hidden in order to make DSC a light-weight program. We appreciate your feedback if you some of these features attractive and that we should officially support them.</p>
 
 <h2 id="running-dsc-benchmarks">Running DSC benchmarks</h2>
 
-<h4 id="how-do-i-run-dsc-on-a-remote-computer">How do I run DSC on a remote computer?</h4>
+<p><strong>How do I run DSC on a remote computer?</strong></p>
 
 <p><a href="advanced_course/Remote_Computations">Here is a tutorial</a> for running DSC on a remote computer such as HPC cluster.</p>
 
-<h4 id="i-want-to-share-my-benchmark-for-my-manuscript-that-allows-others-to-reproduce-with-little-hassle-whats-the-best-way-to-do-it">I want to share my benchmark for my manuscript that allows others to reproduce with little hassle. What’s the best way to do it?</h4>
+<p><strong>I want to share my benchmark for my manuscript that allows others to reproduce with little hassle. What’s the best way to do it?</strong></p>
 
 <p>We suggest using Docker. <a href="advanced_course/DSC_Docker">Here</a> is a tutorial on dockerizing your benchmark.</p>
 
-<h4 id="i-notice-that-simple-benchmarks-are-a-lot-slower-to-run-in-dsc-than-in-say-an-equivalent-r-script-what-is-going-on">I notice that simple benchmarks are a lot slower to run in DSC than in, say, an equivalent R script. What is going on?</h4>
+<p><strong>I notice that simple benchmarks are a lot slower to run in DSC than in, say, an equivalent R script. What is going on?</strong></p>
 
 <p>In short, there are data communication and workflow overhead. Please read a discussion on performance on <a href="advanced_course/DSC_Data">this page</a>.</p>
 
 <h2 id="dsc-under-the-hood">DSC under the hood</h2>
 
-<h4 id="im-curious-how-dsc-handles-data-implicitly-how-does-it-work">I’m curious how DSC handles data implicitly. How does it work?</h4>
+<p><strong>I’m curious how DSC handles data implicitly. How does it work?</strong></p>
 
 <p><a href="advanced_course/DSC_Data">This page</a> has a discussion on how  DSC handles data communication and storage for R and Python languages.</p>
 
-<h4 id="why-is-dsc-written-in-python">Why is DSC written in Python?</h4>
+<p><strong>Why is DSC written in Python?</strong></p>
 
 <p>DSC relies heavily on <a href="https://github.com/vatlab/SOS">Script of Scripts (SoS)</a> project, a Python-based workflow system. 
 Core features in DSC are directly implemented in SoS whenever applicable. DSC also depends on a number of other Python packages <a href="reference/Implementation_Details">listed here</a>.</p>
 
 <h2 id="installation-troubleshoot">Installation troubleshoot</h2>
 
-<h4 id="i-am-new-to-conda-do-you-have-advice-for-setting-it-up">I am new to <code class="highlighter-rouge">conda</code>. Do you have advice for setting it up?</h4>
+<p><strong>I am new to <code class="highlighter-rouge">conda</code>. Do you have advice for setting it up?</strong></p>
 
 <p>Here we provide some suggestions for installing <a href="https://conda.io/miniconda.html">Miniconda</a> with Python 3. (The instructions below worked for Miniconda3 4.4.10 – future versions may have a different 
 installation procedure.)</p>
@@ -1146,18 +1146,22 @@ Thank you for installing Miniconda3!
 
 <p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code class="highlighter-rouge">source</code> with this file</strong>. If you do this often, you may want to add this line to your <code class="highlighter-rouge">.bashrc</code> file.</p>
 
-<h4 id="what-do-i-do-if-i-already-have-conda-but-not-python--36">What do I do if I already have <code class="highlighter-rouge">conda</code>, but not python &gt;= 3.6?</h4>
+<p><strong>What do I do if I already have <code class="highlighter-rouge">conda</code>, but not python &gt;= 3.6?</strong></p>
 
 <p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
 
-<h5 id="upgrade-to-python-36">Upgrade to Python 3.6</h5>
+<ol>
+  <li>Upgrade to Python 3.6</li>
+</ol>
 
 <p>Run the following to upgrade your Python to 3.6:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install python=3.6.3
 </code></pre></div></div>
 
-<h5 id="start-from-scratch">Start from scratch</h5>
+<ol>
+  <li>Start from scratch</li>
+</ol>
 
 <p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
 
@@ -1172,16 +1176,16 @@ Thank you for installing Miniconda3!
 
 <p>Then follow the provided instructions to install Anaconda or Miniconda.</p>
 
-<h4 id="what-do-i-do-when-i-do-not-have-permission-to-install-python-packages">What do I do when I do not have permission to install Python packages?</h4>
+<p><strong>What do I do when I do not have permission to install Python packages?</strong></p>
 
 <p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code class="highlighter-rouge">--user</code> switch to the <code class="highlighter-rouge">pip</code> command:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --user dsc
 </code></pre></div></div>
 
-<p><strong>Important note:</strong> The <code class="highlighter-rouge">--user</code> switch will install packages to the <code class="highlighter-rouge">~/.local</code> hidden directory. This may cause problems if <code class="highlighter-rouge">dsc</code> is upgraded at a later date without the <code class="highlighter-rouge">--user</code> switch.</p>
+<p><em>Important note:</em> The <code class="highlighter-rouge">--user</code> switch will install packages to the <code class="highlighter-rouge">~/.local</code> hidden directory. This may cause problems if <code class="highlighter-rouge">dsc</code> is upgraded at a later date without the <code class="highlighter-rouge">--user</code> switch.</p>
 
-<h4 id="what-to-do-if-i-try-to-run-dscquery-in-rstudio-and-it-complains-that-the-dsc-query-command-is-not-found">What to do if I try to run <code class="highlighter-rouge">dscquery</code> in RStudio, and it complains that the <code class="highlighter-rouge">dsc-query</code> command is not found?</h4>
+<p><strong>What to do if I try to run <code class="highlighter-rouge">dscquery</code> in RStudio, and it complains that the <code class="highlighter-rouge">dsc-query</code> command is not found?</strong></p>
 
 <p>If you are using DSC in RStudio, you will need to adjust your <code class="highlighter-rouge">~/.Renviron</code> settings, e.g. if your <code class="highlighter-rouge">dsc-query</code> is in <code class="highlighter-rouge">/home/osboxes/miniconda3/bin</code> (use <code class="highlighter-rouge">which dsc-query</code> to figure this out) then your <code class="highlighter-rouge">~/.Renviron</code> should look like:</p>
 
@@ -1193,7 +1197,7 @@ PATH=/home/osboxes/miniconda3/bin:${PATH}
 
 <h2 id="contribute">Contribute</h2>
 
-<h4 id="i-would-like-to-help-improve-dsc-documentation-where-should-i-start">I would like to help improve DSC documentation. Where should I start?</h4>
+<p><strong>I would like to help improve DSC documentation. Where should I start?</strong></p>
 
 <p>The wiki is mostly written in Markdown format with suffix <code class="highlighter-rouge">.md</code>. Jupyter’s <code class="highlighter-rouge">.ipynb</code> format for interactive documents are also when necessary. We welcome your contributions – for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code class="highlighter-rouge">README</code></a> of the wiki source repo to set up the software environment for editing.</p>
 
