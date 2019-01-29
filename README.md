@@ -35,9 +35,11 @@ Use a text editor to modify the file `cfg/toc.yml`.
 
 ## Build the website
 
+The website is built using [`jupyter-book`](https://github.com/jupyter/jupyter-book). We implemented a SoS workflow to streamline the process. You should have SoS installed if you have installed DSC.
+
 ### First time build
 
-To build the site for the first time on your computer you need to download [`jupyter-book`](https://github.com/jupyter/jupyter-book) and create the docker image for relevant tools to compile it. To do so, run
+To build the site for the first time on your computer you need to download `jupyter-book` and create the docker image for relevant tools to compile it. To do so, run
 
 ```
 ./release.sos setup
