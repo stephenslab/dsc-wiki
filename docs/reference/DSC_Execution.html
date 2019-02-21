@@ -27,9 +27,9 @@
   "headline":
     "Running DSC",
   "datePublished":
-    "2019-01-31T15:40:25-06:00",
+    "2019-02-20T22:40:44-06:00",
   "dateModified":
-    "2019-01-31T15:40:25-06:00",
+    "2019-02-20T22:40:44-06:00",
   "description":
     "DSC syntax: basics of benchmark execution",
   "author": {
@@ -1141,7 +1141,26 @@ initFunction(initQuery);
    <span class="s">simulate * voom * SVA * edgeRglm * score</span>
 </code></pre></div></div>
 
+<h4 id="example-4-named-pipelines">Example 4: named pipelines</h4>
+
+<p>Pipelines in benchmark can have names, for example:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span>
+   <span class="na">pipeline_1</span><span class="pi">:</span> <span class="s">simulate * sqrt * RUV * DESeq * score</span>
+   <span class="na">pipeline_2</span><span class="pi">:</span> <span class="s">simulate * sqrt * SVA * DESeq * score</span>
+</code></pre></div></div>
+
+<p>Here <code class="highlighter-rouge">pipeline_1</code> and <code class="highlighter-rouge">pipeline_2</code> are the names of pipelines in benchmark. They are only relevant for command executions (see section below). When pipeline named <code class="highlighter-rouge">default</code> is found, eg,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>run:
+   default: ...
+   other_names: ...
+</code></pre></div></div>
+
+<p>then executing the script without additional parameters will only execute the <code class="highlighter-rouge">default</code> pipeline. Otherwise, all pipelines will be executed just like the case of unnamed pipelines by default.</p>
+
 <h2 id="command-interface-to-dsc-benchmark">Command interface to DSC benchmark</h2>
+
 <p>By default, DSC will execute all pipelines defined in <code class="highlighter-rouge">DSC::run</code>. But one can override pipelines from <a href="Command_Options">command line</a>. For example to execute the complete <code class="highlighter-rouge">Example 1</code></p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> <span class="s2">"simulate * estimate * score"</span>
@@ -1155,6 +1174,11 @@ initFunction(initQuery);
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> normal t
 dsc file.dsc <span class="nt">--target</span> simulate
+</code></pre></div></div>
+
+<p>To execute one of the two pipelines in Example 4:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> pipeline_1
 </code></pre></div></div>
 
 <h2 id="benchmark-parameters">Benchmark parameters</h2>
