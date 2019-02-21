@@ -90,7 +90,28 @@ run: simulate * sqrt * RUV * DESeq * score,
    simulate * voom * SVA * edgeRglm * score
 ```
 
+#### Example 4: named pipelines
+
+Pipelines in benchmark can have names, for example:
+
+```yaml
+run:
+   pipeline_1: simulate * sqrt * RUV * DESeq * score
+   pipeline_2: simulate * sqrt * SVA * DESeq * score
+```
+
+Here `pipeline_1` and `pipeline_2` are the names of pipelines in benchmark. They are only relevant for command executions (see section below). When pipeline named `default` is found, eg,
+
+```
+run:
+   default: ...
+   other_names: ...
+```
+
+then executing the script without additional parameters will only execute the `default` pipeline. Otherwise, all pipelines will be executed just like the case of unnamed pipelines by default.
+
 ## Command interface to DSC benchmark
+
 By default, DSC will execute all pipelines defined in `DSC::run`. But one can override pipelines from [command line](Command_Options). For example to execute the complete `Example 1`
 
 ```bash
@@ -107,6 +128,12 @@ You can also execute a single module / ensemble **for debug purpose**. Commands 
 ```bash
 dsc file.dsc --target normal t
 dsc file.dsc --target simulate
+```
+
+To execute one of the two pipelines in Example 4:
+
+```bash
+dsc file.dsc --target pipeline_1
 ```
 
 ## Benchmark parameters
