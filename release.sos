@@ -31,7 +31,7 @@ for x in glob.glob('src/*/[!_]*.ipynb'):
 [build_3]
 depends: executable('docker')
 bash:  workdir = 'jupyter-book'
-	docker run --rm --security-opt label:disable  \
+	docker run --rm --security-opt label:disable \
    		-v `pwd`:/srv/jekyll \
    		-p 4000:4000 \
    		-it -u 1000:1000 \
@@ -51,7 +51,7 @@ bash:
 [serve]
 depends: executable('docker')
 bash:  workdir = 'jupyter-book'
-	docker run --rm --security-opt label:disable  \
+	docker run --rm --security-opt label:disable \
    		-v `pwd`:/srv/jekyll \
    		-p 4000:4000 \
    		-it -u 1000:1000 \
