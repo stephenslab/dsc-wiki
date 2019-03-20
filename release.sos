@@ -2,35 +2,24 @@
 #fileformat=SOS1.0
 
 [global]
+import glob
 
 [setup]
+depends: executable('pip')
 bash:
-	rm -rf jupyter-book
-	git clone https://github.com/jupyter/jupyter-book
-	rm -rf jupyter-book/.git
-	rm -rf jupyter-book/_build
-	rm -rf jupyter-book/_site
-	rm -rf jupyter-book/content
-sos_run('docker_image')
+	pip install git+https://github.com/jupyter/jupyter-book
+	rm -rf jupyter-book && jupyter-book create jupyter-book
+	rm -rf jupyter-book/content/*
 
-[execute]
-bash: workdir = 'jupyter-book'
-	python scripts/execute_all_notebooks.py
-
-[clean]
-bash: workdir = 'jupyter-book'
-	python scripts/clean.py
 
 [build_1]
-depends: Py_Module('nbclean'), executable('rsync')
+depends: executable('rsync')
 from sos.utils import env
 bash: workdir = 'jupyter-book', expand = True
-	mkdir -p content
 	rsync -auz --delete ../src/* ./content/
 	cp ../cfg/toc.yml _data/
 	cp ../cfg/_config.yml _config.yml
-  	python scripts/license.py --path ./content
-	python scripts/generate_book.py {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
+  	jupyter-book build . {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
 # a hack for https://github.com/jupyter/jupyter-book/issues/72
@@ -40,11 +29,16 @@ for x in glob.glob('src/*/[!_]*.ipynb'):
 		run(f'''sed -i 's/scope=col/scope="col"/g; s/scope=row/scope="row"/g' {x}''', stderr=False, stdout=False)
 
 [build_3]
-bash:  workdir = 'jupyter-book', container='jekyll-book'
-	rm -f Gemfile.lock
-	bundle exec jekyll build
+depends: executable('docker')
+bash:  workdir = 'jupyter-book'
+	docker run --rm --security-opt label:disable  \
+   		-v `pwd`:/srv/jekyll \
+   		-p 4000:4000 \
+   		-it -u 1000:1000 \
+   		emdupre/jupyter-book bundle exec jekyll build 
 
 [build_4]
+depends: executable('rsync')
 bash: 
 	mkdir -p docs
 	rsync -auz --delete jupyter-book/_site/* docs/
@@ -53,10 +47,20 @@ bash:
 	cp src/index.html docs/index.html
 	echo "Deployed to the docs/ folder"
 
+# see it at http://0.0.0.0:4000/dsc-wiki/overview.html
 [serve]
-bash:  workdir = 'jupyter-book', container='jekyll-book'
-	bundle exec guard
+depends: executable('docker')
+bash:  workdir = 'jupyter-book'
+	docker run --rm --security-opt label:disable  \
+   		-v `pwd`:/srv/jekyll \
+   		-p 4000:4000 \
+   		-it -u 1000:1000 \
+   		emdupre/jupyter-book bundle exec jekyll serve --host 0.0.0.0
 
+# This workflow can be ignored now
+# because at this point juypter-book
+# has now adopted this workflow and provides
+# this image.
 [docker_image]
 docker_build: workdir = 'jupyter-book', tag = 'jekyll-book'
 	FROM jekyll/jekyll:3.8.5
