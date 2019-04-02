@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-04-02T11:43:58-05:00",
+    "2019-04-02T13:29:36-05:00",
   "dateModified":
-    "2019-04-02T11:43:58-05:00",
+    "2019-04-02T13:29:36-05:00",
   "description":
     "DSC Basics, Part II",
   "author": {
@@ -1419,7 +1419,7 @@ t.n     2  4 10
 
 <p>Suppose, for example, we would like to simulate data sets from the <em>t</em> distribution with different numbers of degrees of freedom and variances. This could be easily done by defining two module parameters which multiple alternative settings:</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + sd * rt(n,df = 2))</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + sd * rt(n,df))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
   <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
   <span class="s">sd</span><span class="pi">:</span> <span class="s">0.2, 0.5, 1</span>
