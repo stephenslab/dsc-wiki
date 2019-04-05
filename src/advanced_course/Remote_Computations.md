@@ -1,5 +1,20 @@
 # Running DSC on a remote computer
 
+## Prerequisites
+
+We will use a minimal example to clearly demonstrate how to run DSC on a remote computer as we go on. Suppose we have created a Github [repo](https://github.com/stephenslab/dsc).
+Suppose we have finished writing a DSC script called `first_investigation_simpler.dsc` after following instructions from [`DSC basics, part I`](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html). This DSC script is under the folder ("/dsc/vignettes/one_sample_location"). And now we want to execute it. 
+
+- First, we should run a truncate version to test DSC [(Details)](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html):
+
+```
+dsc first_investigate_simpler.dsc --truncate
+```
+
+- Second, if the truncate version reports error, we should try to [`debug DSC`](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html) before running on a large scale.
+
+- Third, after successfully completing a truncate version DSC, we can consider to execute the entire DSC script on a remote computer to substantially save running time. 
+ 
 ## Overview
 
 DSC uses one additional configuration file and two command options (`--host` and `--to-host`) to run on a remote computer (or "host", hereafter). Here a remote computer can be:
@@ -7,7 +22,7 @@ DSC uses one additional configuration file and two command options (`--host` and
 1. A standalone desktop workstation without a job queue system
 2. A system with a job queue manager, such as PBS-based cluster
 
-DSC facilicate two approaches to run remote tasks:
+DSC facilicates two approaches to run remote tasks:
 
 1. "On-Host", the conventional way: log in to the host and run remote jobs. For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. For a cluster system this will automatically submit jobs to compute nodes based on provided template.
 2. "Local-Host", a host friendly way: do not log in to the host to run jobs. Rather, have a copy of DSC software installed to your local computer (Mac or Linux), and configure the host to have DSC and all required tools for benchmarking installed. Then run DSC from local computer with additional folders to be synced to the host specified by `--to-host` option. The local computer will serve as the job dispatcher and job monitor. This provides a way to run on hosts that has some policy constraints on long running jobs from the headnode, for example.
@@ -40,10 +55,10 @@ DSC:
     description: UChicago RCC cluster Midway 2
     address: localhost
     paths:
-      home: /home/gaow
+      home: /home/kaiqianz
     queue_type: pbs
     status_check_interval: 60
-    max_running_jobs: 40
+    max_running_jobs: 60
     max_cores: 40
     max_walltime: "36:00:00"
     max_mem: 64G
@@ -56,10 +71,10 @@ DSC:
       #SBATCH --ntasks-per-node={cores}
       #SBATCH --mem-per-cpu={mem//10**9}G
       #SBATCH --job-name={job_name}
-      #SBATCH --output={cur_dir}/{job_name}.stdout
-      #SBATCH --error={cur_dir}/{job_name}.stderr
+      #SBATCH --output={cur_dir}/{job_name}.out
+      #SBATCH --error={cur_dir}/{job_name}.err
       cd {cur_dir}
-      module load R/3.4.3
+      module load R
     partition: "SBATCH --partition=broadwl"
     account: ""
     submit_cmd: sbatch {job_file}
@@ -69,7 +84,7 @@ DSC:
   faraway2:
     based_on: midway2
     description: Submit and manage jobs to `midway2` from a local computer.
-    address: gaow@midway2.rcc.uchicago.edu
+    address: kaiqianz@midway2.rcc.uchicago.edu
   stephenslab:
     based_on: midway2
     max_cores: 28
@@ -80,23 +95,18 @@ DSC:
 
 default:
   queue: midway2
-  time_per_instance: 10m
-  instances_per_job: 2
+  time_per_instance: 3m
+  instances_per_job: 20
   n_cpu: 1
   mem_per_cpu: 2G
 
-# module specific configurations
-# mostly to consolidate small jobs
 simulate:
-  instances_per_job: 20
-
-score:
   instances_per_job: 20
 ```
 
 The section `DSC` is required to provide various templates for a number of systems. Here `midway2` is a host provided by [The University of Chicago RCC group](https://rcc.uchicago.edu). Jobs are submitted to `partition=broadwl`. Typically it has 40 cores per node, allows for maximum of 40 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the `max_*` values in the configuration. 
 
-There are also 2 "derived" queue: `stephenslab` is a special partition on `midway2` that allows for different configurations, thus it is derived from `midway2` via `based_on: midway2`. Also relevant is the `faraway2`, also `based_on: midway2`, but specifies the address of how to connect to `midway2`. Then DSC will assume that the request is made from a local computer and try to use the "local-host" mechanism to run jobs.
+There are also 2 "derived" queues: `stephenslab` is a special partition on `midway2` that allows for different configurations, thus it is derived from `midway2` via `based_on: midway2`. Also relevant is the `faraway2`, also `based_on: midway2`, but specifies the address of how to connect to `midway2`. Then DSC will assume that the request is made from a local computer and try to use the "local-host" mechanism to run jobs.
 
 The section `default` is also required. It provides default settings for all modules in the DSC. Available settings are:
 
@@ -108,7 +118,9 @@ The section `default` is also required. It provides default settings for all mod
 
 For example for 100 module instances of `simulate` that each generates some data in under a minute, one can specify `time_per_instance: 1m` and `instance_per_job: 200`. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.
 
-Typically, `DSC` and `default` section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace `gaow` with their UChicago cnetID.
+Typically, `DSC` and `default` section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace `kaiqianz` with their UChicago cnetID.
+
+In our example, under the same folder ("/dsc/vignettes/one_sample_location"), we open a text editor to write the yml file called `midway.yml` as described above and save it. 
 
 **Please never use this template without configuring the required resources, particularly `time_per_instance` and `instance_per_job`. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on `instance_per_job`) and waste of resource (too high on `time_per_instance`)**
 
@@ -136,109 +148,115 @@ will additionally use `--to-host` to sync specified files and folders to the rem
 
 Caution that to successfully use `--to-host`, the command program [`rsync`](https://rsync.samba.org) have to be available from the local computer.
 
+In our example, under the same folder ("/dsc/vignettes/one_sample_location"), we run
+
+```bash
+dsc first_investigation_simpler.dsc --host midway.yml -c 30
+```
+
 ## Monitor and manage jobs
 
 When jobs are submitted, you should see on the screen something like:
 
 ```
-INFO: M2_9eb9ad957cc31d50 submitted to midway2 with job id 45634260
+INFO: M1_9056f36343b32614 submitted to midway2 with job id 59250575
 ```
 
-So there is a task ID `M2_9eb9ad957cc31d50` and job ID `45634260`. This can also be observed from your system's job queue, for example:
+So there is a task ID `M1_9056f36343b32614` and job ID `59250575`. This can also be observed from your system's job queue, for example:
 
 
 ```
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-          45633096   broadwl M2_2eac6     gaow PD       0:00      1 (Priority)
-          45633098   broadwl M2_c6ed0     gaow PD       0:00      1 (Priority)
-          45633099   broadwl M2_38e36     gaow PD       0:00      1 (Priority)
-          45633100   broadwl M2_8fea7     gaow PD       0:00      1 (Priority)
-          45633101   broadwl M2_829d4     gaow PD       0:00      1 (Priority)
-          45633102   broadwl M2_3ab21     gaow PD       0:00      1 (Priority)
-          45633103   broadwl M2_ed42e     gaow PD       0:00      1 (Priority)
-          45633104   broadwl M2_2966b     gaow PD       0:00      1 (Priority)
-          45633086   broadwl M2_13151     gaow  R       0:01      1 midway2-0033
-          45633087   broadwl M2_01df1     gaow  R       0:01      1 midway2-0033
-          45633088   broadwl M2_b8668     gaow  R       0:01      1 midway2-0033
-          45633089   broadwl M2_89a83     gaow  R       0:01      1 midway2-0070
-          45633090   broadwl M2_7cbdd     gaow  R       0:01      1 midway2-0070
-          45633091   broadwl M2_56fa6     gaow  R       0:01      1 midway2-0070
-          45633092   broadwl M2_4baac     gaow  R       0:01      1 midway2-0070
+          59250575   broadwl M1_9056f kaiqianz  R       0:04      1 midway2-0003
+          59250576   broadwl M1_10b92 kaiqianz  R       0:04      1 midway2-0003
 ```
 
 To check on one of the job, for example the first one:
 
 ```bash
-sos status M2_2eac6 -v3
+sos status M1_9056f -v3
 ```
 
 You will see information such as:
 
 ```
-Started 27 min 13 sec ago
-Duration 26 min 59 sec
-
-TAGS:
-=====
-e0b204d49b525c52 susie2_0 susie2_sparse_13_susie2_1 susie2_sparse_14_susie2_1
-
-...
+M1_9056f36343b32614	56ed1083fa5bd015 normal normal_normal_1	
+Created 20 hr ago	Started 2 min ago	Ran for 1 sec 	
+completed
 ```
 
-The `TAGS` line explains that the job comes from the module `susie2` and produces 2 files `susie2/sparse_13_susie2_1` and  `susie2/sparse_14_susie2_1`. That is, 2 module instances per job. There are also some other useful info on execution stats such as memory usage.
+
+This means that the job comes from the module `normal` and produces 1 file `normal/normal_1`. There are also some other useful info on execution stats such as memory usage.
 
 To have more details,
 
 ```bash
-sos status M2_2eac6 -v4
+sos status M1_9056f -v4
 ```
 
 and the output:
 
 ```
-M2_2eac66b84134d3f8.err:
-========================
-2eac66b84134d3f8: completed
-2018-05-02 07:49:50,749: DEBUG: 2eac66b84134d3f8 ``started``
-2018-05-02 07:49:51,249: DEBUG: 2eac66b84134d3f8 ``completed``
-c9afa00936023dba: completed
-2018-05-02 07:49:51,299: DEBUG: c9afa00936023dba ``started``
-2018-05-02 07:49:51,788: DEBUG: c9afa00936023dba ``completed``
+M1_9056f36343b32614	completed
 
-M2_2eac66b84134d3f8.out:
-========================
-2eac66b84134d3f8: completed
-output: {file_target('benchmark/susie2/sparse_13_susie2_1.rds'): '12e0ebc6506e00e2'}
-c9afa00936023dba: completed
-output: {file_target('benchmark/susie2/sparse_14_susie2_1.rds'): '98adf711379a200e'}
+Created 21 hr ago
+Started 6 min ago
+Ran for 1 sec
+TASK:
+=====
 
-M2_2eac66b84134d3f8.sh:
-=======================
+TAGS:
+=====
+56ed1083fa5bd015 normal normal_normal_1
+
+ENVIRONMENT:
+============
+_runtime              {'cores': 1,
+ 'cur_dir': '/home/kaiqianz/dsc/vignettes/one_sample_location',
+ 'home_dir': '/home/kaiqianz',
+ 'mem': 2000000000,
+ 'run_mode': 'run',
+ 'sig_mode': 'default',
+ 'verbosity': 2,
+ 'walltime': '00:03:00'}
+step_name             'normal'
+
+execution script:
+================
 #!/bin/bash
-#SBATCH --time=00:10:00
+#SBATCH --time=00:03:00
 #SBATCH --partition=broadwl
-
+#
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=3
-#SBATCH --mem-per-cpu=4G
-#SBATCH --job-name=M2_2eac66b84134d3f8
-#SBATCH --output=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stdout
-#SBATCH --error=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stderr
-cd /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg
-module load R/3.4.3
-sos execute M2_2eac66b84134d3f8 -v 2 -s default
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=2G
+#SBATCH --job-name=M1_9056f36343b32614
+#SBATCH --output=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.out
+#SBATCH --error=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err
+cd /home/kaiqianz/dsc/vignettes/one_sample_location
+module load R
+sos execute M1_9056f36343b32614 -v 2 -s default
+standout output:
+================
+9056f36343b32614: completed
+output: first_investigation/normal/normal_1.rds
+
+standout error:
+================
+9056f36343b32614: completed
 ```
 
 
-You will see the actual SBATCH script submitted. Of perticular interest is perhaps the `stderr` and `stdout`. They record screen output of a job. To check them out:
+You will see the actual SBATCH script submitted. Of perticular interest is perhaps the `.err` and `.out`. They record screen output of a job. To check them out:
 
 ```bash
-cat /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.err
+cat /home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err
 ```
 
 ```
-Note that the current default version of R is 3.4.3.
-Type "module help R" for advice on using R on midway.
+Note that the current default version of R is 3.5.1.
+INFO: M1_9056f36343b32614 started
+INFO: All 1 tasks in M1_9056f36343b32614 completed
 ```
 
-So I get two lines of messages related to loading R modules and nothing else. This is perhaps a good sign that no error or warning messages were generated from my R-based jobs.
+So I get three lines of messages related to loading R modules and nothing else. This is perhaps a good sign that no error or warning messages were generated from my R-based jobs.
