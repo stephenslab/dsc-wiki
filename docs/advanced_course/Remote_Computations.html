@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-04-02T13:29:36-05:00",
+    "2019-04-05T12:55:16-05:00",
   "dateModified":
-    "2019-04-02T13:29:36-05:00",
+    "2019-04-05T12:55:16-05:00",
   "description":
     "Running DSC on a remote computer",
   "author": {
@@ -1022,6 +1022,7 @@ initFunction(initQuery);
     <nav class="onthispage">
       <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
       <ul class="toc__menu">
+  <li><a href="#prerequisites">Prerequisites</a></li>
   <li><a href="#overview">Overview</a></li>
   <li><a href="#job-configuration-template-and-command-options">Job configuration template and command options</a></li>
   <li><a href="#host-configuration-example">Host configuration example</a></li>
@@ -1054,6 +1055,27 @@ initFunction(initQuery);
             <div class="c-textbook__content">
               <h1 id="running-dsc-on-a-remote-computer">Running DSC on a remote computer</h1>
 
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>We will use a minimal example to clearly demonstrate how to run DSC on a remote computer as we go on. Suppose we have created a Github <a href="https://github.com/stephenslab/dsc">repo</a>.
+Suppose we have finished writing a DSC script called <code class="highlighter-rouge">first_investigation_simpler.dsc</code> after following instructions from <a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html"><code class="highlighter-rouge">DSC basics, part I</code></a>. This DSC script is under the folder (“/dsc/vignettes/one_sample_location”). And now we want to execute it.</p>
+
+<ul>
+  <li>First, we should run a truncate version to test DSC <a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">(Details)</a>:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigate_simpler.dsc --truncate
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Second, if the truncate version reports error, we should try to <a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html"><code class="highlighter-rouge">debug DSC</code></a> before running on a large scale.</p>
+  </li>
+  <li>
+    <p>Third, after successfully completing a truncate version DSC, we can consider to execute the entire DSC script on a remote computer to substantially save running time.</p>
+  </li>
+</ul>
+
 <h2 id="overview">Overview</h2>
 
 <p>DSC uses one additional configuration file and two command options (<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote computer (or “host”, hereafter). Here a remote computer can be:</p>
@@ -1063,7 +1085,7 @@ initFunction(initQuery);
   <li>A system with a job queue manager, such as PBS-based cluster</li>
 </ol>
 
-<p>DSC facilicate two approaches to run remote tasks:</p>
+<p>DSC facilicates two approaches to run remote tasks:</p>
 
 <ol>
   <li>“On-Host”, the conventional way: log in to the host and run remote jobs. For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. For a cluster system this will automatically submit jobs to compute nodes based on provided template.</li>
@@ -1101,10 +1123,10 @@ initFunction(initQuery);
     <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway 2</span>
     <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
     <span class="na">paths</span><span class="pi">:</span>
-      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/gaow</span>
+      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/kaiqianz</span>
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
     <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">60</span>
-    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">40</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">60</span>
     <span class="na">max_cores</span><span class="pi">:</span> <span class="s">40</span>
     <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">36:00:00"</span>
     <span class="na">max_mem</span><span class="pi">:</span> <span class="s">64G</span>
@@ -1117,10 +1139,10 @@ initFunction(initQuery);
       <span class="no">#SBATCH --ntasks-per-node={cores}</span>
       <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
       <span class="no">#SBATCH --job-name={job_name}</span>
-      <span class="no">#SBATCH --output={cur_dir}/{job_name}.stdout</span>
-      <span class="no">#SBATCH --error={cur_dir}/{job_name}.stderr</span>
+      <span class="no">#SBATCH --output={cur_dir}/{job_name}.out</span>
+      <span class="no">#SBATCH --error={cur_dir}/{job_name}.err</span>
       <span class="no">cd {cur_dir}</span>
-      <span class="no">module load R/3.4.3</span>
+      <span class="no">module load R</span>
     <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl"</span>
     <span class="na">account</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
     <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
@@ -1130,7 +1152,7 @@ initFunction(initQuery);
   <span class="na">faraway2</span><span class="pi">:</span>
     <span class="na">based_on</span><span class="pi">:</span> <span class="s">midway2</span>
     <span class="na">description</span><span class="pi">:</span> <span class="s">Submit and manage jobs to `midway2` from a local computer.</span>
-    <span class="na">address</span><span class="pi">:</span> <span class="s">gaow@midway2.rcc.uchicago.edu</span>
+    <span class="na">address</span><span class="pi">:</span> <span class="s">kaiqianz@midway2.rcc.uchicago.edu</span>
   <span class="na">stephenslab</span><span class="pi">:</span>
     <span class="na">based_on</span><span class="pi">:</span> <span class="s">midway2</span>
     <span class="na">max_cores</span><span class="pi">:</span> <span class="s">28</span>
@@ -1141,23 +1163,18 @@ initFunction(initQuery);
 
 <span class="na">default</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
-  <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">10m</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">3m</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
   <span class="na">n_cpu</span><span class="pi">:</span> <span class="s">1</span>
   <span class="na">mem_per_cpu</span><span class="pi">:</span> <span class="s">2G</span>
 
-<span class="c1"># module specific configurations</span>
-<span class="c1"># mostly to consolidate small jobs</span>
 <span class="na">simulate</span><span class="pi">:</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
-
-<span class="na">score</span><span class="pi">:</span>
   <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
 </code></pre></div></div>
 
 <p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a number of systems. Here <code class="highlighter-rouge">midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per node, allows for maximum of 40 concurrent jobs per user, and a maximum running time of 36hrs per job. These limitations have been reflected by the <code class="highlighter-rouge">max_*</code> values in the configuration.</p>
 
-<p>There are also 2 “derived” queue: <code class="highlighter-rouge">stephenslab</code> is a special partition on <code class="highlighter-rouge">midway2</code> that allows for different configurations, thus it is derived from <code class="highlighter-rouge">midway2</code> via <code class="highlighter-rouge">based_on: midway2</code>. Also relevant is the <code class="highlighter-rouge">faraway2</code>, also <code class="highlighter-rouge">based_on: midway2</code>, but specifies the address of how to connect to <code class="highlighter-rouge">midway2</code>. Then DSC will assume that the request is made from a local computer and try to use the “local-host” mechanism to run jobs.</p>
+<p>There are also 2 “derived” queues: <code class="highlighter-rouge">stephenslab</code> is a special partition on <code class="highlighter-rouge">midway2</code> that allows for different configurations, thus it is derived from <code class="highlighter-rouge">midway2</code> via <code class="highlighter-rouge">based_on: midway2</code>. Also relevant is the <code class="highlighter-rouge">faraway2</code>, also <code class="highlighter-rouge">based_on: midway2</code>, but specifies the address of how to connect to <code class="highlighter-rouge">midway2</code>. Then DSC will assume that the request is made from a local computer and try to use the “local-host” mechanism to run jobs.</p>
 
 <p>The section <code class="highlighter-rouge">default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
 
@@ -1174,7 +1191,9 @@ initFunction(initQuery);
 
 <p>For example for 100 module instances of <code class="highlighter-rouge">simulate</code> that each generates some data in under a minute, one can specify <code class="highlighter-rouge">time_per_instance: 1m</code> and <code class="highlighter-rouge">instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
 
-<p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code class="highlighter-rouge">gaow</code> with their UChicago cnetID.</p>
+<p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code class="highlighter-rouge">kaiqianz</code> with their UChicago cnetID.</p>
+
+<p>In our example, under the same folder (“/dsc/vignettes/one_sample_location”), we open a text editor to write the yml file called <code class="highlighter-rouge">midway.yml</code> as described above and save it.</p>
 
 <p><strong>Please never use this template without configuring the required resources, particularly <code class="highlighter-rouge">time_per_instance</code> and <code class="highlighter-rouge">instance_per_job</code>. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on <code class="highlighter-rouge">instance_per_job</code>) and waste of resource (too high on <code class="highlighter-rouge">time_per_instance</code>)</strong></p>
 
@@ -1200,102 +1219,106 @@ initFunction(initQuery);
 
 <p>Caution that to successfully use <code class="highlighter-rouge">--to-host</code>, the command program <a href="https://rsync.samba.org"><code class="highlighter-rouge">rsync</code></a> have to be available from the local computer.</p>
 
+<p>In our example, under the same folder (“/dsc/vignettes/one_sample_location”), we run</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation_simpler.dsc <span class="nt">--host</span> midway.yml <span class="nt">-c</span> 30
+</code></pre></div></div>
+
 <h2 id="monitor-and-manage-jobs">Monitor and manage jobs</h2>
 
 <p>When jobs are submitted, you should see on the screen something like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: M2_9eb9ad957cc31d50 submitted to midway2 with job id 45634260
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: M1_9056f36343b32614 submitted to midway2 with job id 59250575
 </code></pre></div></div>
 
-<p>So there is a task ID <code class="highlighter-rouge">M2_9eb9ad957cc31d50</code> and job ID <code class="highlighter-rouge">45634260</code>. This can also be observed from your system’s job queue, for example:</p>
+<p>So there is a task ID <code class="highlighter-rouge">M1_9056f36343b32614</code> and job ID <code class="highlighter-rouge">59250575</code>. This can also be observed from your system’s job queue, for example:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-          45633096   broadwl M2_2eac6     gaow PD       0:00      1 (Priority)
-          45633098   broadwl M2_c6ed0     gaow PD       0:00      1 (Priority)
-          45633099   broadwl M2_38e36     gaow PD       0:00      1 (Priority)
-          45633100   broadwl M2_8fea7     gaow PD       0:00      1 (Priority)
-          45633101   broadwl M2_829d4     gaow PD       0:00      1 (Priority)
-          45633102   broadwl M2_3ab21     gaow PD       0:00      1 (Priority)
-          45633103   broadwl M2_ed42e     gaow PD       0:00      1 (Priority)
-          45633104   broadwl M2_2966b     gaow PD       0:00      1 (Priority)
-          45633086   broadwl M2_13151     gaow  R       0:01      1 midway2-0033
-          45633087   broadwl M2_01df1     gaow  R       0:01      1 midway2-0033
-          45633088   broadwl M2_b8668     gaow  R       0:01      1 midway2-0033
-          45633089   broadwl M2_89a83     gaow  R       0:01      1 midway2-0070
-          45633090   broadwl M2_7cbdd     gaow  R       0:01      1 midway2-0070
-          45633091   broadwl M2_56fa6     gaow  R       0:01      1 midway2-0070
-          45633092   broadwl M2_4baac     gaow  R       0:01      1 midway2-0070
+          59250575   broadwl M1_9056f kaiqianz  R       0:04      1 midway2-0003
+          59250576   broadwl M1_10b92 kaiqianz  R       0:04      1 midway2-0003
 </code></pre></div></div>
 
 <p>To check on one of the job, for example the first one:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M2_2eac6 <span class="nt">-v3</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M1_9056f <span class="nt">-v3</span>
 </code></pre></div></div>
 
 <p>You will see information such as:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Started 27 min 13 sec ago
-Duration 26 min 59 sec
-
-TAGS:
-=====
-e0b204d49b525c52 susie2_0 susie2_sparse_13_susie2_1 susie2_sparse_14_susie2_1
-
-...
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M1_9056f36343b32614	56ed1083fa5bd015 normal normal_normal_1	
+Created 20 hr ago	Started 2 min ago	Ran for 1 sec 	
+completed
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">TAGS</code> line explains that the job comes from the module <code class="highlighter-rouge">susie2</code> and produces 2 files <code class="highlighter-rouge">susie2/sparse_13_susie2_1</code> and  <code class="highlighter-rouge">susie2/sparse_14_susie2_1</code>. That is, 2 module instances per job. There are also some other useful info on execution stats such as memory usage.</p>
+<p>This means that the job comes from the module <code class="highlighter-rouge">normal</code> and produces 1 file <code class="highlighter-rouge">normal/normal_1</code>. There are also some other useful info on execution stats such as memory usage.</p>
 
 <p>To have more details,</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M2_2eac6 <span class="nt">-v4</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sos status M1_9056f <span class="nt">-v4</span>
 </code></pre></div></div>
 
 <p>and the output:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M2_2eac66b84134d3f8.err:
-========================
-2eac66b84134d3f8: completed
-2018-05-02 07:49:50,749: DEBUG: 2eac66b84134d3f8 ``started``
-2018-05-02 07:49:51,249: DEBUG: 2eac66b84134d3f8 ``completed``
-c9afa00936023dba: completed
-2018-05-02 07:49:51,299: DEBUG: c9afa00936023dba ``started``
-2018-05-02 07:49:51,788: DEBUG: c9afa00936023dba ``completed``
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M1_9056f36343b32614	completed
 
-M2_2eac66b84134d3f8.out:
-========================
-2eac66b84134d3f8: completed
-output: {file_target('benchmark/susie2/sparse_13_susie2_1.rds'): '12e0ebc6506e00e2'}
-c9afa00936023dba: completed
-output: {file_target('benchmark/susie2/sparse_14_susie2_1.rds'): '98adf711379a200e'}
+Created 21 hr ago
+Started 6 min ago
+Ran for 1 sec
+TASK:
+=====
 
-M2_2eac66b84134d3f8.sh:
-=======================
+TAGS:
+=====
+56ed1083fa5bd015 normal normal_normal_1
+
+ENVIRONMENT:
+============
+_runtime              {'cores': 1,
+ 'cur_dir': '/home/kaiqianz/dsc/vignettes/one_sample_location',
+ 'home_dir': '/home/kaiqianz',
+ 'mem': 2000000000,
+ 'run_mode': 'run',
+ 'sig_mode': 'default',
+ 'verbosity': 2,
+ 'walltime': '00:03:00'}
+step_name             'normal'
+
+execution script:
+================
 #!/bin/bash
-#SBATCH --time=00:10:00
+#SBATCH --time=00:03:00
 #SBATCH --partition=broadwl
-
+#
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=3
-#SBATCH --mem-per-cpu=4G
-#SBATCH --job-name=M2_2eac66b84134d3f8
-#SBATCH --output=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stdout
-#SBATCH --error=/scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.stderr
-cd /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg
-module load R/3.4.3
-sos execute M2_2eac66b84134d3f8 -v 2 -s default
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem-per-cpu=2G
+#SBATCH --job-name=M1_9056f36343b32614
+#SBATCH --output=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.out
+#SBATCH --error=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err
+cd /home/kaiqianz/dsc/vignettes/one_sample_location
+module load R
+sos execute M1_9056f36343b32614 -v 2 -s default
+standout output:
+================
+9056f36343b32614: completed
+output: first_investigation/normal/normal_1.rds
+
+standout error:
+================
+9056f36343b32614: completed
 </code></pre></div></div>
 
-<p>You will see the actual SBATCH script submitted. Of perticular interest is perhaps the <code class="highlighter-rouge">stderr</code> and <code class="highlighter-rouge">stdout</code>. They record screen output of a job. To check them out:</p>
+<p>You will see the actual SBATCH script submitted. Of perticular interest is perhaps the <code class="highlighter-rouge">.err</code> and <code class="highlighter-rouge">.out</code>. They record screen output of a job. To check them out:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /scratch/midway2/gaow/GIT/lab-dsc/dsc-reg/.sos/M2_2eac66b84134d3f8.err
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Note that the current default version of R is 3.4.3.
-Type "module help R" for advice on using R on midway.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Note that the current default version of R is 3.5.1.
+INFO: M1_9056f36343b32614 started
+INFO: All 1 tasks in M1_9056f36343b32614 completed
 </code></pre></div></div>
 
-<p>So I get two lines of messages related to loading R modules and nothing else. This is perhaps a good sign that no error or warning messages were generated from my R-based jobs.</p>
+<p>So I get three lines of messages related to loading R modules and nothing else. This is perhaps a good sign that no error or warning messages were generated from my R-based jobs.</p>
 
               <nav class="c-page__nav">
   
