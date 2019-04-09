@@ -3,12 +3,12 @@
 ## Prerequisites
 
 We will use a minimal example to demonstrate how to run DSC on a computer cluster. 
-We will be using the example from [`DSC basics, part I`](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html).
+We will be using the example from [DSC basics, part I](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html).
 The source code [can be found here](https://github.com/stephenslab/dsc/master/vignettes/one_sample_location).
 
 Suppose we created the `first_investigate_simpler.dsc` script and want to submit it to a cluster to run the job. Before doing so, we must make sure it works:
 
-1. We should run directly from command terminal a "truncate" version to test the script [(Details)](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html):
+1. We should run directly from command terminal a "truncate" version to test the script ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
 
 ```
 dsc first_investigate_simpler.dsc --truncate
