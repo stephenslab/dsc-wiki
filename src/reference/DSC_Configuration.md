@@ -133,6 +133,21 @@ t: R( x = mu + rt(n,df) )
   $true_mean: mu
 ```
 
+It is possible to create "base" modules that are not meant to be used directly, but exclusively for other modules to derive upon. Such base modules are characterized by the **absence of module executable specification**, eg:
+
+```yaml
+simulate_base:
+  n: 100, 1000
+  mu: 0
+  $data: x
+  $true_mean: mu
+  
+normal(simulate_base): R( x = mu + rnorm(n) )
+
+t(simulate_base): R( x = mu + rt(n,df) )
+  df: 2
+```
+
 ### Module parameters
 
 Each module parameter is an indented property under module property line. In the example above, `n` is module input parameter for both modules `normal` and `t`, corresponding to the variable `n` in both [rnorm.R](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rnorm.R) and [rt.R](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/R/scenarios/rt.R) scripts. Here `n` is set to `1000`. When set to an array-like value, eg `n: 100, 500, 1000` then effectively 3 modules are defined for `normal` and `t` each. Take `normal` for example:

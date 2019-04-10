@@ -29,9 +29,9 @@
   "headline":
     "DSC configuration syntax",
   "datePublished":
-    "2019-04-09T18:56:58-05:00",
+    "2019-04-10T10:10:49-05:00",
   "dateModified":
-    "2019-04-09T18:56:58-05:00",
+    "2019-04-10T10:10:49-05:00",
   "description":
     "DSC syntax: basics of modules",
   "author": {
@@ -1201,6 +1201,20 @@ initFunction(initQuery);
   <span class="s">df</span><span class="pi">:</span> <span class="s">2</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
+</code></pre></div></div>
+
+<p>It is possible to create “base” modules that are not meant to be used directly, but exclusively for other modules to derive upon. Such base modules are characterized by the <strong>absence of module executable specification</strong>, eg:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate_base</span><span class="pi">:</span>
+  <span class="na">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
+  
+<span class="s">normal(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
+
+<span class="s">t(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rt(n,df) )</span>
+  <span class="s">df</span><span class="pi">:</span> <span class="s">2</span>
 </code></pre></div></div>
 
 <h3 id="module-parameters">Module parameters</h3>
