@@ -8,13 +8,13 @@ The source code [can be found here](https://github.com/stephenslab/dsc/master/vi
 
 Suppose we created the `first_investigate_simpler.dsc` script and want to submit it to a cluster to run the job. Before doing so, we must make sure it works:
 
-1. We should run directly from command terminal a "truncate" version to test the script ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
+- We should run directly from command terminal a "truncate" version to test the script ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
 
 ```
 dsc first_investigate_simpler.dsc --truncate
 ```
 
-2. If the "truncated run" reports error, we should try to [debug DSC](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html), repeat the previous step, until the truncated run works.
+- If the "truncated run" reports error, we should try to [debug DSC](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html), repeat the previous step, until the truncated run works.
 
 Now we are ready to submit the DSC to run on computer cluster.
  
@@ -34,7 +34,7 @@ For a cluster system this will automatically submit jobs to compute nodes based 
 
 Under the hood, DSC configures all modules and converts them to [`SoS`](https://vatlab.github.io/sos-docs) tasks. Enthusiastic readers shall refer to [this page](https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html) for details under the hood. Configuration here in DSC is further automated for benchmarking and thus simpler interface-wise.
 
-In this document we focus on running jobs on a cluster with queue manager, using the On-host mode.
+**For RCC users at The University of Chicago: ** you can focus on the On-Host mode (do not specify `--to-host` option for file transfer) because it is possible to submit jobs from compute nodes on the cluster system.
 
 ## Job configuration template and command options
 
