@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-04-10T12:55:59-05:00",
+    "2019-04-22T13:00:21-05:00",
   "dateModified":
-    "2019-04-10T12:55:59-05:00",
+    "2019-04-22T13:00:21-05:00",
   "description":
     "DSC Basics, Part II",
   "author": {
@@ -1275,7 +1275,7 @@ INFO: Elapsed time 29.389 seconds.
 <div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
 </span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
-  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.n"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -1352,7 +1352,7 @@ INFO: Elapsed time 57.557 seconds.
 <p>Now let’s load all the results generated with the <em>t</em>-simulated data:</p>
 
 <div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
-  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
+  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t.n"</span><span class="p">,</span><span class="s2">"t.df"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 
