@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part I",
   "datePublished":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "dateModified":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "description":
     "DSC Basics, Part I",
   "author": {
@@ -139,11 +139,31 @@ initFunction(function () {
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
-  <script src="https://unpkg.com/nbinteract-core" async></script>
+  
 
   <!-- Load Thebelab for interactive widgets -->
   <!-- Include Thebelab for interactive code if it's enabled -->
 
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
 
   <!-- Google analytics -->
   <script src="/dsc-wiki/assets/js/ga.js" async></script>
@@ -159,7 +179,7 @@ initFunction(function () {
 const codeCellId = index => `codecell${index}`
 
 const clipboardButton = id =>
-  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
     <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
   </a>`
 
@@ -187,11 +207,11 @@ const addCopyButtonToCodeCells = () => {
     return
   }
 
-  const codeCells = document.querySelectorAll('div.highlighter-rouge:not(.output) pre')
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
   codeCells.forEach((codeCell, index) => {
     const id = codeCellId(index)
     codeCell.setAttribute('id', id)
-    if (document.querySelector(`pre#${id} + a`) == null) {
+    if (document.getElementById("copy-button" + id) == null) {
       codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
     }
   })
@@ -215,6 +235,7 @@ const addCopyButtonToCodeCells = () => {
 initFunction(addCopyButtonToCodeCells);
 </script>
 
+
   <!-- Hide cell code -->
   
 <script>
@@ -226,7 +247,7 @@ Add buttons to hide code cells
 var setCodeCellVisibility = function(inputField, kind) {
     // Update the image and class for hidden
     var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id}`);
+    var codeCell = document.querySelector(`#${id} div.highlight`);
 
     if (kind === "visible") {
         codeCell.classList.remove('hidden');
@@ -264,18 +285,19 @@ var addHideButton = function () {
   }
 
   // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
-    if (!item.parentElement.classList.contains("hidecode")) {
+  document.querySelectorAll('div.input_area').forEach(function (item, index) {
+    if (!item.classList.contains("hidecode")) {
         // Skip the cell if it doesn't have a hidecode class
         return;
     }
 
     const id = codeCellId(index)
     item.setAttribute('id', id);
-    item.insertAdjacentHTML('afterend', hideCodeButton(id))
+    // Insert the button just inside the end of the next div
+    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
     // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} + input + label`);
+    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
     hideLink.addEventListener('click', toggleCodeCellVisibility)
   });
 }
@@ -1012,38 +1034,12 @@ initFunction(initQuery);
 </nav>
 
       
-      <!-- Shamelessly copied from minimal mistakes -->
-
-
-<!-- TOC will only show up if it has at least one item -->
-
-
-  <aside class="sidebar__right">
-    <nav class="onthispage">
-      <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
-      <ul class="toc__menu">
-  <li><a href="#pipeline-variables">Pipeline variables</a></li>
-  <li><a href="#planning-a-dsc-file">Planning a DSC file</a></li>
-  <li><a href="#two-important-notes-about-pipeline-variables">Two important notes about pipeline variables</a></li>
-  <li><a href="#defining-modules-in-a-dsc-file">Defining modules in a DSC file</a>
-    <ul>
-      <li><a href="#the-normal-module">The normal module</a></li>
-      <li><a href="#the-t-module">The t module</a></li>
-      <li><a href="#the-two-analyze-modules">The two analyze modules</a></li>
-      <li><a href="#the-two-score-modules">The two score modules</a></li>
-    </ul>
-  </li>
-  <li><a href="#defining-groups-and-pipelines">Defining groups and pipelines</a></li>
-  <li><a href="#executing-the-dsc-benchmark">Executing the DSC benchmark</a></li>
-  <li><a href="#inspecting-the-results-of-the-dsc-benchmark">Inspecting the results of the DSC benchmark</a></li>
-  <li><a href="#pipeline-evaluation-and-alternatives">Pipeline evaluation, and alternatives</a></li>
-  <li><a href="#recap">Recap</a></li>
-  <li><a href="#next-steps">Next steps</a></li>
-</ul>
-    </nav>
-  </aside>
-
-
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
       
       <main class="c-textbook__page" tabindex="-1">
           <div class="o-wrapper">
@@ -1062,6 +1058,7 @@ initFunction(initQuery);
 
             
 <div class="buttons">
+
 
 
 
@@ -1308,23 +1305,31 @@ INFO: Elapsed time 6.206 seconds.
 
 <p>To inspect the outcomes generated by each of the 8 pipelines, change the R working directory to the location of the DSC file, and use the <code class="highlighter-rouge">dscquery</code> function from the <code class="highlighter-rouge">dscrutils</code> package to load the DSC results into R:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
 </span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
   </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_mean"</span><span class="p">,</span><span class="s2">"analyze.est_mean"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span><span class="n">dscout</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_mean: extracted atomic values
  - analyze.est_mean: extracted atomic values
  - score.error: extracted atomic values
+</code></pre></div>      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
 
-</code></pre></div></div>
-
-<div class="output output_html">
+      <div class="output output_html">
 <table>
 <thead><tr><th scope="col">DSC</th><th scope="col">simulate</th><th scope="col">simulate.true_mean</th><th scope="col">analyze</th><th scope="col">analyze.est_mean</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
 <tbody>
@@ -1339,6 +1344,10 @@ Reading DSC outputs:
 </tbody>
 </table>
 
+</div>
+
+    </div>
+  </div>
 </div>
 
 <p>The results in this table illustrate a few essential features of a DSC program:</p>

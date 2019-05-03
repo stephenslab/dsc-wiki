@@ -29,9 +29,9 @@
   "headline":
     "R Example 1",
   "datePublished":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "dateModified":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "description":
     "An R example: ashr benchmark",
   "author": {
@@ -139,11 +139,31 @@ initFunction(function () {
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
-  <script src="https://unpkg.com/nbinteract-core" async></script>
+  
 
   <!-- Load Thebelab for interactive widgets -->
   <!-- Include Thebelab for interactive code if it's enabled -->
 
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
 
   <!-- Google analytics -->
   <script src="/dsc-wiki/assets/js/ga.js" async></script>
@@ -159,7 +179,7 @@ initFunction(function () {
 const codeCellId = index => `codecell${index}`
 
 const clipboardButton = id =>
-  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
     <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
   </a>`
 
@@ -187,11 +207,11 @@ const addCopyButtonToCodeCells = () => {
     return
   }
 
-  const codeCells = document.querySelectorAll('div.highlighter-rouge:not(.output) pre')
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
   codeCells.forEach((codeCell, index) => {
     const id = codeCellId(index)
     codeCell.setAttribute('id', id)
-    if (document.querySelector(`pre#${id} + a`) == null) {
+    if (document.getElementById("copy-button" + id) == null) {
       codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
     }
   })
@@ -215,6 +235,7 @@ const addCopyButtonToCodeCells = () => {
 initFunction(addCopyButtonToCodeCells);
 </script>
 
+
   <!-- Hide cell code -->
   
 <script>
@@ -226,7 +247,7 @@ Add buttons to hide code cells
 var setCodeCellVisibility = function(inputField, kind) {
     // Update the image and class for hidden
     var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id}`);
+    var codeCell = document.querySelector(`#${id} div.highlight`);
 
     if (kind === "visible") {
         codeCell.classList.remove('hidden');
@@ -264,18 +285,19 @@ var addHideButton = function () {
   }
 
   // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
-    if (!item.parentElement.classList.contains("hidecode")) {
+  document.querySelectorAll('div.input_area').forEach(function (item, index) {
+    if (!item.classList.contains("hidecode")) {
         // Skip the cell if it doesn't have a hidecode class
         return;
     }
 
     const id = codeCellId(index)
     item.setAttribute('id', id);
-    item.insertAdjacentHTML('afterend', hideCodeButton(id))
+    // Insert the button just inside the end of the next div
+    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
     // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} + input + label`);
+    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
     hideLink.addEventListener('click', toggleCodeCellVisibility)
   });
 }
@@ -1012,39 +1034,12 @@ initFunction(initQuery);
 </nav>
 
       
-      <!-- Shamelessly copied from minimal mistakes -->
-
-
-<!-- TOC will only show up if it has at least one item -->
-
-
-  <aside class="sidebar__right">
-    <nav class="onthispage">
-      <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
-      <ul class="toc__menu">
-  <li><a href="#dsc-problem">DSC Problem</a></li>
-  <li><a href="#dsc-specification">DSC Specification</a>
-    <ul>
-      <li><a href="#module-simulate">Module simulate</a></li>
-      <li><a href="#module-shrink">Module shrink</a></li>
-      <li><a href="#module-beta_score--pi0_score">Module beta_score &amp; pi0_score</a></li>
-      <li><a href="#dsc-section-for-benchmark-configuration">DSC section for benchmark configuration</a></li>
-    </ul>
-  </li>
-  <li><a href="#execution-logic">Execution logic</a></li>
-  <li><a href="#run-dsc">Run DSC</a></li>
-  <li><a href="#benchmark-evaluation">Benchmark evaluation</a>
-    <ul>
-      <li><a href="#extract-result-of-interest">Extract result of interest</a></li>
-      <li><a href="#explore-results-of-interest">Explore results of interest</a></li>
-    </ul>
-  </li>
-  <li><a href="#explore-intermediate-output">Explore intermediate output</a></li>
-</ul>
-    </nav>
-  </aside>
-
-
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
       
       <main class="c-textbook__page" tabindex="-1">
           <div class="o-wrapper">
@@ -1063,6 +1058,7 @@ initFunction(initQuery);
 
             
 <div class="buttons">
+
 
 
 
@@ -1227,67 +1223,99 @@ INFO: Elapsed time 85.268 seconds.
 
 <p>The <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> has names to various simulation settings and methods. Here we use <code class="highlighter-rouge">dscrutils</code> to reproduce the DSCR example. It is similar to what we have done in the <a href="../first_course/Intro_DSC">DSC Introduction example</a>, but we will demonstrate the use of <code class="highlighter-rouge">condition</code> argument, to create 3 data-sets:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s1">'~/GIT/dsc/vignettes/ash'</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s1">'~/GIT/dsc/vignettes/ash'</span><span class="p">)</span><span class="w">
 </span><span class="n">dsc_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dsc_result'</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">An</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">An</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.mixcompdist"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.beta_est"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.pi0_est"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"score.mse"</span><span class="p">),</span><span class="w">
                          </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.g = 'list(c(2/3,1/3),c(0,0),c(1,2))'"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
  - shrink.pi0_est: extracted atomic values
  - score.mse: extracted atomic values
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
-</code></pre></div></div>
-
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Bn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Bn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.mixcompdist"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.beta_est"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.pi0_est"</span><span class="p">,</span><span class="w"> 
                                               </span><span class="s2">"score.mse"</span><span class="p">),</span><span class="w">
                          </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.g = 'list(rep(1/7,7),c(-1.5,-1,-0.5,0,0.5,1,1.5),rep(0.5,7))'"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
  - shrink.pi0_est: extracted atomic values
  - score.mse: extracted atomic values
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
-</code></pre></div></div>
-
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Cn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Cn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_pi0"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.mixcompdist"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.beta_est"</span><span class="p">,</span><span class="w">
                                               </span><span class="s2">"shrink.pi0_est"</span><span class="p">,</span><span class="w"> 
                                               </span><span class="s2">"score.mse"</span><span class="p">),</span><span class="w">
                          </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.g = 'list(c(1/4,1/4,1/3,1/6),c(-2,-1,0,1),c(2,1.5,1,1))'"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
  - shrink.pi0_est: extracted atomic values
  - score.mse: extracted atomic values
-
-</code></pre></div></div>
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
 <p>To view one of the resulting data frame:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">An</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">An</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_html">
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <div class="output output_html">
 <table>
 <thead><tr><th scope="col">DSC</th><th scope="col">simulate.true_pi0</th><th scope="col">shrink.mixcompdist</th><th scope="col">shrink.beta_est</th><th scope="col">shrink.pi0_est</th><th scope="col">score</th><th scope="col">score.mse</th></tr></thead>
 <tbody>
@@ -1302,17 +1330,28 @@ Reading DSC outputs:
 
 </div>
 
+    </div>
+  </div>
+</div>
+
 <h3 id="explore-results-of-interest">Explore results of interest</h3>
 
 <p>Suppose we are interested in comparing $\pi_0$ estimates under scenario <code class="highlighter-rouge">An</code>, for two flavors of shrink module <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">halfuniform</code>.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">An</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'normal'</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">An</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'normal'</span><span class="p">)</span><span class="w">
 </span><span class="n">hu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">An</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'halfuniform'</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
+
+</div>
 
 <p>First, we visualize estimated vs true $\pi_0$ for two methods:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w">
 </span><span class="n">plot</span><span class="p">(</span><span class="n">subset</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'score_pi0'</span><span class="p">)</span><span class="o">$</span><span class="n">simulate.true_pi0</span><span class="p">,</span><span class="w"> 
      </span><span class="n">subset</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'score_pi0'</span><span class="p">)</span><span class="o">$</span><span class="n">shrink.pi0_est</span><span class="p">,</span><span class="w"> 
      </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'truth'</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'estimated'</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'normal'</span><span class="p">,</span><span class="w"> 
@@ -1323,53 +1362,101 @@ Reading DSC outputs:
      </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'truth'</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'estimated'</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'halfunif'</span><span class="p">,</span><span class="w"> 
      </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#800000"</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">))</span><span class="w">
 </span><span class="n">abline</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/examples/R_Example_1_25_0.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/examples/R_Example_1_25_0.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
 <p>We then summarize the MSE scores for the two methods:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="n">plotly</span><span class="p">))</span><span class="w">
 </span><span class="n">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span><span class="w">
 </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'score_pi0'</span><span class="p">)</span><span class="o">$</span><span class="n">score.mse</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Normal'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"box"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">add_trace</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hu</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'score_pi0'</span><span class="p">)</span><span class="o">$</span><span class="n">score.mse</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Half Uniform'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"box"</span><span class="p">)</span><span class="w">  </span><span class="o">%&gt;%</span><span class="w"> 
     </span><span class="n">layout</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MSE for pi_0 estimate"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'mse.png'</span><span class="p">)</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'mse.png'</span><span class="p">)</span><span class="w">
 </span><span class="n">IRdisplay</span><span class="o">::</span><span class="n">display_png</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"mse.png"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/examples/R_Example_1_28_1.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/examples/R_Example_1_28_1.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
 <h2 id="explore-intermediate-output">Explore intermediate output</h2>
 
 <p>We have previously focused on benchmark “results”, ie, the mean square errors. It is also possible to extract quantities of interest from any module in the benchmark. For example we want to explore relationship between “true” value and posterior estimates of $\beta$ from method <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">halfnormal</code>. First we use <code class="highlighter-rouge">dscrutils</code> to extract these quantities:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dscrutils</span><span class="o">::</span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc_dir</span><span class="p">,</span><span class="w">
                            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.true_beta"</span><span class="p">,</span><span class="w"> </span><span class="s2">"shrink.mixcompdist"</span><span class="p">,</span><span class="w"> </span><span class="s2">"shrink.beta_est"</span><span class="p">),</span><span class="w">
                            </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.g = 'list(c(2/3,1/3),c(0,0),c(1,2))'"</span><span class="p">,</span><span class="w">
                            </span><span class="n">max.extract.vector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_beta: extracted vector values
  - shrink.beta_est: extracted vector values
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
-</code></pre></div></div>
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">print</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">dat2</span><span class="p">))</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">print</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">dat2</span><span class="p">))</span><span class="w">
-</span></code></pre></div></div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1]   20 2002
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1]   20 2002
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dat2</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
 
-</code></pre></div></div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dat2</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span><span class="w">
-</span></code></pre></div></div>
-
-<div class="output output_html">
+      <div class="output output_html">
 <table>
 <thead><tr><th scope="col">DSC</th><th scope="col">simulate.true_beta.1</th><th scope="col">simulate.true_beta.2</th><th scope="col">simulate.true_beta.3</th><th scope="col">simulate.true_beta.4</th></tr></thead>
 <tbody>
@@ -1384,9 +1471,15 @@ Reading DSC outputs:
 
 </div>
 
+    </div>
+  </div>
+</div>
+
 <p>As shown above, with <code class="highlighter-rouge">max.extract.vector = 1000</code> we allow for extracting vector-valued $\beta$ estimates into the outputted data frame. The resulting dataframe has 2001 columns containing both $\beta$ and its posterior estimate $\tilde{\beta}<em>{\text{normal}}$ and $\tilde{\beta}</em>{\text{halfunif}}$. We make them into separate tables. Rows in each table are replicates.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.true_beta"</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"simulate.true_beta"</span><span class="w">
 </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">sapply</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">dat2</span><span class="p">),</span><span class="s2">"[.]"</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="s1">'.'</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pattern</span><span class="p">)</span><span class="w">
 </span><span class="n">normal0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dat2</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'normal'</span><span class="p">)[,</span><span class="n">cols</span><span class="p">]</span><span class="w">
 </span><span class="n">hu0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dat2</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'halfuniform'</span><span class="p">)[,</span><span class="n">cols</span><span class="p">]</span><span class="w">                 
@@ -1395,44 +1488,96 @@ Reading DSC outputs:
 </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">sapply</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">dat2</span><span class="p">),</span><span class="s2">"[.]"</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="s1">'.'</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pattern</span><span class="p">)</span><span class="w">
 </span><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dat2</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'normal'</span><span class="p">)[,</span><span class="n">cols</span><span class="p">]</span><span class="w">
 </span><span class="n">hu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dat2</span><span class="p">,</span><span class="w"> </span><span class="n">shrink.mixcompdist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'halfuniform'</span><span class="p">)[,</span><span class="n">cols</span><span class="p">]</span><span class="w">             
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
+
+</div>
 
 <p>To view distribution of $\tilde{\beta}$ from one replicate:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_ly</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">normal</span><span class="p">[</span><span class="m">1</span><span class="p">,]),</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Normal'</span><span class="p">,</span><span class="w"> </span><span class="n">opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"histogram"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_ly</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">normal</span><span class="p">[</span><span class="m">1</span><span class="p">,]),</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Normal'</span><span class="p">,</span><span class="w"> </span><span class="n">opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"histogram"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">add_trace</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">hu</span><span class="p">[</span><span class="m">1</span><span class="p">,]),</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Half Uniform'</span><span class="p">,</span><span class="w"> </span><span class="n">opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"histogram"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">layout</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Posterior mean distribution"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'beta.png'</span><span class="p">)</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'beta.png'</span><span class="p">)</span><span class="w">
 </span><span class="n">IRdisplay</span><span class="o">::</span><span class="n">display_png</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"beta.png"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/examples/R_Example_1_37_1.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/examples/R_Example_1_37_1.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
 <p>Now we compare correlation between estimate and the truth for these 2 methods:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normal0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">normal0</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normal0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">normal0</span><span class="p">)</span><span class="w">
 </span><span class="n">normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span><span class="w">
 </span><span class="n">normal_cor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="nf">seq.int</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">normal0</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">cor</span><span class="p">(</span><span class="n">normal0</span><span class="p">[</span><span class="n">i</span><span class="p">,],</span><span class="w"> </span><span class="n">normal</span><span class="p">[</span><span class="n">i</span><span class="p">,]))</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hu0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">hu0</span><span class="p">)</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hu0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">hu0</span><span class="p">)</span><span class="w">
 </span><span class="n">hu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">hu</span><span class="p">)</span><span class="w">
 </span><span class="n">hu_cor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="nf">seq.int</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">hu0</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">cor</span><span class="p">(</span><span class="n">hu0</span><span class="p">[</span><span class="n">i</span><span class="p">,],</span><span class="w"> </span><span class="n">hu</span><span class="p">[</span><span class="n">i</span><span class="p">,]))</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normal_cor</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Normal'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"box"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_ly</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normal_cor</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Normal'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"box"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">add_trace</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hu_cor</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Half Uniform'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"box"</span><span class="p">)</span><span class="w">  </span><span class="o">%&gt;%</span><span class="w"> 
     </span><span class="n">layout</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Correlation between truth and estimates for beta"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'corr.png'</span><span class="p">)</span><span class="w">
+</div>
+
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">export</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'corr.png'</span><span class="p">)</span><span class="w">
 </span><span class="n">IRdisplay</span><span class="o">::</span><span class="n">display_png</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"corr.png"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/examples/R_Example_1_42_1.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
 
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/examples/R_Example_1_42_1.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
               <nav class="c-page__nav">
   

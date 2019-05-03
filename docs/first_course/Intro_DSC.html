@@ -29,9 +29,9 @@
   "headline":
     "A brief introduction to DSC",
   "datePublished":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "dateModified":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "description":
     "Introduction to Dynamical Statistical Comparisons",
   "author": {
@@ -139,11 +139,31 @@ initFunction(function () {
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
-  <script src="https://unpkg.com/nbinteract-core" async></script>
+  
 
   <!-- Load Thebelab for interactive widgets -->
   <!-- Include Thebelab for interactive code if it's enabled -->
 
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
 
   <!-- Google analytics -->
   <script src="/dsc-wiki/assets/js/ga.js" async></script>
@@ -159,7 +179,7 @@ initFunction(function () {
 const codeCellId = index => `codecell${index}`
 
 const clipboardButton = id =>
-  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
     <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
   </a>`
 
@@ -187,11 +207,11 @@ const addCopyButtonToCodeCells = () => {
     return
   }
 
-  const codeCells = document.querySelectorAll('div.highlighter-rouge:not(.output) pre')
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
   codeCells.forEach((codeCell, index) => {
     const id = codeCellId(index)
     codeCell.setAttribute('id', id)
-    if (document.querySelector(`pre#${id} + a`) == null) {
+    if (document.getElementById("copy-button" + id) == null) {
       codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
     }
   })
@@ -215,6 +235,7 @@ const addCopyButtonToCodeCells = () => {
 initFunction(addCopyButtonToCodeCells);
 </script>
 
+
   <!-- Hide cell code -->
   
 <script>
@@ -226,7 +247,7 @@ Add buttons to hide code cells
 var setCodeCellVisibility = function(inputField, kind) {
     // Update the image and class for hidden
     var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id}`);
+    var codeCell = document.querySelector(`#${id} div.highlight`);
 
     if (kind === "visible") {
         codeCell.classList.remove('hidden');
@@ -264,18 +285,19 @@ var addHideButton = function () {
   }
 
   // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
-    if (!item.parentElement.classList.contains("hidecode")) {
+  document.querySelectorAll('div.input_area').forEach(function (item, index) {
+    if (!item.classList.contains("hidecode")) {
         // Skip the cell if it doesn't have a hidecode class
         return;
     }
 
     const id = codeCellId(index)
     item.setAttribute('id', id);
-    item.insertAdjacentHTML('afterend', hideCodeButton(id))
+    // Insert the button just inside the end of the next div
+    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
     // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} + input + label`);
+    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
     hideLink.addEventListener('click', toggleCodeCellVisibility)
   });
 }
@@ -1012,33 +1034,12 @@ initFunction(initQuery);
 </nav>
 
       
-      <!-- Shamelessly copied from minimal mistakes -->
-
-
-<!-- TOC will only show up if it has at least one item -->
-
-
-  <aside class="sidebar__right">
-    <nav class="onthispage">
-      <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
-      <ul class="toc__menu">
-  <li><a href="#an-illustration-the-simulate-analyze-score-design-pattern">An illustration: the simulate-analyze-score design pattern</a></li>
-  <li><a href="#the-dsc-building-blocks-modules-groups-and-pipelines">The DSC building blocks: modules, groups and pipelines</a></li>
-  <li><a href="#running-a-dsc-benchmark">Running a DSC benchmark</a></li>
-  <li><a href="#example">Example</a></li>
-  <li><a href="#the-dsc-file">The DSC file</a></li>
-  <li><a href="#run-dsc">Run DSC</a></li>
-  <li><a href="#query-the-results">Query the results</a></li>
-  <li><a href="#visualize-the-results">Visualize the results</a></li>
-  <li><a href="#expand-the-experiment">Expand the experiment</a></li>
-  <li><a href="#add-a-new-method-to-the-dsc-benchmark">Add a new method to the DSC benchmark</a></li>
-  <li><a href="#recap">Recap</a></li>
-  <li><a href="#next-steps">Next steps</a></li>
-</ul>
-    </nav>
-  </aside>
-
-
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
       
       <main class="c-textbook__page" tabindex="-1">
           <div class="o-wrapper">
@@ -1057,6 +1058,7 @@ initFunction(initQuery);
 
             
 <div class="buttons">
+
 
 
 
@@ -1310,26 +1312,44 @@ INFO: Elapsed time 30.451 seconds.
 
 <p>Next, we will read the results into R using the <code class="highlighter-rouge">dscquery</code> function from the <code class="highlighter-rouge">dscrutils</code> package. To do so, change the working directory in R to the location of the <code class="highlighter-rouge">first_investigation.dsc</code> file.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
+
+</div>
 
 <p>Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame interactively in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code class="highlighter-rouge">help(dscquery)</code> in R for more information.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
 </span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                    </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
-</code></pre></div></div>
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
 
-<div class="output output_html">
+      <div class="output output_html">
 <table>
 <thead><tr><th scope="col">DSC</th><th scope="col">simulate</th><th scope="col">simulate.output.file</th><th scope="col">analyze</th><th scope="col">analyze.output.file</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
 <tbody>
@@ -1344,15 +1364,25 @@ Reading DSC outputs:
 
 </div>
 
+    </div>
+  </div>
+</div>
+
 <p>Once the results are in an R data frame like this, we can easily use standard functions in R to investigate them further.</p>
 
 <p>For example, we can generate an informative summary of the results using the <code class="highlighter-rouge">aggregate</code> function, followed by a call to the <code class="highlighter-rouge">order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscsummary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aggregate</span><span class="p">(</span><span class="n">score.error</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">simulate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">analyze</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="n">dscout</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscsummary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aggregate</span><span class="p">(</span><span class="n">score.error</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">simulate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">analyze</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="n">dscout</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span><span class="w">
 </span><span class="n">dscsummary</span><span class="p">[</span><span class="n">with</span><span class="p">(</span><span class="n">dscsummary</span><span class="p">,</span><span class="n">order</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">score</span><span class="p">)),]</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_html">
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <div class="output output_html">
 <table>
 <thead><tr><th></th><th scope="col">simulate</th><th scope="col">analyze</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
 <tbody>
@@ -1369,13 +1399,19 @@ Reading DSC outputs:
 
 </div>
 
+    </div>
+  </div>
+</div>
+
 <p>In this small experiment with 10 replicates (most likely too small to draw any meaningful conclusions!), we see that the median is a more accurate estimate of the population mean for <em>t</em>-distributed data (on average), and it is also a better estimate for normally distributed data judging as measured by the absolute error—but it is not better if we look at the squared differences.</p>
 
 <h2 id="visualize-the-results">Visualize the results</h2>
 
 <p>Next, we demonstrate use of the <code class="highlighter-rouge">ggplot2</code> package to create a visual summary the squared-error results:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the ggplot2 package and set up graphics within the Jupyter environment.</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the ggplot2 package and set up graphics within the Jupyter environment.</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">repr</span><span class="p">)</span><span class="w">
 </span><span class="n">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3.5</span><span class="p">,</span><span class="n">repr.plot.height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2.5</span><span class="p">)</span><span class="w">
@@ -1391,9 +1427,22 @@ Reading DSC outputs:
 </span><span class="p">}</span><span class="w">
 
 </span><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/first_course/Intro_DSC_24_1.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/first_course/Intro_DSC_24_1.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
 <p>Based on the results from the 10 replicates, we see that the median is substantially more accurate than the mean in the <em>t</em> simulations, on average, and it yields only slightly worse accuracy in the normal simulations.</p>
 
@@ -1421,28 +1470,50 @@ INFO: Elapsed time 29.287 seconds.
 
 <p>Let’s now load the results from our expanded DSC run.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                     </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
-
-</code></pre></div></div>
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
 <p>Comparing to the previous <code class="highlighter-rouge">dscquery</code> output, we confirm that the new DSC run generated twice as many results.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout2</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_html">
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <div class="output output_html">
 80
 </div>
 
-<div class="output output_html">
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <div class="output output_html">
 160
+</div>
+
+    </div>
+  </div>
 </div>
 
 <h2 id="add-a-new-method-to-the-dsc-benchmark">Add a new method to the DSC benchmark</h2>
@@ -1492,22 +1563,44 @@ INFO: Elapsed time 33.921 seconds.
 
 <p>Let’s load the results from our new benchmark into R.</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                     </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div>    </div>
+  </div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+  <div class="output_wrapper">
+    <div class="output_subarea">
+      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
-
-</code></pre></div></div>
+</code></pre></div>      </div>
+    </div>
+  </div>
+</div>
 
 <p>As before, we can easily create a visual summary of the squared-error results:</p>
 
-<div class="language-R input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout3</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+<div class="cell code_cell">
+  <div class="input_area">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout3</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </div>
 
-<p class="output output_png"><img src="../images/first_course/Intro_DSC_37_1.png" alt="png" /></p>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output_subarea">
+
+      <p class="output_png"><img src="../images/first_course/Intro_DSC_37_1.png" alt="png" /></p>
+
+    </div>
+  </div>
+</div>
 
 <p>From this plot, we observe that the Winsorized mean estimate is more accurate than both the standard mean and median on the <em>t</em>-distributed data.</p>
 

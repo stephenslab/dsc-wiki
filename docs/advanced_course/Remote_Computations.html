@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "dateModified":
-    "2019-04-22T13:04:28-05:00",
+    "2019-05-03T08:56:49-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -139,11 +139,31 @@ initFunction(function () {
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
-  <script src="https://unpkg.com/nbinteract-core" async></script>
+  
 
   <!-- Load Thebelab for interactive widgets -->
   <!-- Include Thebelab for interactive code if it's enabled -->
 
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
 
   <!-- Google analytics -->
   <script src="/dsc-wiki/assets/js/ga.js" async></script>
@@ -159,7 +179,7 @@ initFunction(function () {
 const codeCellId = index => `codecell${index}`
 
 const clipboardButton = id =>
-  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
     <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
   </a>`
 
@@ -187,11 +207,11 @@ const addCopyButtonToCodeCells = () => {
     return
   }
 
-  const codeCells = document.querySelectorAll('div.highlighter-rouge:not(.output) pre')
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
   codeCells.forEach((codeCell, index) => {
     const id = codeCellId(index)
     codeCell.setAttribute('id', id)
-    if (document.querySelector(`pre#${id} + a`) == null) {
+    if (document.getElementById("copy-button" + id) == null) {
       codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
     }
   })
@@ -215,6 +235,7 @@ const addCopyButtonToCodeCells = () => {
 initFunction(addCopyButtonToCodeCells);
 </script>
 
+
   <!-- Hide cell code -->
   
 <script>
@@ -226,7 +247,7 @@ Add buttons to hide code cells
 var setCodeCellVisibility = function(inputField, kind) {
     // Update the image and class for hidden
     var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id}`);
+    var codeCell = document.querySelector(`#${id} div.highlight`);
 
     if (kind === "visible") {
         codeCell.classList.remove('hidden');
@@ -264,18 +285,19 @@ var addHideButton = function () {
   }
 
   // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
-    if (!item.parentElement.classList.contains("hidecode")) {
+  document.querySelectorAll('div.input_area').forEach(function (item, index) {
+    if (!item.classList.contains("hidecode")) {
         // Skip the cell if it doesn't have a hidecode class
         return;
     }
 
     const id = codeCellId(index)
     item.setAttribute('id', id);
-    item.insertAdjacentHTML('afterend', hideCodeButton(id))
+    // Insert the button just inside the end of the next div
+    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
     // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} + input + label`);
+    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
     hideLink.addEventListener('click', toggleCodeCellVisibility)
   });
 }
@@ -1012,28 +1034,12 @@ initFunction(initQuery);
 </nav>
 
       
-      <!-- Shamelessly copied from minimal mistakes -->
-
-
-<!-- TOC will only show up if it has at least one item -->
-
-
-  <aside class="sidebar__right">
-    <nav class="onthispage">
-      <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
-      <ul class="toc__menu">
-  <li><a href="#prerequisites">Prerequisites</a></li>
-  <li><a href="#overview-of-running-remote-jobs">Overview of running remote jobs</a></li>
-  <li><a href="#job-configuration-template-and-command-options">Job configuration template and command options</a></li>
-  <li><a href="#host-configuration-example">Host configuration example</a></li>
-  <li><a href="#run-remote-jobs">Run remote jobs</a></li>
-  <li><a href="#monitor-and-manage-jobs">Monitor and manage jobs</a></li>
-  <li><a href="#computer-resource-overhead">Computer resource overhead</a></li>
-</ul>
-    </nav>
-  </aside>
-
-
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
       
       <main class="c-textbook__page" tabindex="-1">
           <div class="o-wrapper">
@@ -1057,68 +1063,123 @@ initFunction(initQuery);
 
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>We will use a minimal example to demonstrate how to run DSC on a computer cluster. 
-We will be using the example from <a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html">DSC basics, part I</a>.
-The source code <a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">can be found here</a>.</p>
+<p>We will use a minimal example to demonstrate how to run DSC on a
+computer cluster.  We will be using the example from
+<a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html">DSC basics, part I</a>.
+The source code
+<a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">can be found here</a>.</p>
 
-<p>Suppose we created the <code class="highlighter-rouge">first_investigate_simpler.dsc</code> script and want to submit it to a cluster to run the job. Before doing so, we must make sure it works:</p>
+<p>Suppose we created the <code class="highlighter-rouge">first_investigate_simpler.dsc</code> script and want
+to submit it to a cluster to run the job. Before doing so, we must
+make sure it works:</p>
 
 <ul>
-  <li>We should run directly from command terminal a “truncate” version to test the script (<a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">see here for details</a>):</li>
+  <li>We should run directly from command terminal a “truncate” version to
+test the script
+(<a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">see here for details</a>):</li>
 </ul>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigate_simpler.dsc --truncate
 </code></pre></div></div>
 
 <ul>
-  <li>If the “truncated run” reports error, we should try to <a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html">debug DSC</a>, repeat the previous step, until the truncated run works.</li>
+  <li>If the “truncated run” reports error, we should try to
+<a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html">debug DSC</a>,
+repeat the previous step, until the truncated run works.</li>
 </ul>
 
 <p>Now we are ready to submit the DSC to run on computer cluster.</p>
 
 <h2 id="overview-of-running-remote-jobs">Overview of running remote jobs</h2>
 
-<p>DSC uses one additional configuration file and two command options (<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote computer (or “host”, hereafter). Here a remote computer can be:</p>
+<p>DSC uses one additional configuration file and two command options
+(<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote computer (or “host”,
+hereafter). Here a remote computer can be:</p>
 
 <ol>
-  <li>A standalone desktop workstation without a job queue system</li>
-  <li>A system with a job queue manager, such as PBS-based cluster</li>
+  <li>
+    <p>A standalone desktop workstation without a job queue system</p>
+  </li>
+  <li>
+    <p>A system with a job queue manager, such as PBS-based cluster</p>
+  </li>
 </ol>
 
 <p>DSC facilicates two approaches to run remote tasks:</p>
 
 <ol>
-  <li>“On-Host”, the conventional way: log in to the host and run DSC with <code class="highlighter-rouge">--host</code> argument. 
-For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. 
-For a cluster system this will automatically submit jobs to compute nodes based on provided template.</li>
-  <li>“Local-Host”, a host friendly way: do not log in to the host to run jobs. Rather, have a copy of DSC software installed to your local computer (Mac or Linux), and configure the host to have DSC and all required tools for benchmarking installed. Then run DSC from local computer with additional folders to be synced to the host specified by <code class="highlighter-rouge">--to-host</code> option. The local computer will serve as the job dispatcher and job monitor. This provides a way to run on hosts whose headnote cannot execute long running <code class="highlighter-rouge">dsc</code> process AND whose compute nodes cannot be used to submit jobs.</li>
+  <li>
+    <p>“On-Host”, the conventional way: log in to the host and run DSC
+with <code class="highlighter-rouge">--host</code> argument.  For a standalone system, this is no
+difference from logging in to the system and run DSC benchmark
+directly.  For a cluster system this will automatically submit jobs to
+compute nodes based on provided template.</p>
+  </li>
+  <li>
+    <p>“Local-Host”, a host friendly way: do not log in to the host to run
+jobs. Rather, have a copy of DSC software installed to your local
+computer (Mac or Linux), and configure the host to have DSC and all
+required tools for benchmarking installed. Then run DSC from local
+computer with additional folders to be synced to the host specified by
+<code class="highlighter-rouge">--to-host</code> option. The local computer will serve as the job
+dispatcher and job monitor. This provides a way to run on hosts whose
+headnote cannot execute long running <code class="highlighter-rouge">dsc</code> process AND whose compute
+nodes cannot be used to submit jobs.</p>
+  </li>
 </ol>
 
-<p>Under the hood, DSC configures all modules and converts them to <a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Enthusiastic readers shall refer to <a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a> for details under the hood. Configuration here in DSC is further automated for benchmarking and thus simpler interface-wise.</p>
+<p>Under the hood, DSC configures all modules and converts them to
+<a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Enthusiastic readers
+shall refer to
+<a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a>
+for details under the hood. Configuration here in DSC is further
+automated for benchmarking and thus simpler interface-wise.</p>
 
-<p>**For RCC users at The University of Chicago: ** you can focus on the On-Host mode (do not specify <code class="highlighter-rouge">--to-host</code> option for file transfer) because it is possible to submit jobs from compute nodes on the cluster system.</p>
+<p>For RCC users at the University of Chicago: you can focus on the
+On-Host mode (do not specify <code class="highlighter-rouge">--to-host</code> option for file transfer)
+because it is possible to submit jobs from compute nodes on the
+cluster system.</p>
 
 <h2 id="job-configuration-template-and-command-options">Job configuration template and command options</h2>
 
 <p>Using a template and command options, DSC allows users to:</p>
 
 <ol>
-  <li>Configure job submission on host.</li>
-  <li>Configure resource requirement per module.</li>
+  <li>
+    <p>Configure job submission on host.</p>
+  </li>
+  <li>
+    <p>Configure resource requirement per module.</p>
+  </li>
 </ol>
 
 <p>Using command options, users can</p>
 
 <ol>
-  <li>Submit the entire benchmark with controlled maximum job limits (via <code class="highlighter-rouge">max_running_jobs</code> setting in the job template).</li>
-  <li>When submitting from local to host computer, automatically send required files to the host for benchmarking (command option <code class="highlighter-rouge">--to-host</code>).</li>
+  <li>
+    <p>Submit the entire benchmark with controlled maximum job limits (via
+<code class="highlighter-rouge">max_running_jobs</code> setting in the job template).</p>
+  </li>
+  <li>
+    <p>When submitting from local to host computer, automatically send
+required files to the host for benchmarking (command option
+<code class="highlighter-rouge">--to-host</code>).</p>
+  </li>
 </ol>
 
-<p>Users can also use SoS utility tools to manage jobs. The end of documentation will briefly discuss a few SoS utility commands with examples.</p>
+<p>Users can also use SoS utility tools to manage jobs. The end of
+documentation will briefly discuss a few SoS utility commands with
+examples.</p>
 
 <h2 id="host-configuration-example">Host configuration example</h2>
 
-<p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that specifies a <em>template</em> for remote jobs. <strong>We provide support to such configuration files on need-basis</strong>, because we (the DSC developers) can only verify and ensure the it works on system that we have access to and use on regular basis. For example, <a href="https://github.com/stephenslab/dsc-reg/blob/master/midway.yml">here is a template</a> for a system running PBS type of queue via Slurm Workload Manage:</p>
+<p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that
+specifies a <em>template</em> for remote jobs. <strong>We provide support to such
+configuration files on an as-need basis</strong>, because we (the DSC
+developers) can only verify and ensure the it works on system that we
+have access to and use on regular basis. For example,
+<a href="https://github.com/stephenslab/dsc-reg/blob/master/midway.yml">here is a template</a>
+for a system running PBS type of queue via Slurm Workload Manage:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">midway2</span><span class="pi">:</span>
@@ -1174,30 +1235,73 @@ For a cluster system this will automatically submit jobs to compute nodes based 
   <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
 </code></pre></div></div>
 
-<p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a number of systems. Here <code class="highlighter-rouge">midway2</code> is a host provided by <a href="https://rcc.uchicago.edu">The University of Chicago RCC group</a>. Jobs are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per node. It is recommended that users do not submit more than 60 jobs at a time, and maximum running time should best be under 36hrs per job. These limitations have been reflected by the <code class="highlighter-rouge">max_*</code> values in the configuration.</p>
+<p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a
+number of systems. Here, <code class="highlighter-rouge">midway2</code> is a host provided by
+<a href="https://rcc.uchicago.edu">he Research Computing Center at the University of Chicago</a>. Jobs
+are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per
+node. It is recommended that users do not submit more than 60 jobs at
+a time, and maximum running time should best be under 36hrs per
+job. These limitations have been reflected by the <code class="highlighter-rouge">max_*</code> values in
+the configuration.</p>
 
-<p>There are also 2 “derived” queues: <code class="highlighter-rouge">stephenslab</code> is a special partition on <code class="highlighter-rouge">midway2</code> that allows for different configurations, thus it is derived from <code class="highlighter-rouge">midway2</code> via <code class="highlighter-rouge">based_on: midway2</code>. Also relevant is the <code class="highlighter-rouge">faraway2</code>, also <code class="highlighter-rouge">based_on: midway2</code>, but specifies the address of how to connect to <code class="highlighter-rouge">midway2</code>. Then DSC will assume that the request is made from a local computer and try to use the “local-host” mechanism to run jobs.</p>
+<p>There are also 2 “derived” queues: <code class="highlighter-rouge">stephenslab</code> is a special
+partition on <code class="highlighter-rouge">midway2</code> that allows for different configurations, thus
+it is derived from <code class="highlighter-rouge">midway2</code> via <code class="highlighter-rouge">based_on: midway2</code>. Also relevant is
+the <code class="highlighter-rouge">faraway2</code>, also <code class="highlighter-rouge">based_on: midway2</code>, but specifies the address of
+how to connect to <code class="highlighter-rouge">midway2</code>. Then DSC will assume that the request is
+made from a local computer and try to use the “local-host” mechanism
+to run jobs.</p>
 
-<p>The section <code class="highlighter-rouge">default</code> is also required. It provides default settings for all modules in the DSC. Available settings are:</p>
+<p>The section <code class="highlighter-rouge">default</code> is also required. It provides default settings
+for all modules in the DSC. Available settings are:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">queue</code>: name of the queue on the remote host to use, one of the various queues defined in <code class="highlighter-rouge">DSC</code> section.
+  <li>
+    <p><code class="highlighter-rouge">queue</code>: name of the queue on the remote host to use, one of the
+various queues defined in <code class="highlighter-rouge">DSC</code> section.</p>
+
     <ul>
       <li>Here in the template it is set to <code class="highlighter-rouge">midway2</code>, which is a “On-Host” queue.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">time_per_instance</code>: maximum computation time for each module instance.</li>
-  <li><code class="highlighter-rouge">instance_per_job</code>: how many module instances to submit as one remote job. This is useful consolidating numerous light-weight module instances into one jobs submission.</li>
-  <li><code class="highlighter-rouge">n_cpu</code> and <code class="highlighter-rouge">mem_per_cpu</code> specify the CPU and memory requirement of a module instance.</li>
+  <li>
+    <p><code class="highlighter-rouge">time_per_instance</code>: maximum computation time for each module
+instance.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">instance_per_job</code>: how many module instances to submit as one
+remote job. This is useful consolidating numerous light-weight
+module instances into one jobs submission.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">n_cpu</code> and <code class="highlighter-rouge">mem_per_cpu</code> specify the CPU and memory requirement of
+a module instance.</p>
+  </li>
 </ul>
 
-<p>For example for 100 module instances of <code class="highlighter-rouge">simulate</code> that each generates some data in under a minute, one can specify <code class="highlighter-rouge">time_per_instance: 1m</code> and <code class="highlighter-rouge">instance_per_job: 200</code>. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.</p>
+<p>For example for 100 module instances of <code class="highlighter-rouge">simulate</code> that each generates
+some data in under a minute, one can specify <code class="highlighter-rouge">time_per_instance: 1m</code>
+and <code class="highlighter-rouge">instance_per_job: 200</code>. Then a single job containing 200
+simulations will be submitted to the host with a total of 200 minutes
+computation time reserved.</p>
 
-<p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace <code class="highlighter-rouge">kaiqianz</code> with their UChicago cnetID.</p>
+<p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not
+have to be changed for different projects. Users can carefully
+configure them once, and reuse for various projects. For Stephens Lab
+users for example, one can take the example from above and replace
+<code class="highlighter-rouge">kaiqianz</code> with their UChicago cnetID.</p>
 
-<p>In our example, under the folder <code class="highlighter-rouge">vignettes/one_sample_location</code> you should find a file called <code class="highlighter-rouge">midway.yml</code> as described above. You can open it with a text editor (on a cluster use <code class="highlighter-rouge">nano</code> from the terminal for example), edit it to suit your project, and save it.</p>
+<p>In our example, under the folder <code class="highlighter-rouge">vignettes/one_sample_location</code> you
+should find a file called <code class="highlighter-rouge">midway.yml</code> as described above. You can
+open it with a text editor (on a cluster use <code class="highlighter-rouge">nano</code> from the terminal
+for example), edit it to suit your project, and save it.</p>
 
-<p><strong>Please don’t use this template without configuring the required resources, particularly <code class="highlighter-rouge">time_per_instance</code> and <code class="highlighter-rouge">instance_per_job</code>. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on <code class="highlighter-rouge">instance_per_job</code>) and waste of resource (too high on <code class="highlighter-rouge">time_per_instance</code>)</strong></p>
+<p><em>Please do not use this template without configuring the required
+resources, particularly <code class="highlighter-rouge">time_per_instance</code> and
+<code class="highlighter-rouge">instance_per_job</code>. They should be tailored for your project. In
+proper configuration of these settings will lead to running many
+small jobs (too low on <code class="highlighter-rouge">instance_per_job</code>) and waste of resource (too
+high on <code class="highlighter-rouge">time_per_instance</code>).</em></p>
 
 <h2 id="run-remote-jobs">Run remote jobs</h2>
 
@@ -1213,11 +1317,17 @@ For a cluster system this will automatically submit jobs to compute nodes based 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc ... <span class="nt">--host</span> /path/to/config.yml <span class="nt">--to-host</span> file1 dir1 file2
 </code></pre></div></div>
 
-<p>will additionally use <code class="highlighter-rouge">--to-host</code> to sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in <code class="highlighter-rouge">DSC::lib_path</code>).</p>
+<p>will additionally use <code class="highlighter-rouge">--to-host</code> to sync specified files and folders
+to the remote, if the particular benchmark requires these files and
+folders to execute (eg, data resource, shell executables, or scripts
+in <code class="highlighter-rouge">DSC::lib_path</code>).</p>
 
-<p>Caution that to successfully use <code class="highlighter-rouge">--to-host</code>, the command program <a href="https://rsync.samba.org"><code class="highlighter-rouge">rsync</code></a> have to be available from the local computer.</p>
+<p>Caution that to successfully use <code class="highlighter-rouge">--to-host</code>, the command program
+<a href="https://rsync.samba.org"><code class="highlighter-rouge">rsync</code></a> have to be available from the local
+computer.</p>
 
-<p>In our example, under the same folder (“/dsc/vignettes/one_sample_location”), we run</p>
+<p>In our example, under the same folder
+(“/dsc/vignettes/one_sample_location”), we run</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation_simpler.dsc <span class="nt">--host</span> midway.yml
 </code></pre></div></div>
