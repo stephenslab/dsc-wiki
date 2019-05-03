@@ -2,57 +2,100 @@
 
 ## Prerequisites
 
-We will use a minimal example to demonstrate how to run DSC on a computer cluster. 
-We will be using the example from [DSC basics, part I](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html).
-The source code [can be found here](https://github.com/stephenslab/dsc/master/vignettes/one_sample_location).
+We will use a minimal example to demonstrate how to run DSC on a
+computer cluster.  We will be using the example from
+[DSC basics, part I](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html).
+The source code
+[can be found here](https://github.com/stephenslab/dsc/master/vignettes/one_sample_location).
 
-Suppose we created the `first_investigate_simpler.dsc` script and want to submit it to a cluster to run the job. Before doing so, we must make sure it works:
+Suppose we created the `first_investigate_simpler.dsc` script and want
+to submit it to a cluster to run the job. Before doing so, we must
+make sure it works:
 
-- We should run directly from command terminal a "truncate" version to test the script ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
+- We should run directly from command terminal a "truncate" version to
+  test the script
+  ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
 
 ```
 dsc first_investigate_simpler.dsc --truncate
 ```
 
-- If the "truncated run" reports error, we should try to [debug DSC](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html), repeat the previous step, until the truncated run works.
+- If the "truncated run" reports error, we should try to
+  [debug DSC](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html),
+  repeat the previous step, until the truncated run works.
 
 Now we are ready to submit the DSC to run on computer cluster.
  
 ## Overview of running remote jobs
 
-DSC uses one additional configuration file and two command options (`--host` and `--to-host`) to run on a remote computer (or "host", hereafter). Here a remote computer can be:
+DSC uses one additional configuration file and two command options
+(`--host` and `--to-host`) to run on a remote computer (or "host",
+hereafter). Here a remote computer can be:
 
 1. A standalone desktop workstation without a job queue system
+
 2. A system with a job queue manager, such as PBS-based cluster
 
 DSC facilicates two approaches to run remote tasks:
 
-1. "On-Host", the conventional way: log in to the host and run DSC with `--host` argument. 
-For a standalone system, this is no difference from logging in to the system and run DSC benchmark directly. 
-For a cluster system this will automatically submit jobs to compute nodes based on provided template.
-2. "Local-Host", a host friendly way: do not log in to the host to run jobs. Rather, have a copy of DSC software installed to your local computer (Mac or Linux), and configure the host to have DSC and all required tools for benchmarking installed. Then run DSC from local computer with additional folders to be synced to the host specified by `--to-host` option. The local computer will serve as the job dispatcher and job monitor. This provides a way to run on hosts whose headnote cannot execute long running `dsc` process AND whose compute nodes cannot be used to submit jobs.
+1. "On-Host", the conventional way: log in to the host and run DSC
+with `--host` argument.  For a standalone system, this is no
+difference from logging in to the system and run DSC benchmark
+directly.  For a cluster system this will automatically submit jobs to
+compute nodes based on provided template.
 
-Under the hood, DSC configures all modules and converts them to [`SoS`](https://vatlab.github.io/sos-docs) tasks. Enthusiastic readers shall refer to [this page](https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html) for details under the hood. Configuration here in DSC is further automated for benchmarking and thus simpler interface-wise.
+2. "Local-Host", a host friendly way: do not log in to the host to run
+jobs. Rather, have a copy of DSC software installed to your local
+computer (Mac or Linux), and configure the host to have DSC and all
+required tools for benchmarking installed. Then run DSC from local
+computer with additional folders to be synced to the host specified by
+`--to-host` option. The local computer will serve as the job
+dispatcher and job monitor. This provides a way to run on hosts whose
+headnote cannot execute long running `dsc` process AND whose compute
+nodes cannot be used to submit jobs.
 
-**For RCC users at The University of Chicago: ** you can focus on the On-Host mode (do not specify `--to-host` option for file transfer) because it is possible to submit jobs from compute nodes on the cluster system.
+Under the hood, DSC configures all modules and converts them to
+[`SoS`](https://vatlab.github.io/sos-docs) tasks. Enthusiastic readers
+shall refer to
+[this page](https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html)
+for details under the hood. Configuration here in DSC is further
+automated for benchmarking and thus simpler interface-wise.
+
+For RCC users at the University of Chicago: you can focus on the
+On-Host mode (do not specify `--to-host` option for file transfer)
+because it is possible to submit jobs from compute nodes on the
+cluster system.
 
 ## Job configuration template and command options
 
 Using a template and command options, DSC allows users to:
 
 1. Configure job submission on host.
+
 2. Configure resource requirement per module.
 
 Using command options, users can
 
-1. Submit the entire benchmark with controlled maximum job limits (via `max_running_jobs` setting in the job template).
-2. When submitting from local to host computer, automatically send required files to the host for benchmarking (command option `--to-host`).
+1. Submit the entire benchmark with controlled maximum job limits (via
+`max_running_jobs` setting in the job template).
 
-Users can also use SoS utility tools to manage jobs. The end of documentation will briefly discuss a few SoS utility commands with examples.
+2. When submitting from local to host computer, automatically send
+required files to the host for benchmarking (command option
+`--to-host`).
+
+Users can also use SoS utility tools to manage jobs. The end of
+documentation will briefly discuss a few SoS utility commands with
+examples.
 
 ## Host configuration example
 
-DSC command option `--host` accepts a YAML configuration file that specifies a *template* for remote jobs. **We provide support to such configuration files on need-basis**, because we (the DSC developers) can only verify and ensure the it works on system that we have access to and use on regular basis. For example, [here is a template](https://github.com/stephenslab/dsc-reg/blob/master/midway.yml) for a system running PBS type of queue via Slurm Workload Manage:
+DSC command option `--host` accepts a YAML configuration file that
+specifies a *template* for remote jobs. **We provide support to such
+configuration files on an as-need basis**, because we (the DSC
+developers) can only verify and ensure the it works on system that we
+have access to and use on regular basis. For example,
+[here is a template](https://github.com/stephenslab/dsc-reg/blob/master/midway.yml)
+for a system running PBS type of queue via Slurm Workload Manage:
 
 ```yaml
 DSC:
@@ -109,26 +152,64 @@ simulate:
   instances_per_job: 20
 ```
 
-The section `DSC` is required to provide various templates for a number of systems. Here `midway2` is a host provided by [The University of Chicago RCC group](https://rcc.uchicago.edu). Jobs are submitted to `partition=broadwl`. Typically it has 40 cores per node. It is recommended that users do not submit more than 60 jobs at a time, and maximum running time should best be under 36hrs per job. These limitations have been reflected by the `max_*` values in the configuration. 
+The section `DSC` is required to provide various templates for a
+number of systems. Here, `midway2` is a host provided by
+[he Research Computing Center at the University of Chicago](https://rcc.uchicago.edu). Jobs
+are submitted to `partition=broadwl`. Typically it has 40 cores per
+node. It is recommended that users do not submit more than 60 jobs at
+a time, and maximum running time should best be under 36hrs per
+job. These limitations have been reflected by the `max_*` values in
+the configuration.
 
-There are also 2 "derived" queues: `stephenslab` is a special partition on `midway2` that allows for different configurations, thus it is derived from `midway2` via `based_on: midway2`. Also relevant is the `faraway2`, also `based_on: midway2`, but specifies the address of how to connect to `midway2`. Then DSC will assume that the request is made from a local computer and try to use the "local-host" mechanism to run jobs.
+There are also 2 "derived" queues: `stephenslab` is a special
+partition on `midway2` that allows for different configurations, thus
+it is derived from `midway2` via `based_on: midway2`. Also relevant is
+the `faraway2`, also `based_on: midway2`, but specifies the address of
+how to connect to `midway2`. Then DSC will assume that the request is
+made from a local computer and try to use the "local-host" mechanism
+to run jobs.
 
-The section `default` is also required. It provides default settings for all modules in the DSC. Available settings are:
+The section `default` is also required. It provides default settings
+for all modules in the DSC. Available settings are:
 
-- `queue`: name of the queue on the remote host to use, one of the various queues defined in `DSC` section.
+- `queue`: name of the queue on the remote host to use, one of the
+various queues defined in `DSC` section.
+
     - Here in the template it is set to `midway2`, which is a "On-Host" queue.
-- `time_per_instance`: maximum computation time for each module instance.
-- `instance_per_job`: how many module instances to submit as one remote job. This is useful consolidating numerous light-weight module instances into one jobs submission. 
-- `n_cpu` and `mem_per_cpu` specify the CPU and memory requirement of a module instance.
 
-For example for 100 module instances of `simulate` that each generates some data in under a minute, one can specify `time_per_instance: 1m` and `instance_per_job: 200`. Then a single job containing 200 simulations will be submitted to the host with a total of 200 minutes computation time reserved.
+- `time_per_instance`: maximum computation time for each module
+  instance.
 
-Typically, `DSC` and `default` section for host configuration do not have to be changed for different projects. Users can carefully configure them once, and reuse for various projects. For Stephens Lab users for example, one can take the example from above and replace `kaiqianz` with their UChicago cnetID.
+- `instance_per_job`: how many module instances to submit as one
+remote job. This is useful consolidating numerous light-weight
+module instances into one jobs submission.
 
-In our example, under the folder `vignettes/one_sample_location` you should find a file called `midway.yml` as described above. You can open it with a text editor (on a cluster use `nano` from the terminal for example), edit it to suit your project, and save it.
+- `n_cpu` and `mem_per_cpu` specify the CPU and memory requirement of
+a module instance.
 
-**Please don't use this template without configuring the required resources, particularly `time_per_instance` and `instance_per_job`. They should be tailored for your project. In proper configuration of these settings will lead to running many small jobs (too low on `instance_per_job`) and waste of resource (too high on `time_per_instance`)**
+For example for 100 module instances of `simulate` that each generates
+some data in under a minute, one can specify `time_per_instance: 1m`
+and `instance_per_job: 200`. Then a single job containing 200
+simulations will be submitted to the host with a total of 200 minutes
+computation time reserved.
 
+Typically, `DSC` and `default` section for host configuration do not
+have to be changed for different projects. Users can carefully
+configure them once, and reuse for various projects. For Stephens Lab
+users for example, one can take the example from above and replace
+`kaiqianz` with their UChicago cnetID.
+
+In our example, under the folder `vignettes/one_sample_location` you
+should find a file called `midway.yml` as described above. You can
+open it with a text editor (on a cluster use `nano` from the terminal
+for example), edit it to suit your project, and save it.
+
+*Please do not use this template without configuring the required
+resources, particularly `time_per_instance` and
+`instance_per_job`. They should be tailored for your project. In
+proper configuration of these settings will lead to running many
+small jobs (too low on `instance_per_job`) and waste of resource (too
+high on `time_per_instance`).*
 
 ## Run remote jobs
 
@@ -146,11 +227,17 @@ For the "Local-Host" mechanism (`default::address: <some URL>`),
 dsc ... --host /path/to/config.yml --to-host file1 dir1 file2
 ```
 
-will additionally use `--to-host` to sync specified files and folders to the remote, if the particular benchmark requires these files and folders to execute (eg, data resource, shell executables, or scripts in `DSC::lib_path`).
+will additionally use `--to-host` to sync specified files and folders
+to the remote, if the particular benchmark requires these files and
+folders to execute (eg, data resource, shell executables, or scripts
+in `DSC::lib_path`).
 
-Caution that to successfully use `--to-host`, the command program [`rsync`](https://rsync.samba.org) have to be available from the local computer.
+Caution that to successfully use `--to-host`, the command program
+[`rsync`](https://rsync.samba.org) have to be available from the local
+computer.
 
-In our example, under the same folder ("/dsc/vignettes/one_sample_location"), we run
+In our example, under the same folder
+("/dsc/vignettes/one_sample_location"), we run
 
 ```bash
 dsc first_investigation_simpler.dsc --host midway.yml
