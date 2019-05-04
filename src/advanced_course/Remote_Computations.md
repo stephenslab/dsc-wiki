@@ -94,7 +94,7 @@ specifies a *template* for remote jobs. **We provide support to such
 configuration files on an as-need basis**, because we (the DSC
 developers) can only verify and ensure the it works on system that we
 have access to and use on regular basis. For example,
-[here is a template](https://github.com/stephenslab/dsc-reg/blob/master/midway.yml)
+[here is a template](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/midway.yml)
 for a system running PBS type of queue via Slurm Workload Manage:
 
 ```yaml

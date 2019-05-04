@@ -45,12 +45,13 @@ Maintenance:
   -s option, --skip option
                         Behavior of how DSC is executed in the presence of
                         existing results. "default": skips modules whose
-                        "environment" has not been changed since previous
-                        execution. "none": executes DSC from scratch. "all":
-                        skips all execution yet build DSC database of what the
-                        specified benchmark is supposed to look like, thus
-                        making it possible to explore partial benchmark
-                        results. (default: default)
+                        status have not been changed since previous execution.
+                        "sloppy": skips modules whose timestamp are newer than
+                        their upstream modules. "none": executes DSC from
+                        scratch. "all": skips all execution yet build DSC
+                        database of what the specified benchmark is supposed
+                        to look like, thus making it possible to explore
+                        partial benchmark results. (default: default)
   --touch               "Touch" output files if exist, to mark them "up-to-
                         date". It will override "--skip" option. Note that
                         time stamp is irrelevant to whether or not a file is
@@ -61,8 +62,9 @@ Maintenance:
                         files will be "touched" to match with the current
                         status of module code. (default: False)
   --clean option        Behavior of how DSC cleans up output folder to save
-                        disk space. "purge", when used without "--target",
-                        cleans up everything in folder "DSC::output"
+                        disk space. Use option "all" to remove all output from
+                        the current benchmark. "purge", when used without "--
+                        target", cleans up everything in folder "DSC::output"
                         irrelevant to the most recent successful execution of
                         the benchmark. When used with "--target" it deletes
                         specified files, or files from specified modules or
@@ -77,8 +79,8 @@ Maintenance:
                         None)
 
 Runtime behavior:
-  -c N                  Number of maximum cpu threads for local runs, or
-                        concurrent jobs for remote execution. (default: 20)
+  -c N                  Maximum number of CPU threads for local runs, or job
+                        managing sockets for remote execution. (default: 8)
   --ignore-errors       Bypass all errors from computational programs. This
                         will keep the benchmark running but all results will
                         be set to missing values and the problematic script
@@ -99,7 +101,6 @@ Remote execution:
 Other options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
-
 ```
 
 Here we elaborate on some of options we did not have space to elaborate on the interface:
@@ -117,12 +118,10 @@ Here we elaborate on some of options we did not have space to elaborate on the i
   * When used with `--clean` it specifies the module(s) whose output are to be "clean"-ed up (defined by behavior specified in `--clean`). Therefore only names of modules are valid input in this context.
 * `--skip`: unlike with `Make` / `Snakemake` that determines whether or not to re-execute based on time stamps, DSC creates HASH for modules that takes into consideration all input parameter, input and output module variables, and the content of the module script if applicable. When all these information agree with a previous execution it will by default skip those runs. This behavior can be changed by this `--skip` option. 
   * `--skip none` will re-execute everything: it will remove and ignore any existing output files. 
+  * `--skip sloppy` will skip modules whose output is newer than input. This is a simple `Make` style check. It is "sloppy", but is a lot faster than checking and saving file signatures. It is recommanded for use when benchmarks are immediately re-executed to recover some failures without having to worry about potential output file corruption or computer clock skew.
   * `--skip all` will not perform any module computations. It will only construct the execution meta-data and create a DSC database that one can query from. That is, `dsc <script> --skip all` followed by `dsc-query <output> -o` will help one understand the expected results from specified DSC benchmark. This can also be used as sanity check when benchmark is only partially completed. If you are uncertain about the scale of the benchmark, for example, it is recommanded to run DSC with `--skip all` and use `dsc-query <output> -o` to view the benchmark structure.
-* `--clean purge` and `--clean replace --target`: these options are *not* meant to delete files generated by modules. They are meant to downsize the benchmark intermediate data without triggering reruns. The first approach is via `--clean purge`: in DSC we keep track of script signatures and assign unique output files to each "version" of the script. As a result different versions of output are saved to disk. `--clean purge` allows one to remove those obsolete versions when only the latest successful run is meant to be kept. The second approach is via `--clean replace --target ...`, which, instead of removing the output file for given modules, replaces them with a file suffixed by `*.zapped`. This will remove output files from specified modules without triggering rerun of benchmark, unless the upstream of these modules have changed. `--clean replace` is particularly useful to remove large intermediate module output to save disk space.
-* `--clean purge --target`: this option will remove files, modules or module groups specified by `--target`.
-* `-c` configures parallel computing. Since DSC is designed to be executed in either local or remote computers, `-c` configures the number of CPU threads used when computing in local and number of jobs to be sent when computing on the remote computers, when used with `--host` option (which will override `max_running_jobs` in the configuration file). Default value is in fact set to using half of the local computers CPU threads. Thus the displayed default `4` CPUs in the documentation above is result of running `dsc -h` on a computer with a total of 8 CPU threads. This number should be specifically configured if one wants to use more (or less) computing power on a desktop; and should definitely be configured for remote job executions based on current queue status of the remote computing environment.
-* `--ignore-errors` is a flag which, when added, will ignore errors from user provided scripts, thus keeps the benchmark running. There are often situations when we use other people's software packages that produces errors in random corner cases that will interrupt the benchmark from moving forward; sometimes one cannot `try ... catch` them. With this option, instead of throwing an error, DSC will **store the problematic chunk of code that resulted in an error to the output, creating a dummy output file that keeps DSC moving**. These dummy output will natually result in a chain reaction of failure in every other module that depends on them. But the benchmark will therefore complete, after which one can check the output and trace back the most upstream dummy output as source of errors.
-* `-p`: By default DSC saves [system stdout and stderr](https://en.wikipedia.org/wiki/Standard_streams) to files `.stderr` and `.stdout` in the DSC result folder for all module instances. Using `-p` will instead print them to the screen to help debugging. However adding / removing `-p` will in fact change the way the scripts are executed, and as far as the workflow manager concerns, are different commands executed. As a result adding / removing `-p` will trigger rerun, unless `--touch` is also used when switching from with `-p` to without `-p`, and vice versa.
+* `--clean all`, `--clean purge`, `--clean purge --target` and `--clean replace --target`: these options are *not* meant to delete files generated by modules. They are meant to downsize the benchmark intermediate data without triggering reruns. The first approach is via `--clean purge`: in DSC we keep track of script signatures and assign unique output files to each "version" of the script. As a result different versions of output are saved to disk. `--clean purge` allows one to remove those obsolete versions when only the latest successful run is meant to be kept. The second approach is `--clean purge --target` which remove files, modules or module groups specified by `--target`. The third approach is via `--clean replace --target ...`, which, instead of removing the output file for given modules, replaces them with a file suffixed by `*.zapped`. This will remove output files from specified modules without triggering rerun of benchmark, unless the upstream of these modules have changed. `--clean replace` is particularly useful to remove large intermediate module output to save disk space. Finally, `--clean all` deletes everything generated by the DSC.
+* `-c` configures parallel computing. Since DSC is designed to be executed in either local or remote computers, `-c` configures the number of CPU threads used on a local computer; or number of threads used to manage jobs such as checking and saving signatures for files on remote computers, when used with `--host` option. This number should be specifically configured if one wants to use more (or less) computing power on a desktop. On a remote compute typically no more than 6 processes is enough to handle job scheduling, check and caching.
 
 ## DSC query program
 
@@ -138,7 +137,7 @@ usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
                  [--description str [str ...]] [-t WHAT [WHAT ...]]
                  [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]]
                  [--language str] [--addon str [str ...]]
-                 [--rds {omit,overwrite}] [-v {0,1,2,3}]
+                 [--rds {omit,overwrite}] [-f] [-v {0,1,2,3}]
                  DSC output folder or a single output file
 
 An internal command to extract meta-table for DSC results (requires 'sos-
@@ -150,7 +149,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
-  -o str                Output notebook / data file name. In query
+  -o str, --output str  Output notebook / data file name. In query
                         applications if file name ends with ".csv", ".ipynb"
                         or ".xlsx" then only data file will be saved as result
                         of query. Otherwise both data file in ".xlsx" format
@@ -179,10 +178,11 @@ optional arguments:
   --rds {omit,overwrite}
                         Convert Python serialized files to R serialized files
                         (default: None)
+  -f, --force           Force overwrite existing query result files (default:
+                        False)
   -v {0,1,2,3}, --verbosity {0,1,2,3}
                         Output error (0), warning (1), info (2) and debug (3)
                         information. (default: 2)
-
 ```
 
 ### To query result
@@ -191,7 +191,7 @@ The main goal of `dsc-query` is to extract results from benchmark given conditio
 
 Currently supported languages specific libraries are:
 
-- R: `dsc_query` function for [`dscrutils` package](https://github.com/stephenslab/dsc/tree/master/dscrutils).
+- R: `dscquery()` function for [`dscrutils` package](https://github.com/stephenslab/dsc/tree/master/dscrutils).
 
 ### To dump single file from DSC benchmark to text
 
