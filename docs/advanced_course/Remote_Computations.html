@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-03T08:56:49-05:00",
+    "2019-05-04T14:08:13-05:00",
   "dateModified":
-    "2019-05-03T08:56:49-05:00",
+    "2019-05-04T14:08:13-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1233,6 +1233,9 @@ for a system running PBS type of queue via Slurm Workload Manage:</p>
 
 <span class="na">simulate</span><span class="pi">:</span>
   <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+
+<span class="na">score</span><span class="pi">:</span>
+  <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2.local</span>
 </code></pre></div></div>
 
 <p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a
@@ -1262,6 +1265,7 @@ various queues defined in <code class="highlighter-rouge">DSC</code> section.</p
 
     <ul>
       <li>Here in the template it is set to <code class="highlighter-rouge">midway2</code>, which is a “On-Host” queue.</li>
+      <li>use <code class="highlighter-rouge">&lt;queue&gt;.local</code> to specify for modules whose computation are to be computed without submitting to PBS.</li>
     </ul>
   </li>
   <li>

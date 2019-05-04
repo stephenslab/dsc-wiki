@@ -150,6 +150,9 @@ default:
 
 simulate:
   instances_per_job: 20
+
+score:
+  queue: midway2.local
 ```
 
 The section `DSC` is required to provide various templates for a
@@ -176,6 +179,7 @@ for all modules in the DSC. Available settings are:
 various queues defined in `DSC` section.
 
     - Here in the template it is set to `midway2`, which is a "On-Host" queue.
+    - use `<queue>.local` to specify for modules whose computation are to be computed without submitting to PBS.
 
 - `time_per_instance`: maximum computation time for each module
   instance.
