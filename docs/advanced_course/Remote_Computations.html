@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-04T14:08:13-05:00",
+    "2019-05-04T14:13:07-05:00",
   "dateModified":
-    "2019-05-04T14:08:13-05:00",
+    "2019-05-04T14:13:07-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1240,7 +1240,7 @@ for a system running PBS type of queue via Slurm Workload Manage:</p>
 
 <p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a
 number of systems. Here, <code class="highlighter-rouge">midway2</code> is a host provided by
-<a href="https://rcc.uchicago.edu">he Research Computing Center at the University of Chicago</a>. Jobs
+<a href="https://rcc.uchicago.edu">The Research Computing Center at the University of Chicago</a>. Jobs
 are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per
 node. It is recommended that users do not submit more than 60 jobs at
 a time, and maximum running time should best be under 36hrs per
@@ -1265,7 +1265,7 @@ various queues defined in <code class="highlighter-rouge">DSC</code> section.</p
 
     <ul>
       <li>Here in the template it is set to <code class="highlighter-rouge">midway2</code>, which is a “On-Host” queue.</li>
-      <li>use <code class="highlighter-rouge">&lt;queue&gt;.local</code> to specify for modules whose computation are to be computed without submitting to PBS.</li>
+      <li><code class="highlighter-rouge">&lt;queue&gt;.local</code> is convention to execute locally without submitting to PBS.</li>
     </ul>
   </li>
   <li>

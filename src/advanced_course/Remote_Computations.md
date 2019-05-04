@@ -157,7 +157,7 @@ score:
 
 The section `DSC` is required to provide various templates for a
 number of systems. Here, `midway2` is a host provided by
-[he Research Computing Center at the University of Chicago](https://rcc.uchicago.edu). Jobs
+[The Research Computing Center at the University of Chicago](https://rcc.uchicago.edu). Jobs
 are submitted to `partition=broadwl`. Typically it has 40 cores per
 node. It is recommended that users do not submit more than 60 jobs at
 a time, and maximum running time should best be under 36hrs per
@@ -179,7 +179,7 @@ for all modules in the DSC. Available settings are:
 various queues defined in `DSC` section.
 
     - Here in the template it is set to `midway2`, which is a "On-Host" queue.
-    - use `<queue>.local` to specify for modules whose computation are to be computed without submitting to PBS.
+    - `<queue>.local` is convention to execute locally without submitting to PBS.
 
 - `time_per_instance`: maximum computation time for each module
   instance.
