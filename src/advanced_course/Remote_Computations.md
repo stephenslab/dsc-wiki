@@ -1,28 +1,38 @@
 # Running DSC on a computer cluster
 
+Here we illustrate how DSC can facilitate remote computation. This is
+useful when working with a DSC that involves intensive and/or
+long-running computations; many of the computations involved are
+ammenable to parallel or distributing computation, so we would like to
+advantage of a high-performance computing system to speed up running a
+benchmark.
+
 ## Prerequisites
 
-We will use a minimal example to demonstrate how to run DSC on a
-computer cluster.  We will be using the example from
-[DSC basics, part I](https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html).
-The source code
-[can be found here](https://github.com/stephenslab/dsc/master/vignettes/one_sample_location).
+We will use a simple example to demonstrate how to run DSC on a remote
+computing system. Although this example is not particularly
+well-suited for running on a high-performance compute cluster---it can
+be easily run on a standard desktop computer, and the individual
+computing tasks are very short---we will use this example to
+illustrate the features of DSC for facilitating remote computation. We
+will draw from the example presented in
+[DSC basics, part I][dsc-intro-1]. The source code can be found
+[here][one-sample-location].
 
-Suppose we created the `first_investigate_simpler.dsc` script and want
-to submit it to a cluster to run the job. Before doing so, we must
-make sure it works:
+Suppose we created the `first_investigate_simpler.dsc` script, and now
+we would like to submit it to a remote cluster to generate all the
+results. Before doing so, we should make sure it works.
 
-- We should run directly from command terminal a "truncate" version to
-  test the script
-  ([see here for details](https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html)):
+We should run directly from command terminal a "truncate" version to
+test the script (see [here][dsc-prototyping-tips] for details):
 
-```
+```bash
 dsc first_investigate_simpler.dsc --truncate
 ```
 
-- If the "truncated run" reports error, we should try to
-  [debug DSC](https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html),
-  repeat the previous step, until the truncated run works.
+If the "truncated run" reports error, we should try to
+[debug DSC][dsc-debugging-tips], repeat the previous step, until the
+truncated run works.
 
 Now we are ready to submit the DSC to run on computer cluster.
  
@@ -356,3 +366,8 @@ DSC keeps track of jobs submitted to compute nodes on the computer you submit th
 the head node, we recommend to submit this DSC command as a job itself to a compute node. Or, to open up an interactive session on a compute node and run from there.
 
 The number of CPUs you ask for running the DSC submitter command should match the `dsc ... -c` option. You can check the default setting for `-c` by running `dsc -h` and look for documentation on `-c` to find out the default (because the default depends on the machine you run it from). We recommand requesting a compute node for 4 CPUs each with 2GB memory allocated. Then submit with `-c 4`.
+
+[dsc-intro-1]:          https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html
+[dsc-prototyping-tips]: https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html
+[dsc-debugging-tips]:   https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html)
+[one-sample-location]:  https://github.com/stephenslab/dsc/master/vignettes/one_sample_location

@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-03T08:56:49-05:00",
+    "2019-05-16T08:09:47-05:00",
   "dateModified":
-    "2019-05-03T08:56:49-05:00",
+    "2019-05-16T08:09:47-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1061,32 +1061,38 @@ initFunction(initQuery);
             <div class="c-textbook__content">
               <h1 id="running-dsc-on-a-computer-cluster">Running DSC on a computer cluster</h1>
 
+<p>Here we illustrate how DSC can facilitate remote computation. This is
+useful when working with a DSC that involves intensive and/or
+long-running computations; many of the computations involved are
+ammenable to parallel or distributing computation, so we would like to
+advantage of a high-performance computing system to speed up running a
+benchmark.</p>
+
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>We will use a minimal example to demonstrate how to run DSC on a
-computer cluster.  We will be using the example from
-<a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html">DSC basics, part I</a>.
-The source code
-<a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">can be found here</a>.</p>
+<p>We will use a simple example to demonstrate how to run DSC on a remote
+computing system. Although this example is not particularly
+well-suited for running on a high-performance compute cluster—it can
+be easily run on a standard desktop computer, and the individual
+computing tasks are very short—we will use this example to
+illustrate the features of DSC for facilitating remote computation. We
+will draw from the example presented in
+<a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html">DSC basics, part I</a>. The source code can be found
+<a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">here</a>.</p>
 
-<p>Suppose we created the <code class="highlighter-rouge">first_investigate_simpler.dsc</code> script and want
-to submit it to a cluster to run the job. Before doing so, we must
-make sure it works:</p>
+<p>Suppose we created the <code class="highlighter-rouge">first_investigate_simpler.dsc</code> script, and now
+we would like to submit it to a remote cluster to generate all the
+results. Before doing so, we should make sure it works.</p>
 
-<ul>
-  <li>We should run directly from command terminal a “truncate” version to
-test the script
-(<a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">see here for details</a>):</li>
-</ul>
+<p>We should run directly from command terminal a “truncate” version to
+test the script (see <a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">here</a> for details):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigate_simpler.dsc --truncate
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigate_simpler.dsc <span class="nt">--truncate</span>
 </code></pre></div></div>
 
-<ul>
-  <li>If the “truncated run” reports error, we should try to
-<a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html">debug DSC</a>,
-repeat the previous step, until the truncated run works.</li>
-</ul>
+<p>If the “truncated run” reports error, we should try to
+<a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html)">debug DSC</a>, repeat the previous step, until the
+truncated run works.</p>
 
 <p>Now we are ready to submit the DSC to run on computer cluster.</p>
 
@@ -1434,6 +1440,7 @@ INFO: All 1 tasks in M1_9056f36343b32614 completed
 the head node, we recommend to submit this DSC command as a job itself to a compute node. Or, to open up an interactive session on a compute node and run from there.</p>
 
 <p>The number of CPUs you ask for running the DSC submitter command should match the <code class="highlighter-rouge">dsc ... -c</code> option. You can check the default setting for <code class="highlighter-rouge">-c</code> by running <code class="highlighter-rouge">dsc -h</code> and look for documentation on <code class="highlighter-rouge">-c</code> to find out the default (because the default depends on the machine you run it from). We recommand requesting a compute node for 4 CPUs each with 2GB memory allocated. Then submit with <code class="highlighter-rouge">-c 4</code>.</p>
+
 
               <nav class="c-page__nav">
   
