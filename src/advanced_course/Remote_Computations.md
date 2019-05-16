@@ -86,31 +86,62 @@ configuration file to run your benchmark (called "mybenchmark.dsc"),
 you would log in to the remote computing system, and run the following
 command: `dsc mybenchmark.dsc --host midway2.yml`.
 
-Below we walk through this configuration file step-by-step.
-
 ```yaml
 DSC:
   midway2:
     address: localhost
     queue_type: pbs
     status_check_interval: 120
-    max_running_jobs: 14
+    max_running_jobs: 10
+    instances_per_job: 100
     job_template: |
       #!/bin/bash
       #SBATCH --time=6:00:00
-      #SBATCH --account=pi-mstephens
       #SBATCH --partition=broadwl
       #SBATCH --mem=4G
-      module load R/3.5.1
+	  #SBATCH --exclusive
     submit_cmd: sbatch {job_file}
     submit_cmd_output: "Submitted batch job {job_id}"
     status_cmd: squeue --job {job_id}
     kill_cmd: scancel {job_id}
-
-default:
-  queue: midway2
-  instances_per_job: 100
 ```
+
+Let's walk through this configuration file step-by-step:
+
++ `DSC2` is required for specifying a configuration.
+
++ `midway2` is the label assigned to the configuration.
+
++ `status_check_interval: 120` means that DSC checks the job status
+  every 120 seconds (2 minutes), and takes action if the job has
+  failed or completed. It is important to set this interval to a
+  reasonable period so as not to overload the job scheduling service
+  when it is being shared with many other users.
+
++ `max_running_jobs: 10` the maximum number of jobs that will run at
+  any one time. Again, it is important not to set this to be too large
+  on a system that is shared with other users.
+
++ `instances_per_job: 100` tells DSC that each job should attempt to
+  generate at most 100 module outputs within each job. If the DSC
+  contains long-running modules, this number should be made smaller,
+  otherwise each job will take a long time to complete. For modules
+  that run very quickly, `instances_per_job` should be set to a large
+  number to avoid overloading the job management system on a shared
+  computing environment.
+
++ The `job_template` entry gives the initial steps that are run to set
+  up the computing environment for computation in DSC. In this case,
+  this is a basic bash script with additional instructions for the
+  [Slurm][slurm] job scheduler. The amount of memory and the time
+  limit should be adjusted for the DSC; in this simple example, the
+  time limit of 6 hours is probably a vast overestimate of the actual
+  time needed.
+
++ The `submit_cmd`, `Submitted batch job {job_id}`, `squeue
+  --job` and `kill_cmd` give additional instructions on how DSC should
+  interact with the job management system (in this case, the Slurm job
+  management system).
 
 ## More advanced configuration example
 
@@ -401,3 +432,4 @@ CPUs each with 2GB memory allocated. Then submit with `-c 4`.
 [sos-docs]:             https://vatlab.github.io/sos-docs
 [sos-docs-remote-exec]: https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html
 [one-sample-location]:  https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location
+[slurm]:                http://slurm.schedmd.com
