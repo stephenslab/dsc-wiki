@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T10:22:29-05:00",
+    "2019-05-16T10:34:31-05:00",
   "dateModified":
-    "2019-05-16T10:22:29-05:00",
+    "2019-05-16T10:34:31-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1127,36 +1127,61 @@ use the “On Host” mode.</p>
 
 <h2 id="job-configuration-template-and-command-options">Job configuration template and command options</h2>
 
-<p>Using a template and command options, DSC allows users to:</p>
+<p>Using a template and in combination with the command options, DSC
+allows users to configure job submission and the resource requirements
+for the jobs.</p>
+
+<p>Using command options, users can:</p>
 
 <ol>
   <li>
-    <p>Configure job submission on host.</p>
+    <p>Submit the entire benchmark.</p>
   </li>
   <li>
-    <p>Configure resource requirement per module.</p>
+    <p>Automatically upload required files to the host for benchmarking
+(when <code class="highlighter-rouge">--to-host</code> is used).</p>
   </li>
 </ol>
 
-<p>Using command options, users can</p>
+<p>Users can also use SoS utility tools to manage jobs. See below for a
+brief discussion of a few SoS utility commands with examples.</p>
 
-<ol>
-  <li>
-    <p>Submit the entire benchmark with controlled maximum job limits (via
-<code class="highlighter-rouge">max_running_jobs</code> setting in the job template).</p>
-  </li>
-  <li>
-    <p>When submitting from local to host computer, automatically send
-required files to the host for benchmarking (command option
-<code class="highlighter-rouge">--to-host</code>).</p>
-  </li>
-</ol>
+<h2 id="basic-configuration-example">Basic configuration example</h2>
 
-<p>Users can also use SoS utility tools to manage jobs. The end of
-documentation will briefly discuss a few SoS utility commands with
-examples.</p>
+<p>We begin with an example illustrating the essential elements of a
+configuration file. This example was configured for the
+high-performance compute cluster run out of the University of Chicago
+(“midway2”), so we have called this file “midway2.yml”. To use this
+configuration file to run your benchmark (called “mybenchmark.dsc”),
+you would log in to the remote computing system, and run the following
+command: <code class="highlighter-rouge">dsc mybenchmark.dsc --host midway2.yml</code>.</p>
 
-<h2 id="host-configuration-example">Host configuration example</h2>
+<p>Below we walk through this configuration file step-by-step.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">midway2</span><span class="pi">:</span>
+    <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
+    <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
+    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">120</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">14</span>
+    <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
+      <span class="no">#!/bin/bash</span>
+      <span class="no">#SBATCH --time=6:00:00</span>
+      <span class="no">#SBATCH --account=pi-mstephens</span>
+      <span class="no">#SBATCH --partition=broadwl</span>
+      <span class="no">#SBATCH --mem=4G</span>
+      <span class="no">module load R/3.5.1</span>
+    <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
+    <span class="na">submit_cmd_output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Submitted</span><span class="nv"> </span><span class="s">batch</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">{job_id}"</span>
+    <span class="na">status_cmd</span><span class="pi">:</span> <span class="s">squeue --job {job_id}</span>
+    <span class="na">kill_cmd</span><span class="pi">:</span> <span class="s">scancel {job_id}</span>
+
+<span class="na">default</span><span class="pi">:</span>
+  <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">100</span>
+</code></pre></div></div>
+
+<h2 id="more-advanced-configuration-example">More advanced configuration example</h2>
 
 <p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that
 specifies a <em>template</em> for remote jobs. <strong>We provide support to such

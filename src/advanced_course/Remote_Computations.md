@@ -62,26 +62,57 @@ use the "On Host" mode.
 
 ## Job configuration template and command options
 
-Using a template and command options, DSC allows users to:
+Using a template and in combination with the command options, DSC
+allows users to configure job submission and the resource requirements
+for the jobs.
 
-1. Configure job submission on host.
+Using command options, users can:
 
-2. Configure resource requirement per module.
+1. Submit the entire benchmark.
 
-Using command options, users can
+2. Automatically upload required files to the host for benchmarking
+(when `--to-host` is used).
 
-1. Submit the entire benchmark with controlled maximum job limits (via
-`max_running_jobs` setting in the job template).
+Users can also use SoS utility tools to manage jobs. See below for a
+brief discussion of a few SoS utility commands with examples.
 
-2. When submitting from local to host computer, automatically send
-required files to the host for benchmarking (command option
-`--to-host`).
+## Basic configuration example
 
-Users can also use SoS utility tools to manage jobs. The end of
-documentation will briefly discuss a few SoS utility commands with
-examples.
+We begin with an example illustrating the essential elements of a
+configuration file. This example was configured for the
+high-performance compute cluster run out of the University of Chicago
+("midway2"), so we have called this file "midway2.yml". To use this
+configuration file to run your benchmark (called "mybenchmark.dsc"),
+you would log in to the remote computing system, and run the following
+command: `dsc mybenchmark.dsc --host midway2.yml`.
 
-## Host configuration example
+Below we walk through this configuration file step-by-step.
+
+```yaml
+DSC:
+  midway2:
+    address: localhost
+    queue_type: pbs
+    status_check_interval: 120
+    max_running_jobs: 14
+    job_template: |
+      #!/bin/bash
+      #SBATCH --time=6:00:00
+      #SBATCH --account=pi-mstephens
+      #SBATCH --partition=broadwl
+      #SBATCH --mem=4G
+      module load R/3.5.1
+    submit_cmd: sbatch {job_file}
+    submit_cmd_output: "Submitted batch job {job_id}"
+    status_cmd: squeue --job {job_id}
+    kill_cmd: scancel {job_id}
+
+default:
+  queue: midway2
+  instances_per_job: 100
+```
+
+## More advanced configuration example
 
 DSC command option `--host` accepts a YAML configuration file that
 specifies a *template* for remote jobs. **We provide support to such
