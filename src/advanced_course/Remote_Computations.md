@@ -19,34 +19,28 @@ will draw from the example presented in
 [DSC basics, part I][dsc-intro-1]. The source code can be found
 [here][one-sample-location].
 
-Suppose we created the `first_investigate_simpler.dsc` script, and now
-we would like to submit it to a remote cluster to generate all the
+Our aim is to submit it to a remote cluster to generate all the
 results. Before doing so, we should make sure it works.
 
-We should run directly from command terminal a "truncate" version to
-test the script (see [here][dsc-prototyping-tips] for details):
+First, run the the "truncate" version of the DSC command to test the
+script (see [here][dsc-prototyping-tips] for details):
 
 ```bash
 dsc first_investigate_simpler.dsc --truncate
 ```
 
-If the "truncated run" reports error, we should try to
-[debug DSC][dsc-debugging-tips], repeat the previous step, until the
-truncated run works.
+If the "truncated run" reports error, try to
+[debug DSC][dsc-debugging-tips] and test again until the truncated run
+works.
 
 Now we are ready to submit the DSC to run on computer cluster.
  
 ## Overview of running remote jobs
 
-DSC uses one additional configuration file and two command options
-(`--host` and `--to-host`) to run on a remote computer (or "host",
-hereafter). Here a remote computer can be:
+DSC uses an additional configuration file and two command options
+(`--host` and `--to-host`) to run on a remote system.
 
-1. A standalone desktop workstation without a job queue system
-
-2. A system with a job queue manager, such as PBS-based cluster
-
-DSC facilicates two approaches to run remote tasks:
+DSC facilicates two approaches to running remote tasks:
 
 1. "On-Host", the conventional way: log in to the host and run DSC
 with `--host` argument.  For a standalone system, this is no
@@ -65,11 +59,10 @@ headnote cannot execute long running `dsc` process AND whose compute
 nodes cannot be used to submit jobs.
 
 Under the hood, DSC configures all modules and converts them to
-[`SoS`](https://vatlab.github.io/sos-docs) tasks. Enthusiastic readers
+[`SoS`][sos-docs] tasks. Enthusiastic readers
 shall refer to
-[this page](https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html)
-for details under the hood. Configuration here in DSC is further
-automated for benchmarking and thus simpler interface-wise.
+[this page][sos-docs-remote-exec]
+for implementation details.
 
 For RCC users at the University of Chicago: you can focus on the
 On-Host mode (do not specify `--to-host` option for file transfer)
@@ -366,12 +359,23 @@ So here are three lines of messages related to loading R modules and nothing els
 
 ## Computer resource overhead
 
-DSC keeps track of jobs submitted to compute nodes on the computer you submit the jobs from. This is some resource "overhead" one has to pay for to run DSC on cluster. While it is convenient and tempting to run directly from
-the head node, we recommend to submit this DSC command as a job itself to a compute node. Or, to open up an interactive session on a compute node and run from there.
+DSC keeps track of jobs submitted to compute nodes on the computer you
+submit the jobs from. This is some resource "overhead" one has to pay
+for to run DSC on cluster. While it is convenient and tempting to run
+directly from the head node, we recommend to submit this DSC command
+as a job itself to a compute node. Or, to open up an interactive
+session on a compute node and run from there.
 
-The number of CPUs you ask for running the DSC submitter command should match the `dsc ... -c` option. You can check the default setting for `-c` by running `dsc -h` and look for documentation on `-c` to find out the default (because the default depends on the machine you run it from). We recommand requesting a compute node for 4 CPUs each with 2GB memory allocated. Then submit with `-c 4`.
+The number of CPUs you ask for running the DSC submitter command
+should match the `dsc ... -c` option. You can check the default
+setting for `-c` by running `dsc -h` and look for documentation on
+`-c` to find out the default (because the default depends on the
+machine you run it from). We recommand requesting a compute node for 4
+CPUs each with 2GB memory allocated. Then submit with `-c 4`.
 
-[dsc-intro-1]:          https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html
-[dsc-prototyping-tips]: https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html
-[dsc-debugging-tips]:   https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html)
+[dsc-intro-1]:          ../first_course/Intro_Syntax_I.html
+[dsc-prototyping-tips]: ../first_course/Prototype_Tips.html
+[dsc-debugging-tips]:   ../first_course/Debug_Tips.html
+[sos-docs]:             https://vatlab.github.io/sos-docs
+[sos-docs-remote-exec]: https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html
 [one-sample-location]:  https://github.com/stephenslab/dsc/master/vignettes/one_sample_location

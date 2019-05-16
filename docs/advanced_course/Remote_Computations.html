@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T08:22:43-05:00",
+    "2019-05-16T08:36:42-05:00",
   "dateModified":
-    "2019-05-16T08:22:43-05:00",
+    "2019-05-16T08:36:42-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1077,41 +1077,30 @@ be easily run on a standard desktop computer, and the individual
 computing tasks are very short—we will use this example to
 illustrate the features of DSC for facilitating remote computation. We
 will draw from the example presented in
-<a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_I.html">DSC basics, part I</a>. The source code can be found
+<a href="../first_course/Intro_Syntax_I.html">DSC basics, part I</a>. The source code can be found
 <a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">here</a>.</p>
 
-<p>Suppose we created the <code class="highlighter-rouge">first_investigate_simpler.dsc</code> script, and now
-we would like to submit it to a remote cluster to generate all the
+<p>Our aim is to submit it to a remote cluster to generate all the
 results. Before doing so, we should make sure it works.</p>
 
-<p>We should run directly from command terminal a “truncate” version to
-test the script (see <a href="https://stephenslab.github.io/dsc-wiki/first_course/Prototype_Tips.html">here</a> for details):</p>
+<p>First, run the the “truncate” version of the DSC command to test the
+script (see <a href="../first_course/Prototype_Tips.html">here</a> for details):</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigate_simpler.dsc <span class="nt">--truncate</span>
 </code></pre></div></div>
 
-<p>If the “truncated run” reports error, we should try to
-<a href="https://stephenslab.github.io/dsc-wiki/first_course/Debug_Tips.html)">debug DSC</a>, repeat the previous step, until the
-truncated run works.</p>
+<p>If the “truncated run” reports error, try to
+<a href="../first_course/Debug_Tips.html">debug DSC</a> and test again until the truncated run
+works.</p>
 
 <p>Now we are ready to submit the DSC to run on computer cluster.</p>
 
 <h2 id="overview-of-running-remote-jobs">Overview of running remote jobs</h2>
 
-<p>DSC uses one additional configuration file and two command options
-(<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote computer (or “host”,
-hereafter). Here a remote computer can be:</p>
+<p>DSC uses an additional configuration file and two command options
+(<code class="highlighter-rouge">--host</code> and <code class="highlighter-rouge">--to-host</code>) to run on a remote system.</p>
 
-<ol>
-  <li>
-    <p>A standalone desktop workstation without a job queue system</p>
-  </li>
-  <li>
-    <p>A system with a job queue manager, such as PBS-based cluster</p>
-  </li>
-</ol>
-
-<p>DSC facilicates two approaches to run remote tasks:</p>
+<p>DSC facilicates two approaches to running remote tasks:</p>
 
 <ol>
   <li>
@@ -1138,8 +1127,7 @@ nodes cannot be used to submit jobs.</p>
 <a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Enthusiastic readers
 shall refer to
 <a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a>
-for details under the hood. Configuration here in DSC is further
-automated for benchmarking and thus simpler interface-wise.</p>
+for implementation details.</p>
 
 <p>For RCC users at the University of Chicago: you can focus on the
 On-Host mode (do not specify <code class="highlighter-rouge">--to-host</code> option for file transfer)
@@ -1440,10 +1428,19 @@ INFO: All 1 tasks in M1_9056f36343b32614 completed
 
 <h2 id="computer-resource-overhead">Computer resource overhead</h2>
 
-<p>DSC keeps track of jobs submitted to compute nodes on the computer you submit the jobs from. This is some resource “overhead” one has to pay for to run DSC on cluster. While it is convenient and tempting to run directly from
-the head node, we recommend to submit this DSC command as a job itself to a compute node. Or, to open up an interactive session on a compute node and run from there.</p>
+<p>DSC keeps track of jobs submitted to compute nodes on the computer you
+submit the jobs from. This is some resource “overhead” one has to pay
+for to run DSC on cluster. While it is convenient and tempting to run
+directly from the head node, we recommend to submit this DSC command
+as a job itself to a compute node. Or, to open up an interactive
+session on a compute node and run from there.</p>
 
-<p>The number of CPUs you ask for running the DSC submitter command should match the <code class="highlighter-rouge">dsc ... -c</code> option. You can check the default setting for <code class="highlighter-rouge">-c</code> by running <code class="highlighter-rouge">dsc -h</code> and look for documentation on <code class="highlighter-rouge">-c</code> to find out the default (because the default depends on the machine you run it from). We recommand requesting a compute node for 4 CPUs each with 2GB memory allocated. Then submit with <code class="highlighter-rouge">-c 4</code>.</p>
+<p>The number of CPUs you ask for running the DSC submitter command
+should match the <code class="highlighter-rouge">dsc ... -c</code> option. You can check the default
+setting for <code class="highlighter-rouge">-c</code> by running <code class="highlighter-rouge">dsc -h</code> and look for documentation on
+<code class="highlighter-rouge">-c</code> to find out the default (because the default depends on the
+machine you run it from). We recommand requesting a compute node for 4
+CPUs each with 2GB memory allocated. Then submit with <code class="highlighter-rouge">-c 4</code>.</p>
 
 
               <nav class="c-page__nav">
