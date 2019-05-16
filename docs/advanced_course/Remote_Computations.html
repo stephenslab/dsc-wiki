@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T12:12:06-05:00",
+    "2019-05-16T12:17:42-05:00",
   "dateModified":
-    "2019-05-16T12:12:06-05:00",
+    "2019-05-16T12:17:42-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1168,7 +1168,7 @@ command: <code class="highlighter-rouge">dsc mybenchmark.dsc --host midway2.yml<
       <span class="no">#SBATCH --time=6:00:00</span>
       <span class="no">#SBATCH --partition=broadwl</span>
       <span class="no">#SBATCH --mem=4G</span>
-<span class="err">	</span>  <span class="c1">#SBATCH --exclusive</span>
+      <span class="no">#SBATCH --exclusive</span>
     <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
     <span class="na">submit_cmd_output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Submitted</span><span class="nv"> </span><span class="s">batch</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">{job_id}"</span>
     <span class="na">status_cmd</span><span class="pi">:</span> <span class="s">squeue --job {job_id}</span>
@@ -1221,6 +1221,10 @@ interact with the job management system (in this case, the Slurm job
 management system).</p>
   </li>
 </ul>
+
+<p>This basic configuration file is sufficient to run DSC computations on
+a system that uses Slurm; compute systems that use different job
+management software (e.g., TORQUE) can be configured similarly.</p>
 
 <h2 id="more-advanced-configuration-example">More advanced configuration example</h2>
 

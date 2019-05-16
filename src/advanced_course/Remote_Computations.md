@@ -99,7 +99,7 @@ DSC:
       #SBATCH --time=6:00:00
       #SBATCH --partition=broadwl
       #SBATCH --mem=4G
-	  #SBATCH --exclusive
+      #SBATCH --exclusive
     submit_cmd: sbatch {job_file}
     submit_cmd_output: "Submitted batch job {job_id}"
     status_cmd: squeue --job {job_id}
@@ -142,6 +142,10 @@ Let's walk through this configuration file step-by-step:
   --job` and `kill_cmd` give additional instructions on how DSC should
   interact with the job management system (in this case, the Slurm job
   management system).
+
+This basic configuration file is sufficient to run DSC computations on
+a system that uses Slurm; compute systems that use different job
+management software (e.g., TORQUE) can be configured similarly.
 
 ## More advanced configuration example
 
