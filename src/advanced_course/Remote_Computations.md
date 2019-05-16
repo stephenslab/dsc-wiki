@@ -42,32 +42,23 @@ DSC uses an additional configuration file and two command options
 
 DSC facilicates two approaches to running remote tasks:
 
-1. "On-Host", the conventional way: log in to the host and run DSC
-with `--host` argument.  For a standalone system, this is no
-difference from logging in to the system and run DSC benchmark
-directly.  For a cluster system this will automatically submit jobs to
-compute nodes based on provided template.
+1. "On Host": Log in to the remote computing system ("the host"), and
+run DSC with `--host` argument. When configured properly, DSC will
+automatically submit jobs to the job scheduling system on the host.
 
-2. "Local-Host", a host friendly way: do not log in to the host to run
-jobs. Rather, have a copy of DSC software installed to your local
-computer (Mac or Linux), and configure the host to have DSC and all
-required tools for benchmarking installed. Then run DSC from local
-computer with additional folders to be synced to the host specified by
-`--to-host` option. The local computer will serve as the job
-dispatcher and job monitor. This provides a way to run on hosts whose
-headnote cannot execute long running `dsc` process AND whose compute
-nodes cannot be used to submit jobs.
+2. "Local Host": Run DSC from local computer with
+additional folders to be synced to the host specified by `--to-host`
+option. The local computer will serve as the job dispatcher and job
+monitor. This provides a way to run on hosts whose headnode cannot
+execute long running `dsc` process and/or whose compute nodes cannot be
+used to submit jobs.
 
 Under the hood, DSC configures all modules and converts them to
-[`SoS`][sos-docs] tasks. Enthusiastic readers
-shall refer to
-[this page][sos-docs-remote-exec]
-for implementation details.
+[`SoS`][sos-docs] tasks. Interested readers may refer to
+[this page][sos-docs-remote-exec] for implementation details.
 
-For RCC users at the University of Chicago: you can focus on the
-On-Host mode (do not specify `--to-host` option for file transfer)
-because it is possible to submit jobs from compute nodes on the
-cluster system.
+*Note to RCC users at the University of Chicago:* It is recommended to
+use the "On Host" mode.
 
 ## Job configuration template and command options
 
@@ -378,4 +369,4 @@ CPUs each with 2GB memory allocated. Then submit with `-c 4`.
 [dsc-debugging-tips]:   ../first_course/Debug_Tips.html
 [sos-docs]:             https://vatlab.github.io/sos-docs
 [sos-docs-remote-exec]: https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html
-[one-sample-location]:  https://github.com/stephenslab/dsc/master/vignettes/one_sample_location
+[one-sample-location]:  https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location

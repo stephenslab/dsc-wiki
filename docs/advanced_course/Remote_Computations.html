@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T08:36:42-05:00",
+    "2019-05-16T10:22:29-05:00",
   "dateModified":
-    "2019-05-16T08:36:42-05:00",
+    "2019-05-16T10:22:29-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1078,7 +1078,7 @@ computing tasks are very short—we will use this example to
 illustrate the features of DSC for facilitating remote computation. We
 will draw from the example presented in
 <a href="../first_course/Intro_Syntax_I.html">DSC basics, part I</a>. The source code can be found
-<a href="https://github.com/stephenslab/dsc/master/vignettes/one_sample_location">here</a>.</p>
+<a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">here</a>.</p>
 
 <p>Our aim is to submit it to a remote cluster to generate all the
 results. Before doing so, we should make sure it works.</p>
@@ -1104,35 +1104,26 @@ works.</p>
 
 <ol>
   <li>
-    <p>“On-Host”, the conventional way: log in to the host and run DSC
-with <code class="highlighter-rouge">--host</code> argument.  For a standalone system, this is no
-difference from logging in to the system and run DSC benchmark
-directly.  For a cluster system this will automatically submit jobs to
-compute nodes based on provided template.</p>
+    <p>“On Host”: Log in to the remote computing system (“the host”), and
+run DSC with <code class="highlighter-rouge">--host</code> argument. When configured properly, DSC will
+automatically submit jobs to the job scheduling system on the host.</p>
   </li>
   <li>
-    <p>“Local-Host”, a host friendly way: do not log in to the host to run
-jobs. Rather, have a copy of DSC software installed to your local
-computer (Mac or Linux), and configure the host to have DSC and all
-required tools for benchmarking installed. Then run DSC from local
-computer with additional folders to be synced to the host specified by
-<code class="highlighter-rouge">--to-host</code> option. The local computer will serve as the job
-dispatcher and job monitor. This provides a way to run on hosts whose
-headnote cannot execute long running <code class="highlighter-rouge">dsc</code> process AND whose compute
-nodes cannot be used to submit jobs.</p>
+    <p>“Local Host”: Run DSC from local computer with
+additional folders to be synced to the host specified by <code class="highlighter-rouge">--to-host</code>
+option. The local computer will serve as the job dispatcher and job
+monitor. This provides a way to run on hosts whose headnode cannot
+execute long running <code class="highlighter-rouge">dsc</code> process and/or whose compute nodes cannot be
+used to submit jobs.</p>
   </li>
 </ol>
 
 <p>Under the hood, DSC configures all modules and converts them to
-<a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Enthusiastic readers
-shall refer to
-<a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a>
-for implementation details.</p>
+<a href="https://vatlab.github.io/sos-docs"><code class="highlighter-rouge">SoS</code></a> tasks. Interested readers may refer to
+<a href="https://vatlab.github.io/sos-docs/doc/documentation/Remote_Execution.html">this page</a> for implementation details.</p>
 
-<p>For RCC users at the University of Chicago: you can focus on the
-On-Host mode (do not specify <code class="highlighter-rouge">--to-host</code> option for file transfer)
-because it is possible to submit jobs from compute nodes on the
-cluster system.</p>
+<p><em>Note to RCC users at the University of Chicago:</em> It is recommended to
+use the “On Host” mode.</p>
 
 <h2 id="job-configuration-template-and-command-options">Job configuration template and command options</h2>
 
