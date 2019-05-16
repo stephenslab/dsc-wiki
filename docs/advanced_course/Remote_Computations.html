@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T08:12:51-05:00",
+    "2019-05-16T08:19:37-05:00",
   "dateModified":
-    "2019-05-16T08:12:51-05:00",
+    "2019-05-16T08:19:37-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1184,7 +1184,7 @@ specifies a <em>template</em> for remote jobs. <strong>We provide support to suc
 configuration files on an as-need basis</strong>, because we (the DSC
 developers) can only verify and ensure the it works on system that we
 have access to and use on regular basis. For example,
-<a href="https://github.com/stephenslab/dsc-reg/blob/master/midway.yml">here is a template</a>
+<a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/midway.yml">here is a template</a>
 for a system running PBS type of queue via Slurm Workload Manage:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
@@ -1239,11 +1239,14 @@ for a system running PBS type of queue via Slurm Workload Manage:</p>
 
 <span class="na">simulate</span><span class="pi">:</span>
   <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+
+<span class="na">score</span><span class="pi">:</span>
+  <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2.local</span>
 </code></pre></div></div>
 
 <p>The section <code class="highlighter-rouge">DSC</code> is required to provide various templates for a
 number of systems. Here, <code class="highlighter-rouge">midway2</code> is a host provided by
-<a href="https://rcc.uchicago.edu">he Research Computing Center at the University of Chicago</a>. Jobs
+<a href="https://rcc.uchicago.edu">The Research Computing Center at the University of Chicago</a>. Jobs
 are submitted to <code class="highlighter-rouge">partition=broadwl</code>. Typically it has 40 cores per
 node. It is recommended that users do not submit more than 60 jobs at
 a time, and maximum running time should best be under 36hrs per
@@ -1268,6 +1271,7 @@ various queues defined in <code class="highlighter-rouge">DSC</code> section.</p
 
     <ul>
       <li>Here in the template it is set to <code class="highlighter-rouge">midway2</code>, which is a “On-Host” queue.</li>
+      <li><code class="highlighter-rouge">&lt;queue&gt;.local</code> is convention to execute locally without submitting to PBS.</li>
     </ul>
   </li>
   <li>

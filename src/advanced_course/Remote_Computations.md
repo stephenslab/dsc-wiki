@@ -104,7 +104,7 @@ specifies a *template* for remote jobs. **We provide support to such
 configuration files on an as-need basis**, because we (the DSC
 developers) can only verify and ensure the it works on system that we
 have access to and use on regular basis. For example,
-[here is a template](https://github.com/stephenslab/dsc-reg/blob/master/midway.yml)
+[here is a template](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/midway.yml)
 for a system running PBS type of queue via Slurm Workload Manage:
 
 ```yaml
@@ -160,11 +160,14 @@ default:
 
 simulate:
   instances_per_job: 20
+
+score:
+  queue: midway2.local
 ```
 
 The section `DSC` is required to provide various templates for a
 number of systems. Here, `midway2` is a host provided by
-[he Research Computing Center at the University of Chicago](https://rcc.uchicago.edu). Jobs
+[The Research Computing Center at the University of Chicago](https://rcc.uchicago.edu). Jobs
 are submitted to `partition=broadwl`. Typically it has 40 cores per
 node. It is recommended that users do not submit more than 60 jobs at
 a time, and maximum running time should best be under 36hrs per
@@ -186,6 +189,7 @@ for all modules in the DSC. Available settings are:
 various queues defined in `DSC` section.
 
     - Here in the template it is set to `midway2`, which is a "On-Host" queue.
+    - `<queue>.local` is convention to execute locally without submitting to PBS.
 
 - `time_per_instance`: maximum computation time for each module
   instance.
