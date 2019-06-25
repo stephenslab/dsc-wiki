@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-05-16T12:17:42-05:00",
+    "2019-06-25T12:11:02-05:00",
   "dateModified":
-    "2019-05-16T12:17:42-05:00",
+    "2019-06-25T12:11:02-05:00",
   "description":
     "DSC Basics, Part II",
   "author": {
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1275,6 +1273,7 @@ INFO: Elapsed time 29.389 seconds.
   </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.n"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1302,6 +1301,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">with</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">simulate.n</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1327,6 +1327,7 @@ simulate 100 1000
 </span><span class="n">as.table</span><span class="p">(</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="w">
             </span><span class="n">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nf">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate.n</span><span class="p">)),</span><span class="w">
             </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">score.error</span><span class="p">)))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1381,6 +1382,7 @@ INFO: Elapsed time 57.557 seconds.
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
   </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t.n"</span><span class="p">,</span><span class="s2">"t.df"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1399,6 +1401,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">with</span><span class="p">(</span><span class="n">dscout2</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">t.n</span><span class="p">,</span><span class="n">t.df</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1625,6 +1628,7 @@ t.n     2  4 10
 <h2 id="exploring-further">Exploring further</h2>
 
 <p>In this tutorial, we introduced the features of DSC that are most essential to developing your own DSC benchmark. There are many other features of DSC that we did not have a chance to explore in these introductory tutorials—to learn more, visit…</p>
+
 
               <nav class="c-page__nav">
   

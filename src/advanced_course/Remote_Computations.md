@@ -78,7 +78,9 @@ brief discussion of a few SoS utility commands with examples.
 
 ## Basic configuration example
 
-We begin with an example illustrating the essential elements of a
+DSC command option `--host` accepts a YAML configuration file that
+specifies a *template* for remote jobs. We begin with an example 
+illustrating the essential elements of a
 configuration file. This example was configured for the
 high-performance compute cluster run out of the University of Chicago
 ("midway2"), so we have called this file "midway2.yml". To use this
@@ -93,7 +95,6 @@ DSC:
     queue_type: pbs
     status_check_interval: 120
     max_running_jobs: 10
-    instances_per_job: 100
     job_template: |
       #!/bin/bash
       #SBATCH --time=6:00:00
@@ -108,7 +109,7 @@ DSC:
 
 Let's walk through this configuration file step-by-step:
 
-+ `DSC2` is required for specifying a configuration.
++ `DSC` is required section title for specifying host configuration.
 
 + `midway2` is the label assigned to the configuration.
 
@@ -122,21 +123,14 @@ Let's walk through this configuration file step-by-step:
   any one time. Again, it is important not to set this to be too large
   on a system that is shared with other users.
 
-+ `instances_per_job: 100` tells DSC that each job should attempt to
-  generate at most 100 module outputs within each job. If the DSC
-  contains long-running modules, this number should be made smaller,
-  otherwise each job will take a long time to complete. For modules
-  that run very quickly, `instances_per_job` should be set to a large
-  number to avoid overloading the job management system on a shared
-  computing environment.
-
 + The `job_template` entry gives the initial steps that are run to set
   up the computing environment for computation in DSC. In this case,
   this is a basic bash script with additional instructions for the
   [Slurm][slurm] job scheduler. The amount of memory and the time
-  limit should be adjusted for the DSC; in this simple example, the
-  time limit of 6 hours is probably a vast overestimate of the actual
-  time needed.
+  limit in this template is hard-coded for simplicity, but we will demonstrate
+  later how to adjust them for different modules. In this simple example, the
+  time limit of 6 hours per job submitted is probably a vast overestimate of 
+  the actual time needed.
 
 + The `submit_cmd`, `Submitted batch job {job_id}`, `squeue
   --job` and `kill_cmd` give additional instructions on how DSC should
@@ -149,13 +143,8 @@ management software (e.g., TORQUE) can be configured similarly.
 
 ## More advanced configuration example
 
-DSC command option `--host` accepts a YAML configuration file that
-specifies a *template* for remote jobs. **We provide support to such
-configuration files on an as-need basis**, because we (the DSC
-developers) can only verify and ensure the it works on system that we
-have access to and use on regular basis. For example,
-[here is a template](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/midway.yml)
-for a system running PBS type of queue via Slurm Workload Manage:
+Here we provide a more advanced template for use with Slurm on UChicago RCC.
+It configures multiple queues `midway2`, `faraway2` and `stephenslab`.
 
 ```yaml
 DSC:
@@ -163,7 +152,7 @@ DSC:
     description: UChicago RCC cluster Midway 2
     address: localhost
     paths:
-      home: /home/kaiqianz
+      home: /home/{user_name}
     queue_type: pbs
     status_check_interval: 60
     max_running_jobs: 60
@@ -182,7 +171,7 @@ DSC:
       #SBATCH --output={cur_dir}/{job_name}.out
       #SBATCH --error={cur_dir}/{job_name}.err
       cd {cur_dir}
-      module load R
+      module load R 2> /dev/null
     partition: "SBATCH --partition=broadwl"
     account: ""
     submit_cmd: sbatch {job_file}
@@ -209,7 +198,7 @@ default:
   mem_per_cpu: 2G
 
 simulate:
-  instances_per_job: 20
+  instances_per_job: 100
 
 score:
   queue: midway2.local
@@ -244,9 +233,15 @@ various queues defined in `DSC` section.
 - `time_per_instance`: maximum computation time for each module
   instance.
 
-- `instance_per_job`: how many module instances to submit as one
-remote job. This is useful consolidating numerous light-weight
-module instances into one jobs submission.
+- `instances_per_job`: the maximum number of module outputs that each 
+  job should should attempt to generate. This is useful 
+  consolidating numerous light-weight module instances into one 
+  jobs submission. If the DSC
+  contains long-running modules, this number should be made smaller,
+  otherwise each job will take a long time to complete. For modules
+  that run very quickly, `instances_per_job` should be set to a large
+  number to avoid overloading the job management system on a shared
+  computing environment.
 
 - `n_cpu` and `mem_per_cpu` specify the CPU and memory requirement of
 a module instance.
@@ -260,8 +255,8 @@ computation time reserved.
 Typically, `DSC` and `default` section for host configuration do not
 have to be changed for different projects. Users can carefully
 configure them once, and reuse for various projects. For Stephens Lab
-users for example, one can take the example from above and replace
-`kaiqianz` with their UChicago cnetID.
+users for example, one can take the example from above and configure 
+resources for their DSC modules (sections after `default`).
 
 In our example, under the folder `vignettes/one_sample_location` you
 should find a file called `midway.yml` as described above. You can

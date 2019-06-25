@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-05-16T12:17:42-05:00",
+    "2019-06-25T12:11:02-05:00",
   "dateModified":
-    "2019-05-16T12:17:42-05:00",
+    "2019-06-25T12:11:02-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1148,7 +1146,9 @@ brief discussion of a few SoS utility commands with examples.</p>
 
 <h2 id="basic-configuration-example">Basic configuration example</h2>
 
-<p>We begin with an example illustrating the essential elements of a
+<p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that
+specifies a <em>template</em> for remote jobs. We begin with an example 
+illustrating the essential elements of a
 configuration file. This example was configured for the
 high-performance compute cluster run out of the University of Chicago
 (“midway2”), so we have called this file “midway2.yml”. To use this
@@ -1162,7 +1162,6 @@ command: <code class="highlighter-rouge">dsc mybenchmark.dsc --host midway2.yml<
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
     <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">120</span>
     <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">10</span>
-    <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">100</span>
     <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
       <span class="no">#!/bin/bash</span>
       <span class="no">#SBATCH --time=6:00:00</span>
@@ -1179,7 +1178,7 @@ command: <code class="highlighter-rouge">dsc mybenchmark.dsc --host midway2.yml<
 
 <ul>
   <li>
-    <p><code class="highlighter-rouge">DSC2</code> is required for specifying a configuration.</p>
+    <p><code class="highlighter-rouge">DSC</code> is required section title for specifying host configuration.</p>
   </li>
   <li>
     <p><code class="highlighter-rouge">midway2</code> is the label assigned to the configuration.</p>
@@ -1197,22 +1196,14 @@ any one time. Again, it is important not to set this to be too large
 on a system that is shared with other users.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">instances_per_job: 100</code> tells DSC that each job should attempt to
-generate at most 100 module outputs within each job. If the DSC
-contains long-running modules, this number should be made smaller,
-otherwise each job will take a long time to complete. For modules
-that run very quickly, <code class="highlighter-rouge">instances_per_job</code> should be set to a large
-number to avoid overloading the job management system on a shared
-computing environment.</p>
-  </li>
-  <li>
     <p>The <code class="highlighter-rouge">job_template</code> entry gives the initial steps that are run to set
 up the computing environment for computation in DSC. In this case,
 this is a basic bash script with additional instructions for the
 <a href="http://slurm.schedmd.com">Slurm</a> job scheduler. The amount of memory and the time
-limit should be adjusted for the DSC; in this simple example, the
-time limit of 6 hours is probably a vast overestimate of the actual
-time needed.</p>
+limit in this template is hard-coded for simplicity, but we will demonstrate
+later how to adjust them for different modules. In this simple example, the
+time limit of 6 hours per job submitted is probably a vast overestimate of 
+the actual time needed.</p>
   </li>
   <li>
     <p>The <code class="highlighter-rouge">submit_cmd</code>, <code class="highlighter-rouge">Submitted batch job {job_id}</code>, <code class="highlighter-rouge">squeue
@@ -1228,20 +1219,15 @@ management software (e.g., TORQUE) can be configured similarly.</p>
 
 <h2 id="more-advanced-configuration-example">More advanced configuration example</h2>
 
-<p>DSC command option <code class="highlighter-rouge">--host</code> accepts a YAML configuration file that
-specifies a <em>template</em> for remote jobs. <strong>We provide support to such
-configuration files on an as-need basis</strong>, because we (the DSC
-developers) can only verify and ensure the it works on system that we
-have access to and use on regular basis. For example,
-<a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/midway.yml">here is a template</a>
-for a system running PBS type of queue via Slurm Workload Manage:</p>
+<p>Here we provide a more advanced template for use with Slurm on UChicago RCC.
+It configures multiple queues <code class="highlighter-rouge">midway2</code>, <code class="highlighter-rouge">faraway2</code> and <code class="highlighter-rouge">stephenslab</code>.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">midway2</span><span class="pi">:</span>
     <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway 2</span>
     <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
     <span class="na">paths</span><span class="pi">:</span>
-      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/kaiqianz</span>
+      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/{user_name}</span>
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
     <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">60</span>
     <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">60</span>
@@ -1260,7 +1246,7 @@ for a system running PBS type of queue via Slurm Workload Manage:</p>
       <span class="no">#SBATCH --output={cur_dir}/{job_name}.out</span>
       <span class="no">#SBATCH --error={cur_dir}/{job_name}.err</span>
       <span class="no">cd {cur_dir}</span>
-      <span class="no">module load R</span>
+      <span class="no">module load R 2&gt; /dev/null</span>
     <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl"</span>
     <span class="na">account</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
     <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
@@ -1287,7 +1273,7 @@ for a system running PBS type of queue via Slurm Workload Manage:</p>
   <span class="na">mem_per_cpu</span><span class="pi">:</span> <span class="s">2G</span>
 
 <span class="na">simulate</span><span class="pi">:</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">100</span>
 
 <span class="na">score</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2.local</span>
@@ -1328,9 +1314,15 @@ various queues defined in <code class="highlighter-rouge">DSC</code> section.</p
 instance.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">instance_per_job</code>: how many module instances to submit as one
-remote job. This is useful consolidating numerous light-weight
-module instances into one jobs submission.</p>
+    <p><code class="highlighter-rouge">instances_per_job</code>: the maximum number of module outputs that each 
+job should should attempt to generate. This is useful 
+consolidating numerous light-weight module instances into one 
+jobs submission. If the DSC
+contains long-running modules, this number should be made smaller,
+otherwise each job will take a long time to complete. For modules
+that run very quickly, <code class="highlighter-rouge">instances_per_job</code> should be set to a large
+number to avoid overloading the job management system on a shared
+computing environment.</p>
   </li>
   <li>
     <p><code class="highlighter-rouge">n_cpu</code> and <code class="highlighter-rouge">mem_per_cpu</code> specify the CPU and memory requirement of
@@ -1347,8 +1339,8 @@ computation time reserved.</p>
 <p>Typically, <code class="highlighter-rouge">DSC</code> and <code class="highlighter-rouge">default</code> section for host configuration do not
 have to be changed for different projects. Users can carefully
 configure them once, and reuse for various projects. For Stephens Lab
-users for example, one can take the example from above and replace
-<code class="highlighter-rouge">kaiqianz</code> with their UChicago cnetID.</p>
+users for example, one can take the example from above and configure 
+resources for their DSC modules (sections after <code class="highlighter-rouge">default</code>).</p>
 
 <p>In our example, under the folder <code class="highlighter-rouge">vignettes/one_sample_location</code> you
 should find a file called <code class="highlighter-rouge">midway.yml</code> as described above. You can
