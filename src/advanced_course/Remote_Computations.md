@@ -152,21 +152,21 @@ DSC:
     description: UChicago RCC cluster Midway 2
     address: localhost
     paths:
-      home: /home/{user_name}
+      home: /home/kaiqianz
     queue_type: pbs
-    status_check_interval: 60
-    max_running_jobs: 60
+    status_check_interval: 30
+    max_running_jobs: 50
     max_cores: 40
     max_walltime: "36:00:00"
     max_mem: 64G
     job_template: |
       #!/bin/bash
-      #SBATCH --time={walltime}
       #{partition}
       #{account}
-      #SBATCH --nodes=1
-      #SBATCH --ntasks-per-node={cores}
-      #SBATCH --mem-per-cpu={mem//10**9}G
+      #SBATCH --time={walltime}
+      #SBATCH --nodes={nodes}
+      #SBATCH --cpus-per-task={cores}
+      #SBATCH --mem={mem//10**9}G
       #SBATCH --job-name={job_name}
       #SBATCH --output={cur_dir}/{job_name}.out
       #SBATCH --error={cur_dir}/{job_name}.err
@@ -192,13 +192,15 @@ DSC:
 
 default:
   queue: midway2
+  instances_per_job: 40
+  nodes_per_job: 10
+  cpus_per_node: 4
+  cpus_per_instance: 1
+  mem_per_instance: 2G
   time_per_instance: 3m
-  instances_per_job: 20
-  n_cpu: 1
-  mem_per_cpu: 2G
 
 simulate:
-  instances_per_job: 100
+  instances_per_job: 20
 
 score:
   queue: midway2.local
@@ -243,8 +245,16 @@ various queues defined in `DSC` section.
   number to avoid overloading the job management system on a shared
   computing environment.
 
-- `n_cpu` and `mem_per_cpu` specify the CPU and memory requirement of
-a module instance.
+- `nodes_per_job`: this will utilize multi-node processing via the MPI 
+interface so that each job is capable of running on multiple nodes to 
+further parallel all module instances.
+
+- `cpus_per_node`: on each node, how many CPUs to use to parallel module
+instances.
+
+- `cpus_per_instance`: how many CPUs to use for each module instance. This
+
+- `mem_per_instance`: maximum memory used for each module instance.
 
 For example for 100 module instances of `simulate` that each generates
 some data in under a minute, one can specify `time_per_instance: 1m`
@@ -376,8 +386,8 @@ execution script:
 #SBATCH --partition=broadwl
 #
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=2G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2G
 #SBATCH --job-name=M1_9056f36343b32614
 #SBATCH --output=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.out
 #SBATCH --error=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err

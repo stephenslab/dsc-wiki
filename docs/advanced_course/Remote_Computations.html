@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-07-05T14:05:35-05:00",
+    "2019-09-17T15:41:18-05:00",
   "dateModified":
-    "2019-07-05T14:05:35-05:00",
+    "2019-09-17T15:41:18-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -237,86 +237,88 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  <script>
-    /**
-    Add buttons to hide code cells
-    */
+  
+<script>
+/**
+Add buttons to hide code cells
+*/
 
 
-    var setCodeCellVisibility = function (inputField, kind) {
-        // Update the image and class for hidden
-        var id = inputField.getAttribute('data-id');
-        var codeCell = document.querySelector(`#${id} div.highlight`);
+var setCodeCellVisibility = function(inputField, kind) {
+    // Update the image and class for hidden
+    var id = inputField.getAttribute('data-id');
+    var codeCell = document.querySelector(`#${id} div.highlight`);
 
-        if (kind === "visible") {
-            codeCell.classList.remove('hidden');
-            inputField.checked = true;
-        } else {
-            codeCell.classList.add('hidden');
-            inputField.checked = false;
-        }
+    if (kind === "visible") {
+        codeCell.classList.remove('hidden');
+        inputField.checked = true;
+    } else {
+        codeCell.classList.add('hidden');
+        inputField.checked = false;
+    }
+}
+
+var toggleCodeCellVisibility = function (event) {
+    // The label is clicked, and now we decide what to do based on the input field's clicked status
+    if (event.target.tagName === "LABEL") {
+        var inputField = event.target.previousElementSibling;
+    } else {
+        // It is the span inside the target
+        var inputField = event.target.parentElement.previousElementSibling;
     }
 
-    var toggleCodeCellVisibility = function (event) {
-        // The label is clicked, and now we decide what to do based on the input field's clicked status
-        if (event.target.tagName === "LABEL") {
-            var inputField = event.target.previousElementSibling;
-        } else {
-            // It is the span inside the target
-            var inputField = event.target.parentElement.previousElementSibling;
-        }
+    if (inputField.checked === true) {
+        setCodeCellVisibility(inputField, "visible");
+    } else {
+        setCodeCellVisibility(inputField, "hidden");
+    }
+}
 
-        if (inputField.checked === true) {
-            setCodeCellVisibility(inputField, "visible");
-        } else {
-            setCodeCellVisibility(inputField, "hidden");
-        }
+
+// Button constructor
+const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+var addHideButton = function () {
+  // If a hide button is already added, don't add another
+  if (document.querySelector('div.hidecode input') !== null) {
+      return;
+  }
+
+  // Find the input cells and add a hide button
+  document.querySelectorAll('div.input_area').forEach(function (item, index) {
+    if (!item.classList.contains("hidecode")) {
+        // Skip the cell if it doesn't have a hidecode class
+        return;
     }
 
+    const id = codeCellId(index)
+    item.setAttribute('id', id);
+    // Insert the button just inside the end of the next div
+    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Button constructor
-    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-    var addHideButton = function () {
-        // If a hide button is already added, don't add another
-        if (document.querySelector('div.hidecode input') !== null) {
-            return;
-        }
-
-        // Find the input cells and add a hide button
-        document.querySelectorAll('div.input_area').forEach(function (item, index) {
-            if (!item.classList.contains("hidecode")) {
-                // Skip the cell if it doesn't have a hidecode class
-                return;
-            }
-
-            const id = codeCellId(index)
-            item.setAttribute('id', id);
-            // Insert the button just inside the end of the next div
-            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
-
-            // Set up the visibility toggle
-            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-            hideLink.addEventListener('click', toggleCodeCellVisibility)
-        });
-    }
+    // Set up the visibility toggle
+    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+    hideLink.addEventListener('click', toggleCodeCellVisibility)
+  });
+}
 
 
-    // Initialize the hide buttos
-    var initHiddenCells = function () {
-        // Add hide buttons to the cells
-        addHideButton();
+// Initialize the hide buttos
+var initHiddenCells = function () {
+    // Add hide buttons to the cells
+    addHideButton();
 
-        // Toggle the code cells that should be hidden
-        document.querySelectorAll('div.hidecode input').forEach(function (item) {
-            setCodeCellVisibility(item, 'hidden');
-            item.checked = true;
-        })
-    }
+    // Toggle the code cells that should be hidden
+    document.querySelectorAll('div.hidecode input').forEach(function (item) {
+        setCodeCellVisibility(item, 'hidden');
+        item.checked = true;
+    })
+}
 
-    initFunction(initHiddenCells);
+initFunction(initHiddenCells);
 
 </script>
+
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1227,21 +1229,21 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
     <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway 2</span>
     <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
     <span class="na">paths</span><span class="pi">:</span>
-      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/{user_name}</span>
+      <span class="na">home</span><span class="pi">:</span> <span class="s">/home/kaiqianz</span>
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
-    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">60</span>
-    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">60</span>
+    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">30</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">50</span>
     <span class="na">max_cores</span><span class="pi">:</span> <span class="s">40</span>
     <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">36:00:00"</span>
     <span class="na">max_mem</span><span class="pi">:</span> <span class="s">64G</span>
     <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
       <span class="no">#!/bin/bash</span>
-      <span class="no">#SBATCH --time={walltime}</span>
       <span class="no">#{partition}</span>
       <span class="no">#{account}</span>
-      <span class="no">#SBATCH --nodes=1</span>
-      <span class="no">#SBATCH --ntasks-per-node={cores}</span>
-      <span class="no">#SBATCH --mem-per-cpu={mem//10**9}G</span>
+      <span class="no">#SBATCH --time={walltime}</span>
+      <span class="no">#SBATCH --nodes={nodes}</span>
+      <span class="no">#SBATCH --cpus-per-task={cores}</span>
+      <span class="no">#SBATCH --mem={mem//10**9}G</span>
       <span class="no">#SBATCH --job-name={job_name}</span>
       <span class="no">#SBATCH --output={cur_dir}/{job_name}.out</span>
       <span class="no">#SBATCH --error={cur_dir}/{job_name}.err</span>
@@ -1267,13 +1269,15 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
 
 <span class="na">default</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">40</span>
+  <span class="na">nodes_per_job</span><span class="pi">:</span> <span class="s">10</span>
+  <span class="na">cpus_per_node</span><span class="pi">:</span> <span class="s">4</span>
+  <span class="na">cpus_per_instance</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">mem_per_instance</span><span class="pi">:</span> <span class="s">2G</span>
   <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">3m</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
-  <span class="na">n_cpu</span><span class="pi">:</span> <span class="s">1</span>
-  <span class="na">mem_per_cpu</span><span class="pi">:</span> <span class="s">2G</span>
 
 <span class="na">simulate</span><span class="pi">:</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
 
 <span class="na">score</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2.local</span>
@@ -1325,8 +1329,19 @@ number to avoid overloading the job management system on a shared
 computing environment.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">n_cpu</code> and <code class="highlighter-rouge">mem_per_cpu</code> specify the CPU and memory requirement of
-a module instance.</p>
+    <p><code class="highlighter-rouge">nodes_per_job</code>: this will utilize multi-node processing via the MPI 
+interface so that each job is capable of running on multiple nodes to 
+further parallel all module instances.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cpus_per_node</code>: on each node, how many CPUs to use to parallel module
+instances.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cpus_per_instance</code>: how many CPUs to use for each module instance. This</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">mem_per_instance</code>: maximum memory used for each module instance.</p>
   </li>
 </ul>
 
@@ -1449,8 +1464,8 @@ execution script:
 #SBATCH --partition=broadwl
 #
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=2G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2G
 #SBATCH --job-name=M1_9056f36343b32614
 #SBATCH --output=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.out
 #SBATCH --error=/home/kaiqianz/dsc/vignettes/one_sample_location/M1_9056f36343b32614.err
