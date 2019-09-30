@@ -194,7 +194,7 @@ default:
   queue: midway2
   instances_per_job: 40
   nodes_per_job: 10
-  cpus_per_node: 4
+  instances_per_node: 4
   cpus_per_instance: 1
   mem_per_instance: 2G
   time_per_instance: 3m
@@ -249,10 +249,9 @@ various queues defined in `DSC` section.
 interface so that each job is capable of running on multiple nodes to 
 further parallel all module instances.
 
-- `cpus_per_node`: on each node, how many CPUs to use to parallel module
-instances.
+- `instances_per_node`: how many parallel module instances are allowed on each node.
 
-- `cpus_per_instance`: how many CPUs to use for each module instance. This
+- `cpus_per_instance`: how many CPUs to use for each module instance.
 
 - `mem_per_instance`: maximum memory used for each module instance.
 
