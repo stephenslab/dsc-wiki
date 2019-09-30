@@ -29,9 +29,9 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-09-17T15:41:18-05:00",
+    "2019-09-30T10:41:44-05:00",
   "dateModified":
-    "2019-09-17T15:41:18-05:00",
+    "2019-09-30T10:41:44-05:00",
   "description":
     "Running DSC on a computer cluster",
   "author": {
@@ -1271,7 +1271,7 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
   <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">40</span>
   <span class="na">nodes_per_job</span><span class="pi">:</span> <span class="s">10</span>
-  <span class="na">cpus_per_node</span><span class="pi">:</span> <span class="s">4</span>
+  <span class="na">instances_per_node</span><span class="pi">:</span> <span class="s">4</span>
   <span class="na">cpus_per_instance</span><span class="pi">:</span> <span class="s">1</span>
   <span class="na">mem_per_instance</span><span class="pi">:</span> <span class="s">2G</span>
   <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">3m</span>
@@ -1334,11 +1334,10 @@ interface so that each job is capable of running on multiple nodes to
 further parallel all module instances.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">cpus_per_node</code>: on each node, how many CPUs to use to parallel module
-instances.</p>
+    <p><code class="highlighter-rouge">instances_per_node</code>: how many parallel module instances are allowed on each node.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">cpus_per_instance</code>: how many CPUs to use for each module instance. This</p>
+    <p><code class="highlighter-rouge">cpus_per_instance</code>: how many CPUs to use for each module instance.</p>
   </li>
   <li>
     <p><code class="highlighter-rouge">mem_per_instance</code>: maximum memory used for each module instance.</p>
