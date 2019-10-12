@@ -26,6 +26,14 @@ bash: expand = '${ }'
 	cp cfg/_config.yml ${workdir}/_config.yml
   	jupyter-book build ${workdir} ${'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
+# a hack for https://github.com/jupyter/jupyter-book/issues/72
+import platform, glob
+exec = "sed -i '' -e" if platform.system() == 'Darwin' else "sed -i -e"
+for x in glob.glob('src/*/[!_]*.ipynb'):
+	x = path(f"jupyter-book/_build/{path(x).relative_to('src'):n}.md")
+	if x.is_file():
+		run(f'''{exec} 's/scope=col/scope="col"/g; s/scope=row/scope="row"/g' {x}''', stderr=False, stdout=False)
+
 [build_2]
 docker_build: workdir = workdir, tag = f'{getpass.getuser()}/jekyll-book'
 	FROM jekyll/jekyll:4.0.0
