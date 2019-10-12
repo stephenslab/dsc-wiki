@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>DSC configuration syntax</title>
-  <meta name="description" content="DSC syntax: basics of modules">
+  <meta name="description" content="">
 
   <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/reference/DSC_Configuration.html">
   <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
@@ -16,7 +16,7 @@
   <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/reference/DSC_Configuration.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="DSC configuration syntax" />
-<meta property="og:description" content="DSC syntax: basics of modules" />
+<meta property="og:description" content="" />
 <meta property="og:image"       content="" />
 
 
@@ -29,11 +29,11 @@
   "headline":
     "DSC configuration syntax",
   "datePublished":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "dateModified":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "description":
-    "DSC syntax: basics of modules",
+    "",
   "author": {
     "@type": "Person",
     "name": "Stephens Lab, University of Chicago"
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1030,7 +1028,7 @@ initFunction(initQuery);
       
     
   </ul>
-  <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
 </nav>
 
       
@@ -1085,7 +1083,7 @@ initFunction(initQuery);
 <p>Modules, the building blocks of DSC, can be minimally specified as follows:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
     <span class="s">$x</span><span class="pi">:</span> <span class="s">x</span>
 </code></pre></div></div>
 
@@ -1122,7 +1120,7 @@ initFunction(initQuery);
 <p>Instead of having to use scripts to specify module executables, <a href="#language-interpreters">language interpreter</a> operators can be used to define codes for modules inline. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x = rnorm(n))</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
     <span class="s">$x</span><span class="pi">:</span> <span class="s">x</span>
 </code></pre></div></div>
 
@@ -1141,20 +1139,20 @@ initFunction(initQuery);
 <p>Modules can be <em>inherited</em> as follows, a shorthand to define new modules based on existing ones:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="s">shifted_normal(normal)</span><span class="pi">:</span> 
-  <span class="na">mu</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">1</span>
 </code></pre></div></div>
 
 <p><code class="highlighter-rouge">shifted_normal</code> is a derived module from <code class="highlighter-rouge">normal</code>. The complete definition of <code class="highlighter-rouge">shifted_normal</code>, after expanding the derived contents, is in fact:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">shifted_normal</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">1</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1164,21 +1162,21 @@ initFunction(initQuery);
 <p>Module inheritance can also be used to add parameters, eg,</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="s">t(normal)</span><span class="pi">:</span> <span class="s">R( x = mu + rt(n,df) )</span>
-  <span class="s">df</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="s">df</span><span class="pi">:</span> <span class="m">2</span>
 </code></pre></div></div>
 
 <p>Then <code class="highlighter-rouge">t</code> is inherited from <code class="highlighter-rouge">normal</code> with a different script and additional parameter, which will get expanded to:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R( x = mu + rt(n,df) )</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">df</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">df</span><span class="pi">:</span> <span class="m">2</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1186,15 +1184,15 @@ initFunction(initQuery);
 <p>It is possible to create “base” modules that are not meant to be used directly, but exclusively for other modules to derive upon. Such base modules are characterized by the <strong>absence of module executable specification</strong>, eg:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate_base</span><span class="pi">:</span>
-  <span class="na">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="na">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="na">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
   
 <span class="s">normal(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
 
 <span class="s">t(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rt(n,df) )</span>
-  <span class="s">df</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="s">df</span><span class="pi">:</span> <span class="m">2</span>
 </code></pre></div></div>
 
 <h3 id="module-parameters">Module parameters</h3>
@@ -1211,8 +1209,8 @@ initFunction(initQuery);
 
 <p>When multiple parameters are specified, eg:</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="na">n</span><span class="pi">:</span> <span class="s">10, 20</span>
-    <span class="na">p</span><span class="pi">:</span> <span class="s">0.1, 0.2</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="na">n</span><span class="pi">:</span> <span class="s">10, </span><span class="m">20</span>
+    <span class="na">p</span><span class="pi">:</span> <span class="s">0.1, </span><span class="m">0.2</span>
 </code></pre></div></div>
 
 <p>Combinations of parameters (Cartesian product style by default) will be assigned to all modules unless otherwise instructed via <a href="#decorator-filter"><code class="highlighter-rouge">@FILTER</code></a> decorator. In the example above each module will take 4 sets of parameters : <code class="highlighter-rouge">(n = 10, p = 0.1), (n = 10, p = 0.2), (n = 20, p = 0.1), (n = 20, p = 0.2)</code>.</p>
@@ -1231,7 +1229,7 @@ initFunction(initQuery);
 <p>Module output are pipeline variables that can be accessed by other downstream modules in the pipeline. These variables have a leading <code class="highlighter-rouge">$</code> symbol followed by variable names. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
     <span class="s">$x</span><span class="pi">:</span> <span class="s">x</span>
 </code></pre></div></div>
 
@@ -1246,7 +1244,7 @@ initFunction(initQuery);
 <p>Module input are pipeline variables generated by other upstream modules in the pipeline. Same as module output, module input has the pipeline variable syntax <code class="highlighter-rouge">$</code> followed by variable names. What distinguishes module input and output syntactically is whether they appear on the left side or the right side of <code class="highlighter-rouge">:</code>. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
     <span class="s">$x</span><span class="pi">:</span> <span class="s">x</span>
 
 <span class="na">shrink</span><span class="pi">:</span> <span class="s">method.R</span>
@@ -1273,18 +1271,18 @@ initFunction(initQuery);
 <p>Module decorator sepcifies parameters or inputs unique to one module but not applicable to others. for example</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">@t</span><span class="pi">:</span>
-        <span class="na">df</span><span class="pi">:</span> <span class="s">5, 10</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="err">@</span><span class="na">t</span><span class="pi">:</span>
+        <span class="na">df</span><span class="pi">:</span> <span class="s">5, </span><span class="m">10</span>
 <span class="nn">...</span>
 </code></pre></div></div>
 
 <p>where <code class="highlighter-rouge">n</code> is shared by both modules but parameter <code class="highlighter-rouge">df</code> is only used by module <code class="highlighter-rouge">t</code>. Module decorator always took precedence over parameters / inputs shared by modules when assigning new variables or modify existing ones, that is:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">@t</span><span class="pi">:</span>
-        <span class="na">n</span><span class="pi">:</span> <span class="s">200</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="err">@</span><span class="na">t</span><span class="pi">:</span>
+        <span class="na">n</span><span class="pi">:</span> <span class="m">200</span>
 <span class="nn">...</span>
 </code></pre></div></div>
 <p>will set <code class="highlighter-rouge">n = 200</code> for <code class="highlighter-rouge">t</code>, rather than using <code class="highlighter-rouge">n = 1000</code>.</p>
@@ -1292,9 +1290,9 @@ initFunction(initQuery);
 <p>Bulk syntax is supported:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t, cauchy</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R, rcauchy.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">@t,cauchy</span><span class="pi">:</span>
-        <span class="na">n</span><span class="pi">:</span> <span class="s">200</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="err">@</span><span class="s">t,cauchy</span><span class="pi">:</span>
+        <span class="na">n</span><span class="pi">:</span> <span class="m">200</span>
 </code></pre></div></div>
 
 <p>Caution that module decorators cannot be used to configure module output variables, because module output are required to be the same for all modules specified in the same syntax block.</p>
@@ -1305,17 +1303,17 @@ initFunction(initQuery);
 
 <p>For example an R script <code class="highlighter-rouge">method.R</code> accepts one “List” variable <code class="highlighter-rouge">args</code> that contains <code class="highlighter-rouge">var_a</code> and <code class="highlighter-rouge">var_b</code>:</p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="m">1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">...</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span><span class="n">f</span><span class="m">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">...</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="m">1</span><span class="p">(</span><span class="n">args</span><span class="o">$</span><span class="n">var_a</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f</span><span class="m">2</span><span class="p">(</span><span class="n">args</span><span class="o">$</span><span class="n">var_b</span><span class="p">)</span><span class="w">
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f1</span><span class="p">(</span><span class="n">args</span><span class="o">$</span><span class="n">var_a</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f2</span><span class="p">(</span><span class="n">args</span><span class="o">$</span><span class="n">var_b</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
 <p>Then instead of modifying <code class="highlighter-rouge">method.R</code> to take “simple” parameters, we can use <code class="highlighter-rouge">@ALIAS</code>,</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">method</span><span class="pi">:</span> <span class="s">method.R</span>
-    <span class="s">a</span><span class="pi">:</span> <span class="s">1</span>
-    <span class="s">b</span><span class="pi">:</span> <span class="s">2</span>
-    <span class="s">@ALIAS</span><span class="pi">:</span> <span class="s">args = List(var_a = a, var_b = b)</span>
+    <span class="s">a</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">b</span><span class="pi">:</span> <span class="m">2</span>
+    <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span> <span class="s">args = List(var_a = a, var_b = b)</span>
 </code></pre></div></div>
 
 <p>such that <code class="highlighter-rouge">a</code> and <code class="highlighter-rouge">b</code> are properly consolidated into an R List <code class="highlighter-rouge">args</code> as <code class="highlighter-rouge">var_a</code> and <code class="highlighter-rouge">var_b</code> respectively. Currently we allow for <code class="highlighter-rouge">List()</code> and <code class="highlighter-rouge">Dict()</code> for R’s List and Python’s Dictionary though more object types may be supported as needed in future versions.</p>
@@ -1331,14 +1329,14 @@ initFunction(initQuery);
 
 <p><strong>Note that when a variable is made into ALIAS operator it will no longer be available as is</strong>. For example,</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n</span><span class="pi">:</span> <span class="s">1</span>
-<span class="na">m</span><span class="pi">:</span> <span class="s">2</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n</span><span class="pi">:</span> <span class="m">1</span>
+<span class="na">m</span><span class="pi">:</span> <span class="m">2</span>
 <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span> <span class="s">args = List()</span>
 </code></pre></div></div>
 
 <p>Then you cannot use <code class="highlighter-rouge">m</code> or <code class="highlighter-rouge">n</code> in the module script. Rather they become <code class="highlighter-rouge">args$m</code> and <code class="highlighter-rouge">args$n</code>. To exclude variables from being included,</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n</span><span class="pi">:</span> <span class="s">1</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n</span><span class="pi">:</span> <span class="m">1</span>
 <span class="nn">...</span>
 <span class="nn">...</span>
 <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span> <span class="s">args = List(!n)</span>
@@ -1349,8 +1347,8 @@ initFunction(initQuery);
 <p>Another <strong>important</strong> usage of <code class="highlighter-rouge">@ALIAS</code> is to adjust parameter names for the module specified. For example, suppose the variable <code class="highlighter-rouge">n</code> in script <code class="highlighter-rouge">rnorm.R</code> is <code class="highlighter-rouge">n</code> but in <code class="highlighter-rouge">rt.R</code> it is <code class="highlighter-rouge">n_samples</code>, then we can use <code class="highlighter-rouge">@ALIAS</code> to adjust module <code class="highlighter-rouge">t</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">@ALIAS</span><span class="pi">:</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span>
         <span class="na">t</span><span class="pi">:</span> <span class="s">n_samples = n</span>
 </code></pre></div></div>
 
@@ -1359,18 +1357,18 @@ initFunction(initQuery);
 <p>When both module specific <code class="highlighter-rouge">@ALIAS</code> and global <code class="highlighter-rouge">@ALIAS</code> are to be specified, one can either use module decorator in combination with <code class="highlighter-rouge">@ALIAS</code>, or use wildcard <code class="highlighter-rouge">*</code> in addition to module specific adjustment. For example the following two code blocks are equivalent:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t, rcauchy</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R, rcauchy.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">mu</span><span class="pi">:</span> <span class="s">5</span>
-    <span class="s">@ALIAS</span><span class="pi">:</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">mu</span><span class="pi">:</span> <span class="m">5</span>
+    <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span>
         <span class="err">*</span><span class="pi">:</span> <span class="s">args = List(mu)</span>
         <span class="na">t</span><span class="pi">:</span> <span class="s">args = List(mu), n_samples = n</span>
 </code></pre></div></div>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t, rcauchy</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R, rcauchy.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">1000</span>
-    <span class="s">mu</span><span class="pi">:</span> <span class="s">5</span>
-    <span class="s">@ALIAS</span><span class="pi">:</span> <span class="s">args = List(mu)</span>
-    <span class="s">@t</span><span class="pi">:</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">mu</span><span class="pi">:</span> <span class="m">5</span>
+    <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span> <span class="s">args = List(mu)</span>
+    <span class="err">@</span><span class="na">t</span><span class="pi">:</span>
         <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span> <span class="s">args = List(mu), n_samples = n</span>
 </code></pre></div></div>
 
@@ -1379,11 +1377,11 @@ initFunction(initQuery);
 <p><code class="highlighter-rouge">@FILTER</code> can be used to modify default logic that all parameters are combined the Cartesian product style. The <code class="highlighter-rouge">@FILTER</code> syntax is the same as the <code class="highlighter-rouge">condition</code> statement in <code class="highlighter-rouge">dsc-query</code> command; both <a href="DSC_Filtering">documented elsewhere</a>. Here we elaborate on some examples:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">normal.R, t.R</span>
-    <span class="s">n</span><span class="pi">:</span> <span class="s">100, 200, 300, 400, 500</span>
-    <span class="s">k</span><span class="pi">:</span> <span class="s">0, 1</span>
-    <span class="s">@FILTER</span><span class="pi">:</span>
+    <span class="s">n</span><span class="pi">:</span> <span class="s">100, 200, 300, 400, </span><span class="m">500</span>
+    <span class="na">k</span><span class="pi">:</span> <span class="s">0, </span><span class="m">1</span>
+    <span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span>
         <span class="na">t</span><span class="pi">:</span> <span class="s">(n &lt;= 300 and k = 0) or (n &gt; 300 and k = 1)</span>
-        <span class="na">normal</span><span class="pi">:</span> <span class="s">n = 500</span>
+        <span class="na">normal</span><span class="pi">:</span> <span class="s">n = </span><span class="m">500</span>
 </code></pre></div></div>
 
 <p>Without <code class="highlighter-rouge">@FILTER</code> DSC will exhaust all combinations of 5 values of <code class="highlighter-rouge">n</code> and 2 of <code class="highlighter-rouge">k</code> for both modules, creating a total of 20 parallel jobs. The <code class="highlighter-rouge">@FILTER</code> here states that instead of running all 20 jobs, DSC will run for <code class="highlighter-rouge">t</code> 3 values from <code class="highlighter-rouge">n</code> with <code class="highlighter-rouge">k = 0</code>, then run the rest 2 values of <code class="highlighter-rouge">n</code> with <code class="highlighter-rouge">k = 1</code>, which is a total of 5 jobs for <code class="highlighter-rouge">t</code>. Then it runs for <code class="highlighter-rouge">normal</code> with <code class="highlighter-rouge">n = 500</code> combined with 2 values from <code class="highlighter-rouge">k</code>, a total of 2 jobs. Therefore only 7 jobs will be executed after applying the <code class="highlighter-rouge">@FILTER</code>.</p>
@@ -1396,7 +1394,7 @@ initFunction(initQuery);
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span> 
         <span class="err">*</span><span class="pi">:</span> <span class="s">n in [100,200,300]</span>
-        <span class="na">t</span><span class="pi">:</span> <span class="s">n = 300</span>
+        <span class="na">t</span><span class="pi">:</span> <span class="s">n = </span><span class="m">300</span>
 </code></pre></div></div>
 
 <p>then for <code class="highlighter-rouge">t</code> we restrict <code class="highlighter-rouge">n</code> to <code class="highlighter-rouge">300</code>, and for all other modules we set <code class="highlighter-rouge">n</code> to loop over <code class="highlighter-rouge">100,200,300</code>.</p>
@@ -1494,7 +1492,7 @@ initFunction(initQuery);
 <p>Then run:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dsc test.dsc <span class="nt">--target</span> <span class="s2">"t1*t2"</span>
-<span class="nv">$ </span>find <span class="nb">test</span> <span class="nt">-name</span> <span class="s2">"*.stdout"</span> <span class="nt">-exec</span> tail <span class="nt">-vn</span> +1 <span class="o">{}</span> <span class="se">\;</span>
+<span class="nv">$ </span>find <span class="nb">test</span> <span class="nt">-name</span> <span class="s2">"*.stdout"</span> <span class="nt">-exec</span> <span class="nb">tail</span> <span class="nt">-vn</span> +1 <span class="o">{}</span> <span class="se">\;</span>
 
 <span class="o">==&gt;</span> <span class="nb">test</span>/t2/t1_1_t2_1.stdout &lt;<span class="o">==</span>
 <span class="o">[</span>1] <span class="s2">"Module input 'data' is previous module output 'out':  test/t1/t1_1.txt"</span>
@@ -1521,8 +1519,8 @@ initFunction(initQuery);
 <p><code class="highlighter-rouge">file()</code> with extension will result in a unique and informative basename for use in a module instance, and will result in files under the DSC output directory. When used as a module parameter, intermediate file cache are generated and saved, but will not be tracked by DSC or used in other modules. This means deleting this file manually afterwards will not trigger rerun of the pipelines involved. When used as a module output, DSC will keep track of it as pipeline variable that other modules can use. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t1</span><span class="pi">:</span> <span class="s">R(print(cache); write(out, 0))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">1, 2, 3, 4</span>
-  <span class="s">cache</span><span class="pi">:</span> <span class="s">file(cache)</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">1, 2, 3, </span><span class="m">4</span>
+  <span class="na">cache</span><span class="pi">:</span> <span class="s">file(cache)</span>
   <span class="s">$out</span><span class="pi">:</span> <span class="s">file(txt)</span>
 </code></pre></div></div>
 
@@ -1550,13 +1548,13 @@ initFunction(initQuery);
 <span class="s">mean, median</span><span class="pi">:</span> <span class="s">mean.R, median.R</span>
     <span class="s"># parameters</span>
     <span class="s">## set to 0 for no winsorization</span>
-    <span class="s">winsorize</span><span class="pi">:</span> <span class="s">0, 0.02</span>
-    <span class="s"># input</span>
-    <span class="s">x</span><span class="pi">:</span> <span class="s">$x</span>
-    <span class="s"># output</span>
+    <span class="s">winsorize</span><span class="pi">:</span> <span class="s">0, </span><span class="m">0.02</span>
+    <span class="c1"># input</span>
+    <span class="na">x</span><span class="pi">:</span> <span class="s">$x</span>
+    <span class="c1"># output</span>
     <span class="s">$mean</span><span class="pi">:</span> <span class="s">mean</span>
-    <span class="s"># decorators</span>
-    <span class="s">@ALIAS</span><span class="pi">:</span>
+    <span class="c1"># decorators</span>
+    <span class="err">@</span><span class="na">ALIAS</span><span class="pi">:</span>
         <span class="na">median</span><span class="pi">:</span> <span class="s">w = winsorize</span>
 </code></pre></div></div>
 
@@ -1566,14 +1564,14 @@ initFunction(initQuery);
               <nav class="c-page__nav">
   
     
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/reference/Terminology">
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/reference/Terminology.html">
       〈 <span class="u-margin-right-tiny"></span> Terminology
     </a>
   
 
   
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/reference/DSC_Execution">
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/reference/DSC_Execution.html">
       Running DSC <span class="u-margin-right-tiny"></span> 〉
     </a>
   

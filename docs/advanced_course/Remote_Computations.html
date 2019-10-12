@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Running DSC on remote computers</title>
-  <meta name="description" content="Running DSC on a computer cluster">
+  <meta name="description" content="">
 
   <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations.html">
   <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
@@ -16,7 +16,7 @@
   <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Running DSC on remote computers" />
-<meta property="og:description" content="Running DSC on a computer cluster" />
+<meta property="og:description" content="" />
 <meta property="og:image"       content="" />
 
 
@@ -29,11 +29,11 @@
   "headline":
     "Running DSC on remote computers",
   "datePublished":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "dateModified":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "description":
-    "Running DSC on a computer cluster",
+    "",
   "author": {
     "@type": "Person",
     "name": "Stephens Lab, University of Chicago"
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1030,7 +1028,7 @@ initFunction(initQuery);
       
     
   </ul>
-  <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
 </nav>
 
       
@@ -1162,14 +1160,14 @@ command: <code class="highlighter-rouge">dsc mybenchmark.dsc --host midway2.yml<
   <span class="na">midway2</span><span class="pi">:</span>
     <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
-    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">120</span>
-    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">10</span>
+    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="m">120</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="m">10</span>
     <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
-      <span class="no">#!/bin/bash</span>
-      <span class="no">#SBATCH --time=6:00:00</span>
-      <span class="no">#SBATCH --partition=broadwl</span>
-      <span class="no">#SBATCH --mem=4G</span>
-      <span class="no">#SBATCH --exclusive</span>
+      <span class="s">#!/bin/bash</span>
+      <span class="s">#SBATCH --time=6:00:00</span>
+      <span class="s">#SBATCH --partition=broadwl</span>
+      <span class="s">#SBATCH --mem=4G</span>
+      <span class="s">#SBATCH --exclusive</span>
     <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
     <span class="na">submit_cmd_output</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Submitted</span><span class="nv"> </span><span class="s">batch</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">{job_id}"</span>
     <span class="na">status_cmd</span><span class="pi">:</span> <span class="s">squeue --job {job_id}</span>
@@ -1226,29 +1224,29 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">midway2</span><span class="pi">:</span>
-    <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway 2</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">UChicago RCC cluster Midway </span><span class="m">2</span>
     <span class="na">address</span><span class="pi">:</span> <span class="s">localhost</span>
     <span class="na">paths</span><span class="pi">:</span>
       <span class="na">home</span><span class="pi">:</span> <span class="s">/home/kaiqianz</span>
     <span class="na">queue_type</span><span class="pi">:</span> <span class="s">pbs</span>
-    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="s">30</span>
-    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="s">50</span>
-    <span class="na">max_cores</span><span class="pi">:</span> <span class="s">40</span>
+    <span class="na">status_check_interval</span><span class="pi">:</span> <span class="m">30</span>
+    <span class="na">max_running_jobs</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="na">max_cores</span><span class="pi">:</span> <span class="m">40</span>
     <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">36:00:00"</span>
     <span class="na">max_mem</span><span class="pi">:</span> <span class="s">64G</span>
     <span class="na">job_template</span><span class="pi">:</span> <span class="pi">|</span>
-      <span class="no">#!/bin/bash</span>
-      <span class="no">#{partition}</span>
-      <span class="no">#{account}</span>
-      <span class="no">#SBATCH --time={walltime}</span>
-      <span class="no">#SBATCH --nodes={nodes}</span>
-      <span class="no">#SBATCH --cpus-per-task={cores}</span>
-      <span class="no">#SBATCH --mem={mem//10**9}G</span>
-      <span class="no">#SBATCH --job-name={job_name}</span>
-      <span class="no">#SBATCH --output={cur_dir}/{job_name}.out</span>
-      <span class="no">#SBATCH --error={cur_dir}/{job_name}.err</span>
-      <span class="no">cd {cur_dir}</span>
-      <span class="no">module load R 2&gt; /dev/null</span>
+      <span class="s">#!/bin/bash</span>
+      <span class="s">#{partition}</span>
+      <span class="s">#{account}</span>
+      <span class="s">#SBATCH --time={walltime}</span>
+      <span class="s">#SBATCH --nodes={nodes}</span>
+      <span class="s">#SBATCH --cpus-per-task={cores}</span>
+      <span class="s">#SBATCH --mem={mem//10**9}G</span>
+      <span class="s">#SBATCH --job-name={job_name}</span>
+      <span class="s">#SBATCH --output={cur_dir}/{job_name}.out</span>
+      <span class="s">#SBATCH --error={cur_dir}/{job_name}.err</span>
+      <span class="s">cd {cur_dir}</span>
+      <span class="s">module load R 2&gt; /dev/null</span>
     <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=broadwl"</span>
     <span class="na">account</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
     <span class="na">submit_cmd</span><span class="pi">:</span> <span class="s">sbatch {job_file}</span>
@@ -1261,7 +1259,7 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
     <span class="na">address</span><span class="pi">:</span> <span class="s">kaiqianz@midway2.rcc.uchicago.edu</span>
   <span class="na">stephenslab</span><span class="pi">:</span>
     <span class="na">based_on</span><span class="pi">:</span> <span class="s">midway2</span>
-    <span class="na">max_cores</span><span class="pi">:</span> <span class="s">28</span>
+    <span class="na">max_cores</span><span class="pi">:</span> <span class="m">28</span>
     <span class="na">max_mem</span><span class="pi">:</span> <span class="s">128G</span>
     <span class="na">max_walltime</span><span class="pi">:</span> <span class="s2">"</span><span class="s">10d"</span>
     <span class="na">partition</span><span class="pi">:</span> <span class="s2">"</span><span class="s">SBATCH</span><span class="nv"> </span><span class="s">--partition=mstephens"</span>
@@ -1269,15 +1267,15 @@ It configures multiple queues <code class="highlighter-rouge">midway2</code>, <c
 
 <span class="na">default</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">40</span>
-  <span class="na">nodes_per_job</span><span class="pi">:</span> <span class="s">10</span>
-  <span class="na">instances_per_node</span><span class="pi">:</span> <span class="s">4</span>
-  <span class="na">cpus_per_instance</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="m">40</span>
+  <span class="na">nodes_per_job</span><span class="pi">:</span> <span class="m">10</span>
+  <span class="na">instances_per_node</span><span class="pi">:</span> <span class="m">4</span>
+  <span class="na">cpus_per_instance</span><span class="pi">:</span> <span class="m">1</span>
   <span class="na">mem_per_instance</span><span class="pi">:</span> <span class="s">2G</span>
   <span class="na">time_per_instance</span><span class="pi">:</span> <span class="s">3m</span>
 
 <span class="na">simulate</span><span class="pi">:</span>
-  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="s">20</span>
+  <span class="na">instances_per_job</span><span class="pi">:</span> <span class="m">20</span>
 
 <span class="na">score</span><span class="pi">:</span>
   <span class="na">queue</span><span class="pi">:</span> <span class="s">midway2.local</span>
@@ -1513,14 +1511,14 @@ CPUs each with 2GB memory allocated. Then submit with <code class="highlighter-r
               <nav class="c-page__nav">
   
     
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/advanced_course/Rmd_Executable">
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/advanced_course/Rmd_Executable.html">
       〈 <span class="u-margin-right-tiny"></span> Using Rmd files as module executables
     </a>
   
 
   
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/advanced_course/DSC_Docker">
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/advanced_course/DSC_Docker.html">
       Running DSC in Docker <span class="u-margin-right-tiny"></span> 〉
     </a>
   

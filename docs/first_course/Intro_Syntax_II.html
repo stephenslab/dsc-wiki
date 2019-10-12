@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>DSC basics, part II</title>
-  <meta name="description" content="DSC Basics, Part II">
+  <meta name="description" content="">
 
   <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_II.html">
   <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
@@ -16,7 +16,7 @@
   <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/first_course/Intro_Syntax_II.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="DSC basics, part II" />
-<meta property="og:description" content="DSC Basics, Part II" />
+<meta property="og:description" content="" />
 <meta property="og:image"       content="" />
 
 
@@ -29,11 +29,11 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "dateModified":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "description":
-    "DSC Basics, Part II",
+    "",
   "author": {
     "@type": "Person",
     "name": "Stephens Lab, University of Chicago"
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1030,7 +1028,7 @@ initFunction(initQuery);
       
     
   </ul>
-  <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
 </nav>
 
       
@@ -1080,15 +1078,15 @@ initFunction(initQuery);
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
-  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="m">0</span>
 </code></pre></div></div>
 
 <p>Here we propose to make a slight improvement to this module by adding a <em>module parameter</em>, <code class="highlighter-rouge">n</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = 0,sd = 1))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
-  <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">$true_mean</span><span class="pi">:</span> <span class="m">0</span>
 </code></pre></div></div>
 
 <p>We have defined a module parameter <code class="highlighter-rouge">n</code> and set its value to 100. Once we have defined <code class="highlighter-rouge">n</code>, any of the R code may refer to this module parameter. In the R code, the first argument of <code class="highlighter-rouge">rnorm</code> is set to the value of <code class="highlighter-rouge">n</code> (which is 100).</p>
@@ -1102,8 +1100,8 @@ initFunction(initQuery);
 <p>It would be better if the mean of the data was defined once. This can be accomplished with a module parameter, which we will name <code class="highlighter-rouge">mu</code> (the Greek letter conventionally used to denote the mean):</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1117,8 +1115,8 @@ initFunction(initQuery);
 <p>Likewise, we can use a module parameter to specify the mean of the data simulated from a <em>t</em> distribution:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df = 2))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">3</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">3</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1162,8 +1160,8 @@ initFunction(initQuery);
 <p>To illustrate the evaluation procedure, consider the simple example of a module we gave above, repeated here for convenience:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1200,8 +1198,8 @@ initFunction(initQuery);
 <p>Our current definition of the <code class="highlighter-rouge">normal</code> module simulates 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code class="highlighter-rouge">n</code> that takes on two different values:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1223,14 +1221,14 @@ initFunction(initQuery);
 <p>Let’s go ahead and generate results from our new “mean estimation” DSC. In the new DSC, the <code class="highlighter-rouge">simulate</code> modules are defined by two module blocks:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df = 2))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">3</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">3</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1246,7 +1244,7 @@ initFunction(initQuery);
 
 <p>remove any previously generated results,</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
 </code></pre></div></div>
 
 <p>then run 10 replicates of all the pipelines:</p>
@@ -1275,6 +1273,7 @@ INFO: Elapsed time 29.389 seconds.
   </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.n"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1302,6 +1301,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">with</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">simulate.n</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1327,6 +1327,7 @@ simulate 100 1000
 </span><span class="n">as.table</span><span class="p">(</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="w">
             </span><span class="n">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nf">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate.n</span><span class="p">)),</span><span class="w">
             </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">score.error</span><span class="p">)))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1350,9 +1351,9 @@ median 0.018195606 0.001767654
 <p>For example, suppose we want to evaluate estimators of the population mean when the data are simulated from the <em>t</em> distribution with different numbers of degrees of freedom. In DSC, this can be succinctly expressed by defining another module parameter, <code class="highlighter-rouge">df</code>, with multiple values:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">3</span>
-  <span class="s">df</span><span class="pi">:</span> <span class="s">2, 4, 10</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">3</span>
+  <span class="na">df</span><span class="pi">:</span> <span class="s">2, 4, </span><span class="m">10</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1361,7 +1362,7 @@ median 0.018195606 0.001767654
 
 <p>Let’s clear the previous results and run the DSC benchmark with this new module:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
 dsc simulate_multiple_dfs.dsc <span class="nt">--replicate</span> 10
 </code></pre></div></div>
 
@@ -1381,6 +1382,7 @@ INFO: Elapsed time 57.557 seconds.
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
   </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t.n"</span><span class="p">,</span><span class="s2">"t.df"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1399,6 +1401,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">with</span><span class="p">(</span><span class="n">dscout2</span><span class="p">,</span><span class="n">table</span><span class="p">(</span><span class="n">t.n</span><span class="p">,</span><span class="n">t.df</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1425,9 +1428,9 @@ t.n     2  4 10
 <p>For example, we can define 10 modules that generate 10 normally distributed data sets:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">seed</span><span class="pi">:</span> <span class="s">1, 2, 3, 4, 5, 6, 7, 8, 9, 10</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">seed</span><span class="pi">:</span> <span class="s">1, 2, 3, 4, 5, 6, 7, 8, 9, </span><span class="m">10</span>
+  <span class="na">n</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1445,8 +1448,8 @@ t.n     2  4 10
 <p>Suppose we wanted to assess the impact of the trimming on the estimate accuracy. To do this, we could introduce a module parameter <code class="highlighter-rouge">trim</code> with multiple settings:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">winsor</span><span class="pi">:</span> <span class="s">R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))</span>
-  <span class="s">trim</span><span class="pi">:</span> <span class="s">0.1, 0.2</span>
-  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">trim</span><span class="pi">:</span> <span class="s">0.1, </span><span class="m">0.2</span>
+  <span class="na">x</span><span class="pi">:</span> <span class="s">$data</span>
   <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
 </code></pre></div></div>
 
@@ -1461,10 +1464,10 @@ t.n     2  4 10
 <p>Suppose, for example, we would like to simulate data sets from the <em>t</em> distribution with different numbers of degrees of freedom and variances. This could be easily done by defining two module parameters which multiple alternative settings:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + sd * rt(n,df))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">sd</span><span class="pi">:</span> <span class="s">0.2, 0.5, 1</span>
-  <span class="s">df</span><span class="pi">:</span> <span class="s">4, 6, 8, 10</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">sd</span><span class="pi">:</span> <span class="s">0.2, 0.5, </span><span class="m">1</span>
+  <span class="na">df</span><span class="pi">:</span> <span class="s">4, 6, 8, </span><span class="m">10</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1501,9 +1504,9 @@ t.n     2  4 10
 <p>One way to accomplish this is to define a new module parameter that stores the settings for <em>both</em> the standard deviation and the degrees of freedom. DSC permits the use of parentheses to define vector-valued module parameters:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params[1] * rt(n,df = params[2]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">params</span><span class="pi">:</span> <span class="s">(0.5, 4), (0.6, 6), (0.8, 10)</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">params</span><span class="pi">:</span> <span class="s">(0.5, 4), (0.6, 6), (0.8, 10)</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1515,9 +1518,9 @@ t.n     2  4 10
 <p>Another option for defining a module parameter is to input chunks of code directly. This is the best option for this example in terms of succinctness and readability, while maintaining complete input information (<code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code> names). Here is the new <code class="highlighter-rouge">t</code> block using un-quoted string parameters</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params["sd"] * rt(n,df = params["df"]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">params</span><span class="pi">:</span> <span class="s">c(sd = 0.5, df = 4),</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">params</span><span class="pi">:</span> <span class="s">c(sd = 0.5, df = 4),</span>
           <span class="s">c(sd = 0.6, df = 6),</span>
           <span class="s">c(sd = 0.8, df = 10)</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
@@ -1536,20 +1539,20 @@ t.n     2  4 10
 </ul>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t1</span><span class="pi">:</span> <span class="s">R(params &lt;- c(sd = 0.5, df = 4); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="na">t2</span><span class="pi">:</span> <span class="s">R(params &lt;- c(sd = 0.6, df = 6); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="na">t3</span><span class="pi">:</span> <span class="s">R(params &lt;- c(sd = 0.8, df = 10); x &lt;- mu + params["sd"] * rt(n,df = params["df"]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1575,9 +1578,9 @@ t.n     2  4 10
 <p>Instead of using code script strings, we can use <code class="highlighter-rouge">R()</code> operator to generate vectors of inputs yet maintaining readability:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params[1] * rt(n,df = params[2]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">params</span><span class="pi">:</span> <span class="s">R(c(sd = 0.5, df = 4)),</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">params</span><span class="pi">:</span> <span class="s">R(c(sd = 0.5, df = 4)),</span>
           <span class="s">R(c(sd = 0.6, df = 6)),</span>
           <span class="s">R(c(sd = 0.8, df = 10))</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
@@ -1593,9 +1596,9 @@ t.n     2  4 10
 <p>A third option for defining module parameters with R code is to use <code class="highlighter-rouge">R{}</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params[1] * rt(n,df = params[2]))</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100, 1000</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">params</span><span class="pi">:</span> <span class="s">R{list(c(sd = 0.5, df = 4),</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">params</span><span class="pi">:</span> <span class="s">R{list(c(sd = 0.5, df = 4),</span>
                  <span class="s">c(sd = 0.6, df = 6),</span>
                  <span class="s">c(sd = 0.8, df = 10))}</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
@@ -1608,8 +1611,8 @@ t.n     2  4 10
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))</span>
   <span class="s">seed</span><span class="pi">:</span> <span class="s">R{1:10}</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
+  <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
@@ -1626,17 +1629,18 @@ t.n     2  4 10
 
 <p>In this tutorial, we introduced the features of DSC that are most essential to developing your own DSC benchmark. There are many other features of DSC that we did not have a chance to explore in these introductory tutorials—to learn more, visit…</p>
 
+
               <nav class="c-page__nav">
   
     
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/first_course/Intro_Syntax_I">
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/first_course/Intro_Syntax_I.html">
       〈 <span class="u-margin-right-tiny"></span> DSC basics, part I
     </a>
   
 
   
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/first_course/Prototype_Tips">
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/first_course/Prototype_Tips.html">
       Developing benchmarks <span class="u-margin-right-tiny"></span> 〉
     </a>
   

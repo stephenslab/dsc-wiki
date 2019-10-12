@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>A brief introduction to DSC</title>
-  <meta name="description" content="Introduction to Dynamical Statistical Comparisons">
+  <meta name="description" content="">
 
   <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC.html">
   <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
@@ -16,7 +16,7 @@
   <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="A brief introduction to DSC" />
-<meta property="og:description" content="Introduction to Dynamical Statistical Comparisons" />
+<meta property="og:description" content="" />
 <meta property="og:image"       content="" />
 
 
@@ -29,11 +29,11 @@
   "headline":
     "A brief introduction to DSC",
   "datePublished":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "dateModified":
-    "2019-09-30T10:41:44-05:00",
+    "2019-10-12T13:19:11-05:00",
   "description":
-    "Introduction to Dynamical Statistical Comparisons",
+    "",
   "author": {
     "@type": "Person",
     "name": "Stephens Lab, University of Chicago"
@@ -237,88 +237,86 @@ initFunction(addCopyButtonToCodeCells);
 
 
   <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
 
 
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id} div.highlight`);
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
 
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
     }
 
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
 
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area').forEach(function (item, index) {
-    if (!item.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
     }
 
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    // Insert the button just inside the end of the next div
-    item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
 
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} div.highlight + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
 
 
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
 
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
 
-initFunction(initHiddenCells);
+    initFunction(initHiddenCells);
 
 </script>
-
 
   <!-- Load custom website scripts -->
   <script src="/dsc-wiki/assets/js/scripts.js" async></script>
@@ -1030,7 +1028,7 @@ initFunction(initQuery);
       
     
   </ul>
-  <p class="sidebar_footer">Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
 </nav>
 
       
@@ -1174,16 +1172,16 @@ can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vign
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Simulate samples from the normal distribution with mean 0 and</span>
 <span class="c1"># standard deviation 1.</span>
 <span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">0</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="s">mu</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">n</span><span class="pi">:</span> <span class="m">100</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
 <span class="c1"># Simulate samples from the non-centered t-distribution with 2 degrees</span>
 <span class="c1"># of freedom.</span>
 <span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df = 2))</span>
-  <span class="s">mu</span><span class="pi">:</span> <span class="s">3</span>
-  <span class="s">n</span><span class="pi">:</span> <span class="s">100</span>
+  <span class="s">mu</span><span class="pi">:</span> <span class="m">3</span>
+  <span class="na">n</span><span class="pi">:</span> <span class="m">100</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
@@ -1248,7 +1246,7 @@ can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vign
 
 <p>If there are any previously generated results, let’s remove them before moving on.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
 </code></pre></div></div>
 
 <p>Before executing the benchmark, we can use the <code class="highlighter-rouge">dsc</code> command-line program to get a summary of what this benchmark includes:</p>
@@ -1315,6 +1313,7 @@ INFO: Elapsed time 30.451 seconds.
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1327,6 +1326,7 @@ INFO: Elapsed time 30.451 seconds.
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
 </span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                    </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1343,6 +1343,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1351,7 +1352,7 @@ Reading DSC outputs:
 
       <div class="output output_html">
 <table>
-<thead><tr><th scope="col">DSC</th><th scope="col">simulate</th><th scope="col">simulate.output.file</th><th scope="col">analyze</th><th scope="col">analyze.output.file</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
+<thead><tr>&lt;th scope=col&gt;DSC&lt;/th&gt;&lt;th scope=col&gt;simulate&lt;/th&gt;&lt;th scope=col&gt;simulate.output.file&lt;/th&gt;&lt;th scope=col&gt;analyze&lt;/th&gt;&lt;th scope=col&gt;analyze.output.file&lt;/th&gt;&lt;th scope=col&gt;score&lt;/th&gt;&lt;th scope=col&gt;score.error&lt;/th&gt;</tr></thead>
 <tbody>
 	<tr><td>1                   </td><td>normal              </td><td>normal/normal_1     </td><td>mean                </td><td>mean/normal_1_mean_1</td><td>abs_err             </td><td>0.10888737          </td></tr>
 	<tr><td>2                   </td><td>normal              </td><td>normal/normal_2     </td><td>mean                </td><td>mean/normal_2_mean_2</td><td>abs_err             </td><td>0.03069816          </td></tr>
@@ -1376,6 +1377,7 @@ Reading DSC outputs:
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscsummary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aggregate</span><span class="p">(</span><span class="n">score.error</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">simulate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">analyze</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">score</span><span class="p">,</span><span class="n">dscout</span><span class="p">,</span><span class="n">mean</span><span class="p">)</span><span class="w">
 </span><span class="n">dscsummary</span><span class="p">[</span><span class="n">with</span><span class="p">(</span><span class="n">dscsummary</span><span class="p">,</span><span class="n">order</span><span class="p">(</span><span class="n">simulate</span><span class="p">,</span><span class="n">score</span><span class="p">)),]</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1384,16 +1386,16 @@ Reading DSC outputs:
 
       <div class="output output_html">
 <table>
-<thead><tr><th></th><th scope="col">simulate</th><th scope="col">analyze</th><th scope="col">score</th><th scope="col">score.error</th></tr></thead>
+<thead><tr><th></th>&lt;th scope=col&gt;simulate&lt;/th&gt;&lt;th scope=col&gt;analyze&lt;/th&gt;&lt;th scope=col&gt;score&lt;/th&gt;&lt;th scope=col&gt;score.error&lt;/th&gt;</tr></thead>
 <tbody>
-	<tr><th scope="row">1</th><td>normal    </td><td>mean      </td><td>abs_err   </td><td>0.07110604</td></tr>
-	<tr><th scope="row">3</th><td>normal    </td><td>median    </td><td>abs_err   </td><td>0.10803587</td></tr>
-	<tr><th scope="row">5</th><td>normal    </td><td>mean      </td><td>sq_err    </td><td>0.00727960</td></tr>
-	<tr><th scope="row">7</th><td>normal    </td><td>median    </td><td>sq_err    </td><td>0.01452696</td></tr>
-	<tr><th scope="row">2</th><td>t         </td><td>mean      </td><td>abs_err   </td><td>0.19000217</td></tr>
-	<tr><th scope="row">4</th><td>t         </td><td>median    </td><td>abs_err   </td><td>0.11355026</td></tr>
-	<tr><th scope="row">6</th><td>t         </td><td>mean      </td><td>sq_err    </td><td>0.05736588</td></tr>
-	<tr><th scope="row">8</th><td>t         </td><td>median    </td><td>sq_err    </td><td>0.02186425</td></tr>
+	<tr>&lt;th scope=row&gt;1&lt;/th&gt;<td>normal    </td><td>mean      </td><td>abs_err   </td><td>0.07110604</td></tr>
+	<tr>&lt;th scope=row&gt;3&lt;/th&gt;<td>normal    </td><td>median    </td><td>abs_err   </td><td>0.10803587</td></tr>
+	<tr>&lt;th scope=row&gt;5&lt;/th&gt;<td>normal    </td><td>mean      </td><td>sq_err    </td><td>0.00727960</td></tr>
+	<tr>&lt;th scope=row&gt;7&lt;/th&gt;<td>normal    </td><td>median    </td><td>sq_err    </td><td>0.01452696</td></tr>
+	<tr>&lt;th scope=row&gt;2&lt;/th&gt;<td>t         </td><td>mean      </td><td>abs_err   </td><td>0.19000217</td></tr>
+	<tr>&lt;th scope=row&gt;4&lt;/th&gt;<td>t         </td><td>median    </td><td>abs_err   </td><td>0.11355026</td></tr>
+	<tr>&lt;th scope=row&gt;6&lt;/th&gt;<td>t         </td><td>mean      </td><td>sq_err    </td><td>0.05736588</td></tr>
+	<tr>&lt;th scope=row&gt;8&lt;/th&gt;<td>t         </td><td>median    </td><td>sq_err    </td><td>0.02186425</td></tr>
 </tbody>
 </table>
 
@@ -1427,6 +1429,7 @@ Reading DSC outputs:
 </span><span class="p">}</span><span class="w">
 
 </span><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1474,6 +1477,7 @@ INFO: Elapsed time 29.287 seconds.
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                     </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1493,6 +1497,7 @@ Reading DSC outputs:
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout2</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1525,8 +1530,8 @@ Reading DSC outputs:
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Estimate the population mean by computing the Winsorized mean; the</span>
 <span class="c1"># mean is computed after trimming the top and bottom 10% quantiles.</span>
 <span class="na">winsor</span><span class="pi">:</span> <span class="s">R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))</span>
-  <span class="s">trim</span><span class="pi">:</span> <span class="s">0.1</span>
-  <span class="s">x</span><span class="pi">:</span> <span class="s">$data</span>
+  <span class="s">trim</span><span class="pi">:</span> <span class="m">0.1</span>
+  <span class="na">x</span><span class="pi">:</span> <span class="s">$data</span>
   <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
 </code></pre></div></div>
 
@@ -1567,6 +1572,7 @@ INFO: Elapsed time 33.921 seconds.
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dscout3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
                     </span><span class="n">targets</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1585,6 +1591,7 @@ Reading DSC outputs:
 <div class="cell code_cell">
   <div class="input_area">
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">create.boxplot</span><span class="p">(</span><span class="n">dscout3</span><span class="p">)</span><span class="w">
+
 </span></code></pre></div>    </div>
   </div>
 
@@ -1633,17 +1640,18 @@ Reading DSC outputs:
 
 <p>To learn more about the syntax of the DSC file so that you can develop your own DSCs, move to <a href="Intro_Syntax_I.html">DSC Basics, Part I</a>.</p>
 
+
               <nav class="c-page__nav">
   
     
-    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/first_course/first_course">
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/dsc-wiki/first_course/first_course.html">
       〈 <span class="u-margin-right-tiny"></span> First course on DSC
     </a>
   
 
   
     
-    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/first_course/Intro_Syntax_I">
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/dsc-wiki/first_course/Intro_Syntax_I.html">
       DSC basics, part I <span class="u-margin-right-tiny"></span> 〉
     </a>
   
