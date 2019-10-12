@@ -2,73 +2,57 @@
 #fileformat=SOS1.0
 
 [global]
-import glob
+import getpass
+parameter: workdir = 'jupyter-book'
+# Set to True to preview it at http://0.0.0.0:4000/${workdir}
+parameter: serve = False
 
-[setup]
-depends: executable('pip')
-bash:
-	pip install git+https://github.com/jupyter/jupyter-book
-	rm -rf jupyter-book && jupyter-book create jupyter-book
-	rm -rf jupyter-book/content/*
-
+[setup: provides = f'{workdir}/Gemfile']
+parameter: version = '0.5.2'
+is_master = version == 'master'
+depends: Py_Module(f'jupyter_book{("==%s" % version) if not is_master else ""}', autoinstall = False if is_master else True)
+if is_master: run('pip install git+https://github.com/jupyter/jupyter-book -U')
+bash: expand = '${ }'
+	rm -rf ${workdir} && jupyter-book create ${workdir} 
+	rm -rf ${workdir}/content/* && rm -f ${workdir}/Gemfile.lock
 
 [build_1]
-depends: executable('rsync')
+depends: executable('rsync'), f'{workdir}/Gemfile'
 from sos.utils import env
-bash: workdir = 'jupyter-book', expand = True
-	rsync -auz --delete ../src/* ./content/
-	cp ../cfg/toc.yml _data/
-	cp ../cfg/_config.yml _config.yml
-  	jupyter-book build . {'--overwrite' if env.config['sig_mode'] == 'force' else ''}
+bash: expand = '${ }'
+	rsync -auz --delete src/* --exclude "*.bib" ${workdir}/content/
+	rsync -auz --delete --ignore-missing-args src/*.bib  ${workdir}/_bibliography
+	cp cfg/toc.yml ${workdir}/_data
+	cp cfg/_config.yml ${workdir}/_config.yml
+  	jupyter-book build ${workdir} ${'--overwrite' if env.config['sig_mode'] == 'force' else ''}
 
 [build_2]
-# a hack for https://github.com/jupyter/jupyter-book/issues/72
-import platform
-exec = "sed -i '' -e" if platform.system() == 'Darwin' else "sed -i -e"
-for x in glob.glob('src/*/[!_]*.ipynb'):
-	x = path(f"jupyter-book/_build/{path(x).relative_to('src'):n}.md")
-	if x.is_file():
-		run(f'''{exec} 's/scope=col/scope="col"/g; s/scope=row/scope="row"/g' {x}''', stderr=False, stdout=False)
+docker_build: workdir = workdir, tag = f'{getpass.getuser()}/jekyll-book'
+	FROM jekyll/jekyll:4.0.0
+	RUN apk --update add make gcc g++ libc-dev
+	COPY Gemfile .
+	RUN gem install bundle && bundle install 
 
 [build_3]
 depends: executable('docker')
-bash:  workdir = 'jupyter-book'
+bash:  workdir = workdir, expand = "${ }"
+	docker container stop $(docker container ls -q --filter ancestor=${getpass.getuser()}/jekyll-book) &> /dev/null || true
 	docker run --rm --security-opt label:disable \
    		-v `pwd`:/srv/jekyll \
-   		-p 4000:4000 \
-   		-it -u 1000:1000 \
-   		emdupre/jupyter-book bundle exec jekyll build 
+   		${'-p 4000:4000' if serve else ''} -it -u 1000:1000 \
+   		${getpass.getuser()}/jekyll-book \
+		 bundle exec jekyll ${'build' if not serve else 'serve --host 0.0.0.0'}
 
 [build_4]
+stop_if(serve)
 depends: executable('rsync')
-bash: 
+bash: expand = '${ }'
 	mkdir -p docs
-	rsync -auz --delete jupyter-book/_site/* docs/
+	rsync -auz --delete ${workdir}/_site/* docs/
 	rsync -auz --delete src/external docs/
-	rm -rf docs/tmp*
+	rm -f docs/runtime.txt
 	cp src/index.html docs/index.html
 	echo "Deployed to the docs/ folder"
-
-# see it at http://0.0.0.0:4000/dsc-wiki/overview.html
-[serve]
-depends: executable('docker')
-bash:  workdir = 'jupyter-book'
-	docker run --rm --security-opt label:disable \
-   		-v `pwd`:/srv/jekyll \
-   		-p 4000:4000 \
-   		-it -u 1000:1000 \
-   		emdupre/jupyter-book bundle exec jekyll serve --host 0.0.0.0
-
-# This workflow can be ignored now
-# because at this point juypter-book
-# has now adopted this workflow and provides
-# this image.
-[docker_image]
-docker_build: workdir = 'jupyter-book', tag = 'jekyll-book'
-	FROM jekyll/jekyll:3.8.5
-	COPY Gemfile .
-	RUN apk --update add make gcc g++ libc-dev
-	RUN bundler install
 
 [default]
 sos_run('build')

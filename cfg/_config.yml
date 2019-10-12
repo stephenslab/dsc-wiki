@@ -29,6 +29,8 @@ repository: "stephenslab/dsc"
 #######################################################################################
 # Jupyter Book settings
 
+foot_text                 : 'Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
+
 # Notebook content settings
 hide_cell_text            : "# HIDDEN"  # When building the textbook, any cells with this text inside will be hidden in the output markdown
 hide_code_text            : "# NO CODE"  # When building the textbook, any cells with this text inside will have *only* their output shown (no code)
@@ -40,8 +42,7 @@ collapse_inactive_chapters: false  # Whether to collapse the inactive chapters i
 # I got DSC logo from freelogodesign.org
 textbook_logo             : images/logo.png  # A logo to be displayed at the top of your textbook sidebar
 textbook_logo_link        : https://github.com/stephenslab/dsc  # A link for the logo.
-sidebar_footer_text       : 'Copyright (c) 2016-2018 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
-# sidebar_footer_text       : 'Copyright (c) 2016-2018 <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>&nbsp;&nbsp;&nbsp; Except where otherwise noted, this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.'
+sidebar_footer_text       : 'Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br>'
 
 # Search settings
 search_max_words_in_content : 100  # In the search function, use at most this many words (too many words will make search slow)
@@ -70,6 +71,14 @@ binderhub_interact_text          : "Interact"  # The text that interact buttons 
 use_thebelab_button              : false  # If 'true', display a button to allow in-page running code cells with Thebelab
 thebelab_button_text             : "Thebelab"  # The text to display inside the Thebelab initialization button
 
+# nbinteract settings
+use_show_widgets_button          : false  # If 'true', display a button to allow in-page running code cells with nbinteract
+
+# Download settings
+use_download_button              : false  # If 'true', display a button to download a zip file for the notebook
+download_button_text             : "Download" # The text that download buttons will contain
+download_page_header             : "Export to PDF" # A header that will be displayed at the top of and PDF-printed page
+
 #######################################################################################
 # Jupyter book extensions and additional features
 
@@ -77,6 +86,12 @@ thebelab_button_text             : "Thebelab"  # The text to display inside the 
 scholar:
   style: apa
 
+######################################################################################
+# Option to add a Goggle analytics tracking code
+
+# Navigate to https://analytics.google.com, add a new property for your jupyter book and copy the tracking id here.
+#google_analytics:
+#  mytrackingcode: UA-52617120-7
 
 #######################################################################################
 # Jupyter book settings you probably don't need to change
@@ -100,6 +115,7 @@ defaults:
       toc: true
       toc_label: "  Contents"
       toc_icon: "list-ul"
+      excerpt: ''
 
 favicon_path: "images/favicon.ico"
 
@@ -121,9 +137,7 @@ collections:
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
 exclude:
-  - notebooks/
-  - add_section_numbers_to_book.py
-  - convert_notebooks_to_html_partial.py
+  - scripts/
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -131,7 +145,6 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - scripts/
 
 plugins:
   - jekyll-redirect-from
