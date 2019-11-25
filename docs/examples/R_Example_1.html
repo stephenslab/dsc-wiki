@@ -29,9 +29,9 @@
   "headline":
     "R Example 1",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1072,16 +1072,16 @@ initFunction(initQuery);
 
 <ul>
   <li>Inline code as parameters</li>
-  <li><code class="highlighter-rouge">@ALIAS</code> decorator</li>
+  <li><code class="language-plaintext highlighter-rouge">@ALIAS</code> decorator</li>
   <li>R library installation and version check</li>
-  <li>Use <code class="highlighter-rouge">dscrutils</code> to query results limited to given conditions</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">dscrutils</code> to query results limited to given conditions</li>
 </ul>
 
 <h2 id="dsc-problem">DSC Problem</h2>
 <p>The DSC problem is based on the ASH example of DSCR (<a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">R Markdown version</a> and <a href="../external/dscr_dsc_shrink.html">HTML version</a>). Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/ash">DSC vignettes repo</a>. Description below is copied from the DSCR vignette:</p>
 
 <blockquote>
-  <p>To illustrate we consider the problem of shrinkage, which is tackled by the <code class="highlighter-rouge">ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output “shrunk” estimates for $\beta$ (so output is a list with one element, called <code class="highlighter-rouge">beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code class="highlighter-rouge">beta_est</code> with beta.</p>
+  <p>To illustrate we consider the problem of shrinkage, which is tackled by the <code class="language-plaintext highlighter-rouge">ashr</code> package at <a href="http://www.github.com/stephens999/ashr">http://www.github.com/stephens999/ashr</a>. The input to this DSC is a set of estimates $\hat\beta$,  with associated standard errors $s$. These values are estimates of actual (true) values for $\beta$, so the meta-data in this case are the true values of beta. Methods must take $\hat\beta$ and $s$ as input, and provide as output “shrunk” estimates for $\beta$ (so output is a list with one element, called <code class="language-plaintext highlighter-rouge">beta_est</code>, which is a vector of estimates for beta). The score function then scores methods on their RMSE comparing <code class="language-plaintext highlighter-rouge">beta_est</code> with beta.</p>
 </blockquote>
 
 <blockquote>
@@ -1089,15 +1089,15 @@ initFunction(initQuery);
 </blockquote>
 
 <blockquote>
-  <p>Now define a <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> for the <code class="highlighter-rouge">ash</code> function from the <code class="highlighter-rouge">ashr</code> package. Notice that this wrapper does not return output in the required format - it simply returns the entire ash output.</p>
+  <p>Now define a <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/runash.R">method wrapper</a> for the <code class="language-plaintext highlighter-rouge">ash</code> function from the <code class="language-plaintext highlighter-rouge">ashr</code> package. Notice that this wrapper does not return output in the required format - it simply returns the entire ash output.</p>
 </blockquote>
 
 <blockquote>
-  <p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code class="highlighter-rouge">ash</code>.</p>
+  <p>Finally add a generic (can be used to deal with both $\pi$ and $\beta$) <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/score.R">score function</a> to evaluate estimates by <code class="language-plaintext highlighter-rouge">ash</code>.</p>
 </blockquote>
 
 <h2 id="dsc-specification">DSC Specification</h2>
-<p>The problem is fully specified in DSC syntax below, following the structure of the original <code class="highlighter-rouge">DSCR</code> implementation:</p>
+<p>The problem is fully specified in DSC syntax below, following the structure of the original <code class="language-plaintext highlighter-rouge">DSCR</code> implementation:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env dsc</span>
 <span class="na">simulate</span><span class="pi">:</span> <span class="s">datamaker.R</span>
@@ -1152,24 +1152,24 @@ initFunction(initQuery);
     <span class="na">output</span><span class="pi">:</span> <span class="s">dsc_result</span>
 </code></pre></div></div>
 
-<p>It is suggested that you check out the corresponding R codes for modules <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/datamaker.R"><code class="highlighter-rouge">simulate</code></a>, <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/runash.R"><code class="highlighter-rouge">shrink</code></a> and the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC communicates with your R scripts.</p>
+<p>It is suggested that you check out the corresponding R codes for modules <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/datamaker.R"><code class="language-plaintext highlighter-rouge">simulate</code></a>, <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/runash.R"><code class="language-plaintext highlighter-rouge">shrink</code></a> and the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/ash/bin/score.R">score function</a> to figure out how DSC communicates with your R scripts.</p>
 
 <p>Here we will walk through all modules to highlight important syntactical elements.</p>
 
-<h3 id="module-simulate">Module <code class="highlighter-rouge">simulate</code></h3>
+<h3 id="module-simulate">Module <code class="language-plaintext highlighter-rouge">simulate</code></h3>
 
 <h4 id="un-quoted-string-as-parameters-and-output-values">Un-quoted string as parameters and output values</h4>
 
-<p>The parameter <code class="highlighter-rouge">g</code> has three candidate values, all of which are un-quoted string to be plugged to script as is. In other words, DSC will interpret each as, eg, <code class="highlighter-rouge">g &lt;- list(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code class="highlighter-rouge">g</code> will be assigned <strong>at runtime</strong> the output of R codes as specified for use with <code class="highlighter-rouge">datamaker.R</code>. Similarly, <code class="highlighter-rouge">mixcompdist: normalmix</code> will be interpreted as <code class="highlighter-rouge">mixcompdist &lt;- normalmix</code> – this statement is valid as long as <code class="highlighter-rouge">datamaker.R</code> has loaded <code class="highlighter-rouge">ashr</code> library, because <code class="highlighter-rouge">normalmix</code> is function from <code class="highlighter-rouge">ashr</code> library.</p>
+<p>The parameter <code class="language-plaintext highlighter-rouge">g</code> has three candidate values, all of which are un-quoted string to be plugged to script as is. In other words, DSC will interpret each as, eg, <code class="language-plaintext highlighter-rouge">g &lt;- list(c(2/3,1/3),c(0,0),c(1,2))</code> so that <code class="language-plaintext highlighter-rouge">g</code> will be assigned <strong>at runtime</strong> the output of R codes as specified for use with <code class="language-plaintext highlighter-rouge">datamaker.R</code>. Similarly, <code class="language-plaintext highlighter-rouge">mixcompdist: normalmix</code> will be interpreted as <code class="language-plaintext highlighter-rouge">mixcompdist &lt;- normalmix</code> – this statement is valid as long as <code class="language-plaintext highlighter-rouge">datamaker.R</code> has loaded <code class="language-plaintext highlighter-rouge">ashr</code> library, because <code class="language-plaintext highlighter-rouge">normalmix</code> is function from <code class="language-plaintext highlighter-rouge">ashr</code> library.</p>
 
-<h4 id="decorator-alias-for-r-list">Decorator <code class="highlighter-rouge">@ALIAS</code> for R list</h4>
-<p>Inside <code class="highlighter-rouge">datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this module. The decorator <code class="highlighter-rouge">@ALIAS</code> uses a special DSC operation <code class="highlighter-rouge">List()</code> to consolidate these parameters into an R list <code class="highlighter-rouge">args</code> which corresponds to the input parameter in <code class="highlighter-rouge">datamaker.R</code>.</p>
+<h4 id="decorator-alias-for-r-list">Decorator <code class="language-plaintext highlighter-rouge">@ALIAS</code> for R list</h4>
+<p>Inside <code class="language-plaintext highlighter-rouge">datamaker.R</code> the input for the core function is a single parameter of an R <a href="http://www.r-tutor.com/r-introduction/list">list</a> containing all parameters specified in this module. The decorator <code class="language-plaintext highlighter-rouge">@ALIAS</code> uses a special DSC operation <code class="language-plaintext highlighter-rouge">List()</code> to consolidate these parameters into an R list <code class="language-plaintext highlighter-rouge">args</code> which corresponds to the input parameter in <code class="language-plaintext highlighter-rouge">datamaker.R</code>.</p>
 
-<h3 id="module-shrink">Module <code class="highlighter-rouge">shrink</code></h3>
-<p>Here notice the output variable are also provided at runtime: DSC allows output variables to directly accept pieces of codes that can provide the desired output. In this case, <code class="highlighter-rouge">get_pi0</code> function from <code class="highlighter-rouge">ashr</code> package will get us what we need.</p>
+<h3 id="module-shrink">Module <code class="language-plaintext highlighter-rouge">shrink</code></h3>
+<p>Here notice the output variable are also provided at runtime: DSC allows output variables to directly accept pieces of codes that can provide the desired output. In this case, <code class="language-plaintext highlighter-rouge">get_pi0</code> function from <code class="language-plaintext highlighter-rouge">ashr</code> package will get us what we need.</p>
 
-<h3 id="module-beta_score--pi0_score">Module <code class="highlighter-rouge">beta_score</code> &amp; <code class="highlighter-rouge">pi0_score</code></h3>
-<p>These modules uses the same module executable <code class="highlighter-rouge">score.R</code> but on different input data. Due to differences in variable names it makes sense to configure them in separate blocks. However an alternative style that configures them in the same block is:</p>
+<h3 id="module-beta_score--pi0_score">Module <code class="language-plaintext highlighter-rouge">beta_score</code> &amp; <code class="language-plaintext highlighter-rouge">pi0_score</code></h3>
+<p>These modules uses the same module executable <code class="language-plaintext highlighter-rouge">score.R</code> but on different input data. Due to differences in variable names it makes sense to configure them in separate blocks. However an alternative style that configures them in the same block is:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">score_beta, score_pi0</span><span class="pi">:</span> <span class="s">score.R</span>
     <span class="s">@score_beta</span><span class="pi">:</span>
@@ -1182,15 +1182,15 @@ initFunction(initQuery);
         <span class="s">$mse_pi</span><span class="pi">:</span> <span class="s">result</span>        
 </code></pre></div></div>
 
-<p>Here <code class="highlighter-rouge">@*</code> are module specific variable decorations that configures input and output such that different modules can be allowed in the same block.</p>
+<p>Here <code class="language-plaintext highlighter-rouge">@*</code> are module specific variable decorations that configures input and output such that different modules can be allowed in the same block.</p>
 
-<p>Notice that different from the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> the output score is an “atomic” value (a float number). If the outcome object <code class="highlighter-rouge">result</code> is not such a simple object, for example it returns an R list, then you may want to code it to only extract the information you need so that they’ll be readily extractable in the benchmark query process – the query process can only extract <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/is.recursive.html">atomic types</a>. To do so, you can write something like, e.g., <code class="highlighter-rouge">$mse_pi: score_output$mse</code>.</p>
+<p>Notice that different from the <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> the output score is an “atomic” value (a float number). If the outcome object <code class="language-plaintext highlighter-rouge">result</code> is not such a simple object, for example it returns an R list, then you may want to code it to only extract the information you need so that they’ll be readily extractable in the benchmark query process – the query process can only extract <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/is.recursive.html">atomic types</a>. To do so, you can write something like, e.g., <code class="language-plaintext highlighter-rouge">$mse_pi: score_output$mse</code>.</p>
 
-<h3 id="dsc-section-for-benchmark-configuration"><code class="highlighter-rouge">DSC</code> section for benchmark configuration</h3>
-<p>As has been discussed in previous tutorials, <code class="highlighter-rouge">DSC</code> sections defines module / pipeline ensembles and a benchmark. This DSC executes essentially two pipelines (one ending with <code class="highlighter-rouge">score_beta</code> another with <code class="highlighter-rouge">score_pi0</code>). The <code class="highlighter-rouge">R_libs</code> property specifies the R package required by the DSC. It is formatted as a github package (<code class="highlighter-rouge">pkg@repo</code>) and the minimal version requirement is <code class="highlighter-rouge">2.0.0</code>. DSC will check first if the package is available and up-to-date, and install it if necessary. It will then check its version and quit on error if it does not satisfy the requirement. <strong>For safety concerns, DSC does not attempt to upgrade/downgrade a package in cases of version mismatch.</strong></p>
+<h3 id="dsc-section-for-benchmark-configuration"><code class="language-plaintext highlighter-rouge">DSC</code> section for benchmark configuration</h3>
+<p>As has been discussed in previous tutorials, <code class="language-plaintext highlighter-rouge">DSC</code> sections defines module / pipeline ensembles and a benchmark. This DSC executes essentially two pipelines (one ending with <code class="language-plaintext highlighter-rouge">score_beta</code> another with <code class="language-plaintext highlighter-rouge">score_pi0</code>). The <code class="language-plaintext highlighter-rouge">R_libs</code> property specifies the R package required by the DSC. It is formatted as a github package (<code class="language-plaintext highlighter-rouge">pkg@repo</code>) and the minimal version requirement is <code class="language-plaintext highlighter-rouge">2.0.0</code>. DSC will check first if the package is available and up-to-date, and install it if necessary. It will then check its version and quit on error if it does not satisfy the requirement. <strong>For safety concerns, DSC does not attempt to upgrade/downgrade a package in cases of version mismatch.</strong></p>
 
 <h2 id="execution-logic">Execution logic</h2>
-<p>This diagram (generated by <code class="highlighter-rouge">dot</code> command using execution graph of this DSC) shows the logic of the benchmark:</p>
+<p>This diagram (generated by <code class="language-plaintext highlighter-rouge">dot</code> command using execution graph of this DSC) shows the logic of the benchmark:</p>
 
 <p><img src="../images/ash.png" alt="ash.png" /></p>
 
@@ -1204,7 +1204,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./settings.dsc <span class="nt">--replicate</span> 10
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library ashr@stephens999/ashr ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library ashr@stephens999/ashr ...
 INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: DSC script exported to dsc_result.html
 INFO: Constructing DSC from ./settings.dsc ...
@@ -1219,7 +1219,7 @@ INFO: Elapsed time 85.268 seconds.
 
 <h3 id="extract-result-of-interest">Extract result of interest</h3>
 
-<p>The <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> has names to various simulation settings and methods. Here we use <code class="highlighter-rouge">dscrutils</code> to reproduce the DSCR example. It is similar to what we have done in the <a href="../first_course/Intro_DSC">DSC Introduction example</a>, but we will demonstrate the use of <code class="highlighter-rouge">condition</code> argument, to create 3 data-sets:</p>
+<p>The <a href="https://github.com/stephens999/dscr/blob/master/vignettes/dsc_shrink.rmd">DSCR ASH example</a> has names to various simulation settings and methods. Here we use <code class="language-plaintext highlighter-rouge">dscrutils</code> to reproduce the DSCR example. It is similar to what we have done in the <a href="../first_course/Intro_DSC">DSC Introduction example</a>, but we will demonstrate the use of <code class="language-plaintext highlighter-rouge">condition</code> argument, to create 3 data-sets:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1245,7 +1245,7 @@ INFO: Elapsed time 85.268 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
@@ -1270,7 +1270,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
@@ -1295,7 +1295,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_pi0: extracted atomic values
  - shrink.beta_est: vectors not extracted (set max.extract.vector = 1000 to extract)
@@ -1339,7 +1339,7 @@ Reading DSC outputs:
 
 <h3 id="explore-results-of-interest">Explore results of interest</h3>
 
-<p>Suppose we are interested in comparing $\pi_0$ estimates under scenario <code class="highlighter-rouge">An</code>, for two flavors of shrink module <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">halfuniform</code>.</p>
+<p>Suppose we are interested in comparing $\pi_0$ estimates under scenario <code class="language-plaintext highlighter-rouge">An</code>, for two flavors of shrink module <code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">halfuniform</code>.</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1418,7 +1418,7 @@ Reading DSC outputs:
 
 <h2 id="explore-intermediate-output">Explore intermediate output</h2>
 
-<p>We have previously focused on benchmark “results”, ie, the mean square errors. It is also possible to extract quantities of interest from any module in the benchmark. For example we want to explore relationship between “true” value and posterior estimates of $\beta$ from method <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">halfnormal</code>. First we use <code class="highlighter-rouge">dscrutils</code> to extract these quantities:</p>
+<p>We have previously focused on benchmark “results”, ie, the mean square errors. It is also possible to extract quantities of interest from any module in the benchmark. For example we want to explore relationship between “true” value and posterior estimates of $\beta$ from method <code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">halfnormal</code>. First we use <code class="language-plaintext highlighter-rouge">dscrutils</code> to extract these quantities:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1432,7 +1432,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - simulate.true_beta: extracted vector values
  - shrink.beta_est: extracted vector values
@@ -1450,7 +1450,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1]   20 2002
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1]   20 2002
 </code></pre></div>      </div>
     </div>
   </div>
@@ -1485,7 +1485,7 @@ Reading DSC outputs:
   </div>
 </div>
 
-<p>As shown above, with <code class="highlighter-rouge">max.extract.vector = 1000</code> we allow for extracting vector-valued $\beta$ estimates into the outputted data frame. The resulting dataframe has 2001 columns containing both $\beta$ and its posterior estimate $\tilde{\beta}<em>{\text{normal}}$ and $\tilde{\beta}</em>{\text{halfunif}}$. We make them into separate tables. Rows in each table are replicates.</p>
+<p>As shown above, with <code class="language-plaintext highlighter-rouge">max.extract.vector = 1000</code> we allow for extracting vector-valued $\beta$ estimates into the outputted data frame. The resulting dataframe has 2001 columns containing both $\beta$ and its posterior estimate $\tilde{\beta}<em>{\text{normal}}$ and $\tilde{\beta}</em>{\text{halfunif}}$. We make them into separate tables. Rows in each table are replicates.</p>
 
 <div class="cell code_cell">
   <div class="input_area">

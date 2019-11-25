@@ -29,9 +29,9 @@
   "headline":
     "Running multiple pipelines",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1062,7 +1062,7 @@ initFunction(initQuery);
 <p>In this tutorial we further expand benchmark of the DSC problem described in <a href="../first_course/Intro_DSC">DSC Introduction</a>, to demonstrate the use of multiple pipelines (pipeline ensembles) in DSC. Material used in this document can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_winsor">DSC vignettes repo</a>.</p>
 
 <h2 id="configuration">Configuration</h2>
-<p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code class="highlighter-rouge">transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two DSC pipelines:</p>
+<p>The DSC problem is similar to what we have previously worked on, i.e. comparison of location parameter estimation methods. This time we simulate data under <em>t</em> distribution (df = 2) and Cauchy distribution. Then before estimating location parameter using mean or median method, there is an <strong>optional</strong> <code class="language-plaintext highlighter-rouge">transform</code> step where we provide two methods for <em>Winsorization</em>. This results in two DSC pipelines:</p>
 
 <ul>
   <li>simulate -&gt; estimate -&gt; score</li>
@@ -1121,7 +1121,7 @@ initFunction(initQuery);
     <span class="na">output</span><span class="pi">:</span> <span class="s">dsc_result</span>
 </code></pre></div></div>
 
-<p>where <code class="highlighter-rouge">transform</code> module ensemble contains:</p>
+<p>where <code class="language-plaintext highlighter-rouge">transform</code> module ensemble contains:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
   </span><span class="o">==&gt;</span><span class="w"> </span><span class="n">..</span><span class="o">/</span><span class="n">vignettes</span><span class="o">/</span><span class="n">one_sample_location_winsor</span><span class="o">/</span><span class="n">R</span><span class="o">/</span><span class="n">winsor1.R</span><span class="w"> </span><span class="o">&lt;==</span><span class="w">
@@ -1157,7 +1157,7 @@ initFunction(initQuery);
 
 </span></code></pre></div></div>
 
-<p>As a result, the previous <code class="highlighter-rouge">analyze</code> step is now a pipeline ensemble of <code class="highlighter-rouge">(transform * analyze, analyze)</code>.</p>
+<p>As a result, the previous <code class="language-plaintext highlighter-rouge">analyze</code> step is now a pipeline ensemble of <code class="language-plaintext highlighter-rouge">(transform * analyze, analyze)</code>.</p>
 
 <h2 id="execution">Execution</h2>
 
@@ -1169,7 +1169,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./settings.dsc <span class="nt">-c</span> 30
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: DSC script exported to dsc_result.html
 INFO: Constructing DSC from ./settings.dsc ...
 INFO: Building execution graph &amp; running DSC ...

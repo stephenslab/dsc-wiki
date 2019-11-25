@@ -29,9 +29,9 @@
   "headline":
     "A brief introduction to DSC",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1118,21 +1118,21 @@ initFunction(initQuery);
 
 <ol>
   <li>
-    <p>A group of <code class="highlighter-rouge">simulate</code> modules, each of which can perform step 1;</p>
+    <p>A group of <code class="language-plaintext highlighter-rouge">simulate</code> modules, each of which can perform step 1;</p>
   </li>
   <li>
-    <p>A group of <code class="highlighter-rouge">analyze</code> modules, each of which can perform step 2; and</p>
+    <p>A group of <code class="language-plaintext highlighter-rouge">analyze</code> modules, each of which can perform step 2; and</p>
   </li>
   <li>
-    <p>A group of <code class="highlighter-rouge">score</code> modules, each of which can perform step 3.</p>
+    <p>A group of <code class="language-plaintext highlighter-rouge">score</code> modules, each of which can perform step 3.</p>
   </li>
 </ol>
 
-<p>Running the benchmark then consists of running sequences of modules—called “pipelines” in DSC—and each pipeline invokes one module from the <code class="highlighter-rouge">simulate</code> group, followed by a module from the <code class="highlighter-rouge">analyze</code> group, then a module from the <code class="highlighter-rouge">score</code> group.</p>
+<p>Running the benchmark then consists of running sequences of modules—called “pipelines” in DSC—and each pipeline invokes one module from the <code class="language-plaintext highlighter-rouge">simulate</code> group, followed by a module from the <code class="language-plaintext highlighter-rouge">analyze</code> group, then a module from the <code class="language-plaintext highlighter-rouge">score</code> group.</p>
 
-<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design of DSC makes it easy to extend benchmarks (e.g., by defining a new <code class="highlighter-rouge">analyze</code> module)—hence the <em>Dynamic</em> in Dynamic Statistical Comparisons.</p>
+<p>DSC provides a flexible and easy-to-use language to manage and run benchmarks like these, as well as more complex ones. The modular design of DSC makes it easy to extend benchmarks (e.g., by defining a new <code class="language-plaintext highlighter-rouge">analyze</code> module)—hence the <em>Dynamic</em> in Dynamic Statistical Comparisons.</p>
 
-<p>Also, DSC efficiently uses the available computational resources by running modules in parallel when possible; for example, once a <code class="highlighter-rouge">simulate</code> module has created a dataset, DSC may run multiple <code class="highlighter-rouge">analyze</code> modules in parallel.</p>
+<p>Also, DSC efficiently uses the available computational resources by running modules in parallel when possible; for example, once a <code class="language-plaintext highlighter-rouge">simulate</code> module has created a dataset, DSC may run multiple <code class="language-plaintext highlighter-rouge">analyze</code> modules in parallel.</p>
 
 <h2 id="running-a-dsc-benchmark">Running a DSC benchmark</h2>
 
@@ -1143,10 +1143,10 @@ initFunction(initQuery);
     <p>A “DSC file”, which defines the modules, groups and pipelines, and how information flows from one module to another. The DSC file is a text file written in DSC syntax, as we show below (this syntax is explained in more detail in <a href="Intro_Syntax_I">DSC Basics, Part I</a>).</p>
   </li>
   <li>
-    <p>A call to the <code class="highlighter-rouge">dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
+    <p>A call to the <code class="language-plaintext highlighter-rouge">dsc</code> command-line program. This runs all pipelines defined by the DSC file, and saves the results to files in a structured way that makes them easy to query.</p>
   </li>
   <li>
-    <p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into a data frame in R. We also provide a command-line tool, <code class="highlighter-rouge">dsc-query</code>, which is demonstrated in other tutorials.</p>
+    <p>Query and summarize the results. We provide two querying interfaces. In this tutorial, we will demonstrate the R interface, which provides a convenient way of reading the DSC results into a data frame in R. We also provide a command-line tool, <code class="language-plaintext highlighter-rouge">dsc-query</code>, which is demonstrated in other tutorials.</p>
   </li>
 </ol>
 
@@ -1167,7 +1167,7 @@ initFunction(initQuery);
 <p>We implement this DSC in <a href="https://cran.r-project.org/">R</a>. Material used, including the DSC file, 
 can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
 
-<p>All source code needed to define the DSC is given in a single text file, <code class="highlighter-rouge">first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I">DSC Basics, Part I</a> and <a href="Intro_Syntax_II">DSC Basics, Part II</a>. <strong>For now, don’t worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
+<p>All source code needed to define the DSC is given in a single text file, <code class="language-plaintext highlighter-rouge">first_investigation.dsc</code>. Here, we give only a high-level overview of the code, deferring an explanation of the syntax to <a href="Intro_Syntax_I">DSC Basics, Part I</a> and <a href="Intro_Syntax_II">DSC Basics, Part II</a>. <strong>For now, don’t worry about understanding the actual code—the code is only shown here to illustrate what DSC code looks like.</strong></p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Simulate samples from the normal distribution with mean 0 and</span>
 <span class="c1"># standard deviation 1.</span>
@@ -1223,23 +1223,23 @@ can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vign
 
 <ul>
   <li>
-    <p>two <code class="highlighter-rouge">simulate</code> modules  (<code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code>),</p>
+    <p>two <code class="language-plaintext highlighter-rouge">simulate</code> modules  (<code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">t</code>),</p>
   </li>
   <li>
-    <p>two <code class="highlighter-rouge">analyze</code> modules (<code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code>), and</p>
+    <p>two <code class="language-plaintext highlighter-rouge">analyze</code> modules (<code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">median</code>), and</p>
   </li>
   <li>
-    <p>two <code class="highlighter-rouge">score</code> modules (<code class="highlighter-rouge">sq_err</code> and <code class="highlighter-rouge">abs_err</code>).</p>
+    <p>two <code class="language-plaintext highlighter-rouge">score</code> modules (<code class="language-plaintext highlighter-rouge">sq_err</code> and <code class="language-plaintext highlighter-rouge">abs_err</code>).</p>
   </li>
 </ul>
 
 <p>Each module in this example involves only one line of R code (for more complex modules, the code can live in separate files).</p>
 
-<p>The DSC file then defines the module groups (<code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code>) and the pipelines to run; <code class="highlighter-rouge">simulate * analyze * score</code> indicates that all sequences of the <code class="highlighter-rouge">simulate</code>, <code class="highlighter-rouge">analyze</code> and <code class="highlighter-rouge">score</code> modules should be run.</p>
+<p>The DSC file then defines the module groups (<code class="language-plaintext highlighter-rouge">simulate</code>, <code class="language-plaintext highlighter-rouge">analyze</code> and <code class="language-plaintext highlighter-rouge">score</code>) and the pipelines to run; <code class="language-plaintext highlighter-rouge">simulate * analyze * score</code> indicates that all sequences of the <code class="language-plaintext highlighter-rouge">simulate</code>, <code class="language-plaintext highlighter-rouge">analyze</code> and <code class="language-plaintext highlighter-rouge">score</code> modules should be run.</p>
 
 <h2 id="run-dsc">Run DSC</h2>
 
-<p>To run DSC, we first change the working directory to the location of the <code class="highlighter-rouge">first_investigation.dsc</code> file. (Here we assume the <code class="highlighter-rouge">dsc</code> repository is stored in the <code class="highlighter-rouge">git</code> subdirectory of your home directory. If you are running the example yourself, please move to the appropriate directory on your computer.)</p>
+<p>To run DSC, we first change the working directory to the location of the <code class="language-plaintext highlighter-rouge">first_investigation.dsc</code> file. (Here we assume the <code class="language-plaintext highlighter-rouge">dsc</code> repository is stored in the <code class="language-plaintext highlighter-rouge">git</code> subdirectory of your home directory. If you are running the example yourself, please move to the appropriate directory on your computer.)</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/git/dsc/vignettes/one_sample_location
 </code></pre></div></div>
@@ -1249,11 +1249,11 @@ can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vign
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm</span> <span class="nt">-Rf</span> first_investigation.html first_investigation.log first_investigation
 </code></pre></div></div>
 
-<p>Before executing the benchmark, we can use the <code class="highlighter-rouge">dsc</code> command-line program to get a summary of what this benchmark includes:</p>
+<p>Before executing the benchmark, we can use the <code class="language-plaintext highlighter-rouge">dsc</code> command-line program to get a summary of what this benchmark includes:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">-h</span>
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: MODULES
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: MODULES
 +------------------------------------------------------------------+
 |                         Group [simulate]                         |
 |        | - parameters - | - input - |    - output -   | - type - |
@@ -1291,7 +1291,7 @@ INFO: PIPELINES EXPANDED
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">--replicate</span> 10 <span class="nt">-c</span> 2
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from first_investigation.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [#############################] 29 steps processed (155 jobs completed)
@@ -1300,15 +1300,15 @@ INFO: DSC complete!
 INFO: Elapsed time 30.451 seconds.
 </code></pre></div></div>
 
-<p>(For first time users of DSC, a companion <code class="highlighter-rouge">R</code> package <code class="highlighter-rouge">dscrutils</code> should automatically installed at this point.)</p>
+<p>(For first time users of DSC, a companion <code class="language-plaintext highlighter-rouge">R</code> package <code class="language-plaintext highlighter-rouge">dscrutils</code> should automatically installed at this point.)</p>
 
-<p>When run, DSC will create results files in the folder <code class="highlighter-rouge">first_investigation</code> (this is the default folder name, and it can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
+<p>When run, DSC will create results files in the folder <code class="language-plaintext highlighter-rouge">first_investigation</code> (this is the default folder name, and it can be changed in the DSC file). Below, we will see how to query these results and read them into R.</p>
 
-<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code class="highlighter-rouge">first_investigation.html</code>). This file allows you to conveniently browse the DSC file, the executed pipelines, and the corresponding source code.</p>
+<p>In addition, DSC will create a webpage summarizing the results (in this example, it is <code class="language-plaintext highlighter-rouge">first_investigation.html</code>). This file allows you to conveniently browse the DSC file, the executed pipelines, and the corresponding source code.</p>
 
 <h2 id="query-the-results">Query the results</h2>
 
-<p>Next, we will read the results into R using the <code class="highlighter-rouge">dscquery</code> function from the <code class="highlighter-rouge">dscrutils</code> package. To do so, change the working directory in R to the location of the <code class="highlighter-rouge">first_investigation.dsc</code> file.</p>
+<p>Next, we will read the results into R using the <code class="language-plaintext highlighter-rouge">dscquery</code> function from the <code class="language-plaintext highlighter-rouge">dscrutils</code> package. To do so, change the working directory in R to the location of the <code class="language-plaintext highlighter-rouge">first_investigation.dsc</code> file.</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1319,7 +1319,7 @@ INFO: Elapsed time 30.451 seconds.
 
 </div>
 
-<p>Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame interactively in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code class="highlighter-rouge">help(dscquery)</code> in R for more information.</p>
+<p>Since this example is small, it is convenient to load all the results into an R data frame and explore the data frame interactively in the R environment. In more complex examples, one might want to start by extracting subsets of results using query conditions; type <code class="language-plaintext highlighter-rouge">help(dscquery)</code> in R for more information.</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1332,7 +1332,7 @@ INFO: Elapsed time 30.451 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
 </code></pre></div>      </div>
@@ -1371,7 +1371,7 @@ Reading DSC outputs:
 
 <p>Once the results are in an R data frame like this, we can easily use standard functions in R to investigate them further.</p>
 
-<p>For example, we can generate an informative summary of the results using the <code class="highlighter-rouge">aggregate</code> function, followed by a call to the <code class="highlighter-rouge">order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
+<p>For example, we can generate an informative summary of the results using the <code class="language-plaintext highlighter-rouge">aggregate</code> function, followed by a call to the <code class="language-plaintext highlighter-rouge">order</code> function to arrange the rows so that it is easier to compare the mean and median estimates:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1409,7 +1409,7 @@ Reading DSC outputs:
 
 <h2 id="visualize-the-results">Visualize the results</h2>
 
-<p>Next, we demonstrate use of the <code class="highlighter-rouge">ggplot2</code> package to create a visual summary the squared-error results:</p>
+<p>Next, we demonstrate use of the <code class="language-plaintext highlighter-rouge">ggplot2</code> package to create a visual summary the squared-error results:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1460,7 +1460,7 @@ Reading DSC outputs:
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_investigation.dsc <span class="nt">--replicate</span> 20 <span class="nt">-c</span> 2
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from first_investigation.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [#############################] 29 steps processed (155 jobs completed, 140 jobs ignored)
@@ -1483,7 +1483,7 @@ INFO: Elapsed time 29.287 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
 </code></pre></div>      </div>
@@ -1491,7 +1491,7 @@ Reading DSC outputs:
   </div>
 </div>
 
-<p>Comparing to the previous <code class="highlighter-rouge">dscquery</code> output, we confirm that the new DSC run generated twice as many results.</p>
+<p>Comparing to the previous <code class="language-plaintext highlighter-rouge">dscquery</code> output, we confirm that the new DSC run generated twice as many results.</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1535,7 +1535,7 @@ Reading DSC outputs:
   <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
 </code></pre></div></div>
 
-<p>This module is similar in structure to the <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">t</code> modules; the main difference is the R code inside the <code class="highlighter-rouge">R()</code>.</p>
+<p>This module is similar in structure to the <code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">t</code> modules; the main difference is the R code inside the <code class="language-plaintext highlighter-rouge">R()</code>.</p>
 
 <p>To include the Winsorized mean method in our benchmark, we also need to add the winsor module to the “analyze” module group:</p>
 
@@ -1553,7 +1553,7 @@ Reading DSC outputs:
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc add_winsor_method1.dsc <span class="nt">--replicate</span> 20 <span class="nt">-c</span> 2
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library psych ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library psych ...
 INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from add_winsor_method1.dsc ...
@@ -1564,7 +1564,7 @@ INFO: DSC complete!
 INFO: Elapsed time 33.921 seconds.
 </code></pre></div></div>
 
-<p>Since the addition of the <code class="highlighter-rouge">winsor</code> module has no effect on the results generated using the mean and median methods, the DSC program automatically determines that the previously generated results for these methods are still valid, and does not re-run the R code.</p>
+<p>Since the addition of the <code class="language-plaintext highlighter-rouge">winsor</code> module has no effect on the results generated using the mean and median methods, the DSC program automatically determines that the previously generated results for these methods are still valid, and does not re-run the R code.</p>
 
 <p>Let’s load the results from our new benchmark into R.</p>
 
@@ -1578,7 +1578,7 @@ INFO: Elapsed time 33.921 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
 </code></pre></div>      </div>

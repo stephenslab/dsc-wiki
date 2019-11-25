@@ -29,9 +29,9 @@
   "headline":
     "Installation",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1065,7 +1065,7 @@ initFunction(initQuery);
 
 <p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a>, you can follow the <a href="advanced_course/DSC_Docker">Docker instructions</a> instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.</p>
 
-<p><em>Note to developers:</em> Please refer to the installation instructions in the <code class="highlighter-rouge">README</code> of the <a href="https://github.com/stephenslab/dsc">dsc repository</a>.</p>
+<p><em>Note to developers:</em> Please refer to the installation instructions in the <code class="language-plaintext highlighter-rouge">README</code> of the <a href="https://github.com/stephenslab/dsc">dsc repository</a>.</p>
 
 <h2 id="overview-of-dsc-components">Overview of DSC components</h2>
 
@@ -1089,13 +1089,13 @@ initFunction(initQuery);
 
 <ol>
   <li>
-    <p>A <a href="https://docs.python.org/3/tutorial/modules.html">Python module</a> called <code class="highlighter-rouge">dsc</code>. It is installed in the same location as other Python modules (unless you choose to override the standard choice).</p>
+    <p>A <a href="https://docs.python.org/3/tutorial/modules.html">Python module</a> called <code class="language-plaintext highlighter-rouge">dsc</code>. It is installed in the same location as other Python modules (unless you choose to override the standard choice).</p>
   </li>
   <li>
-    <p>Two Python executables, <code class="highlighter-rouge">dsc</code> and <code class="highlighter-rouge">dsc-query</code>, that can be run from the command-line shell. These executables are also installed and managed by the <code class="highlighter-rouge">pip</code> program. It is installed in the same location as other Python executables (unless you choose to override the standard choice).</p>
+    <p>Two Python executables, <code class="language-plaintext highlighter-rouge">dsc</code> and <code class="language-plaintext highlighter-rouge">dsc-query</code>, that can be run from the command-line shell. These executables are also installed and managed by the <code class="language-plaintext highlighter-rouge">pip</code> program. It is installed in the same location as other Python executables (unless you choose to override the standard choice).</p>
   </li>
   <li>
-    <p>An R package called <code class="highlighter-rouge">dscrutils</code> that provides an interface for querying DSC results in R, as well as tools to run R code inside a DSC program. It is installed in the same location as other R packages.</p>
+    <p>An R package called <code class="language-plaintext highlighter-rouge">dscrutils</code> that provides an interface for querying DSC results in R, as well as tools to run R code inside a DSC program. It is installed in the same location as other R packages.</p>
   </li>
 </ol>
 
@@ -1107,11 +1107,11 @@ initFunction(initQuery);
 
 <p><strong>Our recommendation:</strong> Install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you are starting from scratch, we recommend <a href="https://conda.io/miniconda.html">Miniconda</a>. See <a href="faq#installation-troubleshoot">here</a> for additional advice on installing and configuring Miniconda.</p>
 
-<p>** Other options:** DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code class="highlighter-rouge">conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
+<p>** Other options:** DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code class="language-plaintext highlighter-rouge">conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
 
 <h2 id="2-check-your-python-installation">2. Check your Python installation</h2>
 
-<p>DSC is distributed via <a href="https://pypi.python.org/pypi/dsc">pypi</a>. The simplest way to install a Python module from pypi is with <code class="highlighter-rouge">pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code class="highlighter-rouge">pip</code>, check that you are running the version bundled with Python &gt;= 3.6:</p>
+<p>DSC is distributed via <a href="https://pypi.python.org/pypi/dsc">pypi</a>. The simplest way to install a Python module from pypi is with <code class="language-plaintext highlighter-rouge">pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code class="language-plaintext highlighter-rouge">pip</code>, check that you are running the version bundled with Python &gt;= 3.6:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">--version</span>
 pip <span class="nt">--version</span>
@@ -1123,24 +1123,24 @@ pip <span class="nt">--version</span>
 pip3 <span class="nt">--version</span>
 </code></pre></div></div>
 
-<p>If the reported Python version is or greater than 3.6.0 and <code class="highlighter-rouge">pip</code> is reported to come from that version (eg. <code class="highlighter-rouge">pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
+<p>If the reported Python version is or greater than 3.6.0 and <code class="language-plaintext highlighter-rouge">pip</code> is reported to come from that version (eg. <code class="language-plaintext highlighter-rouge">pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
 
-<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code class="highlighter-rouge">python</code>, and your pip (python 3.6+) executable is <code class="highlighter-rouge">pip</code>. However, you might need to replace <code class="highlighter-rouge">python</code> with <code class="highlighter-rouge">python3</code> and <code class="highlighter-rouge">pip</code> with <code class="highlighter-rouge">pip3</code>.</em></p>
+<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code class="language-plaintext highlighter-rouge">python</code>, and your pip (python 3.6+) executable is <code class="language-plaintext highlighter-rouge">pip</code>. However, you might need to replace <code class="language-plaintext highlighter-rouge">python</code> with <code class="language-plaintext highlighter-rouge">python3</code> and <code class="language-plaintext highlighter-rouge">pip</code> with <code class="language-plaintext highlighter-rouge">pip3</code>.</em></p>
 
 <p>If you already have an old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see <a href="faq#installation-troubleshoot">here</a> for advice on how to proceed.</p>
 
 <h2 id="3-install-or-upgrade-dsc">3. Install (or upgrade) DSC</h2>
 
-<p>We provide two sets of installation instructions: Python installed with <code class="highlighter-rouge">conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code class="highlighter-rouge">conda</code>.</p>
+<p>We provide two sets of installation instructions: Python installed with <code class="language-plaintext highlighter-rouge">conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code class="language-plaintext highlighter-rouge">conda</code>.</p>
 
-<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda">3a. If Python is installed with <code class="highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
+<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda">3a. If Python is installed with <code class="language-plaintext highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
 
-<p>Using <code class="highlighter-rouge">conda</code>, install DSC from the conda-forge channel:</p>
+<p>Using <code class="language-plaintext highlighter-rouge">conda</code>, install DSC from the conda-forge channel:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge dsc
 </code></pre></div></div>
 
-<h3 id="3b-if-python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code class="highlighter-rouge">conda</code></h3>
+<h3 id="3b-if-python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code class="language-plaintext highlighter-rouge">conda</code></h3>
 
 <p>Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):</p>
 
@@ -1151,30 +1151,30 @@ pip3 <span class="nt">--version</span>
 
 <ul>
   <li>
-    <p>You must have both <code class="highlighter-rouge">C</code> and <code class="highlighter-rouge">Fortran</code> compilers (and accompanying libraries).</p>
+    <p>You must have both <code class="language-plaintext highlighter-rouge">C</code> and <code class="language-plaintext highlighter-rouge">Fortran</code> compilers (and accompanying libraries).</p>
   </li>
   <li>
-    <p>The <code class="highlighter-rouge">pip</code> command may take a long time to run because several packages will need to be built from source.</p>
+    <p>The <code class="language-plaintext highlighter-rouge">pip</code> command may take a long time to run because several packages will need to be built from source.</p>
   </li>
   <li>
-    <p>Installation of some packages may fail. If so, try running the same command again; <em>sometimes running the same <code class="highlighter-rouge">pip</code> command a second time works!</em></p>
+    <p>Installation of some packages may fail. If so, try running the same command again; <em>sometimes running the same <code class="language-plaintext highlighter-rouge">pip</code> command a second time works!</em></p>
   </li>
 </ul>
 
-<p>If you are having difficulty installing DSC and its dependnencies directly from source, we recommend switching to using <code class="highlighter-rouge">conda</code>. Since <code class="highlighter-rouge">conda</code> installs binary packages that have already been compiled, this saves you from having to configure the correct compiler settings on your local machine.</p>
+<p>If you are having difficulty installing DSC and its dependnencies directly from source, we recommend switching to using <code class="language-plaintext highlighter-rouge">conda</code>. Since <code class="language-plaintext highlighter-rouge">conda</code> installs binary packages that have already been compiled, this saves you from having to configure the correct compiler settings on your local machine.</p>
 
 <h2 id="4-install-modules-for-network-visualization-of-benchmarks-optional">4. Install modules for network visualization of benchmarks (optional)</h2>
 
 <p>If you’d like to be able to create a network visualization of your benchmarks, you’ll need to install some additional Python modules. This is an entirely optional feature which will not affect the running of your DSC benchmarks.</p>
 
-<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda-1">3a. If Python is installed with <code class="highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
+<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda-1">3a. If Python is installed with <code class="language-plaintext highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
 
 <p>Run the following:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge python-graphviz imageio pillow
 </code></pre></div></div>
 
-<h3 id="3b-if-python-is-not-installed-with-conda-1">3b. If Python is <em>not</em> installed with <code class="highlighter-rouge">conda</code></h3>
+<h3 id="3b-if-python-is-not-installed-with-conda-1">3b. If Python is <em>not</em> installed with <code class="language-plaintext highlighter-rouge">conda</code></h3>
 
 <p>Run the following:</p>
 
@@ -1190,7 +1190,7 @@ pip3 <span class="nt">--version</span>
 
 <p>After running this command, you should see something like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Name: dsc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Name: dsc
 Version: 0.2.7.2
 Summary: Implementation of Dynamic Statistical Comparisons
 Home-page: https://github.com/stephenslab/dsc
@@ -1211,7 +1211,7 @@ dsc-query <span class="nt">--version</span>
 
 <p>For both commands, you should see the software version number printed to the screen.</p>
 
-<p>If you get an error, and you have verified that the Python module has been successfully installed, the most likely explanation is that the Python executables are stored in a location that is not in your command search path. In particular, this location needs to be included in the <code class="highlighter-rouge">PATH</code> environment variable.</p>
+<p>If you get an error, and you have verified that the Python module has been successfully installed, the most likely explanation is that the Python executables are stored in a location that is not in your command search path. In particular, this location needs to be included in the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable.</p>
 
 <p><em>NOTE: I think it would be better to move this to the FAQ Troubleshooting section, with title, “What do I do when it says that commands dsc or dsc-query cannot be found”?</em></p>
 
@@ -1226,20 +1226,20 @@ pip show dsc <span class="nt">--files</span> | <span class="nb">grep </span>dsc-
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>&lt;python-exec-path&gt;:<span class="nv">$PATH</span>
 </code></pre></div></div>
 
-<p>where <code class="highlighter-rouge">&lt;python-exec-path&gt;</code> was identified from running the commands above. For example, in Anaconda the first and second install locations may look something like <code class="highlighter-rouge">/home/jsmith/anaconda3/lib/python3.6/site-packages</code> and <code class="highlighter-rouge">../../../bin/dsc-query</code>, in which case running</p>
+<p>where <code class="language-plaintext highlighter-rouge">&lt;python-exec-path&gt;</code> was identified from running the commands above. For example, in Anaconda the first and second install locations may look something like <code class="language-plaintext highlighter-rouge">/home/jsmith/anaconda3/lib/python3.6/site-packages</code> and <code class="language-plaintext highlighter-rouge">../../../bin/dsc-query</code>, in which case running</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/jsmith/anaconda3/lib:<span class="nv">$PATH</span>
 </code></pre></div></div>
 
-<p>should make the <code class="highlighter-rouge">dsc</code> and <code class="highlighter-rouge">dsc-query</code> commands accessible.</p>
+<p>should make the <code class="language-plaintext highlighter-rouge">dsc</code> and <code class="language-plaintext highlighter-rouge">dsc-query</code> commands accessible.</p>
 
 <h2 id="7-install-r-optional">7. Install R (optional)</h2>
 
 <p>R is optional, but highly recommended—it is useful for querying DSC results. It is also required for running any DSC benchmarks that run R code. Follow the instructions on the <a href="https://cran.r-project.org">CRAN website</a> to install R on your computer. DSC also works with <a href="http://rstudio.com">RStudio</a>, although an additional setup step may be required for RStudio.</p>
 
-<h2 id="8-install-dscrutils-r-package-optional">8. Install <code class="highlighter-rouge">dscrutils</code> R package (optional)</h2>
+<h2 id="8-install-dscrutils-r-package-optional">8. Install <code class="language-plaintext highlighter-rouge">dscrutils</code> R package (optional)</h2>
 
-<p>The simplest way to install the <code class="highlighter-rouge">dscrutils</code> package is to start up R or RStudio and run the following code:</p>
+<p>The simplest way to install the <code class="language-plaintext highlighter-rouge">dscrutils</code> package is to start up R or RStudio and run the following code:</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span><span class="w">
@@ -1248,16 +1248,16 @@ pip show dsc <span class="nt">--files</span> | <span class="nb">grep </span>dsc-
 
 <p>This will also install the <a href="https://github.com/hadley/devtools">devtools</a> package.</p>
 
-<h2 id="9-ensure-dsc-query-is-recognized-in-r-optional">9. Ensure <code class="highlighter-rouge">dsc-query</code> is recognized in R (optional)</h2>
+<h2 id="9-ensure-dsc-query-is-recognized-in-r-optional">9. Ensure <code class="language-plaintext highlighter-rouge">dsc-query</code> is recognized in R (optional)</h2>
 
-<p>In a previous step, you verified that <code class="highlighter-rouge">dsc-query</code> can be run from the command-line shell. In order to query DSC results, we also need to make sure that it can be run inside your preferred R environment.</p>
+<p>In a previous step, you verified that <code class="language-plaintext highlighter-rouge">dsc-query</code> can be run from the command-line shell. In order to query DSC results, we also need to make sure that it can be run inside your preferred R environment.</p>
 
 <p>Start up R or RStudio, and run</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">system</span><span class="p">(</span><span class="s2">"dsc-query --version"</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>If this outputs a version number, then you are ready to use the <code class="highlighter-rouge">dscrutils</code> package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the <a href="faq#installation-troubleshoot">Troubleshooting</a> section of the FAQ page for instructions on how to do this.</p>
+<p>If this outputs a version number, then you are ready to use the <code class="language-plaintext highlighter-rouge">dscrutils</code> package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the <a href="faq#installation-troubleshoot">Troubleshooting</a> section of the FAQ page for instructions on how to do this.</p>
 
 <h2 id="10-start-your-first-dsc-project">10. Start your first DSC project</h2>
 

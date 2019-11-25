@@ -29,9 +29,9 @@
   "headline":
     "R Example 2",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1057,11 +1057,11 @@ initFunction(initQuery);
             
 
             <div class="c-textbook__content">
-              <h1 id="reproducing-simulator-package-quick-start">Reproducing <code class="highlighter-rouge">simulator</code> package Quick Start</h1>
+              <h1 id="reproducing-simulator-package-quick-start">Reproducing <code class="language-plaintext highlighter-rouge">simulator</code> package Quick Start</h1>
 
 <p>This tutorial reimplements the execution part of <a href="http://faculty.bscb.cornell.edu/~bien/simulator_vignettes/getting-started.html">Getting Started with Simulator</a> example. We demonstrate in this tutorial how compound module executables are specified with scripts and inline executables.</p>
 
-<p>Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/simulator_example">DSC vignettes repo</a>. It also contains the code to reproduce the original <code class="highlighter-rouge">simulator</code> simulation.</p>
+<p>Material to run this tutorial can be found in <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/simulator_example">DSC vignettes repo</a>. It also contains the code to reproduce the original <code class="language-plaintext highlighter-rouge">simulator</code> simulation.</p>
 
 <h2 id="dsc-specification">DSC Specification</h2>
 <p>The problem is fully specified in DSC syntax below:</p>
@@ -1095,7 +1095,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc main.dsc
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: DSC script exported to simulator_results.html
 INFO: Constructing DSC from main.dsc ...
 INFO: Building execution graph &amp; running DSC ...
@@ -1105,7 +1105,7 @@ INFO: DSC complete!
 INFO: Elapsed time 35.413 seconds.
 </code></pre></div></div>
 
-<p>You may notice that for this trivial benchmark, the execution is a lot slower compared to the original implementation. This is a limitation of DSC when running lite jobs – having to build and execute DAG, checking file signatures and monitoring runtime environment results in substential overhead. For real-world benchmarking when execution time is much longer, this overhead is perhaps tolerable because it is relatively insignificant under such scenario. Also notice that under <code class="highlighter-rouge">simulator_results</code> there are 420 intermediate output <code class="highlighter-rouge">*.rds</code> files generated, compared to only 31 <code class="highlighter-rouge">*.Rdata</code> itermediate files generated when you run the <code class="highlighter-rouge">simulator</code> version of the example. This is because the demonstrated DSC implementation is a lot more modular. You can compare the data generating code in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/R/model.R">DSC</a> vs in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/sims/model_functions.R"><code class="highlighter-rouge">simulator</code></a> to tell the more modular setup we have adopted here – although it is entirely possible to develop a different style of DSC that reproduces exactly the <code class="highlighter-rouge">simulator</code> example’s output (yet stored in <code class="highlighter-rouge">rds</code> rather than <code class="highlighter-rouge">Rdata</code> format).</p>
+<p>You may notice that for this trivial benchmark, the execution is a lot slower compared to the original implementation. This is a limitation of DSC when running lite jobs – having to build and execute DAG, checking file signatures and monitoring runtime environment results in substential overhead. For real-world benchmarking when execution time is much longer, this overhead is perhaps tolerable because it is relatively insignificant under such scenario. Also notice that under <code class="language-plaintext highlighter-rouge">simulator_results</code> there are 420 intermediate output <code class="language-plaintext highlighter-rouge">*.rds</code> files generated, compared to only 31 <code class="language-plaintext highlighter-rouge">*.Rdata</code> itermediate files generated when you run the <code class="language-plaintext highlighter-rouge">simulator</code> version of the example. This is because the demonstrated DSC implementation is a lot more modular. You can compare the data generating code in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/R/model.R">DSC</a> vs in <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/simulator_example/sims/model_functions.R"><code class="language-plaintext highlighter-rouge">simulator</code></a> to tell the more modular setup we have adopted here – although it is entirely possible to develop a different style of DSC that reproduces exactly the <code class="language-plaintext highlighter-rouge">simulator</code> example’s output (yet stored in <code class="language-plaintext highlighter-rouge">rds</code> rather than <code class="language-plaintext highlighter-rouge">Rdata</code> format).</p>
 
               <nav class="c-page__nav">
   

@@ -29,9 +29,9 @@
   "headline":
     "Working with R and Python",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1061,7 +1061,7 @@ initFunction(initQuery);
 
 <p>This tutorials shows re-implementation of the <a href="../first_course/Intro_DSC">DSC Introduction</a> mixing R and Python implementations. Source code to run this example can be found <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location_python">here</a>.</p>
 
-<p>If you are reading this page and are in need of R &amp; Python communications, I suppose you might have experience interacting between R and Python, and appreciate the challenges. Data transfer between R and Python currently depends on <code class="highlighter-rouge">rpy2</code>. This has 2 implications: 1) information flow is no longer lossless because it is impossible to support the Python counter part for any arbitary R object (and vise versa) and 2) installation of <code class="highlighter-rouge">rpy2</code> and get it to work can be challenging. While I cannot provide support for <code class="highlighter-rouge">rpy2</code> installation, here is a <a href="https://gist.github.com/gaow/39902e16603ffbe185ae38ff062fa266">personal note</a> on how I got it work on my system, possibly the hard way, but might be of interest to those who are in the same situation as I did. Additionally, 3) there is noticible performance overhead at the data transfer interface.</p>
+<p>If you are reading this page and are in need of R &amp; Python communications, I suppose you might have experience interacting between R and Python, and appreciate the challenges. Data transfer between R and Python currently depends on <code class="language-plaintext highlighter-rouge">rpy2</code>. This has 2 implications: 1) information flow is no longer lossless because it is impossible to support the Python counter part for any arbitary R object (and vise versa) and 2) installation of <code class="language-plaintext highlighter-rouge">rpy2</code> and get it to work can be challenging. While I cannot provide support for <code class="language-plaintext highlighter-rouge">rpy2</code> installation, here is a <a href="https://gist.github.com/gaow/39902e16603ffbe185ae38ff062fa266">personal note</a> on how I got it work on my system, possibly the hard way, but might be of interest to those who are in the same situation as I did. Additionally, 3) there is noticible performance overhead at the data transfer interface.</p>
 
 <p>Data communication via a more universial and robust interface <a href="https://github.com/stephenslab/dsc/issues/86">has been proposed</a>. We hope to be able to implement it in a near future release.</p>
 
@@ -1116,7 +1116,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./settings_mix.dsc <span class="nt">-c</span> 30
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: Checking R library reticulate@rstudio ...
 INFO: Checking Python module numpy ...
 INFO: Checking Python module rpy2 ...

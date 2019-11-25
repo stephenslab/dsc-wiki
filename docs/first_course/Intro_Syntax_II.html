@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1072,16 +1072,16 @@ initFunction(initQuery);
 
 <p>Materials used in this tutorial can be found in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">DSC vignettes repository</a>. As before, you may choose to run this example DSC program as you read through the tutorial, but this is not required. For more details, consult the README in the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">“one sample location” DSC vignette</a>.</p>
 
-<h2 id="adding-a-module-parameter-to-normal">Adding a module parameter to <code class="highlighter-rouge">normal</code></h2>
+<h2 id="adding-a-module-parameter-to-normal">Adding a module parameter to <code class="language-plaintext highlighter-rouge">normal</code></h2>
 
-<p>In our example DSC, recall we defined the <code class="highlighter-rouge">normal</code> module as follows:</p>
+<p>In our example DSC, recall we defined the <code class="language-plaintext highlighter-rouge">normal</code> module as follows:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n = 100,mean = 0,sd = 1))</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="m">0</span>
 </code></pre></div></div>
 
-<p>Here we propose to make a slight improvement to this module by adding a <em>module parameter</em>, <code class="highlighter-rouge">n</code>:</p>
+<p>Here we propose to make a slight improvement to this module by adding a <em>module parameter</em>, <code class="language-plaintext highlighter-rouge">n</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = 0,sd = 1))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
@@ -1089,15 +1089,15 @@ initFunction(initQuery);
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="m">0</span>
 </code></pre></div></div>
 
-<p>We have defined a module parameter <code class="highlighter-rouge">n</code> and set its value to 100. Once we have defined <code class="highlighter-rouge">n</code>, any of the R code may refer to this module parameter. In the R code, the first argument of <code class="highlighter-rouge">rnorm</code> is set to the value of <code class="highlighter-rouge">n</code> (which is 100).</p>
+<p>We have defined a module parameter <code class="language-plaintext highlighter-rouge">n</code> and set its value to 100. Once we have defined <code class="language-plaintext highlighter-rouge">n</code>, any of the R code may refer to this module parameter. In the R code, the first argument of <code class="language-plaintext highlighter-rouge">rnorm</code> is set to the value of <code class="language-plaintext highlighter-rouge">n</code> (which is 100).</p>
 
-<p>In this first example, there is not much benefit to defining a module parameter <code class="highlighter-rouge">n</code>. In the examples below, the advantages of module parameters will become more apparent.</p>
+<p>In this first example, there is not much benefit to defining a module parameter <code class="language-plaintext highlighter-rouge">n</code>. In the examples below, the advantages of module parameters will become more apparent.</p>
 
-<h2 id="adding-a-second-module-parameter-to-normal">Adding a second module parameter to <code class="highlighter-rouge">normal</code></h2>
+<h2 id="adding-a-second-module-parameter-to-normal">Adding a second module parameter to <code class="language-plaintext highlighter-rouge">normal</code></h2>
 
-<p>In our current design of <code class="highlighter-rouge">normal</code>, we made an unfortunate choice: the mean used to simulate the data is defined twice, once inside the call to <code class="highlighter-rouge">rnorm</code>, where we set <code class="highlighter-rouge">mean = 0</code>, and once when we set the module output <code class="highlighter-rouge">$true_mean</code> to zero. If we decide to use a different mean to simulate the data, then we would have to be careful to change the code in two different places.</p>
+<p>In our current design of <code class="language-plaintext highlighter-rouge">normal</code>, we made an unfortunate choice: the mean used to simulate the data is defined twice, once inside the call to <code class="language-plaintext highlighter-rouge">rnorm</code>, where we set <code class="language-plaintext highlighter-rouge">mean = 0</code>, and once when we set the module output <code class="language-plaintext highlighter-rouge">$true_mean</code> to zero. If we decide to use a different mean to simulate the data, then we would have to be careful to change the code in two different places.</p>
 
-<p>It would be better if the mean of the data was defined once. This can be accomplished with a module parameter, which we will name <code class="highlighter-rouge">mu</code> (the Greek letter conventionally used to denote the mean):</p>
+<p>It would be better if the mean of the data was defined once. This can be accomplished with a module parameter, which we will name <code class="language-plaintext highlighter-rouge">mu</code> (the Greek letter conventionally used to denote the mean):</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="m">100</span>
@@ -1106,9 +1106,9 @@ initFunction(initQuery);
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>Here, we have defined a second module parameter <code class="highlighter-rouge">mu</code>, and set its value zero. Now the <code class="highlighter-rouge">mean</code> argument of <code class="highlighter-rouge">rnorm</code> can be set to the value of <code class="highlighter-rouge">mu</code>.</p>
+<p>Here, we have defined a second module parameter <code class="language-plaintext highlighter-rouge">mu</code>, and set its value zero. Now the <code class="language-plaintext highlighter-rouge">mean</code> argument of <code class="language-plaintext highlighter-rouge">rnorm</code> can be set to the value of <code class="language-plaintext highlighter-rouge">mu</code>.</p>
 
-<p>Additionally, since <code class="highlighter-rouge">mu</code> is also a script parameter, the module output <code class="highlighter-rouge">$true_mean</code> can be set to the value of (script parameter) <code class="highlighter-rouge">mu</code>. (In this example, the value of the module parameter happens to be the same as the value of the variable <code class="highlighter-rouge">mu</code> used in the R code, but in some cases the R code might modify the value of <code class="highlighter-rouge">mu</code>, in which case the module parameter and script parameter will be different. So it is important to keep these quantities distinct.)</p>
+<p>Additionally, since <code class="language-plaintext highlighter-rouge">mu</code> is also a script parameter, the module output <code class="language-plaintext highlighter-rouge">$true_mean</code> can be set to the value of (script parameter) <code class="language-plaintext highlighter-rouge">mu</code>. (In this example, the value of the module parameter happens to be the same as the value of the variable <code class="language-plaintext highlighter-rouge">mu</code> used in the R code, but in some cases the R code might modify the value of <code class="language-plaintext highlighter-rouge">mu</code>, in which case the module parameter and script parameter will be different. So it is important to keep these quantities distinct.)</p>
 
 <p>With this change to the module definition, modifying the mean used to simulate the data only requires editing one line of code instead of two.</p>
 
@@ -1121,7 +1121,7 @@ initFunction(initQuery);
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>Note that there is no requirement that the module parameters for the <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code> modules have the same name, <code class="highlighter-rouge">mu</code>, but in this case makes sense to do so. One advantage of defining parameters with the same name is that makes it easier to query the results.</p>
+<p>Note that there is no requirement that the module parameters for the <code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">t</code> modules have the same name, <code class="language-plaintext highlighter-rouge">mu</code>, but in this case makes sense to do so. One advantage of defining parameters with the same name is that makes it easier to query the results.</p>
 
 <h2 id="the-order-of-evaluation-inside-a-module">The order of evaluation inside a module</h2>
 
@@ -1173,19 +1173,19 @@ initFunction(initQuery);
     <p>The first step is skipped because no R code needs to be run to evaluate the module parameters.</p>
   </li>
   <li>
-    <p>The module parameters <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">mu</code> are set to 100 and 0, respectively.</p>
+    <p>The module parameters <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">mu</code> are set to 100 and 0, respectively.</p>
   </li>
   <li>
     <p>The third step is skipped because no inputs are defined for this module.</p>
   </li>
   <li>
-    <p>In the global R environment, variables <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">mu</code> are defined and set to the values of the module parameters <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">mu</code> (in this case, 100 and 0).</p>
+    <p>In the global R environment, variables <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">mu</code> are defined and set to the values of the module parameters <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">mu</code> (in this case, 100 and 0).</p>
   </li>
   <li>
-    <p>The expression <code class="highlighter-rouge">x &lt;- rnorm(n,mean = mu,sd = 1)</code> is parsed and evaluated in the same global R environment.</p>
+    <p>The expression <code class="language-plaintext highlighter-rouge">x &lt;- rnorm(n,mean = mu,sd = 1)</code> is parsed and evaluated in the same global R environment.</p>
   </li>
   <li>
-    <p>Module output <code class="highlighter-rouge">$data</code> is assigned the value of R expression <code class="highlighter-rouge">x</code> (which is a vector of length 100), and module output <code class="highlighter-rouge">$true_mean</code> is assigned the value of R expresion <code class="highlighter-rouge">mu</code> (which is just zero because <code class="highlighter-rouge">mu</code> was unchanged when the R code was run). In both cases, the R expressions are simply variable names, but we point out that they can be more general R expressions.</p>
+    <p>Module output <code class="language-plaintext highlighter-rouge">$data</code> is assigned the value of R expression <code class="language-plaintext highlighter-rouge">x</code> (which is a vector of length 100), and module output <code class="language-plaintext highlighter-rouge">$true_mean</code> is assigned the value of R expresion <code class="language-plaintext highlighter-rouge">mu</code> (which is just zero because <code class="language-plaintext highlighter-rouge">mu</code> was unchanged when the R code was run). In both cases, the R expressions are simply variable names, but we point out that they can be more general R expressions.</p>
   </li>
 </ol>
 
@@ -1195,7 +1195,7 @@ initFunction(initQuery);
 
 <p>Above, we gave a couple examples of defining module parameters. Here, we will demonstrate an important feature of module parameters: <em>they can be used to define multiple modules that are similar to each other.</em></p>
 
-<p>Our current definition of the <code class="highlighter-rouge">normal</code> module simulates 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code class="highlighter-rouge">n</code> that takes on two different values:</p>
+<p>Our current definition of the <code class="language-plaintext highlighter-rouge">normal</code> module simulates 100 random samples from a normal distribution. Suppose we would like to define a second module that simulates 1,000 random samples from the same normal distribution. This is easily done by defining a new module parameter <code class="language-plaintext highlighter-rouge">n</code> that takes on two different values:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1204,21 +1204,21 @@ initFunction(initQuery);
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>The comma delimits the two possible values of model parameter <code class="highlighter-rouge">n</code>.</p>
+<p>The comma delimits the two possible values of model parameter <code class="language-plaintext highlighter-rouge">n</code>.</p>
 
-<p>Now that we have defined <code class="highlighter-rouge">n</code> inside this module, we can refer to this module parameter inside the R code that simulates random draws from a normal distribution, as in the example above.</p>
+<p>Now that we have defined <code class="language-plaintext highlighter-rouge">n</code> inside this module, we can refer to this module parameter inside the R code that simulates random draws from a normal distribution, as in the example above.</p>
 
-<p>To be precise, this code defines a <em>module block</em> with two modules. It is equivalent to defining two modules, <code class="highlighter-rouge">normal_100</code> and <code class="highlighter-rouge">normal_1000</code>, that are identical in every way except that the first module includes parameter definition <code class="highlighter-rouge">n: 100</code> and the second defines <code class="highlighter-rouge">n: 100</code>. The module block above is of course much more succinct.</p>
+<p>To be precise, this code defines a <em>module block</em> with two modules. It is equivalent to defining two modules, <code class="language-plaintext highlighter-rouge">normal_100</code> and <code class="language-plaintext highlighter-rouge">normal_1000</code>, that are identical in every way except that the first module includes parameter definition <code class="language-plaintext highlighter-rouge">n: 100</code> and the second defines <code class="language-plaintext highlighter-rouge">n: 100</code>. The module block above is of course much more succinct.</p>
 
-<p>The line <code class="highlighter-rouge">n: 100, 1000</code> should not be interpreted as defining a vector or sequence with two entries, 100 and 1000. It defines a <em>set of alternative values</em>. To put it another way—and this is the terminology we use frequently—<code class="highlighter-rouge">n: 100, 1000</code> defines two <em>alternative values</em> for module parameter <code class="highlighter-rouge">n</code>, and therefore defines two <em>alternative modules</em> that are the same in every way (including their name, <code class="highlighter-rouge">normal</code>) except for the setting of <code class="highlighter-rouge">n</code>.</p>
+<p>The line <code class="language-plaintext highlighter-rouge">n: 100, 1000</code> should not be interpreted as defining a vector or sequence with two entries, 100 and 1000. It defines a <em>set of alternative values</em>. To put it another way—and this is the terminology we use frequently—<code class="language-plaintext highlighter-rouge">n: 100, 1000</code> defines two <em>alternative values</em> for module parameter <code class="language-plaintext highlighter-rouge">n</code>, and therefore defines two <em>alternative modules</em> that are the same in every way (including their name, <code class="language-plaintext highlighter-rouge">normal</code>) except for the setting of <code class="language-plaintext highlighter-rouge">n</code>.</p>
 
-<p>An important property of module parameters with multiple alternative values is that <em>their order does not matter</em>. For example, if we instead wrote <code class="highlighter-rouge">n: 1000, 100</code>, <em>the DSC results will be exactly the same as</em> <code class="highlighter-rouge">n: 100, 1000</code>. The only thing that will change is the order in which the results will appear in the tables, and the way in which the results are stored in files.</p>
+<p>An important property of module parameters with multiple alternative values is that <em>their order does not matter</em>. For example, if we instead wrote <code class="language-plaintext highlighter-rouge">n: 1000, 100</code>, <em>the DSC results will be exactly the same as</em> <code class="language-plaintext highlighter-rouge">n: 100, 1000</code>. The only thing that will change is the order in which the results will appear in the tables, and the way in which the results are stored in files.</p>
 
-<p>Although the two modules both have the same name, <code class="highlighter-rouge">normal</code>, their outputs can still be easily distinguished in the results; for example, if you want to compare the accuracy of the estimates in the larger (<code class="highlighter-rouge">n = 1000</code>) and smaller (<code class="highlighter-rouge">n = 100</code>) simulated data sets, the results from these two modules can be distinguished by the stored value of the module parameter <code class="highlighter-rouge">n</code>. We will see an example of this next.</p>
+<p>Although the two modules both have the same name, <code class="language-plaintext highlighter-rouge">normal</code>, their outputs can still be easily distinguished in the results; for example, if you want to compare the accuracy of the estimates in the larger (<code class="language-plaintext highlighter-rouge">n = 1000</code>) and smaller (<code class="language-plaintext highlighter-rouge">n = 100</code>) simulated data sets, the results from these two modules can be distinguished by the stored value of the module parameter <code class="language-plaintext highlighter-rouge">n</code>. We will see an example of this next.</p>
 
-<h2 id="executing-the-dsc-with-four-simulate-modules">Executing the DSC with four <code class="highlighter-rouge">simulate</code> modules</h2>
+<h2 id="executing-the-dsc-with-four-simulate-modules">Executing the DSC with four <code class="language-plaintext highlighter-rouge">simulate</code> modules</h2>
 
-<p>Let’s go ahead and generate results from our new “mean estimation” DSC. In the new DSC, the <code class="highlighter-rouge">simulate</code> modules are defined by two module blocks:</p>
+<p>Let’s go ahead and generate results from our new “mean estimation” DSC. In the new DSC, the <code class="language-plaintext highlighter-rouge">simulate</code> modules are defined by two module blocks:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(x &lt;- rnorm(n,mean = mu,sd = 1))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1235,9 +1235,9 @@ initFunction(initQuery);
 
 <p>The rest of the DSC remains unchanged from before.</p>
 
-<p>This new DSC is implemeted by <code class="highlighter-rouge">simulate_data_twice.dsc</code> inside the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">one_sample_location</a> vignette folder.</p>
+<p>This new DSC is implemeted by <code class="language-plaintext highlighter-rouge">simulate_data_twice.dsc</code> inside the <a href="https://github.com/stephenslab/dsc/tree/master/vignettes/one_sample_location">one_sample_location</a> vignette folder.</p>
 
-<p>To run the DSC benchmark, change the working directory (here we have assumed that the dsc repository is stored in the <code class="highlighter-rouge">git</code> subdirectory of your home directory),</p>
+<p>To run the DSC benchmark, change the working directory (here we have assumed that the dsc repository is stored in the <code class="language-plaintext highlighter-rouge">git</code> subdirectory of your home directory),</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/git/dsc/vignettes/one_sample_location
 </code></pre></div></div>
@@ -1252,7 +1252,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc simulate_data_twice.dsc <span class="nt">--replicate</span> 10
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from simulate_data_twice.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [#############################] 29 steps processed (295 jobs completed)
@@ -1261,9 +1261,9 @@ INFO: DSC complete!
 INFO: Elapsed time 29.389 seconds.
 </code></pre></div></div>
 
-<h2 id="comparing-the-dsc-results-with-n100-and-n1000">Comparing the DSC results with <code class="highlighter-rouge">n=100</code> and <code class="highlighter-rouge">n=1000</code></h2>
+<h2 id="comparing-the-dsc-results-with-n100-and-n1000">Comparing the DSC results with <code class="language-plaintext highlighter-rouge">n=100</code> and <code class="language-plaintext highlighter-rouge">n=1000</code></h2>
 
-<p>Now let’s inspect the DSC results in R. Change the R working directory to the location of the DSC file, and use the dscquery function from the <code class="highlighter-rouge">dscrutils</code> package to load the DSC results into R:</p>
+<p>Now let’s inspect the DSC results in R. Change the R working directory to the location of the DSC file, and use the dscquery function from the <code class="language-plaintext highlighter-rouge">dscrutils</code> package to load the DSC results into R:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1279,7 +1279,7 @@ INFO: Elapsed time 29.389 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
 </code></pre></div>      </div>
@@ -1296,7 +1296,7 @@ Reading DSC outputs:
   </div>
 </div>
 
-<p>The DSC command we ran above generated results for 10 replicates of 16 pipelines. We now have double the number of pipelines we had before, which is expected because we now have 4 <code class="highlighter-rouge">simulate</code> modules (2 <code class="highlighter-rouge">normal</code> modules and 2 <code class="highlighter-rouge">t</code> modules), whereas before we had 2 <code class="highlighter-rouge">simulate</code> modules. To confirm this, we see that each of the four <code class="highlighter-rouge">simulate</code> modules appears in 40 pipelines:</p>
+<p>The DSC command we ran above generated results for 10 replicates of 16 pipelines. We now have double the number of pipelines we had before, which is expected because we now have 4 <code class="language-plaintext highlighter-rouge">simulate</code> modules (2 <code class="language-plaintext highlighter-rouge">normal</code> modules and 2 <code class="language-plaintext highlighter-rouge">t</code> modules), whereas before we had 2 <code class="language-plaintext highlighter-rouge">simulate</code> modules. To confirm this, we see that each of the four <code class="language-plaintext highlighter-rouge">simulate</code> modules appears in 40 pipelines:</p>
 
 <div class="cell code_cell">
   <div class="input_area">
@@ -1307,7 +1307,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        simulate.n
+      <div class="language-plaintext output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        simulate.n
 simulate 100 1000
   normal  40   40
   t       40   40
@@ -1317,7 +1317,7 @@ simulate 100 1000
   </div>
 </div>
 
-<p>The <code class="highlighter-rouge">"simulate.n"</code> column in the <code class="highlighter-rouge">dscout</code> data frame gives the value of module parameter <code class="highlighter-rouge">n</code> defined inside a <code class="highlighter-rouge">simulate</code> module.</p>
+<p>The <code class="language-plaintext highlighter-rouge">"simulate.n"</code> column in the <code class="language-plaintext highlighter-rouge">dscout</code> data frame gives the value of module parameter <code class="language-plaintext highlighter-rouge">n</code> defined inside a <code class="language-plaintext highlighter-rouge">simulate</code> module.</p>
 
 <p>We would expect that population mean estimates improve with more data. We can quickly check this by comparing the average squared error in the pipelines with 100 samples against the average error in the pipelines with 1,000 samples:</p>
 
@@ -1333,7 +1333,7 @@ simulate 100 1000
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>               100        1000
+      <div class="language-plaintext output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>               100        1000
 mean   0.032322738 0.006269221
 median 0.018195606 0.001767654
 </code></pre></div>      </div>
@@ -1348,7 +1348,7 @@ median 0.018195606 0.001767654
 
 <p>If you provide more than one value for multiple module parameters, DSC considers all combinations of the values.</p>
 
-<p>For example, suppose we want to evaluate estimators of the population mean when the data are simulated from the <em>t</em> distribution with different numbers of degrees of freedom. In DSC, this can be succinctly expressed by defining another module parameter, <code class="highlighter-rouge">df</code>, with multiple values:</p>
+<p>For example, suppose we want to evaluate estimators of the population mean when the data are simulated from the <em>t</em> distribution with different numbers of degrees of freedom. In DSC, this can be succinctly expressed by defining another module parameter, <code class="language-plaintext highlighter-rouge">df</code>, with multiple values:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + rt(n,df))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1358,7 +1358,7 @@ median 0.018195606 0.001767654
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>This new module block defines 6 <code class="highlighter-rouge">t</code> modules from the 6 different ways of setting both the <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">df</code> parameters.</p>
+<p>This new module block defines 6 <code class="language-plaintext highlighter-rouge">t</code> modules from the 6 different ways of setting both the <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">df</code> parameters.</p>
 
 <p>Let’s clear the previous results and run the DSC benchmark with this new module:</p>
 
@@ -1366,7 +1366,7 @@ median 0.018195606 0.001767654
 dsc simulate_multiple_dfs.dsc <span class="nt">--replicate</span> 10
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from simulate_multiple_dfs.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [#############################] 29 steps processed (575 jobs completed)
@@ -1388,7 +1388,7 @@ INFO: Elapsed time 57.557 seconds.
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
+      <div class="language-plaintext output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Loading dsc-query output from CSV file.
 Reading DSC outputs:
  - score.error: extracted atomic values
 </code></pre></div>      </div>
@@ -1407,7 +1407,7 @@ Reading DSC outputs:
 
   <div class="output_wrapper">
     <div class="output_subarea">
-      <div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      t.df
+      <div class="language-plaintext output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      t.df
 t.n     2  4 10
   100  40 40 40
   1000 40 40 40
@@ -1417,13 +1417,13 @@ t.n     2  4 10
   </div>
 </div>
 
-<p>Each of the six <code class="highlighter-rouge">t</code> modules was run 40 times: 2 analyze modules x 2 score modules x 10 replicates.</p>
+<p>Each of the six <code class="language-plaintext highlighter-rouge">t</code> modules was run 40 times: 2 analyze modules x 2 score modules x 10 replicates.</p>
 
 <h2 id="using-a-module-parameter-to-set-the-seed">Using a module parameter to set the seed</h2>
 
 <p>Here we illustrate another practical use of module parameters for defining modules with different “seeds”.</p>
 
-<p>To ensure reproducible results, it is often necessary to initialize the state, or <em>seed</em>, of the  pseudorandom number generator. For example, in R the sequence of pseudorandom numbers is initialized by calling <code class="highlighter-rouge">set.seed(x)</code>, in which <code class="highlighter-rouge">x</code> is an integer. (Note that DSC provides a default seed setting in R.)</p>
+<p>To ensure reproducible results, it is often necessary to initialize the state, or <em>seed</em>, of the  pseudorandom number generator. For example, in R the sequence of pseudorandom numbers is initialized by calling <code class="language-plaintext highlighter-rouge">set.seed(x)</code>, in which <code class="language-plaintext highlighter-rouge">x</code> is an integer. (Note that DSC provides a default seed setting in R.)</p>
 
 <p>For example, we can define 10 modules that generate 10 normally distributed data sets:</p>
 
@@ -1435,17 +1435,17 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>The only difference in the 10 <code class="highlighter-rouge">normal</code> modules is the sequence of pseudorandom numbers used to simulate random draws from the normal distribution.</p>
+<p>The only difference in the 10 <code class="language-plaintext highlighter-rouge">normal</code> modules is the sequence of pseudorandom numbers used to simulate random draws from the normal distribution.</p>
 
-<p>See <code class="highlighter-rouge">multiple_seeds.dsc</code> in the <code class="highlighter-rouge">one_sample_location</code> directory for the working example.</p>
+<p>See <code class="language-plaintext highlighter-rouge">multiple_seeds.dsc</code> in the <code class="language-plaintext highlighter-rouge">one_sample_location</code> directory for the working example.</p>
 
 <h2 id="combining-module-parameters-with-module-inputs">Combining module parameters with module inputs</h2>
 
 <p>It is also possible to combine module parameters with module inputs.</p>
 
-<p>Recall, in the <a href="Intro_DSC">initial tutorial</a> we defined a third <code class="highlighter-rouge">analyze</code> module that implemented the “Winsorized” mean. The <code class="highlighter-rouge">trim</code> argument to <code class="highlighter-rouge">winsor.mean</code> determined what proportion of data to “squish” from the top and bottom of the distribution.</p>
+<p>Recall, in the <a href="Intro_DSC">initial tutorial</a> we defined a third <code class="language-plaintext highlighter-rouge">analyze</code> module that implemented the “Winsorized” mean. The <code class="language-plaintext highlighter-rouge">trim</code> argument to <code class="language-plaintext highlighter-rouge">winsor.mean</code> determined what proportion of data to “squish” from the top and bottom of the distribution.</p>
 
-<p>Suppose we wanted to assess the impact of the trimming on the estimate accuracy. To do this, we could introduce a module parameter <code class="highlighter-rouge">trim</code> with multiple settings:</p>
+<p>Suppose we wanted to assess the impact of the trimming on the estimate accuracy. To do this, we could introduce a module parameter <code class="language-plaintext highlighter-rouge">trim</code> with multiple settings:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">winsor</span><span class="pi">:</span> <span class="s">R(y &lt;- psych::winsor.mean(x,trim,na.rm = TRUE))</span>
   <span class="s">trim</span><span class="pi">:</span> <span class="s">0.1, </span><span class="m">0.2</span>
@@ -1453,7 +1453,7 @@ t.n     2  4 10
   <span class="s">$est_mean</span><span class="pi">:</span> <span class="s">y</span>
 </code></pre></div></div>
 
-<p>Each time a data set <code class="highlighter-rouge">$data</code> is provided to the <code class="highlighter-rouge">simulate</code> module, DSC will run two different <code class="highlighter-rouge">winsor</code> modules: one with <code class="highlighter-rouge">trim = 0.1</code>, and a second with <code class="highlighter-rouge">trim = 0.2</code>.</p>
+<p>Each time a data set <code class="language-plaintext highlighter-rouge">$data</code> is provided to the <code class="language-plaintext highlighter-rouge">simulate</code> module, DSC will run two different <code class="language-plaintext highlighter-rouge">winsor</code> modules: one with <code class="language-plaintext highlighter-rouge">trim = 0.1</code>, and a second with <code class="language-plaintext highlighter-rouge">trim = 0.2</code>.</p>
 
 <p>Intuitively, one may want to adjust the trim setting <em>dynamically</em> based on the data (e.g., based on the fit to the normal distribution). However, this is not possible in DSC because module parameters must be set independently of the module inputs.</p>
 
@@ -1472,11 +1472,11 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>DSC will define a module for each combination of the module settings; specifically, this module block defines $2 \times 3 \times 4 = 24$ modules, one for each combination of <code class="highlighter-rouge">n</code> (the number of samples), <code class="highlighter-rouge">sd</code> (the standard deviation) and <code class="highlighter-rouge">df</code> (the degrees of freedom).</p>
+<p>DSC will define a module for each combination of the module settings; specifically, this module block defines $2 \times 3 \times 4 = 24$ modules, one for each combination of <code class="language-plaintext highlighter-rouge">n</code> (the number of samples), <code class="language-plaintext highlighter-rouge">sd</code> (the standard deviation) and <code class="language-plaintext highlighter-rouge">df</code> (the degrees of freedom).</p>
 
 <h3 id="defining-vector-valued-module-parameters-in-dsc">Defining vector-valued module parameters in DSC</h3>
 
-<p>Now suppose that we want to have finer control over which combinations of <code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code> are used to simulate the data; in other words, we do not want to simulate data sets for all combinations of <code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code>. For example, suppose we want to simulate data from <em>t</em> distributions with these three settings of the standard deviation (<code class="highlighter-rouge">sd</code>) and degrees of freedom (<code class="highlighter-rouge">df</code>):</p>
+<p>Now suppose that we want to have finer control over which combinations of <code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code> are used to simulate the data; in other words, we do not want to simulate data sets for all combinations of <code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code>. For example, suppose we want to simulate data from <em>t</em> distributions with these three settings of the standard deviation (<code class="language-plaintext highlighter-rouge">sd</code>) and degrees of freedom (<code class="language-plaintext highlighter-rouge">df</code>):</p>
 
 <table>
   <thead>
@@ -1511,11 +1511,11 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>This module block defines $2 \times 3 = 6$ modules, one for each combination of <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">params</code>; each setting of <code class="highlighter-rouge">params</code> is a vector of length 2, in which the first vector entry specifies the standard deviation parameter, and the second entry specifies the degrees of freedom.</p>
+<p>This module block defines $2 \times 3 = 6$ modules, one for each combination of <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">params</code>; each setting of <code class="language-plaintext highlighter-rouge">params</code> is a vector of length 2, in which the first vector entry specifies the standard deviation parameter, and the second entry specifies the degrees of freedom.</p>
 
 <h3 id="defining-module-parameters-with-un-quoted-code-strings">Defining module parameters with un-quoted code strings</h3>
 
-<p>Another option for defining a module parameter is to input chunks of code directly. This is the best option for this example in terms of succinctness and readability, while maintaining complete input information (<code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code> names). Here is the new <code class="highlighter-rouge">t</code> block using un-quoted string parameters</p>
+<p>Another option for defining a module parameter is to input chunks of code directly. This is the best option for this example in terms of succinctness and readability, while maintaining complete input information (<code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code> names). Here is the new <code class="language-plaintext highlighter-rouge">t</code> block using un-quoted string parameters</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params["sd"] * rt(n,df = params["df"]))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1527,14 +1527,14 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>As before, this module block defines $2 \times 3 = 6$ modules, one for each combination of <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">params</code>. The end result is the same as the above. However, there are some fundamental differences in this version:</p>
+<p>As before, this module block defines $2 \times 3 = 6$ modules, one for each combination of <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">params</code>. The end result is the same as the above. However, there are some fundamental differences in this version:</p>
 
 <ul>
   <li>
-    <p>In each module, the <code class="highlighter-rouge">params</code> module parameter is not a vector of length 2; rather it is a string value containing the R expression specified, e.g., <code class="highlighter-rouge">"c(sd = 0.5, df = 4)"</code>.</p>
+    <p>In each module, the <code class="language-plaintext highlighter-rouge">params</code> module parameter is not a vector of length 2; rather it is a string value containing the R expression specified, e.g., <code class="language-plaintext highlighter-rouge">"c(sd = 0.5, df = 4)"</code>.</p>
   </li>
   <li>
-    <p>In each module, the script parameter <code class="highlighter-rouge">params</code> is assigned to the value of expression evaluated in the R environment. In actual fact this is implemented by prepending R code here to the code inside the <code class="highlighter-rouge">R()</code> statement. Therefore, this module block is (for the most part) equivalent to the following three module blocks in which the only difference between the modules is the <code class="highlighter-rouge">params</code> assignment inside the R code:</p>
+    <p>In each module, the script parameter <code class="language-plaintext highlighter-rouge">params</code> is assigned to the value of expression evaluated in the R environment. In actual fact this is implemented by prepending R code here to the code inside the <code class="language-plaintext highlighter-rouge">R()</code> statement. Therefore, this module block is (for the most part) equivalent to the following three module blocks in which the only difference between the modules is the <code class="language-plaintext highlighter-rouge">params</code> assignment inside the R code:</p>
   </li>
 </ul>
 
@@ -1564,18 +1564,18 @@ t.n     2  4 10
     <p>The code remains succinct.</p>
   </li>
   <li>
-    <p>As before, the vector entries are labeled by <code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code>, making the code more understandable.</p>
+    <p>As before, the vector entries are labeled by <code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code>, making the code more understandable.</p>
   </li>
   <li>
-    <p>Because the code is evaluated in the same R environment as the module script, the labels are retained, and so we can write <code class="highlighter-rouge">params$sd</code> and <code class="highlighter-rouge">params$df</code> instead of <code class="highlighter-rouge">params[1]</code> and <code class="highlighter-rouge">params[2]</code> to access the settings of the standard deviation and degrees of freedom.</p>
+    <p>Because the code is evaluated in the same R environment as the module script, the labels are retained, and so we can write <code class="language-plaintext highlighter-rouge">params$sd</code> and <code class="language-plaintext highlighter-rouge">params$df</code> instead of <code class="language-plaintext highlighter-rouge">params[1]</code> and <code class="language-plaintext highlighter-rouge">params[2]</code> to access the settings of the standard deviation and degrees of freedom.</p>
   </li>
 </ol>
 
-<h3 id="defining-module-parameters-with-r">Defining module parameters with <code class="highlighter-rouge">R()</code></h3>
+<h3 id="defining-module-parameters-with-r">Defining module parameters with <code class="language-plaintext highlighter-rouge">R()</code></h3>
 
-<p>This example has achieved our aim of directly specifying combinations of <code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code>, but the <code class="highlighter-rouge">params</code> module parameter will now be more difficult to use when inspecting the results in query, because in order to match it in query one has to type in the exact code script eg <code class="highlighter-rouge">c(sd = 0.5, df = 4)</code> including spaces.</p>
+<p>This example has achieved our aim of directly specifying combinations of <code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code>, but the <code class="language-plaintext highlighter-rouge">params</code> module parameter will now be more difficult to use when inspecting the results in query, because in order to match it in query one has to type in the exact code script eg <code class="language-plaintext highlighter-rouge">c(sd = 0.5, df = 4)</code> including spaces.</p>
 
-<p>Instead of using code script strings, we can use <code class="highlighter-rouge">R()</code> operator to generate vectors of inputs yet maintaining readability:</p>
+<p>Instead of using code script strings, we can use <code class="language-plaintext highlighter-rouge">R()</code> operator to generate vectors of inputs yet maintaining readability:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params[1] * rt(n,df = params[2]))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1587,13 +1587,13 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>In the “<code class="highlighter-rouge">params: ...</code>” statement, the code inside each <code class="highlighter-rouge">R(...)</code> is evaluated inside an R environment, then the outcome of each evaluation is used to assign a value to each setting of <code class="highlighter-rouge">params</code>. This achieves the same result as using vector-valued inputs, yet it is also a slight improvement because the intent of the first and second entries is now more clear from the code because the vector entries are labeled by <code class="highlighter-rouge">sd</code> and <code class="highlighter-rouge">df</code>.</p>
+<p>In the “<code class="language-plaintext highlighter-rouge">params: ...</code>” statement, the code inside each <code class="language-plaintext highlighter-rouge">R(...)</code> is evaluated inside an R environment, then the outcome of each evaluation is used to assign a value to each setting of <code class="language-plaintext highlighter-rouge">params</code>. This achieves the same result as using vector-valued inputs, yet it is also a slight improvement because the intent of the first and second entries is now more clear from the code because the vector entries are labeled by <code class="language-plaintext highlighter-rouge">sd</code> and <code class="language-plaintext highlighter-rouge">df</code>.</p>
 
-<p>In general, <code class="highlighter-rouge">R()</code> provides much more flexibility in defining complex module parameters because it provides access to the many features of R. (The only restriction is that none of the module inputs can be referenced within the R code.)</p>
+<p>In general, <code class="language-plaintext highlighter-rouge">R()</code> provides much more flexibility in defining complex module parameters because it provides access to the many features of R. (The only restriction is that none of the module inputs can be referenced within the R code.)</p>
 
-<h3 id="defining-module-parameters-with-r-1">Defining module parameters with <code class="highlighter-rouge">R{}</code></h3>
+<h3 id="defining-module-parameters-with-r-1">Defining module parameters with <code class="language-plaintext highlighter-rouge">R{}</code></h3>
 
-<p>A third option for defining module parameters with R code is to use <code class="highlighter-rouge">R{}</code>:</p>
+<p>A third option for defining module parameters with R code is to use <code class="language-plaintext highlighter-rouge">R{}</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">t</span><span class="pi">:</span> <span class="s">R(x &lt;- mu + params[1] * rt(n,df = params[2]))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, </span><span class="m">1000</span>
@@ -1605,9 +1605,9 @@ t.n     2  4 10
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">R{}</code> statement evaluates the code given inside the curly braces, then subdivides the elements of the top-level sequence (vector or list) among multiple settings of the module parameters. In other words, a single <code class="highlighter-rouge">R{}</code> statement defines a <em>set of alternatives.</em> In this example, the R code evaluates to a list with 3 elements, in which each list element is a vector of length 2. Therefore, <code class="highlighter-rouge">params</code> is assigned 3 alternative values, in which each value is a vector of length 2.</p>
+<p>The <code class="language-plaintext highlighter-rouge">R{}</code> statement evaluates the code given inside the curly braces, then subdivides the elements of the top-level sequence (vector or list) among multiple settings of the module parameters. In other words, a single <code class="language-plaintext highlighter-rouge">R{}</code> statement defines a <em>set of alternatives.</em> In this example, the R code evaluates to a list with 3 elements, in which each list element is a vector of length 2. Therefore, <code class="language-plaintext highlighter-rouge">params</code> is assigned 3 alternative values, in which each value is a vector of length 2.</p>
 
-<p>In this particular example, defining the module parameter with <code class="highlighter-rouge">R()</code> or <code class="highlighter-rouge">R{}</code> achieved the same result, and either way the code is equally understandable, so there is no particular advantage of one syntax over the other. The main utility of <code class="highlighter-rouge">R{}</code> is that it is able to succinctly define longer sets of alternative settings. For example, in the random seed example above, creating a module parameter that defines 10 different seeds was rather tedious. The same example using <code class="highlighter-rouge">R{}</code> is</p>
+<p>In this particular example, defining the module parameter with <code class="language-plaintext highlighter-rouge">R()</code> or <code class="language-plaintext highlighter-rouge">R{}</code> achieved the same result, and either way the code is equally understandable, so there is no particular advantage of one syntax over the other. The main utility of <code class="language-plaintext highlighter-rouge">R{}</code> is that it is able to succinctly define longer sets of alternative settings. For example, in the random seed example above, creating a module parameter that defines 10 different seeds was rather tedious. The same example using <code class="language-plaintext highlighter-rouge">R{}</code> is</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">normal</span><span class="pi">:</span> <span class="s">R(set.seed(seed); x &lt;- rnorm(n,mean = mu,sd = 1))</span>
   <span class="s">seed</span><span class="pi">:</span> <span class="s">R{1:10}</span>
@@ -1623,7 +1623,7 @@ t.n     2  4 10
 
 <p>The multiple similar modules defined in a module block can be identified according to the name of the module and the module parameter settings.</p>
 
-<p>The keywords <code class="highlighter-rouge">R()</code> and <code class="highlighter-rouge">R{}</code> are useful for defining more complex-valued module parameters.</p>
+<p>The keywords <code class="language-plaintext highlighter-rouge">R()</code> and <code class="language-plaintext highlighter-rouge">R{}</code> are useful for defining more complex-valued module parameters.</p>
 
 <h2 id="exploring-further">Exploring further</h2>
 

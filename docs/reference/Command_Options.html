@@ -29,9 +29,9 @@
   "headline":
     "Command-line reference",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1059,14 +1059,14 @@ initFunction(initQuery);
             <div class="c-textbook__content">
               <h1 id="command-interface">Command interface</h1>
 
-<p>DSC implements 2 command programs, <code class="highlighter-rouge">dsc</code> and <code class="highlighter-rouge">dsc-query</code>, for executing DSC and extracting result from executed benchmarks, respectively.</p>
+<p>DSC implements 2 command programs, <code class="language-plaintext highlighter-rouge">dsc</code> and <code class="language-plaintext highlighter-rouge">dsc-query</code>, for executing DSC and extracting result from executed benchmarks, respectively.</p>
 
 <h2 id="dsc-main-program">DSC main program</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc <span class="nt">-h</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc [--target str [str ...]] [--truncate] [--replicate N] [-o str]
            [-s option] [--touch] [--clean option] [-c N] [--ignore-errors]
            [-v {0,1,2,3,4}] [-d] [--host file] [--to-host dir [dir ...]]
            [--version] [-h]
@@ -1164,42 +1164,42 @@ Other options:
 
 <ul>
   <li>
-    <p><code class="highlighter-rouge">-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code class="highlighter-rouge">-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc/issues">github issue</a>.</p>
+    <p><code class="language-plaintext highlighter-rouge">-v</code> controls verbosity level. Default level is 2 (recommended), which displays necessary runtime info and uses a progressbar to display DSC progress. This verbosity level is typically good enough to hide trivial information yet report back errors. When these prompts are not sufficient to fix problems, it is very likely you run into a software bug. It would be very helpful if you could reproduce the bug with increased verbosity level (eg <code class="language-plaintext highlighter-rouge">-v4</code>) and post the problem to a <a href="https://github.com/stephenslab/dsc/issues">github issue</a>.</p>
   </li>
-  <li><code class="highlighter-rouge">--target</code>: this option takes multiple input.
+  <li><code class="language-plaintext highlighter-rouge">--target</code>: this option takes multiple input.
     <ul>
       <li>
-        <p>When used without <code class="highlighter-rouge">--clean</code> it overrides <code class="highlighter-rouge">DSC::run</code>, where DSC benchmark is defined. For example, benchmark in DSC file</p>
+        <p>When used without <code class="language-plaintext highlighter-rouge">--clean</code> it overrides <code class="language-plaintext highlighter-rouge">DSC::run</code>, where DSC benchmark is defined. For example, benchmark in DSC file</p>
 
         <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * method * score</span>
 </code></pre></div>        </div>
 
-        <p>can be re-defined with, for example <code class="highlighter-rouge">--target "simulate * method"</code> so that the pipeline <code class="highlighter-rouge">simulate * target</code> will be executed instead. Using this option, one can execute DSC bit by bit to debug, eg, <code class="highlighter-rouge">"simulate"</code>, then <code class="highlighter-rouge">"simulate * method"</code> and finally <code class="highlighter-rouge">"simulate * method * score"</code>.</p>
+        <p>can be re-defined with, for example <code class="language-plaintext highlighter-rouge">--target "simulate * method"</code> so that the pipeline <code class="language-plaintext highlighter-rouge">simulate * target</code> will be executed instead. Using this option, one can execute DSC bit by bit to debug, eg, <code class="language-plaintext highlighter-rouge">"simulate"</code>, then <code class="language-plaintext highlighter-rouge">"simulate * method"</code> and finally <code class="language-plaintext highlighter-rouge">"simulate * method * score"</code>.</p>
       </li>
       <li>
-        <p>When used with <code class="highlighter-rouge">--clean</code> it specifies the module(s) whose output are to be “clean”-ed up (defined by behavior specified in <code class="highlighter-rouge">--clean</code>). Therefore only names of modules are valid input in this context.</p>
+        <p>When used with <code class="language-plaintext highlighter-rouge">--clean</code> it specifies the module(s) whose output are to be “clean”-ed up (defined by behavior specified in <code class="language-plaintext highlighter-rouge">--clean</code>). Therefore only names of modules are valid input in this context.</p>
       </li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">--skip</code>: unlike with <code class="highlighter-rouge">Make</code> / <code class="highlighter-rouge">Snakemake</code> that determines whether or not to re-execute based on time stamps, DSC creates HASH for modules that takes into consideration all input parameter, input and output module variables, and the content of the module script if applicable. When all these information agree with a previous execution it will by default skip those runs. This behavior can be changed by this <code class="highlighter-rouge">--skip</code> option.
+  <li><code class="language-plaintext highlighter-rouge">--skip</code>: unlike with <code class="language-plaintext highlighter-rouge">Make</code> / <code class="language-plaintext highlighter-rouge">Snakemake</code> that determines whether or not to re-execute based on time stamps, DSC creates HASH for modules that takes into consideration all input parameter, input and output module variables, and the content of the module script if applicable. When all these information agree with a previous execution it will by default skip those runs. This behavior can be changed by this <code class="language-plaintext highlighter-rouge">--skip</code> option.
     <ul>
-      <li><code class="highlighter-rouge">--skip none</code> will re-execute everything: it will remove and ignore any existing output files.</li>
-      <li><code class="highlighter-rouge">--skip sloppy</code> will skip modules whose output is newer than input. This is a simple <code class="highlighter-rouge">Make</code> style check. It is “sloppy”, but is a lot faster than checking and saving file signatures. It is recommanded for use when benchmarks are immediately re-executed to recover some failures without having to worry about potential output file corruption or computer clock skew.</li>
-      <li><code class="highlighter-rouge">--skip all</code> will not perform any module computations. It will only construct the execution meta-data and create a DSC database that one can query from. That is, <code class="highlighter-rouge">dsc &lt;script&gt; --skip all</code> followed by <code class="highlighter-rouge">dsc-query &lt;output&gt; -o</code> will help one understand the expected results from specified DSC benchmark. This can also be used as sanity check when benchmark is only partially completed. If you are uncertain about the scale of the benchmark, for example, it is recommanded to run DSC with <code class="highlighter-rouge">--skip all</code> and use <code class="highlighter-rouge">dsc-query &lt;output&gt; -o</code> to view the benchmark structure.</li>
+      <li><code class="language-plaintext highlighter-rouge">--skip none</code> will re-execute everything: it will remove and ignore any existing output files.</li>
+      <li><code class="language-plaintext highlighter-rouge">--skip sloppy</code> will skip modules whose output is newer than input. This is a simple <code class="language-plaintext highlighter-rouge">Make</code> style check. It is “sloppy”, but is a lot faster than checking and saving file signatures. It is recommanded for use when benchmarks are immediately re-executed to recover some failures without having to worry about potential output file corruption or computer clock skew.</li>
+      <li><code class="language-plaintext highlighter-rouge">--skip all</code> will not perform any module computations. It will only construct the execution meta-data and create a DSC database that one can query from. That is, <code class="language-plaintext highlighter-rouge">dsc &lt;script&gt; --skip all</code> followed by <code class="language-plaintext highlighter-rouge">dsc-query &lt;output&gt; -o</code> will help one understand the expected results from specified DSC benchmark. This can also be used as sanity check when benchmark is only partially completed. If you are uncertain about the scale of the benchmark, for example, it is recommanded to run DSC with <code class="language-plaintext highlighter-rouge">--skip all</code> and use <code class="language-plaintext highlighter-rouge">dsc-query &lt;output&gt; -o</code> to view the benchmark structure.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">--clean all</code>, <code class="highlighter-rouge">--clean purge</code>, <code class="highlighter-rouge">--clean purge --target</code> and <code class="highlighter-rouge">--clean replace --target</code>: these options are <em>not</em> meant to delete files generated by modules. They are meant to downsize the benchmark intermediate data without triggering reruns. The first approach is via <code class="highlighter-rouge">--clean purge</code>: in DSC we keep track of script signatures and assign unique output files to each “version” of the script. As a result different versions of output are saved to disk. <code class="highlighter-rouge">--clean purge</code> allows one to remove those obsolete versions when only the latest successful run is meant to be kept. The second approach is <code class="highlighter-rouge">--clean purge --target</code> which remove files, modules or module groups specified by <code class="highlighter-rouge">--target</code>. The third approach is via <code class="highlighter-rouge">--clean replace --target ...</code>, which, instead of removing the output file for given modules, replaces them with a file suffixed by <code class="highlighter-rouge">*.zapped</code>. This will remove output files from specified modules without triggering rerun of benchmark, unless the upstream of these modules have changed. <code class="highlighter-rouge">--clean replace</code> is particularly useful to remove large intermediate module output to save disk space. Finally, <code class="highlighter-rouge">--clean all</code> deletes everything generated by the DSC.</li>
-  <li><code class="highlighter-rouge">-c</code> configures parallel computing. Since DSC is designed to be executed in either local or remote computers, <code class="highlighter-rouge">-c</code> configures the number of CPU threads used on a local computer; or number of threads used to manage jobs such as checking and saving signatures for files on remote computers, when used with <code class="highlighter-rouge">--host</code> option. This number should be specifically configured if one wants to use more (or less) computing power on a desktop. On a remote compute typically no more than 6 processes is enough to handle job scheduling, check and caching.</li>
+  <li><code class="language-plaintext highlighter-rouge">--clean all</code>, <code class="language-plaintext highlighter-rouge">--clean purge</code>, <code class="language-plaintext highlighter-rouge">--clean purge --target</code> and <code class="language-plaintext highlighter-rouge">--clean replace --target</code>: these options are <em>not</em> meant to delete files generated by modules. They are meant to downsize the benchmark intermediate data without triggering reruns. The first approach is via <code class="language-plaintext highlighter-rouge">--clean purge</code>: in DSC we keep track of script signatures and assign unique output files to each “version” of the script. As a result different versions of output are saved to disk. <code class="language-plaintext highlighter-rouge">--clean purge</code> allows one to remove those obsolete versions when only the latest successful run is meant to be kept. The second approach is <code class="language-plaintext highlighter-rouge">--clean purge --target</code> which remove files, modules or module groups specified by <code class="language-plaintext highlighter-rouge">--target</code>. The third approach is via <code class="language-plaintext highlighter-rouge">--clean replace --target ...</code>, which, instead of removing the output file for given modules, replaces them with a file suffixed by <code class="language-plaintext highlighter-rouge">*.zapped</code>. This will remove output files from specified modules without triggering rerun of benchmark, unless the upstream of these modules have changed. <code class="language-plaintext highlighter-rouge">--clean replace</code> is particularly useful to remove large intermediate module output to save disk space. Finally, <code class="language-plaintext highlighter-rouge">--clean all</code> deletes everything generated by the DSC.</li>
+  <li><code class="language-plaintext highlighter-rouge">-c</code> configures parallel computing. Since DSC is designed to be executed in either local or remote computers, <code class="language-plaintext highlighter-rouge">-c</code> configures the number of CPU threads used on a local computer; or number of threads used to manage jobs such as checking and saving signatures for files on remote computers, when used with <code class="language-plaintext highlighter-rouge">--host</code> option. This number should be specifically configured if one wants to use more (or less) computing power on a desktop. On a remote compute typically no more than 6 processes is enough to handle job scheduling, check and caching.</li>
 </ul>
 
 <h2 id="dsc-query-program">DSC query program</h2>
 
-<p>This is a companion program to <code class="highlighter-rouge">dsc</code> that can be used to extract results from benchmark.</p>
+<p>This is a companion program to <code class="language-plaintext highlighter-rouge">dsc</code> that can be used to extract results from benchmark.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc-query <span class="nt">-h</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: dsc-query [-h] [--version] -o str [--limit N] [--title str]
                  [--description str [str ...]] [-t WHAT [WHAT ...]]
                  [-c WHERE [WHERE ...]] [-g G:A,B [G:A,B ...]]
                  [--language str] [--addon str [str ...]]
@@ -1253,24 +1253,24 @@ optional arguments:
 
 <h3 id="to-query-result">To query result</h3>
 
-<p>The main goal of <code class="highlighter-rouge">dsc-query</code> is to extract results from benchmark given conditions. Although <code class="highlighter-rouge">dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it – the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
+<p>The main goal of <code class="language-plaintext highlighter-rouge">dsc-query</code> is to extract results from benchmark given conditions. Although <code class="language-plaintext highlighter-rouge">dsc-query</code> works as is, we are extending it to meet language specific demands by creating separate software packages that wraps this command and enhances it – the approach differs from language to language and will be documented in language specific manner. Therefore we will not provide in-depth documentation to this program.</p>
 
 <p>Currently supported languages specific libraries are:</p>
 
 <ul>
-  <li>R: <code class="highlighter-rouge">dscquery()</code> function for <a href="https://github.com/stephenslab/dsc/tree/master/dscrutils"><code class="highlighter-rouge">dscrutils</code> package</a>.</li>
+  <li>R: <code class="language-plaintext highlighter-rouge">dscquery()</code> function for <a href="https://github.com/stephenslab/dsc/tree/master/dscrutils"><code class="language-plaintext highlighter-rouge">dscrutils</code> package</a>.</li>
 </ul>
 
 <h3 id="to-dump-single-file-from-dsc-benchmark-to-text">To dump single file from DSC benchmark to text</h3>
 
-<p><code class="highlighter-rouge">dsc-query</code> can also be used to convert to text file single benchmark output file in <code class="highlighter-rouge">rds</code> or <code class="highlighter-rouge">pkl</code> format, along with a scripts to reproduce the result. For example:</p>
+<p><code class="language-plaintext highlighter-rouge">dsc-query</code> can also be used to convert to text file single benchmark output file in <code class="language-plaintext highlighter-rouge">rds</code> or <code class="language-plaintext highlighter-rouge">pkl</code> format, along with a scripts to reproduce the result. For example:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc-query dsc_result/simulate/data_1.pkl <span class="nt">-o</span> data.out
 INFO: Loading database ...
 INFO: Data dumped to text files data.out and data.out.script.
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">*.out</code> file contains data in plain text, and <code class="highlighter-rouge">*.script</code> contains the script that generated the data as well as the time elapsed executing the script.</p>
+<p><code class="language-plaintext highlighter-rouge">*.out</code> file contains data in plain text, and <code class="language-plaintext highlighter-rouge">*.script</code> contains the script that generated the data as well as the time elapsed executing the script.</p>
 
               <nav class="c-page__nav">
   

@@ -29,9 +29,9 @@
   "headline":
     "Running DSC",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1059,21 +1059,21 @@ initFunction(initQuery);
             <div class="c-textbook__content">
               <h1 id="dsc-syntax-basics-of-benchmark-execution">DSC syntax: basics of benchmark execution</h1>
 
-<p>This document is continuation of discussion in <a href="DSC_Configuration">DSC syntax: basics of modules</a>. We will use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/first_investigation.dsc">this toy</a>) to introduce a special syntax block called <code class="highlighter-rouge">DSC</code> that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword <code class="highlighter-rouge">DSC</code> and is required for all DSC scripts. In this document we refer to its contents by <code class="highlighter-rouge">DSC::&lt;key&gt;</code> where <code class="highlighter-rouge">&lt;key&gt;</code> is the identifier on the left side of <code class="highlighter-rouge">:</code> in each line of the <code class="highlighter-rouge">DSC</code> block.</p>
+<p>This document is continuation of discussion in <a href="DSC_Configuration">DSC syntax: basics of modules</a>. We will use toy DSC examples (including breaking down <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/first_investigation.dsc">this toy</a>) to introduce a special syntax block called <code class="language-plaintext highlighter-rouge">DSC</code> that defines module ensembles, pipelines and DSC benchmark, as well as execution environment. This block has a reserved property keyword <code class="language-plaintext highlighter-rouge">DSC</code> and is required for all DSC scripts. In this document we refer to its contents by <code class="language-plaintext highlighter-rouge">DSC::&lt;key&gt;</code> where <code class="language-plaintext highlighter-rouge">&lt;key&gt;</code> is the identifier on the left side of <code class="language-plaintext highlighter-rouge">:</code> in each line of the <code class="language-plaintext highlighter-rouge">DSC</code> block.</p>
 
 <h2 id="benchmark-logic-operators">Benchmark logic operators</h2>
 
-<p>In building a DSC benchmark, two logic are involved: “alternating” modules, or <em>module ensemble</em>, refers to groups of modules that achieve the same goal (able to take similar input and provide the same type of output) as if they are exchangable; “concatenating” modules, or <em>pipelines</em> refers to sequences of modules that executes one after another as if concatenated into a chain of actions. These logic are implemented via <code class="highlighter-rouge">*</code>, <code class="highlighter-rouge">,</code> and <code class="highlighter-rouge">()</code> operators:</p>
+<p>In building a DSC benchmark, two logic are involved: “alternating” modules, or <em>module ensemble</em>, refers to groups of modules that achieve the same goal (able to take similar input and provide the same type of output) as if they are exchangable; “concatenating” modules, or <em>pipelines</em> refers to sequences of modules that executes one after another as if concatenated into a chain of actions. These logic are implemented via <code class="language-plaintext highlighter-rouge">*</code>, <code class="language-plaintext highlighter-rouge">,</code> and <code class="language-plaintext highlighter-rouge">()</code> operators:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">*</code>: connects concatenating modules, ie, right hand side (RHS) is executed after the left hand side (LHS).</li>
-  <li><code class="highlighter-rouge">,</code>: connects alternating modules, ie, RHS and LHS are exchangable.</li>
-  <li><code class="highlighter-rouge">()</code>: when alternating modules and concatenating modules are combined, it is used to re-define operator precedence. By default <code class="highlighter-rouge">*</code> has higher precedence than <code class="highlighter-rouge">,</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">*</code>: connects concatenating modules, ie, right hand side (RHS) is executed after the left hand side (LHS).</li>
+  <li><code class="language-plaintext highlighter-rouge">,</code>: connects alternating modules, ie, RHS and LHS are exchangable.</li>
+  <li><code class="language-plaintext highlighter-rouge">()</code>: when alternating modules and concatenating modules are combined, it is used to re-define operator precedence. By default <code class="language-plaintext highlighter-rouge">*</code> has higher precedence than <code class="language-plaintext highlighter-rouge">,</code>.</li>
 </ul>
 
 <h2 id="module-ensembles-and-pipelines">Module ensembles and pipelines</h2>
 
-<p><code class="highlighter-rouge">DSC::define</code> defines module ensembles and pipelines, that is, groups of “alternating” or sequences of “concatenating” modules / ensembles. For example:</p>
+<p><code class="language-plaintext highlighter-rouge">DSC::define</code> defines module ensembles and pipelines, that is, groups of “alternating” or sequences of “concatenating” modules / ensembles. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">normal, t</span><span class="pi">:</span> <span class="s">rnorm.R, rt.R</span>
     <span class="s">...</span>
@@ -1086,9 +1086,9 @@ initFunction(initQuery);
       <span class="na">estimate</span><span class="pi">:</span> <span class="s">mean, median</span>
 </code></pre></div></div>
 
-<p>Here 2 ensembles are defined: <code class="highlighter-rouge">simulate</code>, of alternating modules <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code> for data generation, and <code class="highlighter-rouge">estimate</code>, of alternating modules <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">median</code> for parameter estimation.</p>
+<p>Here 2 ensembles are defined: <code class="language-plaintext highlighter-rouge">simulate</code>, of alternating modules <code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">t</code> for data generation, and <code class="language-plaintext highlighter-rouge">estimate</code>, of alternating modules <code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">median</code> for parameter estimation.</p>
 
-<p>To illustrate pipelines and pipeline ensemble we can add an additional <code class="highlighter-rouge">winsorize</code> module to <code class="highlighter-rouge">estimate</code>, creating a pipeline ensemble called <code class="highlighter-rouge">winsorized_estimate</code>:</p>
+<p>To illustrate pipelines and pipeline ensemble we can add an additional <code class="language-plaintext highlighter-rouge">winsorize</code> module to <code class="language-plaintext highlighter-rouge">estimate</code>, creating a pipeline ensemble called <code class="language-plaintext highlighter-rouge">winsorized_estimate</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
     <span class="na">define</span><span class="pi">:</span>
@@ -1096,17 +1096,17 @@ initFunction(initQuery);
       <span class="na">winsorized_estimate</span><span class="pi">:</span> <span class="s">winsorize * (mean, median)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">winsorized_estimate</code> pipeline ensemble contains 2 pipelines <code class="highlighter-rouge">winsorize * mean</code> and <code class="highlighter-rouge">winsorize * median</code>. They are not <em>full pipeline</em> because they depend on input from <code class="highlighter-rouge">simulate</code>. DSC benchmark <code class="highlighter-rouge">DSC::run</code> will require one or multiple full pipelines – see below for detailed discussions.</p>
+<p><code class="language-plaintext highlighter-rouge">winsorized_estimate</code> pipeline ensemble contains 2 pipelines <code class="language-plaintext highlighter-rouge">winsorize * mean</code> and <code class="language-plaintext highlighter-rouge">winsorize * median</code>. They are not <em>full pipeline</em> because they depend on input from <code class="language-plaintext highlighter-rouge">simulate</code>. DSC benchmark <code class="language-plaintext highlighter-rouge">DSC::run</code> will require one or multiple full pipelines – see below for detailed discussions.</p>
 
 <h2 id="dsc-benchmark">DSC benchmark</h2>
 
-<p>DSC benchmark, defined by <code class="highlighter-rouge">DSC::run</code>, is one or multiple complete pipelines. We will use a series of examples to illustrate how benchmarks are created.</p>
+<p>DSC benchmark, defined by <code class="language-plaintext highlighter-rouge">DSC::run</code>, is one or multiple complete pipelines. We will use a series of examples to illustrate how benchmarks are created.</p>
 
 <h4 id="example-1-styles-of-pipeline-speicification">Example 1: styles of pipeline speicification</h4>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span> <span class="s">simulate * estimate * score</span>
 </code></pre></div></div>
 
-<p>Here <code class="highlighter-rouge">simulate</code> and <code class="highlighter-rouge">estimate</code> are module ensembles (see <code class="highlighter-rouge">DSC::define</code> of previous section). This is equivalent to writing:</p>
+<p>Here <code class="language-plaintext highlighter-rouge">simulate</code> and <code class="language-plaintext highlighter-rouge">estimate</code> are module ensembles (see <code class="language-plaintext highlighter-rouge">DSC::define</code> of previous section). This is equivalent to writing:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span> <span class="s">(normal, t) * (mean, median) * score</span>    
 </code></pre></div></div>
@@ -1115,7 +1115,7 @@ initFunction(initQuery);
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span> <span class="s">simulate * (winsorize * mean, mean) * score</span>
 </code></pre></div></div>
-<p>Here <code class="highlighter-rouge">simulate</code> is a module ensemble, <code class="highlighter-rouge">(winsorize * mean, mean)</code> is a pipeline ensemble and <code class="highlighter-rouge">score</code> is a module. DSC will run 2 flavors of pipelines: 1) that involves <code class="highlighter-rouge">winsorize</code> followed by <code class="highlighter-rouge">mean</code>, and 2) <code class="highlighter-rouge">mean</code> only.</p>
+<p>Here <code class="language-plaintext highlighter-rouge">simulate</code> is a module ensemble, <code class="language-plaintext highlighter-rouge">(winsorize * mean, mean)</code> is a pipeline ensemble and <code class="language-plaintext highlighter-rouge">score</code> is a module. DSC will run 2 flavors of pipelines: 1) that involves <code class="language-plaintext highlighter-rouge">winsorize</code> followed by <code class="language-plaintext highlighter-rouge">mean</code>, and 2) <code class="language-plaintext highlighter-rouge">mean</code> only.</p>
 
 <h4 id="example-3-expansion-of-pipeline-operators">Example 3: expansion of pipeline operators</h4>
 
@@ -1153,22 +1153,22 @@ initFunction(initQuery);
    <span class="na">pipeline_2</span><span class="pi">:</span> <span class="s">simulate * sqrt * SVA * DESeq * score</span>
 </code></pre></div></div>
 
-<p>Here <code class="highlighter-rouge">pipeline_1</code> and <code class="highlighter-rouge">pipeline_2</code> are the names of pipelines in benchmark. They are only relevant for command executions (see section below). When pipeline named <code class="highlighter-rouge">default</code> is found, eg,</p>
+<p>Here <code class="language-plaintext highlighter-rouge">pipeline_1</code> and <code class="language-plaintext highlighter-rouge">pipeline_2</code> are the names of pipelines in benchmark. They are only relevant for command executions (see section below). When pipeline named <code class="language-plaintext highlighter-rouge">default</code> is found, eg,</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>run:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>run:
    default: ...
    other_names: ...
 </code></pre></div></div>
 
-<p>then executing the script without additional parameters will only execute the <code class="highlighter-rouge">default</code> pipeline. Otherwise, all pipelines will be executed just like the case of unnamed pipelines by default.</p>
+<p>then executing the script without additional parameters will only execute the <code class="language-plaintext highlighter-rouge">default</code> pipeline. Otherwise, all pipelines will be executed just like the case of unnamed pipelines by default.</p>
 
 <h2 id="command-interface-to-dsc-benchmark">Command interface to DSC benchmark</h2>
 
-<p>By default, DSC will execute all pipelines defined in <code class="highlighter-rouge">DSC::run</code>. But one can override pipelines from <a href="Command_Options">command line</a>. For example to execute the complete <code class="highlighter-rouge">Example 1</code></p>
+<p>By default, DSC will execute all pipelines defined in <code class="language-plaintext highlighter-rouge">DSC::run</code>. But one can override pipelines from <a href="Command_Options">command line</a>. For example to execute the complete <code class="language-plaintext highlighter-rouge">Example 1</code></p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> <span class="s2">"simulate * estimate * score"</span>
 </code></pre></div></div>
-<p>or a subset of <code class="highlighter-rouge">Example 1</code>:</p>
+<p>or a subset of <code class="language-plaintext highlighter-rouge">Example 1</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * estimate * score"</span>
 </code></pre></div></div>
@@ -1186,30 +1186,30 @@ dsc file.dsc <span class="nt">--target</span> simulate
 
 <h2 id="benchmark-parameters">Benchmark parameters</h2>
 
-<p>These parameters are specified in the rest of <code class="highlighter-rouge">DSC</code> block:</p>
+<p>These parameters are specified in the rest of <code class="language-plaintext highlighter-rouge">DSC</code> block:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">exec_path</code>: search path (or paths) for executable files</li>
-  <li><code class="highlighter-rouge">lib_path</code>: search path (or paths) for library files, such as R script to be <code class="highlighter-rouge">source</code>-ed or Python scripts to be <code class="highlighter-rouge">import</code>-ed from</li>
-  <li><code class="highlighter-rouge">R_libs</code>: check required R libraries and if not available, automatically install them from cran, bioconductor or github. 3 formats are accepted:</li>
-  <li><code class="highlighter-rouge">&lt;package&gt;</code>: DSC will check / install <code class="highlighter-rouge">package</code> from cran or bioconductor.</li>
-  <li><code class="highlighter-rouge">&lt;package@github_repo/subdir&gt;</code>: DSC will install <code class="highlighter-rouge">package</code> from <code class="highlighter-rouge">github_repo</code> on github. <code class="highlighter-rouge">/subdir</code> is optional – only applicable when the package is not in the root of the repository. eg <code class="highlighter-rouge">ashr@stephenslab/ashr</code>, <code class="highlighter-rouge">varbvs@pcarbo/varbvs/varbvs-r</code>.</li>
-  <li><code class="highlighter-rouge">&lt;package (version[s])&gt;</code>: DSC will install <code class="highlighter-rouge">package</code> and check version as required. A warning message will be generated if version do not match after force installation to the latest. It is possible to specify several versions such as <code class="highlighter-rouge">edgeR (3.12.0, 3.12.1)</code> or simply <code class="highlighter-rouge">edgeR (3.12.0+)</code>.</li>
-  <li><code class="highlighter-rouge">python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
-  <li><code class="highlighter-rouge">work_dir</code>: work directory where benchmarking will take place.</li>
-  <li><code class="highlighter-rouge">output</code>: folder name to store benchmark output files.</li>
-  <li><code class="highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="Unsupported_Features#wildcard-operators">variable wildcard</a> <code class="highlighter-rouge">$()</code>.</li>
-  <li><code class="highlighter-rouge">replicate</code>: number of replicate to run the benchmark (default is 1).</li>
+  <li><code class="language-plaintext highlighter-rouge">exec_path</code>: search path (or paths) for executable files</li>
+  <li><code class="language-plaintext highlighter-rouge">lib_path</code>: search path (or paths) for library files, such as R script to be <code class="language-plaintext highlighter-rouge">source</code>-ed or Python scripts to be <code class="language-plaintext highlighter-rouge">import</code>-ed from</li>
+  <li><code class="language-plaintext highlighter-rouge">R_libs</code>: check required R libraries and if not available, automatically install them from cran, bioconductor or github. 3 formats are accepted:</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;package&gt;</code>: DSC will check / install <code class="language-plaintext highlighter-rouge">package</code> from cran or bioconductor.</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;package@github_repo/subdir&gt;</code>: DSC will install <code class="language-plaintext highlighter-rouge">package</code> from <code class="language-plaintext highlighter-rouge">github_repo</code> on github. <code class="language-plaintext highlighter-rouge">/subdir</code> is optional – only applicable when the package is not in the root of the repository. eg <code class="language-plaintext highlighter-rouge">ashr@stephenslab/ashr</code>, <code class="language-plaintext highlighter-rouge">varbvs@pcarbo/varbvs/varbvs-r</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;package (version[s])&gt;</code>: DSC will install <code class="language-plaintext highlighter-rouge">package</code> and check version as required. A warning message will be generated if version do not match after force installation to the latest. It is possible to specify several versions such as <code class="language-plaintext highlighter-rouge">edgeR (3.12.0, 3.12.1)</code> or simply <code class="language-plaintext highlighter-rouge">edgeR (3.12.0+)</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
+  <li><code class="language-plaintext highlighter-rouge">work_dir</code>: work directory where benchmarking will take place.</li>
+  <li><code class="language-plaintext highlighter-rouge">output</code>: folder name to store benchmark output files.</li>
+  <li><code class="language-plaintext highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="Unsupported_Features#wildcard-operators">variable wildcard</a> <code class="language-plaintext highlighter-rouge">$()</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">replicate</code>: number of replicate to run the benchmark (default is 1).</li>
 </ul>
 
-<h3 id="override-runtime-options-in-modules-with-conf">Override runtime options in modules with <code class="highlighter-rouge">@CONF</code></h3>
+<h3 id="override-runtime-options-in-modules-with-conf">Override runtime options in modules with <code class="language-plaintext highlighter-rouge">@CONF</code></h3>
 <p>Among these DSC runtime options, the following can be customized on per-module basis:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">exec_path</code>, <code class="highlighter-rouge">lib_path</code>, <code class="highlighter-rouge">work_dir</code>, <code class="highlighter-rouge">R_libs</code>, <code class="highlighter-rouge">python_modules</code></li>
+  <li><code class="language-plaintext highlighter-rouge">exec_path</code>, <code class="language-plaintext highlighter-rouge">lib_path</code>, <code class="language-plaintext highlighter-rouge">work_dir</code>, <code class="language-plaintext highlighter-rouge">R_libs</code>, <code class="language-plaintext highlighter-rouge">python_modules</code></li>
 </ul>
 
-<p>The syntax is similar to that of <code class="highlighter-rouge">@ALIAS</code>. That is, values are assigned by <code class="highlighter-rouge">=</code>:</p>
+<p>The syntax is similar to that of <code class="language-plaintext highlighter-rouge">@ALIAS</code>. That is, values are assigned by <code class="language-plaintext highlighter-rouge">=</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate</span><span class="pi">:</span> <span class="s">simulate.R</span>
     <span class="s">...</span>
@@ -1232,11 +1232,11 @@ dsc file.dsc <span class="nt">--target</span> simulate
     <span class="s">@CONF</span><span class="pi">:</span> <span class="s">lib_path = (simulate_lib, main_lib), R_libs = (ashr@stephenslab/ashr 2.2.7+, mashr 0.2.6+)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">@CONF</code> is designed not only to “fine-tune” the runtime environment of a module, but, as a “decorator”, will change behavior of a module’s execution. Specifically:</p>
+<p><code class="language-plaintext highlighter-rouge">@CONF</code> is designed not only to “fine-tune” the runtime environment of a module, but, as a “decorator”, will change behavior of a module’s execution. Specifically:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">lib_path</code> when specified under <code class="highlighter-rouge">@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code class="highlighter-rouge">R</code> or <code class="highlighter-rouge">Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
-  <li><code class="highlighter-rouge">R_libs</code> when specified under <code class="highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>.</li>
+  <li><code class="language-plaintext highlighter-rouge">lib_path</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code class="language-plaintext highlighter-rouge">R</code> or <code class="language-plaintext highlighter-rouge">Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
+  <li><code class="language-plaintext highlighter-rouge">R_libs</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="language-plaintext highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="language-plaintext highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>.</li>
 </ul>
 
 <h2 id="run-dsc-on-hpc-cluster-or-other-remote-computaters">Run DSC on HPC cluster or other remote computaters</h2>

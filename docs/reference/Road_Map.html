@@ -29,9 +29,9 @@
   "headline":
     "Development roadmap",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1063,7 +1063,7 @@ initFunction(initQuery);
 
 <h3 id="module-names">Module names</h3>
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />module name cannot start with <code class="highlighter-rouge">pipeline_</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />module name cannot start with <code class="language-plaintext highlighter-rouge">pipeline_</code></li>
   <li class="task-list-item">[?] module names have to be SQL friendly</li>
   <li class="task-list-item">[!] modules that are identical in every way except names</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />module names match number of executables</li>
@@ -1075,31 +1075,31 @@ initFunction(initQuery);
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />More tests to @ALIAS</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />More tests to @CONF</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Module inherit omitting exec</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />No multiple module input <code class="highlighter-rouge">$x</code>, <code class="highlighter-rouge">$y</code> or any mixture of them with module parameters</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />No multiple module input <code class="language-plaintext highlighter-rouge">$x</code>, <code class="language-plaintext highlighter-rouge">$y</code> or any mixture of them with module parameters</li>
   <li class="task-list-item">[!] All module output in the same block should have same name (a required good practice)</li>
-  <li class="task-list-item">[] <code class="highlighter-rouge">DSC::run</code> we support only <code class="highlighter-rouge">()</code> <code class="highlighter-rouge">*</code> and  <code class="highlighter-rouge">,</code></li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Module names / parameters cannot start / end with <code class="highlighter-rouge">_</code> and cannot have <code class="highlighter-rouge">.</code> in them</li>
+  <li class="task-list-item">[] <code class="language-plaintext highlighter-rouge">DSC::run</code> we support only <code class="language-plaintext highlighter-rouge">()</code> <code class="language-plaintext highlighter-rouge">*</code> and  <code class="language-plaintext highlighter-rouge">,</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Module names / parameters cannot start / end with <code class="language-plaintext highlighter-rouge">_</code> and cannot have <code class="language-plaintext highlighter-rouge">.</code> in them</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Duplicate module / parameter names</li>
   <li class="task-list-item">[] Different length of params in different exec. e.g. mybeta = 1,2,3 vs. mybeta = (4,5,6) will lead to file lock fail.</li>
-  <li class="task-list-item">[] Strings ending with <code class="highlighter-rouge">,</code> intentionally</li>
+  <li class="task-list-item">[] Strings ending with <code class="language-plaintext highlighter-rouge">,</code> intentionally</li>
   <li class="task-list-item">[] Check if @ALIAS is of the right type (is a number or str?)</li>
   <li class="task-list-item">[] Check if all parameter names are of the right type</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">@FILTER</code> cannot have pipeline variables <code class="highlighter-rouge">$</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="language-plaintext highlighter-rouge">@FILTER</code> cannot have pipeline variables <code class="language-plaintext highlighter-rouge">$</code></li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Packages installed from github also has version option</li>
 </ul>
 
 <h3 id="execution">Execution</h3>
 <ul class="task-list">
   <li>[] Identical tasks will result in complaint. check for identical jobs ie same parameter twice</li>
-  <li>[] Both in <code class="highlighter-rouge">DSC::run</code> and in <code class="highlighter-rouge">--target</code>: what if the first module has upstream dependency? Should catch and report an error.</li>
-  <li>[] Unsupported keywords in <code class="highlighter-rouge">DSC</code> block</li>
+  <li>[] Both in <code class="language-plaintext highlighter-rouge">DSC::run</code> and in <code class="language-plaintext highlighter-rouge">--target</code>: what if the first module has upstream dependency? Should catch and report an error.</li>
+  <li>[] Unsupported keywords in <code class="language-plaintext highlighter-rouge">DSC</code> block</li>
   <li>[] Bad pipeline logic specification (resulting in failure as said in #22 )</li>
   <li>[] Looped steps. Actually this should be a feature when desired …</li>
   <li>[] Downstream pipeline did not use any of upstream variables</li>
   <li>[] All modules are valid (defined)</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Find some Rmd source code and test if they work as executables
     <ul>
-      <li><code class="highlighter-rouge">mashr</code> intro works</li>
+      <li><code class="language-plaintext highlighter-rouge">mashr</code> intro works</li>
     </ul>
   </li>
 </ul>
@@ -1132,34 +1132,34 @@ initFunction(initQuery);
       <li>Explain how DSC signature works</li>
     </ul>
   </li>
-  <li class="task-list-item">[] Add a documentation page on remote execution, and a tutorial for it (<code class="highlighter-rouge">ash</code> example)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Add a doucmentation for <code class="highlighter-rouge">dscrutils</code>, and a tutorial on data extraction using <code class="highlighter-rouge">one_sample_location</code> example; and update <code class="highlighter-rouge">ash</code> example to include result exploration</li>
+  <li class="task-list-item">[] Add a documentation page on remote execution, and a tutorial for it (<code class="language-plaintext highlighter-rouge">ash</code> example)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Add a doucmentation for <code class="language-plaintext highlighter-rouge">dscrutils</code>, and a tutorial on data extraction using <code class="language-plaintext highlighter-rouge">one_sample_location</code> example; and update <code class="language-plaintext highlighter-rouge">ash</code> example to include result exploration</li>
 </ul>
 
 <h2 id="engineering">Engineering</h2>
 
 <ul>
   <li>[] Use HDF5 to replace msgpack and reimplement IO_DB to only load the chunk necessary.</li>
-  <li>[] Optimize <code class="highlighter-rouge">build_result_db</code> and <code class="highlighter-rouge">build_io_db</code> via line profiler.</li>
+  <li>[] Optimize <code class="language-plaintext highlighter-rouge">build_result_db</code> and <code class="language-plaintext highlighter-rouge">build_io_db</code> via line profiler.</li>
 </ul>
 
 <h2 id="small-features">Small features</h2>
 <ul class="task-list">
-  <li>[!] Add exec <code class="highlighter-rouge">depend</code> property to track source files</li>
+  <li>[!] Add exec <code class="language-plaintext highlighter-rouge">depend</code> property to track source files</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Create a switch / or –debug switch to generate mock run file</li>
   <li class="task-list-item">[!] Pipeline seed batch has to be used / tested; based on total number of jobs distribute it smartly.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Remove old Rlib info files</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Fix github R package arbitary paths</li>
   <li class="task-list-item">[!] Add tags for queries</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support <code class="highlighter-rouge">(N,P):(100,1000)</code></li>
-  <li class="task-list-item">[!] Unsupport nested tuples <code class="highlighter-rouge">((100,200),(300,400)), ((9,8))</code> – i actually have attempted to handle this in R</li>
-  <li class="task-list-item">[!] Properly handle grouped input eg <code class="highlighter-rouge">g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P) – no need. just query with <code class="highlighter-rouge">"(N,P)"</code> as a string, otherwise users should use paired parameter.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">file()</code> / <code class="highlighter-rouge">file(ext)</code> behavior is reversed … need to fix</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Replace eg <code class="highlighter-rouge">simulate_n</code> with <code class="highlighter-rouge">simulate:n</code> in the column names</li>
-  <li class="task-list-item">[] Reimplement the underlying <code class="highlighter-rouge">args</code> and <code class="highlighter-rouge">sys.argv</code> for plugins – make them more general</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support <code class="highlighter-rouge">Rmd</code> file as executable</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support <code class="language-plaintext highlighter-rouge">(N,P):(100,1000)</code></li>
+  <li class="task-list-item">[!] Unsupport nested tuples <code class="language-plaintext highlighter-rouge">((100,200),(300,400)), ((9,8))</code> – i actually have attempted to handle this in R</li>
+  <li class="task-list-item">[!] Properly handle grouped input eg <code class="language-plaintext highlighter-rouge">g: (N,P)</code> (then in the table has to have 2 columns g_N and g_P) – no need. just query with <code class="language-plaintext highlighter-rouge">"(N,P)"</code> as a string, otherwise users should use paired parameter.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="language-plaintext highlighter-rouge">file()</code> / <code class="language-plaintext highlighter-rouge">file(ext)</code> behavior is reversed … need to fix</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Replace eg <code class="language-plaintext highlighter-rouge">simulate_n</code> with <code class="language-plaintext highlighter-rouge">simulate:n</code> in the column names</li>
+  <li class="task-list-item">[] Reimplement the underlying <code class="language-plaintext highlighter-rouge">args</code> and <code class="language-plaintext highlighter-rouge">sys.argv</code> for plugins – make them more general</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support <code class="language-plaintext highlighter-rouge">Rmd</code> file as executable</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Rmd file chunk name</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Make operator <code class="highlighter-rouge">Python()</code> smarter, along the lines of <code class="highlighter-rouge">R()</code> operator</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Make operator <code class="language-plaintext highlighter-rouge">Python()</code> smarter, along the lines of <code class="language-plaintext highlighter-rouge">R()</code> operator</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />#98</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />#99</li>
 </ul>
@@ -1170,15 +1170,15 @@ initFunction(initQuery);
 
 <h3 id="enhanced-interface-syntax">Enhanced interface syntax</h3>
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">inline</code> executables</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="language-plaintext highlighter-rouge">inline</code> executables</li>
 </ul>
 
 <h3 id="r-interface">R interface</h3>
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Make operator <code class="highlighter-rouge">R()</code> smarter: basically make a <code class="highlighter-rouge">dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Make operator <code class="language-plaintext highlighter-rouge">R()</code> smarter: basically make a <code class="language-plaintext highlighter-rouge">dscrutils::run_r()</code> function that runs input string as R code and format result as a comma separated string. Raise an error if it fails to format.</li>
   <li class="task-list-item">[!] <strong>New data exchange format in HDF5</strong>
     <ul class="task-list">
-      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Might stick to <code class="highlighter-rouge">rpy2</code> until we need to support Matlab</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Might stick to <code class="language-plaintext highlighter-rouge">rpy2</code> until we need to support Matlab</li>
     </ul>
   </li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />New data extraction interface / basic data exploration features in R</li>
@@ -1194,13 +1194,13 @@ initFunction(initQuery);
 <ul>
   <li>[] Multiple output files</li>
   <li>[] Executable command options
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  `exec` specifies the names of executable computational routines as well as their command line arguments if applicable. For example an `exec` entry reads:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  `exec` specifies the names of executable computational routines as well as their command line arguments if applicable. For example an `exec` entry reads:
 
    exec: datamaker.R, ms $nsam $nreps -t $theta -seed $seed
 </code></pre></div>    </div>
   </li>
   <li>[] index slicing
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Index for parameters, for example `exec: makeped.py $data $output[1]` where `output` parameter takes the form of `output: (1.ped, 1.map), (2.ped, 2.map)`. In this case `output[1]` will only use the first value of each parameter group.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Index for parameters, for example `exec: makeped.py $data $output[1]` where `output` parameter takes the form of `output: (1.ped, 1.map), (2.ped, 2.map)`. In this case `output[1]` will only use the first value of each parameter group.
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -1216,9 +1216,9 @@ initFunction(initQuery);
 
 <h3 id="large-scale-computations">Large scale computations</h3>
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">--host</code> option
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="language-plaintext highlighter-rouge">--host</code> option
     <ul>
-      <li>To check: <code class="highlighter-rouge">scp</code>, <code class="highlighter-rouge">ssh</code> commands are available</li>
+      <li>To check: <code class="language-plaintext highlighter-rouge">scp</code>, <code class="language-plaintext highlighter-rouge">ssh</code> commands are available</li>
       <li>To sync by DSC:
         <ul>
           <li>the output folder</li>
@@ -1227,8 +1227,8 @@ initFunction(initQuery);
       </li>
     </ul>
   </li>
-  <li class="task-list-item">[!] CONF <code class="highlighter-rouge">merge</code> feature:
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> `inline`: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply `runif(500000)` it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.
+  <li class="task-list-item">[!] CONF <code class="language-plaintext highlighter-rouge">merge</code> feature:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> `inline`: True or False, of whether or not an R script is executed inline with the next procedure instead of producing return files. This feature is useful when the cost of computation for a procedure is trivial compared to the cost of storing its output. For example if a simulation procedure is simply `runif(500000)` it makes more sense to save this line of code and execute it inline with the next step, rather than to save a vector of 500,000 random numbers to disk.
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -1238,7 +1238,7 @@ initFunction(initQuery);
 <p>SoS issues that needs to be fixed:</p>
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Build mode not working</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">stderr</code> should remove empty files</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="language-plaintext highlighter-rouge">stderr</code> should remove empty files</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Hang on dead-lock</li>
 </ul>
 

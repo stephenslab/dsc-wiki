@@ -37,44 +37,14 @@ Now we are ready to submit the DSC to run on computer cluster.
  
 ## Overview of running remote jobs
 
-DSC uses an additional configuration file and two command options
-(`--host` and `--to-host`) to run on a remote system.
-
-DSC facilicates two approaches to running remote tasks:
-
-1. "On Host": Log in to the remote computing system ("the host"), and
-run DSC with `--host` argument. When configured properly, DSC will
-automatically submit jobs to the job scheduling system on the host.
-
-2. "Local Host": Run DSC from local computer with
-additional folders to be synced to the host specified by `--to-host`
-option. The local computer will serve as the job dispatcher and job
-monitor. This provides a way to run on hosts whose headnode cannot
-execute long running `dsc` process and/or whose compute nodes cannot be
-used to submit jobs.
+DSC uses `--host` option to specify a configuration file 
+for setting up computing environments, including HPC cluster.
+With proper configurations DSC will automatically submit 
+to the job scheduling system on the HPC to run benchmark.
 
 Under the hood, DSC configures all modules and converts them to
 [`SoS`][sos-docs] tasks. Interested readers may refer to
 [this page][sos-docs-remote-exec] for implementation details.
-
-*Note to RCC users at the University of Chicago:* It is recommended to
-use the "On Host" mode.
-
-## Job configuration template and command options
-
-Using a template and in combination with the command options, DSC
-allows users to configure job submission and the resource requirements
-for the jobs.
-
-Using command options, users can:
-
-1. Submit the entire benchmark.
-
-2. Automatically upload required files to the host for benchmarking
-(when `--to-host` is used).
-
-Users can also use SoS utility tools to manage jobs. See below for a
-brief discussion of a few SoS utility commands with examples.
 
 ## Basic configuration example
 
@@ -83,19 +53,18 @@ specifies a *template* for remote jobs. We begin with an example
 illustrating the essential elements of a
 configuration file. This example was configured for the
 high-performance compute cluster run out of the University of Chicago
-("midway2"), so we have called this file "midway2.yml". To use this
+("midway"), so we have called this file "midway.yml". To use this
 configuration file to run your benchmark (called "mybenchmark.dsc"),
 you would log in to the remote computing system, and run the following
-command: `dsc mybenchmark.dsc --host midway2.yml`.
+command: `dsc mybenchmark.dsc --host midway.yml`.
 
 ```yaml
 DSC:
   midway2:
-    address: localhost
     queue_type: pbs
     status_check_interval: 120
     max_running_jobs: 10
-    job_template: |
+    task_template: |
       #!/bin/bash
       #SBATCH --time=6:00:00
       #SBATCH --partition=broadwl
@@ -123,7 +92,7 @@ Let's walk through this configuration file step-by-step:
   any one time. Again, it is important not to set this to be too large
   on a system that is shared with other users.
 
-+ The `job_template` entry gives the initial steps that are run to set
++ The `task_template` entry gives the initial steps that are run to set
   up the computing environment for computation in DSC. In this case,
   this is a basic bash script with additional instructions for the
   [Slurm][slurm] job scheduler. The amount of memory and the time
@@ -144,22 +113,19 @@ management software (e.g., TORQUE) can be configured similarly.
 ## More advanced configuration example
 
 Here we provide a more advanced template for use with Slurm on UChicago RCC.
-It configures multiple queues `midway2`, `faraway2` and `stephenslab`.
+It configures multiple queues `midway2` and `stephenslab`.
 
 ```yaml
 DSC:
   midway2:
     description: UChicago RCC cluster Midway 2
-    address: localhost
-    paths:
-      home: /home/kaiqianz
     queue_type: pbs
     status_check_interval: 30
-    max_running_jobs: 50
+    max_running_jobs: 30
     max_cores: 40
     max_walltime: "36:00:00"
     max_mem: 64G
-    job_template: |
+    task_template: |
       #!/bin/bash
       #{partition}
       #{account}
@@ -178,10 +144,6 @@ DSC:
     submit_cmd_output: "Submitted batch job {job_id}"
     status_cmd: squeue --job {job_id}
     kill_cmd: scancel {job_id}
-  faraway2:
-    based_on: midway2
-    description: Submit and manage jobs to `midway2` from a local computer.
-    address: kaiqianz@midway2.rcc.uchicago.edu
   stephenslab:
     based_on: midway2
     max_cores: 28
@@ -200,7 +162,7 @@ default:
   time_per_instance: 3m
 
 simulate:
-  instances_per_job: 20
+  instances_per_job: 200
 
 score:
   queue: midway2.local
@@ -217,11 +179,7 @@ the configuration.
 
 There are also 2 "derived" queues: `stephenslab` is a special
 partition on `midway2` that allows for different configurations, thus
-it is derived from `midway2` via `based_on: midway2`. Also relevant is
-the `faraway2`, also `based_on: midway2`, but specifies the address of
-how to connect to `midway2`. Then DSC will assume that the request is
-made from a local computer and try to use the "local-host" mechanism
-to run jobs.
+it is derived from `midway2` via `based_on: midway2`. 
 
 The section `default` is also required. It provides default settings
 for all modules in the DSC. Available settings are:
@@ -229,7 +187,7 @@ for all modules in the DSC. Available settings are:
 - `queue`: name of the queue on the remote host to use, one of the
 various queues defined in `DSC` section.
 
-    - Here in the template it is set to `midway2`, which is a "On-Host" queue.
+    - Here in the template it is set to `midway2`.
     - `<queue>.local` is convention to execute locally without submitting to PBS.
 
 - `time_per_instance`: maximum computation time for each module
@@ -281,28 +239,12 @@ high on `time_per_instance`).*
 
 ## Run remote jobs
 
-If the `default` queue is a "On-Host" queue (`address: localhost`), then
 
 ```bash
 dsc ... --host /path/to/config.yml
 ```
 
 will configuration in `/path/to/config.yml` and submit jobs.
-
-For the "Local-Host" mechanism (`default::address: <some URL>`), 
-
-```bash
-dsc ... --host /path/to/config.yml --to-host file1 dir1 file2
-```
-
-will additionally use `--to-host` to sync specified files and folders
-to the remote, if the particular benchmark requires these files and
-folders to execute (eg, data resource, shell executables, or scripts
-in `DSC::lib_path`).
-
-Caution that to successfully use `--to-host`, the command program
-[`rsync`](https://rsync.samba.org) have to be available from the local
-computer.
 
 In our example, under the same folder
 ("/dsc/vignettes/one_sample_location"), we run

@@ -29,9 +29,9 @@
   "headline":
     "FAQ",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1089,7 +1089,7 @@ You can find in <a href="advanced_course/5_Minutes_Python">here</a> a Python exa
 
 <p><strong>Can I load module developed for another DSC project into my current DSC project without copying the code?</strong></p>
 
-<p>Yes, we have a preliminary <code class="highlighter-rouge">%include</code> feature to achieve it. Please find it in the <a href="reference/DSC_Configuration">reference manual</a> for details.</p>
+<p>Yes, we have a preliminary <code class="language-plaintext highlighter-rouge">%include</code> feature to achieve it. Please find it in the <a href="reference/DSC_Configuration">reference manual</a> for details.</p>
 
 <p><strong>I wish DSC has feature <em>X</em> to make my benchmarking easier. Can you do that for me?</strong></p>
 
@@ -1122,39 +1122,39 @@ Core features in DSC are directly implemented in SoS whenever applicable. DSC al
 
 <h2 id="installation-troubleshoot">Installation troubleshoot</h2>
 
-<p><strong>I am new to <code class="highlighter-rouge">conda</code>. Do you have advice for setting it up?</strong></p>
+<p><strong>I am new to <code class="language-plaintext highlighter-rouge">conda</code>. Do you have advice for setting it up?</strong></p>
 
 <p>Here we provide some suggestions for installing <a href="https://conda.io/miniconda.html">Miniconda</a> with Python 3. (The instructions below worked for Miniconda3 4.4.10 – future versions may have a different 
 installation procedure.)</p>
 
 <p>First, download the version Miniconda built for your operating system. On a Mac computer, for example, open up a terminal and run these commands:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x Miniconda3-latest-MacOSX-x86_64.sh
 ./Miniconda3-latest-MacOSX-x86_64.sh
 </code></pre></div></div>
 
-<p>Follow the prompt to install it (use <code class="highlighter-rouge">ctrl+F</code> a couple of times to quickly jump to the end of the Licenses if you have read them before). At the end of installation, the installer will ask you something like this:</p>
+<p>Follow the prompt to install it (use <code class="language-plaintext highlighter-rouge">ctrl+F</code> a couple of times to quickly jump to the end of the Licenses if you have read them before). At the end of installation, the installer will ask you something like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do you wish the installer to prepend the Miniconda3 install location
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do you wish the installer to prepend the Miniconda3 install location
 to PATH in your /home/&lt;user_name&gt;/.bashrc ? [yes|no]
 [no] &gt;&gt;&gt;
 </code></pre></div></div>
 
-<p>If you are not familiar with <code class="highlighter-rouge">conda</code>, our recommendation is to type <code class="highlighter-rouge">no</code> for now. Then the installer would say something like:</p>
+<p>If you are not familiar with <code class="language-plaintext highlighter-rouge">conda</code>, our recommendation is to type <code class="language-plaintext highlighter-rouge">no</code> for now. Then the installer would say something like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You may wish to edit your .bashrc to prepend the Miniconda3 install location to PATH:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You may wish to edit your .bashrc to prepend the Miniconda3 install location to PATH:
 export PATH=/&lt;path_to_conda&gt;/bin:$PATH
 Thank you for installing Miniconda3!
 </code></pre></div></div>
 
-<p>The next step is important: open an empty text file <code class="highlighter-rouge">~/.bash_conda</code>, copy the “<code class="highlighter-rouge">export PATH=...</code>” line <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type</p>
+<p>The next step is important: open an empty text file <code class="language-plaintext highlighter-rouge">~/.bash_conda</code>, copy the “<code class="language-plaintext highlighter-rouge">export PATH=...</code>” line <strong>from your own terminal output (not from above text!)</strong> to this file, and save the file. Then type</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bash_conda
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bash_conda
 </code></pre></div></div>
 
-<p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code class="highlighter-rouge">source</code> with this file</strong>. If you do this often, you may want to add this line to your <code class="highlighter-rouge">.bashrc</code> file.</p>
+<p>to load your new Python 3 environment. <strong>In the future, each time when you open a new terminal to run DSC you need to run <code class="language-plaintext highlighter-rouge">source</code> with this file</strong>. If you do this often, you may want to add this line to your <code class="language-plaintext highlighter-rouge">.bashrc</code> file.</p>
 
-<p><strong>What do I do if I already have <code class="highlighter-rouge">conda</code>, but not python &gt;= 3.6?</strong></p>
+<p><strong>What do I do if I already have <code class="language-plaintext highlighter-rouge">conda</code>, but not python &gt;= 3.6?</strong></p>
 
 <p>You have two options: (1) upgrade your Python software to the latest version, or (2) remove your conda installation, and install a new one from scratch.</p>
 
@@ -1164,7 +1164,7 @@ Thank you for installing Miniconda3!
 
 <p>Run the following to upgrade your Python to 3.6:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install python=3.6.3
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install python=3.6.3
 </code></pre></div></div>
 
 <ol>
@@ -1173,41 +1173,41 @@ Thank you for installing Miniconda3!
 
 <p>The safer option is to install from scratch. To remove your existing installation, first figure out where it is installed. For example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ which python
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ which python
 /home/osboxes/miniconda3/bin/python
 </code></pre></div></div>
 
-<p>Next, remove <code class="highlighter-rouge">/home/osboxes/miniconda3</code>:</p>
+<p>Next, remove <code class="language-plaintext highlighter-rouge">/home/osboxes/miniconda3</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf /home/osboxes/miniconda3
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf /home/osboxes/miniconda3
 </code></pre></div></div>
 
 <p>Then follow the provided instructions to install Anaconda or Miniconda.</p>
 
 <p><strong>What do I do when I do not have permission to install Python packages?</strong></p>
 
-<p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code class="highlighter-rouge">--user</code> switch to the <code class="highlighter-rouge">pip</code> command:</p>
+<p>If you did not install Python, it is possible that you will not have permission to install packages. To work around this permissions issue, add the <code class="language-plaintext highlighter-rouge">--user</code> switch to the <code class="language-plaintext highlighter-rouge">pip</code> command:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --user dsc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --user dsc
 </code></pre></div></div>
 
-<p><em>Important note:</em> The <code class="highlighter-rouge">--user</code> switch will install packages to the <code class="highlighter-rouge">~/.local</code> hidden directory. This may cause problems if <code class="highlighter-rouge">dsc</code> is upgraded at a later date without the <code class="highlighter-rouge">--user</code> switch.</p>
+<p><em>Important note:</em> The <code class="language-plaintext highlighter-rouge">--user</code> switch will install packages to the <code class="language-plaintext highlighter-rouge">~/.local</code> hidden directory. This may cause problems if <code class="language-plaintext highlighter-rouge">dsc</code> is upgraded at a later date without the <code class="language-plaintext highlighter-rouge">--user</code> switch.</p>
 
-<p><strong>What to do if I try to run <code class="highlighter-rouge">dscquery</code> in RStudio, and it complains that the <code class="highlighter-rouge">dsc-query</code> command is not found?</strong></p>
+<p><strong>What to do if I try to run <code class="language-plaintext highlighter-rouge">dscquery</code> in RStudio, and it complains that the <code class="language-plaintext highlighter-rouge">dsc-query</code> command is not found?</strong></p>
 
-<p>If you are using DSC in RStudio, you will need to adjust your <code class="highlighter-rouge">~/.Renviron</code> settings, e.g. if your <code class="highlighter-rouge">dsc-query</code> is in <code class="highlighter-rouge">/home/osboxes/miniconda3/bin</code> (use <code class="highlighter-rouge">which dsc-query</code> to figure this out) then your <code class="highlighter-rouge">~/.Renviron</code> should look like:</p>
+<p>If you are using DSC in RStudio, you will need to adjust your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> settings, e.g. if your <code class="language-plaintext highlighter-rouge">dsc-query</code> is in <code class="language-plaintext highlighter-rouge">/home/osboxes/miniconda3/bin</code> (use <code class="language-plaintext highlighter-rouge">which dsc-query</code> to figure this out) then your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> should look like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat ~/.Renviron
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat ~/.Renviron
 PATH=/home/osboxes/miniconda3/bin:${PATH}
 </code></pre></div></div>
 
-<p>and restart <code class="highlighter-rouge">R</code> to load the setting.</p>
+<p>and restart <code class="language-plaintext highlighter-rouge">R</code> to load the setting.</p>
 
 <h2 id="contribute">Contribute</h2>
 
 <p><strong>I would like to help improve DSC documentation. Where should I start?</strong></p>
 
-<p>The wiki is mostly written in Markdown format with suffix <code class="highlighter-rouge">.md</code>. Jupyter’s <code class="highlighter-rouge">.ipynb</code> format for interactive documents are also when necessary. We welcome your contributions – for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code class="highlighter-rouge">README</code></a> of the wiki source repo to set up the software environment for editing.</p>
+<p>The wiki is mostly written in Markdown format with suffix <code class="language-plaintext highlighter-rouge">.md</code>. Jupyter’s <code class="language-plaintext highlighter-rouge">.ipynb</code> format for interactive documents are also when necessary. We welcome your contributions – for starters please follow the <a href="https://github.com/stephenslab/dsc-wiki/blob/master/README.md"><code class="language-plaintext highlighter-rouge">README</code></a> of the wiki source repo to set up the software environment for editing.</p>
 
               <nav class="c-page__nav">
   

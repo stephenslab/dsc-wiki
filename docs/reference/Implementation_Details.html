@@ -29,9 +29,9 @@
   "headline":
     "Implementation details",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1062,17 +1062,17 @@ initFunction(initQuery);
 <p>DSC is implemented in Python 3. It relies on a number of libraries:</p>
 
 <ul>
-  <li>DSC relies heavily on codes from <a href="https://github.com/vatlab/SoS"><code class="highlighter-rouge">SoS</code></a> project for execution of pipelines, which implements job dispatch and management via <a href="https://networkx.github.io/"><code class="highlighter-rouge">networkx</code></a> and, different from other timestamp-based workflow tools, a file signature system via <a href="https://cyan4973.github.io/xxHash/"><code class="highlighter-rouge">xxHash</code></a>. Development of DSC is contributed directly to <code class="highlighter-rouge">SoS</code> whenever approperate.</li>
-  <li><a href="http://www.sympy.org/en/index.html"><code class="highlighter-rouge">sympy</code></a> is used to expand DSC benchmark specification into pipelines, and to expand logic for <code class="highlighter-rouge">@FILTER</code> decorator.</li>
-  <li><a href="http://pandas.pydata.org/"><code class="highlighter-rouge">pandas</code></a> is used to ensure proper conversion between R and Python data frames. It is also used to manipulate output data.</li>
-  <li><a href="https://www.scipy.org"><code class="highlighter-rouge">scipy</code></a> provides a <code class="highlighter-rouge">sparse</code> module that supports storing <code class="highlighter-rouge">scipy.sparse</code> type of matrix to DSC default storage format for Python.</li>
-  <li><a href="https://www.sqlalchemy.org"><code class="highlighter-rouge">sqlalchemy</code></a> supports <code class="highlighter-rouge">dsc-query</code> to use SQL-like syntax.</li>
+  <li>DSC relies heavily on codes from <a href="https://github.com/vatlab/SoS"><code class="language-plaintext highlighter-rouge">SoS</code></a> project for execution of pipelines, which implements job dispatch and management via <a href="https://networkx.github.io/"><code class="language-plaintext highlighter-rouge">networkx</code></a> and, different from other timestamp-based workflow tools, a file signature system via <a href="https://cyan4973.github.io/xxHash/"><code class="language-plaintext highlighter-rouge">xxHash</code></a>. Development of DSC is contributed directly to <code class="language-plaintext highlighter-rouge">SoS</code> whenever approperate.</li>
+  <li><a href="http://www.sympy.org/en/index.html"><code class="language-plaintext highlighter-rouge">sympy</code></a> is used to expand DSC benchmark specification into pipelines, and to expand logic for <code class="language-plaintext highlighter-rouge">@FILTER</code> decorator.</li>
+  <li><a href="http://pandas.pydata.org/"><code class="language-plaintext highlighter-rouge">pandas</code></a> is used to ensure proper conversion between R and Python data frames. It is also used to manipulate output data.</li>
+  <li><a href="https://www.scipy.org"><code class="language-plaintext highlighter-rouge">scipy</code></a> provides a <code class="language-plaintext highlighter-rouge">sparse</code> module that supports storing <code class="language-plaintext highlighter-rouge">scipy.sparse</code> type of matrix to DSC default storage format for Python.</li>
+  <li><a href="https://www.sqlalchemy.org"><code class="language-plaintext highlighter-rouge">sqlalchemy</code></a> supports <code class="language-plaintext highlighter-rouge">dsc-query</code> to use SQL-like syntax.</li>
 </ul>
 
 <p>In addition,</p>
 
 <ul>
-  <li>Preliminary cross-language communication from R to Python is implemented in <a href="https://rpy2.bitbucket.io/"><code class="highlighter-rouge">rpy2</code></a>, and from Python to R using <a href="https://github.com/rstudio/reticulate"><code class="highlighter-rouge">reticulate</code></a>. This might be replaced in future versions with some data bus implementation in the SoS project.</li>
+  <li>Preliminary cross-language communication from R to Python is implemented in <a href="https://rpy2.bitbucket.io/"><code class="language-plaintext highlighter-rouge">rpy2</code></a>, and from Python to R using <a href="https://github.com/rstudio/reticulate"><code class="language-plaintext highlighter-rouge">reticulate</code></a>. This might be replaced in future versions with some data bus implementation in the SoS project.</li>
 </ul>
 
               <nav class="c-page__nav">

@@ -29,9 +29,9 @@
   "headline":
     "Debug in DSC",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1092,7 +1092,7 @@ initFunction(initQuery);
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 </code></pre></div></div>
 
-<p>creating a parameter <code class="highlighter-rouge">nu</code>, a typo of <code class="highlighter-rouge">mu</code>, that does not exist in <code class="highlighter-rouge">normal</code> module <code class="highlighter-rouge">rt.R</code>. Consequently the required <code class="highlighter-rouge">mu</code> variable for these routines will not be provided by DSC interface. We save this configuration file as <code class="highlighter-rouge">first_error_v1.dsc</code> and run it:</p>
+<p>creating a parameter <code class="language-plaintext highlighter-rouge">nu</code>, a typo of <code class="language-plaintext highlighter-rouge">mu</code>, that does not exist in <code class="language-plaintext highlighter-rouge">normal</code> module <code class="language-plaintext highlighter-rouge">rt.R</code>. Consequently the required <code class="language-plaintext highlighter-rouge">mu</code> variable for these routines will not be provided by DSC interface. We save this configuration file as <code class="language-plaintext highlighter-rouge">first_error_v1.dsc</code> and run it:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/GIT/dsc/vignettes/one_sample_location_debug
 </code></pre></div></div>
@@ -1100,7 +1100,7 @@ initFunction(initQuery);
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_error_v1.dsc <span class="nt">-o</span> dsc_result
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to dsc_result.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to dsc_result.html
 INFO: Constructing DSC from first_error_v1.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [ERROR: Command 'Rscript .sos/normal_0_0_5b69d818.R' returned non-zero exit status 1.
@@ -1117,16 +1117,16 @@ INFO: Elapsed time 4.896 seconds.
 
 <p>The error message is a bit wordy but the part most relevant to debugging are highlighted in green color on your terminal. In this case multiple generated scripts have failed, but the cause is likely the same. You can try to resolve the problem starting from the last error message and see if the fix will help with other errors.</p>
 
-<p>You can also see that a file called <code class="highlighter-rouge">dsc_result.scripts.html</code> is generated. It bundles generated scripts from all module instances involved in the benchmark up to the point the errors occur.</p>
+<p>You can also see that a file called <code class="language-plaintext highlighter-rouge">dsc_result.scripts.html</code> is generated. It bundles generated scripts from all module instances involved in the benchmark up to the point the errors occur.</p>
 
 <h3 id="debug-with-the-problematic-script">Debug with the problematic script</h3>
 
-<p>As prompted in the error message, let’s see what’s inside <code class="highlighter-rouge">dsc_result/normal/normal_1.stderr</code>:</p>
+<p>As prompted in the error message, let’s see what’s inside <code class="language-plaintext highlighter-rouge">dsc_result/normal/normal_1.stderr</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>dsc_result/normal/normal_1.stderr
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error in rnorm(n, mean = mu, sd = 1) : object 'mu' not found
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error in rnorm(n, mean = mu, sd = 1) : object 'mu' not found
 Execution halted
 </code></pre></div></div>
 
@@ -1150,9 +1150,9 @@ Execution halted
 </span><span class="n">saveRDS</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">true_mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">DSC_DEBUG</span><span class="o">=</span><span class="n">dscrutils</span><span class="o">::</span><span class="n">save_session</span><span class="p">(</span><span class="n">TIC_C1997B87</span><span class="p">,</span><span class="w"> </span><span class="n">DSC_REPLICATE</span><span class="p">)),</span><span class="w"> </span><span class="s1">'dsc_result/normal/normal_1.rds'</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>It seems like the line <code class="highlighter-rouge">x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code class="highlighter-rouge">mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_debug/first_error_v1.dsc">DSC script</a> that we had set <code class="highlighter-rouge">nu</code> not <code class="highlighter-rouge">mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code class="highlighter-rouge">nu</code> to <code class="highlighter-rouge">mu</code> in the DSC script.</p>
+<p>It seems like the line <code class="language-plaintext highlighter-rouge">x &lt;- rnorm(n,mean = mu,sd = 1)</code> looks for variable <code class="language-plaintext highlighter-rouge">mu</code>, which was not previously defined in the script. We know from the <a href="https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location_debug/first_error_v1.dsc">DSC script</a> that we had set <code class="language-plaintext highlighter-rouge">nu</code> not <code class="language-plaintext highlighter-rouge">mu</code>. So obviously there is a glitch on the interface which can be fixed by changing <code class="language-plaintext highlighter-rouge">nu</code> to <code class="language-plaintext highlighter-rouge">mu</code> in the DSC script.</p>
 
-<p>In practice when you run into problems that you cannot immediately tell what is going on from <code class="highlighter-rouge">err</code> file or script file, you should load the problematic script <code class="highlighter-rouge">.sos/normal_0_0_5b69d818.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you’ve learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
+<p>In practice when you run into problems that you cannot immediately tell what is going on from <code class="language-plaintext highlighter-rouge">err</code> file or script file, you should load the problematic script <code class="language-plaintext highlighter-rouge">.sos/normal_0_0_5b69d818.R</code> to some interactive session, try to debug and fix the script from there (do not worry about changing this script), test until it works. Then you should have learned where the problem is, and you can apply what you’ve learned to patching DSC script or the original module code. <em>Fixing these generated scripts is not enough as they will be overwritten next time DSC runs</em>.</p>
 
 <h2 id="buggy-module-script">Buggy module script</h2>
 
@@ -1171,7 +1171,7 @@ Execution halted
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc first_error_v2.dsc <span class="nt">-o</span> dsc_result
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to dsc_result.html
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: DSC script exported to dsc_result.html
 INFO: Constructing DSC from first_error_v2.dsc ...
 INFO: Building execution graph &amp; running DSC ...
 [################ERROR: Command 'Rscript .sos/sq_err_0_9fcb14a9.R' returned non-zero exit status 1.
@@ -1208,11 +1208,11 @@ INFO: Elapsed time 4.544 seconds.
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>dsc_result/abs_err/t_1_mean_1_abs_err_1.stderr
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error in x - y : non-numeric argument to binary operator
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error in x - y : non-numeric argument to binary operator
 Execution halted
 </code></pre></div></div>
 
-<p>It is not immediately clear what is going on, so we examine the code <code class="highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> by adding a couple of <code class="highlighter-rouge">print</code> commands before the line in question:</p>
+<p>It is not immediately clear what is going on, so we examine the code <code class="language-plaintext highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> by adding a couple of <code class="language-plaintext highlighter-rouge">print</code> commands before the line in question:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## r script UUID: 90107557</span><span class="w">
 
@@ -1232,28 +1232,28 @@ Execution halted
 </span><span class="c1">## END DSC CORE</span><span class="w">
 </span></code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "meow"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "meow"
 [1] 0
 
 Error in x - y: non-numeric argument to binary operator
 Traceback:
 </code></pre></div></div>
 
-<p>It looks like <code class="highlighter-rouge">x</code>, instead of being a number, is a string <code class="highlighter-rouge">meow</code>. Therefore the line <code class="highlighter-rouge">e &lt;- abs(x - y)</code> is doomed to fail. We know from the DSC script that <code class="highlighter-rouge">x</code> comes from an upstream module group <code class="highlighter-rouge">analyze</code>, that somehow returned <code class="highlighter-rouge">meow</code> as output. We can also see from this script that the variable comes from one of <code class="highlighter-rouge">'dsc_result/normal/normal_1.rds','dsc_result/mean/normal_1_mean_1.rds'</code>. From our knowledge of the DSC script we know it should come from <code class="highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> the <code class="highlighter-rouge">mean</code> module. Therefore there is nothing we can do in the current script to fix the problem.</p>
+<p>It looks like <code class="language-plaintext highlighter-rouge">x</code>, instead of being a number, is a string <code class="language-plaintext highlighter-rouge">meow</code>. Therefore the line <code class="language-plaintext highlighter-rouge">e &lt;- abs(x - y)</code> is doomed to fail. We know from the DSC script that <code class="language-plaintext highlighter-rouge">x</code> comes from an upstream module group <code class="language-plaintext highlighter-rouge">analyze</code>, that somehow returned <code class="language-plaintext highlighter-rouge">meow</code> as output. We can also see from this script that the variable comes from one of <code class="language-plaintext highlighter-rouge">'dsc_result/normal/normal_1.rds','dsc_result/mean/normal_1_mean_1.rds'</code>. From our knowledge of the DSC script we know it should come from <code class="language-plaintext highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> the <code class="language-plaintext highlighter-rouge">mean</code> module. Therefore there is nothing we can do in the current script to fix the problem.</p>
 
 <h3 id="debugging-with-upstream-scripts">Debugging with upstream scripts</h3>
 
-<p>Now we want to find out what has produced the problematic <code class="highlighter-rouge">x</code> variable. That is, we want to find the module instance that generated <code class="highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code class="highlighter-rouge">x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../external/dsc_result.scripts_e2.html"><code class="highlighter-rouge">dsc_result.scripts.html</code></a>.</p>
+<p>Now we want to find out what has produced the problematic <code class="language-plaintext highlighter-rouge">x</code> variable. That is, we want to find the module instance that generated <code class="language-plaintext highlighter-rouge">'dsc_result/mean/normal_1_mean_1.rds'</code> from which <code class="language-plaintext highlighter-rouge">x</code> is loaded. However the problematic script above did not tell us where this data comes from. This leads us to examine other scripts in the benchmark that leads to the error, in <a href="../external/dsc_result.scripts_e2.html"><code class="language-plaintext highlighter-rouge">dsc_result.scripts.html</code></a>.</p>
 
-<p>You can open up <a href="../external/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code class="highlighter-rouge">ctrl-F</code>) for the phrase <code class="highlighter-rouge">dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
+<p>You can open up <a href="../external/dsc_result.scripts_e2.html">this file</a> in your web browser, and <em>search</em> (<code class="language-plaintext highlighter-rouge">ctrl-F</code>) for the phrase <code class="language-plaintext highlighter-rouge">dsc_result/mean/normal_1_mean_1.rds</code>. This leads you to the following:</p>
 
 <p><img src="../images/debug-tips-1.png" alt="debug-1" /></p>
 
-<p>Unsurprisingly, running these code by itself produces no error message – this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code class="highlighter-rouge">meow</code> string somehow 🐱 replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code class="highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> to an interactive session, fix it until <code class="highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> works, and apply the knowledge learned to the original module line <code class="highlighter-rouge">mean: R(y &lt;- "meow")</code> in the DSC script.</p>
+<p>Unsurprisingly, running these code by itself produces no error message – this is expected because otherwise DSC would have failed at this stage. However we know from previous investigation that the output does not look right. For this example we can spot instantly that the <code class="language-plaintext highlighter-rouge">meow</code> string somehow 🐱 replaced the code for location parameter estimation; and we can fix it easily. In practice, one may need to load both this code chunk and the previous <code class="language-plaintext highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> to an interactive session, fix it until <code class="language-plaintext highlighter-rouge">.sos/abs_err_0_0_73c4c826.R</code> works, and apply the knowledge learned to the original module line <code class="language-plaintext highlighter-rouge">mean: R(y &lt;- "meow")</code> in the DSC script.</p>
 
 <h2 id="more-output-info">More output info</h2>
 
-<p>The run-time information are kept in greater when running DSC with verbosity level greater than <code class="highlighter-rouge">2</code>. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with <code class="highlighter-rouge">-v 4</code> and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics.</p>
+<p>The run-time information are kept in greater when running DSC with verbosity level greater than <code class="language-plaintext highlighter-rouge">2</code>. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with <code class="language-plaintext highlighter-rouge">-v 4</code> and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics.</p>
 
               <nav class="c-page__nav">
   

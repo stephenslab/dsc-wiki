@@ -29,9 +29,9 @@
   "headline":
     "Running DSC in Docker",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1061,8 +1061,8 @@ initFunction(initQuery);
 
 <p>First you need to install and configure docker:</p>
 <ul>
-  <li>Follow <a href="https://www.docker.com/community-edition">Docker installation guild</a> until you can use <code class="highlighter-rouge">sudo docker</code> to print the “Hello World” example.</li>
-  <li>Run <code class="highlighter-rouge">sudo usermod -aG docker $USER</code></li>
+  <li>Follow <a href="https://www.docker.com/community-edition">Docker installation guild</a> until you can use <code class="language-plaintext highlighter-rouge">sudo docker</code> to print the “Hello World” example.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">sudo usermod -aG docker $USER</code></li>
   <li>Log out and log back in</li>
 </ul>
 
@@ -1084,7 +1084,7 @@ docker run <span class="nt">--rm</span> <span class="nt">--security-opt</span> l
        dsc <span class="nt">-h</span>
 </code></pre></div></div>
 
-<p>You can add a shortcut to your shell configuration script (<code class="highlighter-rouge">~/.bashrc</code> on Linux and <code class="highlighter-rouge">~/.bash_profile</code> on Mac) to trigger docker based DSC:</p>
+<p>You can add a shortcut to your shell configuration script (<code class="language-plaintext highlighter-rouge">~/.bashrc</code> on Linux and <code class="language-plaintext highlighter-rouge">~/.bash_profile</code> on Mac) to trigger docker based DSC:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span>dsc-docker<span class="o">=</span><span class="s1">'docker run --rm --security-opt label:disable -v $USER:/home/docker -v /tmp:/tmp -v $PWD:$PWD -t -P -w $PWD -u $UID:${GROUPS[0]} gaow/dsc dsc'</span>
 </code></pre></div></div>
@@ -1100,7 +1100,7 @@ docker run <span class="nt">--rm</span> <span class="nt">--security-opt</span> l
     dsc first_investigation.dsc <span class="nt">--replicate</span> 10 <span class="nt">-c</span> 2
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Checking R library dscrutils@stephenslab/dsc/dscrutils ...
 INFO: DSC script exported to first_investigation.html
 INFO: Constructing DSC from first_investigation.dsc ...
 INFO: Building execution graph &amp; running DSC ...

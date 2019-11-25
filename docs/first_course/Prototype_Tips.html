@@ -29,9 +29,9 @@
   "headline":
     "Developing benchmarks",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1061,19 +1061,19 @@ initFunction(initQuery);
 
 <p>Although DSC is a benchmarking tool, you might still be able to utilize DSC when you are in a “research mode”, or the prototyping stage. Starting directly with DSC to build mini-benchmark for methods prototyping saves the efforts of having to migrate your code over to DSC down the line when you seriously consider expanding your initial comparisons.</p>
 
-<p>In prototyping stage, you might find command options <code class="highlighter-rouge">--target</code> and <code class="highlighter-rouge">--truncate</code> are of particular relevance. In brief, <code class="highlighter-rouge">--target</code> accepts:</p>
+<p>In prototyping stage, you might find command options <code class="language-plaintext highlighter-rouge">--target</code> and <code class="language-plaintext highlighter-rouge">--truncate</code> are of particular relevance. In brief, <code class="language-plaintext highlighter-rouge">--target</code> accepts:</p>
 
 <ul>
   <li>A single or a sequence of modules</li>
   <li>A single or a sequence of module groups</li>
-  <li>A single <code class="highlighter-rouge">run</code> flag</li>
+  <li>A single <code class="language-plaintext highlighter-rouge">run</code> flag</li>
 </ul>
 
-<p>and <code class="highlighter-rouge">--truncate</code> enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Please read on for details.</p>
+<p>and <code class="language-plaintext highlighter-rouge">--truncate</code> enables running a fraction of DSC benchmark relatively quickly to ensure everthing is correct. Please read on for details.</p>
 
 <h2 id="test-out-one-module-at-a-time">Test out one module at a time</h2>
 
-<p>It is highly recommanded that you check the correctness of DSC modules as you develop them. Do not run the entire benchmark unless you have checked it module by module: that is, only add in the next module when you are sure the first module works well. Command options <code class="highlighter-rouge">--target</code> and <code class="highlighter-rouge">--truncate</code> can be used for this purpose, for example for a DSC benchmark:</p>
+<p>It is highly recommanded that you check the correctness of DSC modules as you develop them. Do not run the entire benchmark unless you have checked it module by module: that is, only add in the next module when you are sure the first module works well. Command options <code class="language-plaintext highlighter-rouge">--target</code> and <code class="language-plaintext highlighter-rouge">--truncate</code> can be used for this purpose, for example for a DSC benchmark:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">define</span><span class="pi">:</span> 
@@ -1088,7 +1088,7 @@ initFunction(initQuery);
 dsc file.dsc <span class="nt">--target</span> t <span class="nt">--truncate</span> <span class="nt">-o</span> prototype
 </code></pre></div></div>
 
-<p>Here option <code class="highlighter-rouge">-o</code> will write results to a separate folder called <code class="highlighter-rouge">prototype</code> (or any name you want to call it) that you can safely remove after done prototyping.</p>
+<p>Here option <code class="language-plaintext highlighter-rouge">-o</code> will write results to a separate folder called <code class="language-plaintext highlighter-rouge">prototype</code> (or any name you want to call it) that you can safely remove after done prototyping.</p>
 
 <p>Then move on to testing next modules:</p>
 
@@ -1101,21 +1101,21 @@ dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * median"
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * median * mse"</span> <span class="nt">--truncate</span> <span class="nt">-o</span> prototype
 </code></pre></div></div>
 
-<p>to test <code class="highlighter-rouge">mse</code>. When everything looks good, run:</p>
+<p>to test <code class="language-plaintext highlighter-rouge">mse</code>. When everything looks good, run:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc 
 </code></pre></div></div>
 
-<p>You can also use module groups in <code class="highlighter-rouge">--target</code>:</p>
+<p>You can also use module groups in <code class="language-plaintext highlighter-rouge">--target</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> simulate <span class="nt">--truncate</span> <span class="nt">-o</span> prototype
 </code></pre></div></div>
 
-<p>will run both <code class="highlighter-rouge">normal</code> and <code class="highlighter-rouge">t</code> modules.</p>
+<p>will run both <code class="language-plaintext highlighter-rouge">normal</code> and <code class="language-plaintext highlighter-rouge">t</code> modules.</p>
 
-<h3 id="option---truncate">Option <code class="highlighter-rouge">--truncate</code></h3>
+<h3 id="option---truncate">Option <code class="language-plaintext highlighter-rouge">--truncate</code></h3>
 
-<p><code class="highlighter-rouge">--truncate</code> allows one to run one instance from a module. For example, for this DSC:</p>
+<p><code class="language-plaintext highlighter-rouge">--truncate</code> allows one to run one instance from a module. For example, for this DSC:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate</span><span class="pi">:</span> <span class="s">R(x=rnorm(n))</span>
   <span class="s">n</span><span class="pi">:</span> <span class="s">100, 200, 300, </span><span class="m">400</span>
@@ -1129,16 +1129,16 @@ dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * median"
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> simulate
 </code></pre></div></div>
 
-<p>will result in 4 different <code class="highlighter-rouge">n</code> values and 20 replicates, a total of 80 module instances. However with</p>
+<p>will result in 4 different <code class="language-plaintext highlighter-rouge">n</code> values and 20 replicates, a total of 80 module instances. However with</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> simulate <span class="nt">--truncate</span>
 </code></pre></div></div>
 
-<p>It will only run the first <code class="highlighter-rouge">n</code> (n=100) with only 1 replicate.</p>
+<p>It will only run the first <code class="language-plaintext highlighter-rouge">n</code> (n=100) with only 1 replicate.</p>
 
 <h2 id="test-out-a-particular-module-downstream">Test out a particular module downstream</h2>
 
-<p><code class="highlighter-rouge">--target</code> can also accept temporary <code class="highlighter-rouge">run</code> flags. This is useful when testing out newly added modules downstream. For example in the DSC section below:</p>
+<p><code class="language-plaintext highlighter-rouge">--target</code> can also accept temporary <code class="language-plaintext highlighter-rouge">run</code> flags. This is useful when testing out newly added modules downstream. For example in the DSC section below:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">define</span><span class="pi">:</span>
@@ -1150,7 +1150,7 @@ dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * median"
     <span class="na">dap</span><span class="pi">:</span> <span class="s">get_data * get_Y * get_sumstats * init * fit_dap</span>
 </code></pre></div></div>
 
-<p>Two <code class="highlighter-rouge">run</code> flags are defined: <code class="highlighter-rouge">first_pass</code> and <code class="highlighter-rouge">dap</code>. Clearly the difference between <code class="highlighter-rouge">first_pass</code> and <code class="highlighter-rouge">dap</code> is that <code class="highlighter-rouge">first_pass</code> does not have <code class="highlighter-rouge">fit_dap</code> in its <code class="highlighter-rouge">fit</code> group, but <code class="highlighter-rouge">dat</code> has only <code class="highlighter-rouge">fit_dap</code> not any other modules for <code class="highlighter-rouge">fit</code>. As their name suggests, <code class="highlighter-rouge">first_pass</code> are module that has been tested to work, as our first pass to a problem. <code class="highlighter-rouge">dap</code> include modules that we are currently working on, which is <code class="highlighter-rouge">fit_dap</code>. To prototype <code class="highlighter-rouge">fit_dap</code> exclusively:</p>
+<p>Two <code class="language-plaintext highlighter-rouge">run</code> flags are defined: <code class="language-plaintext highlighter-rouge">first_pass</code> and <code class="language-plaintext highlighter-rouge">dap</code>. Clearly the difference between <code class="language-plaintext highlighter-rouge">first_pass</code> and <code class="language-plaintext highlighter-rouge">dap</code> is that <code class="language-plaintext highlighter-rouge">first_pass</code> does not have <code class="language-plaintext highlighter-rouge">fit_dap</code> in its <code class="language-plaintext highlighter-rouge">fit</code> group, but <code class="language-plaintext highlighter-rouge">dat</code> has only <code class="language-plaintext highlighter-rouge">fit_dap</code> not any other modules for <code class="language-plaintext highlighter-rouge">fit</code>. As their name suggests, <code class="language-plaintext highlighter-rouge">first_pass</code> are module that has been tested to work, as our first pass to a problem. <code class="language-plaintext highlighter-rouge">dap</code> include modules that we are currently working on, which is <code class="language-plaintext highlighter-rouge">fit_dap</code>. To prototype <code class="language-plaintext highlighter-rouge">fit_dap</code> exclusively:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc file.dsc <span class="nt">--target</span> dap
 </code></pre></div></div>
@@ -1159,7 +1159,7 @@ dsc file.dsc <span class="nt">--target</span> <span class="s2">"normal * median"
 
 <h2 id="test-locally-before-running-on-a-cluster-system">Test locally before running on a cluster system</h2>
 
-<p>If you are working with a cluster, we suggest that you have an interactive session on the cluster, and use <code class="highlighter-rouge">--target</code> &amp; <code class="highlighter-rouge">--truncate</code> as instructed above to test your modules out quickly; but do not use <code class="highlighter-rouge">--host</code> so your test DSC runs will be local to the interactive node and you get feedback quickly. Once you are confident everything works, you can submit DSC instances as cluster jobs using <code class="highlighter-rouge">--host</code> option, from either your computer or from the cluster’s head node. See <a href="../advanced_course/Remote_Computations">this tutorial</a> for details.</p>
+<p>If you are working with a cluster, we suggest that you have an interactive session on the cluster, and use <code class="language-plaintext highlighter-rouge">--target</code> &amp; <code class="language-plaintext highlighter-rouge">--truncate</code> as instructed above to test your modules out quickly; but do not use <code class="language-plaintext highlighter-rouge">--host</code> so your test DSC runs will be local to the interactive node and you get feedback quickly. Once you are confident everything works, you can submit DSC instances as cluster jobs using <code class="language-plaintext highlighter-rouge">--host</code> option, from either your computer or from the cluster’s head node. See <a href="../advanced_course/Remote_Computations">this tutorial</a> for details.</p>
 
               <nav class="c-page__nav">
   

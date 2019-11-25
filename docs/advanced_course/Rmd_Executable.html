@@ -29,9 +29,9 @@
   "headline":
     "Using Rmd files as module executables",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1063,7 +1063,7 @@ initFunction(initQuery);
 
 <p>Caution that running DSC with source code provided from Rmarkdown files is meant to ease DSC development, but is more error prone because users may make more mistakes matching variables or code chunks between DSC interface and Rmarkdown documents. This feature is therefore intended to only prototyping a benchmark. Users will be discouraged with a DSC warning message to use Rmd files in finalized benchmark.</p>
 
-<p>The Rmarkdown file comes from the <a href="https://stephenslab.github.io/mashr/docs/intro_mash.html"><code class="highlighter-rouge">mashr</code> package intro vigenette</a>. Here we run in DSC the steps of simulating data, compute covariance matrices (prior), and fit the <code class="highlighter-rouge">mash</code> model. The DSC file is specified as:</p>
+<p>The Rmarkdown file comes from the <a href="https://stephenslab.github.io/mashr/docs/intro_mash.html"><code class="language-plaintext highlighter-rouge">mashr</code> package intro vigenette</a>. Here we run in DSC the steps of simulating data, compute covariance matrices (prior), and fit the <code class="language-plaintext highlighter-rouge">mash</code> model. The DSC file is specified as:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env dsc</span>
 
@@ -1088,20 +1088,20 @@ initFunction(initQuery);
   <span class="na">output</span><span class="pi">:</span> <span class="s">mash_result</span>
 </code></pre></div></div>
 
-<p>Take <code class="highlighter-rouge">simulate_*@intro_mash.Rmd</code> for example: it means the module executable comes from code chunks matching <code class="highlighter-rouge">simulate_*</code> pattern in file <code class="highlighter-rouge">intro_mash.Rmd</code>. The code chunk matching pattern follows from <a href="http://www.robelle.com/smugbook/wildcard.html">UNIX wildcard</a> convention. When only the Rmarkdown filename (the part after <code class="highlighter-rouge">@</code>) is specified, all code chunks in the Rmarkdown file will be loaded.</p>
+<p>Take <code class="language-plaintext highlighter-rouge">simulate_*@intro_mash.Rmd</code> for example: it means the module executable comes from code chunks matching <code class="language-plaintext highlighter-rouge">simulate_*</code> pattern in file <code class="language-plaintext highlighter-rouge">intro_mash.Rmd</code>. The code chunk matching pattern follows from <a href="http://www.robelle.com/smugbook/wildcard.html">UNIX wildcard</a> convention. When only the Rmarkdown filename (the part after <code class="language-plaintext highlighter-rouge">@</code>) is specified, all code chunks in the Rmarkdown file will be loaded.</p>
 
-<p>The extracted code can be found in DSC code browser <a href="../external/mash_result.html"><code class="highlighter-rouge">mash_result.html</code></a>. To run the benchmark:</p>
+<p>The extracted code can be found in DSC code browser <a href="../external/mash_result.html"><code class="language-plaintext highlighter-rouge">mash_result.html</code></a>. To run the benchmark:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/GIT/dsc/vignettes/mash
 </code></pre></div></div>
 
-<div class="output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/gaow/GIT/dsc/vignettes/mash
+<div class="language-plaintext output output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/gaow/GIT/dsc/vignettes/mash
 </code></pre></div></div>
 
 <pre><code class="language-sos">./settings.dsc
 </code></pre>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING: Source code of simulate is loaded from intro_mash.Rmd. This is only recommended for prototyping.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING: Source code of simulate is loaded from intro_mash.Rmd. This is only recommended for prototyping.
 WARNING: Source code of get_cov is loaded from intro_mash.Rmd. This is only recommended for prototyping.
 WARNING: Source code of fit is loaded from intro_mash.Rmd. This is only recommended for prototyping.
 INFO: Checking R library mashr@stephenslab/mashr ...

@@ -29,9 +29,9 @@
   "headline":
     "Unsupported features",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1068,7 +1068,7 @@ initFunction(initQuery);
 <h2 id="wildcard-operators">Wildcard operators</h2>
 
 <h3 id="global-variable-wildcard">Global variable wildcard</h3>
-<p>The global variable wildcard <code class="highlighter-rouge">${}</code>, when used to specify module parameters, refers to variables defined in <code class="highlighter-rouge">DSC::global</code>.</p>
+<p>The global variable wildcard <code class="language-plaintext highlighter-rouge">${}</code>, when used to specify module parameters, refers to variables defined in <code class="language-plaintext highlighter-rouge">DSC::global</code>.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate_cosine</span><span class="pi">:</span> <span class="s">cosine.R</span>
     <span class="s">types</span><span class="pi">:</span> <span class="s">${data_functions}</span>
@@ -1087,7 +1087,7 @@ initFunction(initQuery);
 
 <h3 id="inline-module-input-wildcard">Inline module input wildcard</h3>
 
-<p>Wildcard <code class="highlighter-rouge">$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Here is a full example using this feature:</p>
+<p>Wildcard <code class="language-plaintext highlighter-rouge">$()</code> can be used inside language operators to specify module inputs so that they do not have to be defined separately. Here is a full example using this feature:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env dsc</span>
 
@@ -1123,18 +1123,18 @@ initFunction(initQuery);
     <span class="na">output</span><span class="pi">:</span> <span class="s">dsc_result</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">$()</code> in inline module executables specifies the required pipeline variables. Therefore for modules <code class="highlighter-rouge">mean</code>, <code class="highlighter-rouge">median</code> and <code class="highlighter-rouge">sq_err</code> and <code class="highlighter-rouge">abs_err</code> only module output needs to be specified – module input are defined already in this inline module executable style.</p>
+<p><code class="language-plaintext highlighter-rouge">$()</code> in inline module executables specifies the required pipeline variables. Therefore for modules <code class="language-plaintext highlighter-rouge">mean</code>, <code class="language-plaintext highlighter-rouge">median</code> and <code class="language-plaintext highlighter-rouge">sq_err</code> and <code class="language-plaintext highlighter-rouge">abs_err</code> only module output needs to be specified – module input are defined already in this inline module executable style.</p>
 
 <h3 id="command-argument-wildcard">Command argument wildcard</h3>
 
-<p>Wildcard <code class="highlighter-rouge">{}</code> can be used with module executable to specify command argument options when they refer to one of the module parameter, eg:</p>
+<p>Wildcard <code class="language-plaintext highlighter-rouge">{}</code> can be used with module executable to specify command argument options when they refer to one of the module parameter, eg:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">module</span><span class="pi">:</span> <span class="s">Python(import sys; print(sys.argv[1:])) {option} constant</span>
   <span class="s">option</span><span class="pi">:</span> <span class="s">1, </span><span class="m">2</span>
   <span class="s">$out</span><span class="pi">:</span> <span class="m">0</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">print</code> statement writes to standard output, which is redirected to files:</p>
+<p>The <code class="language-plaintext highlighter-rouge">print</code> statement writes to standard output, which is redirected to files:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">$ cat t/t_1.stdout</span>
 <span class="pi">[</span><span class="s1">'</span><span class="s">1'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">constant'</span><span class="pi">]</span>
@@ -1142,10 +1142,10 @@ initFunction(initQuery);
 <span class="pi">[</span><span class="s1">'</span><span class="s">2'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">constant'</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>It shows that command argument <code class="highlighter-rouge">{option}</code> has been passed to the module as module parameters.</p>
+<p>It shows that command argument <code class="language-plaintext highlighter-rouge">{option}</code> has been passed to the module as module parameters.</p>
 
 <h2 id="grouping-operators">Grouping operators</h2>
-<p>Currently <code class="highlighter-rouge">for_each()</code> and <code class="highlighter-rouge">pairs()</code> are supported to generate cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
+<p>Currently <code class="language-plaintext highlighter-rouge">for_each()</code> and <code class="language-plaintext highlighter-rouge">pairs()</code> are supported to generate cartesian product and paired grouping of parameters. These operators makes it easier to assign values to DSC. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">n</span><span class="pi">:</span> <span class="s">for_each(1, [1,2,3])</span>
 </code></pre></div></div>
@@ -1171,7 +1171,7 @@ initFunction(initQuery);
 <span class="nn">...</span>
 </code></pre></div></div>
 
-<h2 id="named-dscrun-pipelines">Named <code class="highlighter-rouge">DSC::run</code> pipelines</h2>
+<h2 id="named-dscrun-pipelines">Named <code class="language-plaintext highlighter-rouge">DSC::run</code> pipelines</h2>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
   <span class="na">run</span><span class="pi">:</span> <span class="s">a * b * c, a * b * e</span>
@@ -1185,7 +1185,7 @@ initFunction(initQuery);
      <span class="na">pipeline_2</span><span class="pi">:</span> <span class="s">a * b * e</span>
 </code></pre></div></div>
 
-<p>From command interface, instead of <code class="highlighter-rouge">--target "a * b * c"</code> you can use the equivalent command <code class="highlighter-rouge">--target pipeine_1</code>.</p>
+<p>From command interface, instead of <code class="language-plaintext highlighter-rouge">--target "a * b * c"</code> you can use the equivalent command <code class="language-plaintext highlighter-rouge">--target pipeine_1</code>.</p>
 
               <nav class="c-page__nav">
   

@@ -29,9 +29,9 @@
   "headline":
     "Extracting DSC results",
   "datePublished":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "dateModified":
-    "2019-10-12T13:23:09-05:00",
+    "2019-11-25T00:16:28-06:00",
   "description":
     "",
   "author": {
@@ -1059,13 +1059,13 @@ initFunction(initQuery);
             <div class="c-textbook__content">
               <h1 id="dsc-filter-syntax">DSC filter syntax</h1>
 
-<p>This document specifically focus on the syntax of <code class="highlighter-rouge">@FILTER</code> in <code class="highlighter-rouge">dsc</code> (for users) and <code class="highlighter-rouge">-c</code> option in <code class="highlighter-rouge">dsc-query</code> (for developers).</p>
+<p>This document specifically focus on the syntax of <code class="language-plaintext highlighter-rouge">@FILTER</code> in <code class="language-plaintext highlighter-rouge">dsc</code> (for users) and <code class="language-plaintext highlighter-rouge">-c</code> option in <code class="language-plaintext highlighter-rouge">dsc-query</code> (for developers).</p>
 
 <h2 id="for-users">For users</h2>
 
-<p>DSC filtering syntax, when applied in <code class="highlighter-rouge">@FILTER</code>, selects parameter combinations to allow for only a subset of modules can stem from a module definition.</p>
+<p>DSC filtering syntax, when applied in <code class="language-plaintext highlighter-rouge">@FILTER</code>, selects parameter combinations to allow for only a subset of modules can stem from a module definition.</p>
 
-<p>The basic structure for a filtering statement <code class="highlighter-rouge">@FILTER</code> is</p>
+<p>The basic structure for a filtering statement <code class="language-plaintext highlighter-rouge">@FILTER</code> is</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">C_i = {parameter}_i {condition operator} {value}</span>
 <span class="s">C = C_1 {logic operator} C_2 {logic operator} ...</span>
@@ -1074,11 +1074,11 @@ initFunction(initQuery);
 <p>Where we support</p>
 
 <ul>
-  <li>condition operators: <code class="highlighter-rouge">=, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in</code></li>
-  <li>logic operators: <code class="highlighter-rouge">AND</code>, <code class="highlighter-rouge">OR</code>, <code class="highlighter-rouge">NOT</code>, or derived compound logic, eg <code class="highlighter-rouge">((NOT (a AND b) OR c) AND d)</code></li>
+  <li>condition operators: <code class="language-plaintext highlighter-rouge">=, ==, &gt;, &lt;, &gt;=, &lt;=, !=, in</code></li>
+  <li>logic operators: <code class="language-plaintext highlighter-rouge">AND</code>, <code class="language-plaintext highlighter-rouge">OR</code>, <code class="language-plaintext highlighter-rouge">NOT</code>, or derived compound logic, eg <code class="language-plaintext highlighter-rouge">((NOT (a AND b) OR c) AND d)</code></li>
 </ul>
 
-<p>Notice that <code class="highlighter-rouge">in</code> logic will have to use <code class="highlighter-rouge">[]</code>, eg, <code class="highlighter-rouge">in [1,2,3]</code>, not <code class="highlighter-rouge">in (1,2,3)</code> because <code class="highlighter-rouge">()</code> is reserved for specifying order of operations (precedence). Misuse of <code class="highlighter-rouge">()</code> will lead to parser error.</p>
+<p>Notice that <code class="language-plaintext highlighter-rouge">in</code> logic will have to use <code class="language-plaintext highlighter-rouge">[]</code>, eg, <code class="language-plaintext highlighter-rouge">in [1,2,3]</code>, not <code class="language-plaintext highlighter-rouge">in (1,2,3)</code> because <code class="language-plaintext highlighter-rouge">()</code> is reserved for specifying order of operations (precedence). Misuse of <code class="language-plaintext highlighter-rouge">()</code> will lead to parser error.</p>
 
 <p>Here is an example:</p>
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate</span><span class="pi">:</span> <span class="s">sim.R</span>
@@ -1090,7 +1090,7 @@ initFunction(initQuery);
     <span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span> <span class="s">p1 &lt; 0.5, p2 &lt; </span><span class="m">0.5</span>
 </code></pre></div></div>
 
-<p>When multiple conditions are involved (separated by comma <code class="highlighter-rouge">,</code>), eg. <code class="highlighter-rouge">p1 &lt; 0.5, p2 &lt; 0.5</code> above, they will be connected by the <code class="highlighter-rouge">AND</code> logic. The setting after filter is:</p>
+<p>When multiple conditions are involved (separated by comma <code class="language-plaintext highlighter-rouge">,</code>), eg. <code class="language-plaintext highlighter-rouge">p1 &lt; 0.5, p2 &lt; 0.5</code> above, they will be connected by the <code class="language-plaintext highlighter-rouge">AND</code> logic. The setting after filter is:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">simulate</span><span class="pi">:</span> <span class="s">sim.R</span>
     <span class="s">n</span><span class="pi">:</span> <span class="s">150, </span><span class="m">200</span>
@@ -1099,21 +1099,21 @@ initFunction(initQuery);
     <span class="na">p2</span><span class="pi">:</span> <span class="m">0.2</span>
 </code></pre></div></div>
 
-<p>For more complex logic one might have to explictly use <code class="highlighter-rouge">OR</code>, for example:</p>
+<p>For more complex logic one might have to explictly use <code class="language-plaintext highlighter-rouge">OR</code>, for example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span> <span class="s">p1 &lt; 0.5 OR p2 &lt; </span><span class="m">0.5</span>
 </code></pre></div></div>
 
-<p>will only rule out the combination of <code class="highlighter-rouge">(p1, p2) = (0.1, 0.2)</code> in the example above.</p>
+<p>will only rule out the combination of <code class="language-plaintext highlighter-rouge">(p1, p2) = (0.1, 0.2)</code> in the example above.</p>
 
 <h2 id="for-developers">For developers</h2>
 
-<p><code class="highlighter-rouge">dsc-query</code> command can serve as the core to writing extension packages to explore DSC benchmark results. The command option is <code class="highlighter-rouge">dsc-query -c</code>, which allows users to decide which specific pipeline instance to extract and explore. The syntax is similar to in <code class="highlighter-rouge">@FILTER</code> except instead of <code class="highlighter-rouge">{parameter}_i</code>, here we need to specify <code class="highlighter-rouge">{module.parameter}_i</code> or <code class="highlighter-rouge">{group.parameter}_i</code>. For example,</p>
+<p><code class="language-plaintext highlighter-rouge">dsc-query</code> command can serve as the core to writing extension packages to explore DSC benchmark results. The command option is <code class="language-plaintext highlighter-rouge">dsc-query -c</code>, which allows users to decide which specific pipeline instance to extract and explore. The syntax is similar to in <code class="language-plaintext highlighter-rouge">@FILTER</code> except instead of <code class="language-plaintext highlighter-rouge">{parameter}_i</code>, here we need to specify <code class="language-plaintext highlighter-rouge">{module.parameter}_i</code> or <code class="language-plaintext highlighter-rouge">{group.parameter}_i</code>. For example,</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc_query ... <span class="nt">-c</span> <span class="s2">"simulate.n &gt; 100"</span> <span class="s2">"method.p1 &lt; 0.5 OR method.p2 &lt; 0.5"</span>
 </code></pre></div></div>
 
-<p>Multiple conditions are connected by the <code class="highlighter-rouge">AND</code> logic, that is, the above condition is <code class="highlighter-rouge">simulate.n &gt; 100 AND (method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)</code>.</p>
+<p>Multiple conditions are connected by the <code class="language-plaintext highlighter-rouge">AND</code> logic, that is, the above condition is <code class="language-plaintext highlighter-rouge">simulate.n &gt; 100 AND (method.p1 &lt; 0.5 OR method.p2 &lt; 0.5)</code>.</p>
 
               <nav class="c-page__nav">
   
