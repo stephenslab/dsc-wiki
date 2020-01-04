@@ -29,9 +29,9 @@
   "headline":
     "Running DSC",
   "datePublished":
-    "2019-11-25T13:17:06-06:00",
+    "2020-01-04T10:23:40-06:00",
   "dateModified":
-    "2019-11-25T13:17:06-06:00",
+    "2020-01-04T10:23:40-06:00",
   "description":
     "",
   "author": {
@@ -1108,7 +1108,7 @@ initFunction(initQuery);
 
 <p>Here <code class="language-plaintext highlighter-rouge">simulate</code> and <code class="language-plaintext highlighter-rouge">estimate</code> are module ensembles (see <code class="language-plaintext highlighter-rouge">DSC::define</code> of previous section). This is equivalent to writing:</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span> <span class="s">(normal, t) * (mean, median) * score</span>    
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run</span><span class="pi">:</span> <span class="s">(normal, t) * (mean, median) * score</span>
 </code></pre></div></div>
 
 <h4 id="example-2-concatenating-module-and-pipeline-ensembles">Example 2: concatenating module and pipeline ensembles</h4>
@@ -1196,6 +1196,8 @@ dsc file.dsc <span class="nt">--target</span> simulate
   <li><code class="language-plaintext highlighter-rouge">&lt;package@github_repo/subdir&gt;</code>: DSC will install <code class="language-plaintext highlighter-rouge">package</code> from <code class="language-plaintext highlighter-rouge">github_repo</code> on github. <code class="language-plaintext highlighter-rouge">/subdir</code> is optional – only applicable when the package is not in the root of the repository. eg <code class="language-plaintext highlighter-rouge">ashr@stephenslab/ashr</code>, <code class="language-plaintext highlighter-rouge">varbvs@pcarbo/varbvs/varbvs-r</code>.</li>
   <li><code class="language-plaintext highlighter-rouge">&lt;package (version[s])&gt;</code>: DSC will install <code class="language-plaintext highlighter-rouge">package</code> and check version as required. A warning message will be generated if version do not match after force installation to the latest. It is possible to specify several versions such as <code class="language-plaintext highlighter-rouge">edgeR (3.12.0, 3.12.1)</code> or simply <code class="language-plaintext highlighter-rouge">edgeR (3.12.0+)</code>.</li>
   <li><code class="language-plaintext highlighter-rouge">python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
+  <li><code class="language-plaintext highlighter-rouge">container</code>: docker container images to use, eg, <code class="language-plaintext highlighter-rouge">gaow/susie-paper:latest</code></li>
+  <li><code class="language-plaintext highlighter-rouge">container_engine</code>: optionally specify engine to run containers, can be either <code class="language-plaintext highlighter-rouge">docker</code> or <code class="language-plaintext highlighter-rouge">singularity</code>. Default is <code class="language-plaintext highlighter-rouge">docker</code>.</li>
   <li><code class="language-plaintext highlighter-rouge">work_dir</code>: work directory where benchmarking will take place.</li>
   <li><code class="language-plaintext highlighter-rouge">output</code>: folder name to store benchmark output files.</li>
   <li><code class="language-plaintext highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="Unsupported_Features#wildcard-operators">variable wildcard</a> <code class="language-plaintext highlighter-rouge">$()</code>.</li>
@@ -1236,7 +1238,7 @@ dsc file.dsc <span class="nt">--target</span> simulate
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">lib_path</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code class="language-plaintext highlighter-rouge">R</code> or <code class="language-plaintext highlighter-rouge">Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
-  <li><code class="language-plaintext highlighter-rouge">R_libs</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="language-plaintext highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="language-plaintext highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>.</li>
+  <li><code class="language-plaintext highlighter-rouge">R_libs</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="language-plaintext highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="language-plaintext highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>. The same holds for <code class="language-plaintext highlighter-rouge">python_modules</code>.</li>
 </ul>
 
 <h2 id="run-dsc-on-hpc-cluster-or-other-remote-computaters">Run DSC on HPC cluster or other remote computaters</h2>

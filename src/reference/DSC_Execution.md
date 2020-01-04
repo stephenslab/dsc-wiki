@@ -51,7 +51,7 @@ run: simulate * estimate * score
 Here `simulate` and `estimate` are module ensembles (see `DSC::define` of previous section). This is equivalent to writing:
 
 ```yaml
-run: (normal, t) * (mean, median) * score    
+run: (normal, t) * (mean, median) * score
 ```
 
 #### Example 2: concatenating module and pipeline ensembles
@@ -147,6 +147,8 @@ These parameters are specified in the rest of `DSC` block:
  * `<package@github_repo/subdir>`: DSC will install `package` from `github_repo` on github. `/subdir` is optional -- only applicable when the package is not in the root of the repository. eg `ashr@stephenslab/ashr`, `varbvs@pcarbo/varbvs/varbvs-r`.
  * `<package (version[s])>`: DSC will install `package` and check version as required. A warning message will be generated if version do not match after force installation to the latest. It is possible to specify several versions such as `edgeR (3.12.0, 3.12.1)` or simply `edgeR (3.12.0+)`.
 * `python_modules`: check required Python3 modules, and install from pip if not available.
+* `container`: docker container images to use, eg, `gaow/susie-paper:latest`
+* `container_engine`: optionally specify engine to run containers, can be either `docker` or `singularity`. Default is `docker`.
 * `work_dir`: work directory where benchmarking will take place.
 * `output`: folder name to store benchmark output files.
 * `global`: defines global variables which can be used in definition of module parameters through [variable wildcard](Unsupported_Features#wildcard-operators) `$()`.
@@ -186,7 +188,7 @@ simulate: simulate.R
 `@CONF` is designed not only to "fine-tune" the runtime environment of a module, but, as a "decorator", will change behavior of a module's execution. Specifically:
 
 - `lib_path` when specified under `@CONF`, all relevant scripts (of the same type as the executable, eg. `R` or `Py`) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.
-- `R_libs` when specified under `@CONF` will automatically load all listed libraries via `library(...)` prior to running the module script. **Please use `DSC::R_libs` instead if this is not the desired behavior**.
+- `R_libs` when specified under `@CONF` will automatically load all listed libraries via `library(...)` prior to running the module script. **Please use `DSC::R_libs` instead if this is not the desired behavior**. The same holds for `python_modules`.
 
 ## Run DSC on HPC cluster or other remote computaters
 

@@ -29,9 +29,9 @@
   "headline":
     "Running DSC in Docker",
   "datePublished":
-    "2019-11-25T13:17:06-06:00",
+    "2020-01-04T10:23:40-06:00",
   "dateModified":
-    "2019-11-25T13:17:06-06:00",
+    "2020-01-04T10:23:40-06:00",
   "description":
     "",
   "author": {
@@ -1057,7 +1057,7 @@ initFunction(initQuery);
             
 
             <div class="c-textbook__content">
-              <h1 id="share-dsc-via-docker">Share DSC via docker</h1>
+              <h1 id="share-dsc-via-containers">Share DSC via containers</h1>
 
 <p>First you need to install and configure docker:</p>
 <ul>
@@ -1073,7 +1073,7 @@ initFunction(initQuery);
   <li>Serve as the base docker image to add to it your own benchmarks for others to reproduce.</li>
 </ul>
 
-<h2 id="run-dsc-base-docker-image">Run DSC base docker image</h2>
+<h2 id="run-dsc-docker-image-demo">Run DSC docker image demo</h2>
 
 <p>To use the docker image:</p>
 
@@ -1108,6 +1108,41 @@ DSC: 100%|######################################################################
 INFO: Building DSC database ...
 INFO: DSC complete!
 INFO: Elapsed time 21.425 seconds.
+</code></pre></div></div>
+
+<h2 id="use-container-options-in-dsc-script-to-share-your-dsc">Use container options in DSC script to share your DSC</h2>
+
+<p><code class="language-plaintext highlighter-rouge">@CONF</code> provides <code class="language-plaintext highlighter-rouge">container</code> and <code class="language-plaintext highlighter-rouge">container_engine</code> options to run DSC using containers (<a href="DSC_Execution">see this document</a> for what <code class="language-plaintext highlighter-rouge">@CONF</code> does).</p>
+
+<h3 id="set-module-specific-container">Set module specific container</h3>
+
+<p>The DSC scsript below uses docker image <code class="language-plaintext highlighter-rouge">gaow/susie</code> which has <code class="language-plaintext highlighter-rouge">susieR</code> package installed. If you have <code class="language-plaintext highlighter-rouge">docker</code> on your computer you should be able to run
+this module without having to install <code class="language-plaintext highlighter-rouge">susieR</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">susie</span><span class="pi">:</span> <span class="s">R(version = packageVersion('susieR'))</span>
+  <span class="s">$out</span><span class="pi">:</span> <span class="s">version</span>
+  <span class="s">@CONF</span><span class="pi">:</span> <span class="s">container = gaow/susie</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc test.dsc <span class="nt">--target</span> susie
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO: Load command line DSC sequence: susie
+INFO: DSC script exported to test.html
+HINT: Pulling docker image gaow/susie
+INFO: Building DSC database ...
+[###] 3 steps processed (3 jobs completed)
+INFO: DSC complete!
+INFO: Elapsed time 8.290 seconds.
+</code></pre></div></div>
+
+<h3 id="use-singularity">Use singularity</h3>
+
+<p>To run the container with <code class="language-plaintext highlighter-rouge">singularity</code> instead of <code class="language-plaintext highlighter-rouge">docker</code>,</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">susie</span><span class="pi">:</span> <span class="s">R(version = packageVersion('susieR'))</span>
+  <span class="s">$out</span><span class="pi">:</span> <span class="s">version</span>
+  <span class="s">@CONF</span><span class="pi">:</span> <span class="s">container = gaow/susie, container_engine = singularity</span>
 </code></pre></div></div>
 
               <nav class="c-page__nav">
