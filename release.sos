@@ -60,7 +60,13 @@ bash:  workdir = workdir, expand = "${ }"
 	${("echo 'Preview the website at: http://0.0.0.0:4000/lab-wiki; type **one** ctrl-c to stop it.'") if serve else ""}
  	bundle exec jekyll ${'build' if not serve else 'serve --host 0.0.0.0 > /dev/null'}
 
-[make_site]
+[add_external]
+bash: expand = True
+	cp src/index.html ${workdir}/_site/index.html
+	cp -r src/external ${workdir}/_site/
+	cp -r images ${workdir}/_site/
+
+[make_gh_pages]
 depends: executable('rsync')
 bash: expand = '${ }'
 	mkdir -p ${htmldir}
@@ -77,5 +83,7 @@ if (not use_docker):
 else:
 	sos_run('make_jekyll_image')
 	sos_run('run_jekyll_image')
-stop_if(serve or len(htmldir)==0)
-sos_run('make_site')
+if (serve or len(htmldir)==0):
+	sos_run('add_external')
+else:
+	sos_run('make_gh_pages')

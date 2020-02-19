@@ -1,7 +1,7 @@
 # Share DSC via containers
 
 First you need to install and configure docker:
-- Follow [Docker installation guild](https://www.docker.com/community-edition) until you can use `sudo docker` to print the "Hello World" example.
+- Follow [Docker installation guide](https://www.docker.com/community-edition) until you can use `sudo docker` to print the "Hello World" example.
 - Run `sudo usermod -aG docker $USER`
 - Log out and log back in
 

@@ -31,7 +31,7 @@ After editing, you should save the notebook before exit.
 
 ## Edit website organization
 
-Use a text editor to modify the file `cfg/toc.yml`. 
+Use a text editor to modify the file `cfg/toc.yml`.
 
 ## Build the website
 
@@ -65,6 +65,15 @@ To preview changes before pushing it, run:
 ```
 
 and enter URL `http://0.0.0.0:4000/dsc-wiki/overview.html` to your browser address bar to preview.
+
+## Automatic deployment
+
+We will use [this Action repository](https://github.com/xinhe-lab/sos-dockerfile-action) to create a github `Action`
+to build the website automatically once a commit is received. Here is now it is configured:
+
+1. Create the [`.github/workflows/jekyll.yml`](https://github.com/stephenslab/dsc-wiki/blob/master/.github/workflows/jekyll.yml) file.
+2. Create a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) if you dont have one.
+3. Add the token to [`secrets`](https://github.com/stephenslab/dsc-wiki/settings/secrets) with name `ACESS_TOKEN` and value `username:token`.
 
 ## Work with Jupyter Notebooks
 

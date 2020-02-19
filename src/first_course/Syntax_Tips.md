@@ -1,6 +1,6 @@
 # Tips and Tricks
 
-Once you have completed the [Introduction to DSC](Intro_DSC), 
+Once you have completed the [Introduction to DSC](Intro_DSC),
 you should be ready to write your own DSC.
 
 This file introduces you
@@ -40,19 +40,24 @@ than is used in a script. For example:
 
 ```yaml
 t: R( y = rt(m, df=2))
-  n: 100, 1000 
+  n: 100, 1000
   $data: y
   $true_mean: 3
   @ALIAS: m = n
 ```
-This defines a module with parameter `n`, and the `ALIAS` command 
-tells DSC to pass the parameter value to the script variable `m` (rather than 
+This defines a module with parameter `n`, and the `ALIAS` command
+tells DSC to pass the parameter value to the script variable `m` (rather than
 the default, which is to pass it to the script variable of the same name as the parameter).
 
 This can be useful when you want two different modules to have the same
 parameter names, even when the scripts use different script variables.
 
 ## Module inheritance
+
+Syntax `module(base_module)` allows constructing a `module` by first *inheriting* from a `base_module`, ie, another module
+very similar to the new module to be created, then modify it by re-defining its input, parameters and / or output to create
+the new module. For example the code below creates a new module called `shifted_normal` based on a `normal` module but set
+`mu: 1` to override `mu: 0` in the original module to "shift" the mean of the distribution:
 
 ```yaml
 normal: R( x = mu + rnorm(n) )
@@ -61,6 +66,6 @@ normal: R( x = mu + rnorm(n) )
   $data: x
   $true_mean: mu
 
-shifted_normal(normal): 
+shifted_normal(normal):
   mu: 1
 ```
