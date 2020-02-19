@@ -66,7 +66,7 @@ bash: expand = True
 	cp -r src/external ${workdir}/_site/
 	cp -r images ${workdir}/_site/
 
-[make_gh_pages]
+[sync_external]
 depends: executable('rsync')
 bash: expand = '${ }'
 	mkdir -p ${htmldir}
@@ -83,7 +83,8 @@ if (not use_docker):
 else:
 	sos_run('make_jekyll_image')
 	sos_run('run_jekyll_image')
-if (serve or len(htmldir)==0):
+stop_if(serve)
+if (len(htmldir)==0):
 	sos_run('add_external')
 else:
-	sos_run('make_gh_pages')
+	sos_run('sync_external')

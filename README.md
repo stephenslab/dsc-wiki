@@ -33,7 +33,21 @@ After editing, you should save the notebook before exit.
 
 Use a text editor to modify the file `cfg/toc.yml`.
 
-## Build the website
+## Automatic deployment
+
+We use [this Action repository](https://github.com/xinhe-lab/sos-dockerfile-action) to create a github `Action`
+to build the website automatically once a commit is received. Here is how it was configured:
+
+1. Create the [`.github/workflows/jekyll.yml`](https://github.com/stephenslab/dsc-wiki/blob/master/.github/workflows/jekyll.yml) file.
+2. Create a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) if you dont have one.
+3. Add the token to [`secrets`](https://github.com/stephenslab/dsc-wiki/settings/secrets) with name `ACESS_TOKEN` and value `username:token`.
+4. Go to [settings](https://github.com/stephenslab/dsc-wiki/settings) of the repository, in "GitHub Pages" section change "Source" to `gh-pages-branch`.
+
+After these settings, you can make changes to source codes in this repository and the changes will be reflected on the [wiki website](https://stephenslab.github.io/) a minute or two, after your changes are pushed to the `master` branch of this repository.
+
+## Build the website manually
+
+You can skip this section if you are using the "Automatic deployment" method above.
 
 The website is built using [`jupyter-book`](https://github.com/jupyter/jupyter-book). We implemented a SoS workflow to streamline the process. You should have SoS installed if you have installed DSC.
 
@@ -65,15 +79,6 @@ To preview changes before pushing it, run:
 ```
 
 and enter URL `http://0.0.0.0:4000/dsc-wiki/overview.html` to your browser address bar to preview.
-
-## Automatic deployment
-
-We will use [this Action repository](https://github.com/xinhe-lab/sos-dockerfile-action) to create a github `Action`
-to build the website automatically once a commit is received. Here is now it is configured:
-
-1. Create the [`.github/workflows/jekyll.yml`](https://github.com/stephenslab/dsc-wiki/blob/master/.github/workflows/jekyll.yml) file.
-2. Create a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) if you dont have one.
-3. Add the token to [`secrets`](https://github.com/stephenslab/dsc-wiki/settings/secrets) with name `ACESS_TOKEN` and value `username:token`.
 
 ## Work with Jupyter Notebooks
 
