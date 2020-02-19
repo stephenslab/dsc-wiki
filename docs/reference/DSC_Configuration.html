@@ -29,9 +29,9 @@
   "headline":
     "DSC configuration syntax",
   "datePublished":
-    "2020-02-19T08:33:36-06:00",
+    "2020-02-19T08:34:46-06:00",
   "dateModified":
-    "2020-02-19T08:33:36-06:00",
+    "2020-02-19T08:34:46-06:00",
   "description":
     "",
   "author": {
@@ -1144,7 +1144,7 @@ initFunction(initQuery);
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
 
-<span class="s">shifted_normal(normal)</span><span class="pi">:</span> 
+<span class="s">shifted_normal(normal)</span><span class="pi">:</span>
   <span class="na">mu</span><span class="pi">:</span> <span class="m">1</span>
 </code></pre></div></div>
 
@@ -1188,7 +1188,7 @@ initFunction(initQuery);
   <span class="na">mu</span><span class="pi">:</span> <span class="m">0</span>
   <span class="s">$data</span><span class="pi">:</span> <span class="s">x</span>
   <span class="s">$true_mean</span><span class="pi">:</span> <span class="s">mu</span>
-  
+
 <span class="s">normal(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rnorm(n) )</span>
 
 <span class="s">t(simulate_base)</span><span class="pi">:</span> <span class="s">R( x = mu + rt(n,df) )</span>
@@ -1392,7 +1392,7 @@ initFunction(initQuery);
 
 <p>Wildcard <code class="language-plaintext highlighter-rouge">*</code> is also supported,</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span> 
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="err">@</span><span class="na">FILTER</span><span class="pi">:</span>
         <span class="err">*</span><span class="pi">:</span> <span class="s">n in [100,200,300]</span>
         <span class="na">t</span><span class="pi">:</span> <span class="s">n = </span><span class="m">300</span>
 </code></pre></div></div>
@@ -1401,7 +1401,7 @@ initFunction(initQuery);
 
 <h3 id="decorator-conf">Decorator CONF</h3>
 
-<p><code class="language-plaintext highlighter-rouge">@CONF</code> provides interface to override certain properties in benchmark configuration section (<code class="language-plaintext highlighter-rouge">DSC</code> section), including <code class="language-plaintext highlighter-rouge">work_dir</code>, <code class="language-plaintext highlighter-rouge">exec_path</code>, <code class="language-plaintext highlighter-rouge">lib_path</code>. See <a href="DSC_Execution">this document</a> for more details.</p>
+<p><code class="language-plaintext highlighter-rouge">@CONF</code> provides interface to override certain properties in benchmark configuration section (<code class="language-plaintext highlighter-rouge">DSC</code> section), including <code class="language-plaintext highlighter-rouge">work_dir</code>, <code class="language-plaintext highlighter-rouge">exec_path</code>, <code class="language-plaintext highlighter-rouge">lib_path</code>, etc. See <a href="DSC_Execution">this document</a> for more details.</p>
 
 <h2 id="operators">Operators</h2>
 

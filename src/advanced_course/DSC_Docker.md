@@ -1,4 +1,4 @@
-# Share DSC via docker
+# Share DSC via containers
 
 First you need to install and configure docker:
 - Follow [Docker installation guild](https://www.docker.com/community-edition) until you can use `sudo docker` to print the "Hello World" example.
@@ -10,7 +10,7 @@ We have provided a docker image for DSC which can be used to
 - Run some of the DSC vignettes examples
 - Serve as the base docker image to add to it your own benchmarks for others to reproduce.
 
-## Run DSC base docker image
+## Run DSC docker image demo
 
 To use the docker image:
 
@@ -29,8 +29,6 @@ alias dsc-docker='docker run --rm --security-opt label:disable -v $USER:/home/do
 ```
 
 For example, to run the [Introductory DSC tutorial](../tutorials/Intro_DSC.html),
-
-
 
 ```bash
 cd ~/GIT/dsc/vignettes/one_sample_location
@@ -52,4 +50,43 @@ DSC: 100%|######################################################################
 INFO: Building DSC database ...
 INFO: DSC complete!
 INFO: Elapsed time 21.425 seconds.
+```
+
+## Use container options in DSC script to share your DSC
+
+`@CONF` provides `container` and `container_engine` options to run DSC using containers ([see this document](DSC_Execution) for what `@CONF` does).
+
+### Set module specific container
+
+The DSC scsript below uses docker image `gaow/susie` which has `susieR` package installed. If you have `docker` on your computer you should be able to run
+this module without having to install `susieR`.
+
+```yaml
+susie: R(version = packageVersion('susieR'))
+  $out: version
+  @CONF: container = gaow/susie
+```
+
+```bash
+dsc test.dsc --target susie
+```
+
+```
+INFO: Load command line DSC sequence: susie
+INFO: DSC script exported to test.html
+HINT: Pulling docker image gaow/susie
+INFO: Building DSC database ...
+[###] 3 steps processed (3 jobs completed)
+INFO: DSC complete!
+INFO: Elapsed time 8.290 seconds.
+```
+
+### Use singularity
+
+To run the container with `singularity` instead of `docker`,
+
+```yaml
+susie: R(version = packageVersion('susieR'))
+  $out: version
+  @CONF: container = gaow/susie, container_engine = singularity
 ```

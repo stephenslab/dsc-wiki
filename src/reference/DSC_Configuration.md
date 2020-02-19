@@ -1,6 +1,6 @@
 # DSC syntax: basics of modules
 
-In this document we mainly use partial DSC examples (along the lines of [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc) but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find [DSC introduction tutorials](../first_course/first_course) a useful first-read to help better understand DSC syntax. 
+In this document we mainly use partial DSC examples (along the lines of [this toy](https://github.com/stephenslab/dsc/blob/master/vignettes/one_sample_location/settings.dsc) but with advanced features not used there) to introduce basic DSC syntax. Before diving into the details, you may find [DSC introduction tutorials](../first_course/first_course) a useful first-read to help better understand DSC syntax.
 
 We endeavor to maintain DSC syntax simple and intuitive. This documentation covers the basic DSC syntax for users to get started quickly. We will use dedicated tutorial examples on various specific user cases separatedly, such as using other languages / command tools, using DSC in exploratory phase of research projects, and working with remote computers or HPC clusters for large scale computation. (**FIXME: create these tutorials and add links to them**)
 
@@ -75,7 +75,7 @@ It can also be combined with scripts as a concatenation:
 method: utils.R + R(res = main(...))
 ```
 
-Or, 
+Or,
 
 ```yaml
 method1, method2: (utils1.R, utils2.R) + R(res = main(...))
@@ -92,7 +92,7 @@ normal: R( x = mu + rnorm(n) )
   $data: x
   $true_mean: mu
 
-shifted_normal(normal): 
+shifted_normal(normal):
   mu: 1
 ```
 
@@ -108,7 +108,7 @@ shifted_normal: R( x = mu + rnorm(n) )
 
 The inheritance syntax makes module definitions not only succint but also conceptually more clear to define new modules -- in this example we can tell that `shifted_normal` is essentially `normal` with different parameters.
 
-Module inheritance can also be used to add parameters, eg, 
+Module inheritance can also be used to add parameters, eg,
 
 
 ```yaml
@@ -141,7 +141,7 @@ simulate_base:
   mu: 0
   $data: x
   $true_mean: mu
-  
+
 normal(simulate_base): R( x = mu + rnorm(n) )
 
 t(simulate_base): R( x = mu + rt(n,df) )
@@ -240,7 +240,7 @@ normal, t: rnorm.R, rt.R
         n: 200
 ...
 ```
-will set `n = 200` for `t`, rather than using `n = 1000`. 
+will set `n = 200` for `t`, rather than using `n = 1000`.
 
 Bulk syntax is supported:
 
@@ -284,7 +284,7 @@ ALIAS operators, `List()` and `Dict()` are used in `@ALIAS` decorator to help co
 ```yaml
 @ALIAS: args = List()
 ```
- 
+
 will convert all input / parameters the module has available, say `x,y,z` to `args <- list(x = ..., y = ..., z = ...)`. Likewise, `List()` will convert parameters to `dictionary` in Python. Partial conversion is also supported, for example `args = List(x, y)` will only convert selected variables to R list which will be translated to R code `args <- list(x = x, y = y)`.
 
 **Note that when a variable is made into ALIAS operator it will no longer be available as is**. For example,
@@ -359,10 +359,10 @@ When no module name is specified, eg. `n`, then all modules will subject to the 
     @FILTER: (n in [100,200,300] and k = 0)
 ```
 
-Wildcard `*` is also supported, 
+Wildcard `*` is also supported,
 
 ```yaml
-    @FILTER: 
+    @FILTER:
         *: n in [100,200,300]
         t: n = 300
 ```
@@ -371,7 +371,7 @@ then for `t` we restrict `n` to `300`, and for all other modules we set `n` to l
 
 ### Decorator CONF
 
-`@CONF` provides interface to override certain properties in benchmark configuration section (`DSC` section), including `work_dir`, `exec_path`, `lib_path`. See [this document](DSC_Execution) for more details.
+`@CONF` provides interface to override certain properties in benchmark configuration section (`DSC` section), including `work_dir`, `exec_path`, `lib_path`, etc. See [this document](DSC_Execution) for more details.
 
 ## Operators
 
@@ -422,7 +422,7 @@ normal: R(x <- rnorm(n,mean = mu,sd = 1))
   mu: raw(0.0)
 ```
 
-will result in 
+will result in
 
 ```r
 x <- rnorm(n,mean = 0.0,sd = 1)
@@ -434,7 +434,7 @@ However replacing `raw(0.0)` with `0.0` it will result in
 x <- rnorm(n,mean = 0,sd = 1)
 ```
 
-Caution that whatever goes into `raw()` will be treated as strings in the `condition` parameter of [`dscrutils::dscquery`](https://github.com/stephenslab/dsc/blob/master/dscrutils/man/dscquery.Rd). 
+Caution that whatever goes into `raw()` will be treated as strings in the `condition` parameter of [`dscrutils::dscquery`](https://github.com/stephenslab/dsc/blob/master/dscrutils/man/dscquery.Rd).
 
 ### File generator
 
