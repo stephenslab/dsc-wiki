@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>DSC</title>
+  <meta name="description" content="">
+
+  <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/content/development/finalized_terminology_and_extraction.html">
+  <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
+
+  <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/content/development/finalized_terminology_and_extraction.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="DSC" />
+<meta property="og:description" content="" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://stephenslab.github.io/dsc-wiki/content/development/finalized_terminology_and_extraction.html",
+  "headline":
+    "DSC",
+  "datePublished":
+    "2020-02-19T09:05:32-06:00",
+  "dateModified":
+    "2020-02-19T09:05:32-06:00",
+  "description":
+    "",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://stephenslab.github.io/dsc-wiki",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://stephenslab.github.io/dsc-wiki",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-wiki/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '/dsc-wiki';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="/dsc-wiki/assets/js/anchor.min.js"  type="text/javascript"></script>
+  <script>
+
+initFunction(function () {
+    anchors.add("main h1, main h2, main h3, main h4")
+});
+
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-wiki/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
+
+  <!-- Google analytics -->
+  <script src="/dsc-wiki/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("copy-button" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
+    }
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+
+  <!-- Hide cell code -->
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
+
+
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
+
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
+    }
+
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
+
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
+    }
+
+
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
+
+
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
+
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
+
+    initFunction(initHiddenCells);
+
+</script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-wiki/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-wiki/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="/dsc-wiki/assets/js/lunr/lunr.min.js" type="text/javascript"></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://github.com/stephenslab/dsc"><img src="/dsc-wiki/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">DSC</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+        <li class="c-sidebar__chapter"><a class="c-sidebar__entry" href="/dsc-wiki/search.html"><img src="/dsc-wiki/images/search.svg" alt="Search This Wiki"></a></li>
+        
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/overview.html"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/installation.html"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/reference/reference.html"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Terminology.html"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Configuration.html"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Execution.html"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Filtering.html"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Command_Options.html"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Road_Map.html"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Implementation_Details.html"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Unsupported_Features.html"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">User guide</li>
+        
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/first_course/first_course.html"
+        >
+          
+          First course on DSC
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_DSC.html"
+                >
+                  
+                  A brief introduction to DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_I.html"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_II.html"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Prototype_Tips.html"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Debug_Tips.html"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Syntax_Tips.html"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          Other tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_Python.html"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Data.html"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_RPY.html"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Multiple_Pipelines.html"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Rmd_Executable.html"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Remote_Computations.html"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Docker.html"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/examples.html"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_1.html"
+                >
+                  
+                  R Example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_2.html"
+                >
+                  
+                  R Example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
+      
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+
+            <div class="c-textbook__content">
+              <p>This documents finalizes proposals on terminology and extraction 
+from <a href="/dsc-wiki/content/development/initial_thoughts_on_terminology_and_extraction.html">here</a> and discussions
+in <a href="https://github.com/stephenslab/dsc2/issues">github issues 68 - 74</a>.</p>
+
+<h1 id="terminology">Terminology</h1>
+<h2 id="dsc-script-terminology">DSC script terminology</h2>
+<p>To adopt</p>
+
+<ul>
+  <li>Module
+    <ul>
+      <li>Module input and output (<code class="language-plaintext highlighter-rouge">$</code> variables)</li>
+      <li>Module instance: <del>when a module is executed given input and parameters</del></li>
+    </ul>
+  </li>
+  <li>Pipeline
+    <ul>
+      <li>Pipeline is a sequence of modules; a module is a special case of a pipeline</li>
+      <li>Pipeline input is input of the first module in the sequence</li>
+      <li>Pipeline output is output of the last module in the sequence</li>
+      <li>Pipeline variable: a collection of all input / output of modules involved in the pipeline</li>
+      <li>Pipeline instance: <del>when a pipeline is executed given input and parameters</del></li>
+      <li>Pipeline seed:</li>
+    </ul>
+  </li>
+  <li>Ensemble of pipelines
+    <ul>
+      <li>A group of modules or pipelines as an entity with well defined functionality</li>
+    </ul>
+  </li>
+  <li>Variables
+    <ul>
+      <li>Input / output / parameters are all variables</li>
+      <li>Input / output are public (or external) variables accessible to other modules</li>
+      <li>Parameters are private (or internal) variables local to a module</li>
+    </ul>
+  </li>
+</ul>
+
+<p>To banish</p>
+<ul>
+  <li>Block</li>
+  <li>Step</li>
+</ul>
+
+<p>To discuss</p>
+<ul>
+  <li>We have not yet defined DSC. Is it a “benchmark” running multiple pipelines?</li>
+</ul>
+
+<h2 id="dsc-result-meta-data-terminology">DSC result meta-data terminology</h2>
+<p>Change <code class="language-plaintext highlighter-rouge">depends</code> to <code class="language-plaintext highlighter-rouge">parent</code>; change <code class="language-plaintext highlighter-rouge">master</code> to <code class="language-plaintext highlighter-rouge">pipeline</code></p>
+
+<h2 id="new-syntax">New syntax</h2>
+<ol>
+  <li>Remove <code class="language-plaintext highlighter-rouge">.alias</code> for <code class="language-plaintext highlighter-rouge">exec</code>; use it for the section name (as module name) directly
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ash </span><span class="pi">:</span> 
+  <span class="na">exec</span><span class="pi">:</span> <span class="s">ash.R</span>
+</code></pre></div>    </div>
+  </li>
+  <li>For multiple similar modules the succinct definition is:
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">ash.hu, ash.n</span> <span class="pi">:</span>
+  <span class="na">exec</span><span class="pi">:</span> <span class="s">ash.R</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Or,</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">method1, method2</span> <span class="pi">:</span> 
+  <span class="na">exec</span><span class="pi">:</span> <span class="s">xxx.R, yyy.R</span>
+</code></pre></div></div>
+
+<p>and for <a href="https://stephenslab.github.io/dsc-wiki/doc/documentation/DSC_Configuration.html#Block-Inheritance-14">module derivation</a>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">method1, method2 (ash.hu, ash.n)</span><span class="pi">:</span> 
+   <span class="na">exec</span><span class="pi">:</span> <span class="s">xxx.R, yyy.R</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Replace <code class="language-plaintext highlighter-rouge">params</code> with <code class="language-plaintext highlighter-rouge">input</code>, replace <code class="language-plaintext highlighter-rouge">return</code> with <code class="language-plaintext highlighter-rouge">output</code>.</p>
+  </li>
+  <li>
+    <p>Pipeline variables are always <code class="language-plaintext highlighter-rouge">$</code>. Previously this is explicit in <code class="language-plaintext highlighter-rouge">input</code> but implicit in <code class="language-plaintext highlighter-rouge">output</code>. Now we make it explicit in output, such as <code class="language-plaintext highlighter-rouge">$x: x</code>. Having return just <code class="language-plaintext highlighter-rouge">x</code> is a shorthand but it obscures the logic, therefore we’ll not adopt.</p>
+  </li>
+  <li>
+    <p>Module groups. This has not been discussed but we can do something in DSC section like:</p>
+  </li>
+</ol>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">DSC</span><span class="pi">:</span>
+  <span class="na">define</span><span class="pi">:</span> <span class="s">method = (method1, method2),</span> 
+          <span class="s">preprocess = split * normalize,</span> 
+          <span class="s">simulate = (simulate1 * process_simulate1, simulate2)</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">simulate * preprocess * method * score</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Implement</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g: score_beta: R($mse_beta = mean(($true_beta-$beta_est)^2))
+</code></pre></div></div>
+<p>and</p>
+<pre><code class="language-￼">ash.n: R($ash_res = ash($beta, $s, mixcompdist="normal"))
+</code></pre>
+
+<p>This would mean no condition-based query but in simple situations it might be fine to lose condition-based query, in return for the extreme convinience it brings along.</p>
+
+<h2 id="pending">Pending</h2>
+<ul>
+  <li>Concept and syntax of <code class="language-plaintext highlighter-rouge">.alias</code></li>
+</ul>
+
+<h1 id="result-extraction">Result extraction</h1>
+<p>We have discussed this in <a href="https://github.com/stephenslab/dsc2/issues/72">this ticket</a> and <a href="https://github.com/stephenslab/dsc2/issues/71">this ticket</a>.</p>
+
+<p>From our discussion I get an impression that if users can understand how meta data tables are connected as relational tables, 
+it is perhaps more appealing to adopt some simplified version of SQL syntax, ie let’s create a DSC query language based on SQL.</p>
+
+<h2 id="an-sql-like-interface">An SQL like interface</h2>
+<p>The simplification I have in mind is to automatically guess and join tables so that users do not have to write JOIN clause. 
+For example users type:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">mse</span>
+<span class="k">where</span> <span class="n">runash</span><span class="p">.</span><span class="n">mixcompdist</span> <span class="o">=</span> <span class="nv">"normal"</span> <span class="k">and</span> <span class="n">datamaker</span><span class="p">.</span><span class="n">nsamp</span> <span class="o">=</span> <span class="mi">1000</span>
+</code></pre></div></div>
+
+<p>Then internally we’ll have to figure out</p>
+
+<ol>
+  <li>Tables <code class="language-plaintext highlighter-rouge">score_beta</code>, <code class="language-plaintext highlighter-rouge">runash</code> and <code class="language-plaintext highlighter-rouge">datamaker</code> are involved (via parsing the query)</li>
+  <li><code class="language-plaintext highlighter-rouge">score_beta</code> depends on <code class="language-plaintext highlighter-rouge">runash</code> and <code class="language-plaintext highlighter-rouge">datamaker</code>, and <code class="language-plaintext highlighter-rouge">runash</code> depends on <code class="language-plaintext highlighter-rouge">datamaker</code> (via information stored in <code class="language-plaintext highlighter-rouge">pipeline</code> table)</li>
+  <li>Complete a JOIN statement to properly put together the relational tables and propagate the SQL query
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="k">result</span>
+<span class="k">from</span> <span class="n">score_beta</span>
+<span class="k">inner</span> <span class="k">join</span> <span class="n">runash</span> 
+<span class="k">on</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">runash</span><span class="p">.</span><span class="n">id</span>
+<span class="k">inner</span> <span class="k">join</span> <span class="n">datamaker</span>
+<span class="k">on</span> <span class="n">runash</span><span class="p">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">datamaker</span><span class="p">.</span><span class="n">id</span>
+<span class="k">where</span> <span class="n">runash</span><span class="p">.</span><span class="n">mixcompdist</span> <span class="o">=</span> <span class="nv">"normal"</span> <span class="k">and</span> <span class="n">datamaker</span><span class="p">.</span><span class="n">nsamp</span> <span class="o">=</span> <span class="mi">1000</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Execute propagated query to obtain output file names, for example <code class="language-plaintext highlighter-rouge">1.rds</code>. This is what we get after running the SQL-style query.</li>
+  <li>Extract desired quantity in R:
+    <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="s1">'1.rds'</span><span class="p">)</span><span class="o">$</span><span class="n">mse</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>Other than extracting results, we also support extracting parameters, for example:
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">n</span>
+<span class="k">where</span> <span class="n">runash</span><span class="p">.</span><span class="n">mixcompdist</span> <span class="o">=</span> <span class="nv">"normal"</span> <span class="k">and</span> <span class="n">datamaker</span><span class="p">.</span><span class="n">nsamp</span> <span class="o">=</span> <span class="mi">1000</span>
+</code></pre></div>    </div>
+    <p>would be translated to</p>
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">n</span>
+<span class="k">from</span> <span class="n">score_beta</span>
+<span class="k">inner</span> <span class="k">join</span> <span class="n">runash</span> 
+<span class="p">...</span>
+</code></pre></div>    </div>
+    <p>and step 5 will be skipped because this quantity should be immediately available in meta database.</p>
+  </li>
+</ol>
+
+<h2 id="how-much-do-we-resemble-sql">How much do we resemble SQL?</h2>
+<p>Again even this simplified SQL style interface requires users to understand the organization of meta data. I’m thinking we should implement a command to display this information nicely – maybe output to an HTML file? Any R/Rstudio widgets for lists of tables that I can borrow? And if it is easier to do it in R we should build this in shinydsc instead?</p>
+
+<p>Another protential problem is that it is then tempting to write:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="k">avg</span><span class="p">(</span><span class="n">score_beta</span><span class="p">.</span><span class="n">mse</span><span class="p">)</span>
+<span class="p">...</span>
+</code></pre></div></div>
+<p>But this will be invalid syntax because under the hood we do not store values of <code class="language-plaintext highlighter-rouge">mse</code> in the meta-data. Instead we query the output file name and extract <code class="language-plaintext highlighter-rouge">mse</code> from there. There are 2 ways around this:</p>
+
+<ol>
+  <li>Use a partial SQL (more constrained) syntax hybrid with command switch:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc <span class="nt">-e</span> mse:score_beta <span class="nt">--condition</span> <span class="s2">"runash:mixcompdist = 'normal' and datamaker:nsamp = 1000"</span>
+</code></pre></div></div>
+<p>which will still be translated to the SQL query above and use R to extract results. That is to say, we do not claim to adopt a full version of SQL but rather only the “WHERE” clause.</p>
+
+<ol>
+  <li>We parse the quantity <code class="language-plaintext highlighter-rouge">mse</code> from the SQL-like query, extract the quantity from RDS file to swap with the meta table (in memory), and perform query directly. The upside is one can use a number of SQL functions for <code class="language-plaintext highlighter-rouge">SELECT</code> statement and there is no need to further process the output. The downside is apparently implementation difficulties.</li>
+</ol>
+
+<p><strong>I’m leaning towards solution 1, but comments welcomed</strong></p>
+
+<h2 id="default-field-name-syntax-and-behavior-in-ensemble-case">Default field name syntax and behavior in ensemble case</h2>
+<p>So far we require one to use <code class="language-plaintext highlighter-rouge">module_name.variable</code> syntax to extract a quantity. But let’s make it default that when only <code class="language-plaintext highlighter-rouge">module_name</code> is specified one can extract the module name. This is a shortcut to <code class="language-plaintext highlighter-rouge">module.name</code> interface <a href="https://github.com/stephenslab/dsc2/issues/72">we’ve discussed before</a>. This is particularly useful for ensembles. Suppose we have an ensemble <code class="language-plaintext highlighter-rouge">ash = (ash_hu, ash_n)</code>. Then running</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">mse</span><span class="p">,</span> <span class="n">datamaker</span><span class="p">.</span><span class="n">nsamp</span><span class="p">,</span> <span class="n">ash</span> 
+<span class="k">where</span> <span class="p">...</span>
+</code></pre></div></div>
+<p>will make a table that looks like:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>mse</th>
+      <th style="text-align: center">datamaker.nsamp</th>
+      <th style="text-align: right">ash</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>xx</td>
+      <td style="text-align: center">1000</td>
+      <td style="text-align: right">ash_hu</td>
+    </tr>
+    <tr>
+      <td>xx</td>
+      <td style="text-align: center">1000</td>
+      <td style="text-align: right">ash_n</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This can also be generalized to selecting or conditioning on common parameters in emsemble case. For example, suppose <code class="language-plaintext highlighter-rouge">simulate = (datamaker1, datamaker2)</code> then the query</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">mse</span><span class="p">,</span> <span class="n">simulate</span><span class="p">,</span> <span class="n">simulate</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">ash</span>
+<span class="k">where</span> <span class="n">simulate</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1000</span>
+</code></pre></div></div>
+<p>will be processed as follows:</p>
+
+<ol>
+  <li>The <code class="language-plaintext highlighter-rouge">where</code> clause will be expanded to <code class="language-plaintext highlighter-rouge">where datamaker1.n &lt;= 1000 or datamaker2.n &lt;= 1000</code></li>
+  <li>The <code class="language-plaintext highlighter-rouge">select</code> clause will be expanded to use module names <code class="language-plaintext highlighter-rouge">(datamaker1, datamaker2)</code></li>
+  <li>The resulting table should be consolidated into</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>mse  </th>
+      <th style="text-align: center"> simulate  </th>
+      <th style="text-align: center">simulate.n    </th>
+      <th style="text-align: right">ash</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>xx</td>
+      <td style="text-align: center">datamaker1</td>
+      <td style="text-align: center">1000</td>
+      <td style="text-align: right">ash_hu</td>
+    </tr>
+    <tr>
+      <td>xx</td>
+      <td style="text-align: center">datamaker2</td>
+      <td style="text-align: center">1000  </td>
+      <td style="text-align: right">  ash_n</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In fact <code class="language-plaintext highlighter-rouge">1</code> would be most difficult because my intention is to keep the <code class="language-plaintext highlighter-rouge">where</code> clause extremely flexible – this means fully compatible with SQL so that we can harness as much SQL magic as possible. It would not be too bad for me to see this hybrid statement:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">score_beta</span><span class="p">.</span><span class="n">mse</span><span class="p">,</span> <span class="n">simulate</span><span class="p">,</span> <span class="n">simulate</span><span class="p">.</span><span class="n">n</span><span class="p">,</span> <span class="n">ash</span>
+<span class="k">where</span> <span class="n">datamaker1</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1000</span> <span class="k">or</span> <span class="n">datamaker2</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1000</span>
+</code></pre></div></div>
+
+<h2 id="can-we-query-based-on-input--output">Can we query based on input / output?</h2>
+<p>Not for now, because pipeline variables are generated only at execution, and are passed along in DSC via files. They are basically “capsuled”. However with additional work we can query on them, ie, make a first query without these conditions, then for each RDS file involved so far, we load it from disk, compare it with the condition, and drop the entire row (of pipeline instance) if it does not satisfy it. It would not need us to change our design to make it happen. Just some post-processing.</p>
+
+<p>When this is supported we have to use <code class="language-plaintext highlighter-rouge">$</code> to refer to pipeline variables in queries.</p>
+
+<h1 id="challenges-to-new-syntax-and-burden-on-workflow-engine">Challenges to new syntax and burden on workflow engine</h1>
+
+<p>Easy part:</p>
+<ul>
+  <li>Syntax are changed, not execution logic:
+    <ul>
+      <li>For DSC executor, the concept of <code class="language-plaintext highlighter-rouge">block</code> / <code class="language-plaintext highlighter-rouge">step</code> helps consolidating tasks and preparing DAG</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Hard part:</p>
+<ul>
+  <li>Interpolating long scripts with DSC variables for distributed execution:
+    <ul>
+      <li>There is no shared <code class="language-plaintext highlighter-rouge">master</code> script. All tasks have to be generated beforehand.</li>
+      <li>Line-by-line string interpolation via regex is slow</li>
+      <li>Solution: rebuild wildcard system with Python 3.6 <code class="language-plaintext highlighter-rouge">f-string</code> method.</li>
+    </ul>
+  </li>
+  <li>Cross-platform file sync
+    <ul>
+      <li>Not only file sync, but also signature sync …</li>
+      <li>To sync or not to? A deeper question is what’s the model for DSC project bundling and sharing?</li>
+      <li>Therefore only the user interface is changed, not the implementation</li>
+    </ul>
+  </li>
+  <li>More robust data exchange model
+    <ul>
+      <li>Maybe time to move away from rpy2</li>
+    </ul>
+  </li>
+</ul>
+
+              <nav class="c-page__nav">
+  
+
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>

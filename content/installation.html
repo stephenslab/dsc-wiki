@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>DSC Installation Guide</title>
+  <meta name="description" content="">
+
+  <link rel="canonical" href="https://stephenslab.github.io/dsc-wiki/content/installation.html">
+  <link rel="alternate" type="application/rss+xml" title="DSC" href="https://stephenslab.github.io/dsc-wiki/feed.xml">
+
+  <meta property="og:url"         content="https://stephenslab.github.io/dsc-wiki/content/installation.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="DSC Installation Guide" />
+<meta property="og:description" content="" />
+<meta property="og:image"       content="" />
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":
+    "https://stephenslab.github.io/dsc-wiki/content/installation.html",
+  "headline":
+    "DSC Installation Guide",
+  "datePublished":
+    "2020-02-19T09:05:32-06:00",
+  "dateModified":
+    "2020-02-19T09:05:32-06:00",
+  "description":
+    "",
+  "author": {
+    "@type": "Person",
+    "name": "Stephens Lab, University of Chicago"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://stephenslab.github.io/dsc-wiki",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://stephenslab.github.io/dsc-wiki",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/dsc-wiki/images/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    CommonHTML: {
+        linebreaks: {
+            automatic: true,
+        },
+    },
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+
+  <!-- DOM updating function -->
+  <script>
+const runWhenDOMLoaded = cb => {
+  if (document.readyState != 'loading') {
+    cb()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', cb)
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') cb()
+    })
+  }
+}
+
+// Helper function to init things quickly
+initFunction = function(myfunc) {
+  runWhenDOMLoaded(myfunc);
+  document.addEventListener('turbolinks:load', myfunc);
+};
+</script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '/dsc-wiki';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="/dsc-wiki/assets/js/anchor.min.js"  type="text/javascript"></script>
+  <script>
+
+initFunction(function () {
+    anchors.add("main h1, main h2, main h3, main h4")
+});
+
+</script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="/dsc-wiki/assets/js/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+
+  <!-- Load the auto-generating TOC -->
+  <script src="/dsc-wiki/assets/js/tocbot.min.js"  type="text/javascript"></script>
+  <script>
+var initToc = function () {
+  tocbot.init({
+    tocSelector: 'nav.onthispage',
+    contentSelector: '.c-textbook__content',
+    headingSelector: 'h2, h3',
+    orderedList: false,
+    collapseDepth: 6,
+    listClass: 'toc__menu',
+    activeListItemClass: "",  // Not using
+    activeLinkClass: "", // Not using
+  });
+  tocbot.refresh();
+}
+initFunction(initToc);
+</script>
+
+  <!-- Google analytics -->
+  <script src="/dsc-wiki/assets/js/ga.js" async></script>
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
+
+  <!-- Load JS that depends on site variables -->
+  <script>
+/**
+ * Set up copy/paste for code blocks
+ */
+const codeCellId = index => `codecell${index}`
+
+const clipboardButton = id =>
+  `<a id="copy-button-${id}" class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
+    <img src="/dsc-wiki/assets/images/copy-button.svg" alt="Copy to clipboard">
+  </a>`
+
+// Clears selected text since ClipboardJS will select the text when copying
+const clearSelection = () => {
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges()
+  } else if (document.selection) {
+    document.selection.empty()
+  }
+}
+
+// Changes tooltip text for two seconds, then changes it back
+const temporarilyChangeTooltip = (el, newText) => {
+  const oldText = el.getAttribute('data-tooltip')
+  el.setAttribute('data-tooltip', newText)
+  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
+}
+
+const addCopyButtonToCodeCells = () => {
+  // If ClipboardJS hasn't loaded, wait a bit and try again. This
+  // happens because we load ClipboardJS asynchronously.
+  if (window.ClipboardJS === undefined) {
+    setTimeout(addCopyButtonToCodeCells, 250)
+    return
+  }
+
+  const codeCells = document.querySelectorAll('div.c-textbook__content > div.highlighter-rouge > div.highlight > pre, div.input_area pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("copy-button" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
+    }
+  })
+
+  const clipboard = new ClipboardJS('.copybtn')
+  clipboard.on('success', event => {
+    clearSelection()
+    temporarilyChangeTooltip(event.trigger, 'Copied!')
+  })
+
+  clipboard.on('error', event => {
+    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
+  })
+
+  // Get rid of clipboard before the next page visit to avoid memory leak
+  document.addEventListener('turbolinks:before-visit', () =>
+    clipboard.destroy()
+  )
+}
+
+initFunction(addCopyButtonToCodeCells);
+</script>
+
+
+  <!-- Hide cell code -->
+  <script>
+    /**
+    Add buttons to hide code cells
+    */
+
+
+    var setCodeCellVisibility = function (inputField, kind) {
+        // Update the image and class for hidden
+        var id = inputField.getAttribute('data-id');
+        var codeCell = document.querySelector(`#${id} div.highlight`);
+
+        if (kind === "visible") {
+            codeCell.classList.remove('hidden');
+            inputField.checked = true;
+        } else {
+            codeCell.classList.add('hidden');
+            inputField.checked = false;
+        }
+    }
+
+    var toggleCodeCellVisibility = function (event) {
+        // The label is clicked, and now we decide what to do based on the input field's clicked status
+        if (event.target.tagName === "LABEL") {
+            var inputField = event.target.previousElementSibling;
+        } else {
+            // It is the span inside the target
+            var inputField = event.target.parentElement.previousElementSibling;
+        }
+
+        if (inputField.checked === true) {
+            setCodeCellVisibility(inputField, "visible");
+        } else {
+            setCodeCellVisibility(inputField, "hidden");
+        }
+    }
+
+
+    // Button constructor
+    const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
+
+    var addHideButton = function () {
+        // If a hide button is already added, don't add another
+        if (document.querySelector('div.hidecode input') !== null) {
+            return;
+        }
+
+        // Find the input cells and add a hide button
+        document.querySelectorAll('div.input_area').forEach(function (item, index) {
+            if (!item.classList.contains("hidecode")) {
+                // Skip the cell if it doesn't have a hidecode class
+                return;
+            }
+
+            const id = codeCellId(index)
+            item.setAttribute('id', id);
+            // Insert the button just inside the end of the next div
+            item.querySelector('div').insertAdjacentHTML('beforeend', hideCodeButton(id))
+
+            // Set up the visibility toggle
+            hideLink = document.querySelector(`#${id} div.highlight + input + label`);
+            hideLink.addEventListener('click', toggleCodeCellVisibility)
+        });
+    }
+
+
+    // Initialize the hide buttos
+    var initHiddenCells = function () {
+        // Add hide buttons to the cells
+        addHideButton();
+
+        // Toggle the code cells that should be hidden
+        document.querySelectorAll('div.hidecode input').forEach(function (item) {
+            setCodeCellVisibility(item, 'hidden');
+            item.checked = true;
+        })
+    }
+
+    initFunction(initHiddenCells);
+
+</script>
+
+  <!-- Load custom website scripts -->
+  <script src="/dsc-wiki/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/dsc-wiki/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/dsc-wiki/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="/dsc-wiki/assets/js/lunr/lunr.min.js" type="text/javascript"></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+</head>
+
+  <body>
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="https://github.com/stephenslab/dsc"><img src="/dsc-wiki/images/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">DSC</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+        <li class="c-sidebar__chapter"><a class="c-sidebar__entry" href="/dsc-wiki/search.html"><img src="/dsc-wiki/images/search.svg" alt="Search This Wiki"></a></li>
+        
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/overview.html"
+        >
+          
+          Home
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry c-sidebar__entry--active"
+          href="/dsc-wiki/installation.html"
+        >
+          
+          Installation
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          FAQ
+        </a>
+
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/reference/reference.html"
+        >
+          
+          Reference manual
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Terminology.html"
+                >
+                  
+                  Terminology
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Configuration.html"
+                >
+                  
+                  DSC configuration syntax
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Execution.html"
+                >
+                  
+                  Running DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/DSC_Filtering.html"
+                >
+                  
+                  Extracting DSC results
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Command_Options.html"
+                >
+                  
+                  Command-line reference
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Road_Map.html"
+                >
+                  
+                  Development roadmap
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Implementation_Details.html"
+                >
+                  
+                  Implementation details
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/reference/Unsupported_Features.html"
+                >
+                  
+                  Unsupported features
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">User guide</li>
+        
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/first_course/first_course.html"
+        >
+          
+          First course on DSC
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_DSC.html"
+                >
+                  
+                  A brief introduction to DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_I.html"
+                >
+                  
+                  DSC basics, part I
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Intro_Syntax_II.html"
+                >
+                  
+                  DSC basics, part II
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Prototype_Tips.html"
+                >
+                  
+                  Developing benchmarks
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Debug_Tips.html"
+                >
+                  
+                  Debug in DSC
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/first_course/Syntax_Tips.html"
+                >
+                  
+                  Syntax tips
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/faq.html"
+        >
+          
+          Other tutorials
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_Python.html"
+                >
+                  
+                  Working with Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Data.html"
+                >
+                  
+                  DSC data flow
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/5_Minutes_RPY.html"
+                >
+                  
+                  Working with R and Python
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Multiple_Pipelines.html"
+                >
+                  
+                  Running multiple pipelines
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Rmd_Executable.html"
+                >
+                  
+                  Using Rmd files as module executables
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/Remote_Computations.html"
+                >
+                  
+                  Running DSC on remote computers
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/advanced_course/DSC_Docker.html"
+                >
+                  
+                  Running DSC in Docker
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+      
+      
+
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter">
+        <a class="c-sidebar__entry "
+          href="/dsc-wiki/examples.html"
+        >
+          
+          Benchmark examples
+        </a>
+
+        
+
+          
+          
+          
+          
+
+          
+
+          <ul class="c-sidebar__sections ">
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_1.html"
+                >
+                  
+                  R Example 1
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+              
+              
+
+              <li class="c-sidebar__section">
+                <a class="c-sidebar__entry "
+                  href="/dsc-wiki/examples/R_Example_2.html"
+                >
+                  
+                  R Example 2
+                </a>
+
+                
+                
+
+              </li>
+              
+            
+          </ul>
+        
+      </li>
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Copyright (c) 2016-2019 <br> <a href="http://home.uchicago.edu/gaow">Gao Wang</a>, <a href="http://stephenslab.uchicago.edu">Matthew Stephens</a>, <a href="https://pcarbo.github.io">Peter Carbonetto</a> and contributors.<br></p>
+</nav>
+
+      
+      <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+      <aside class="sidebar__right">
+          <header><h4 class="nav__title"><i class="fa fa-list"></i>   Contents</h4></header>
+          <nav class="onthispage">
+          </nav>
+      </aside>
+      
+      <main class="c-textbook__page" tabindex="-1">
+          <div class="o-wrapper">
+            <div class="c-sidebar-toggle">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <button
+    id="js-sidebar-toggle"
+    class="hamburger hamburger--arrowalt is-active"
+  >
+    <span class="hamburger-box">
+      <span class="hamburger-inner"></span>
+    </span>
+    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
+  </button>
+</div>
+
+            
+
+            <div class="c-textbook__content">
+              <h1 id="dsc-installation-guide">DSC Installation Guide</h1>
+
+<p>Follow these steps to get started using DSC.</p>
+
+<p>If you encounter a problem during the installation procedure, please see the <a href="faq#installation-troubleshoot">“Troubleshooting installation”</a> section in the FAQ for a possible solution.</p>
+
+<p><em>Note:</em> If you have <a href="https://www.docker.com">Docker</a>, you can follow the <a href="advanced_course/DSC_Docker">Docker instructions</a> instead of installing DSC from source. Once you have completed the Docker instructions, jump directly to Installation Step 5 below.</p>
+
+<p><em>Note to developers:</em> Please refer to the installation instructions in the <code class="language-plaintext highlighter-rouge">README</code> of the <a href="https://github.com/stephenslab/dsc">dsc repository</a>.</p>
+
+<h2 id="overview-of-dsc-components">Overview of DSC components</h2>
+
+<p>DSC consists of several components that interact with each other. Before beginning the installation, it is helpful to know: (1) what is being installed, (2) where DSC is installed, and (3) what software is needed to run DSC successfully.</p>
+
+<p>To install DSC, you will need to have the following software on your computer:</p>
+
+<ol>
+  <li>
+    <p><a href="http://python.org">Python</a> (version 3.6 or greater).</p>
+  </li>
+  <li>
+    <p>Several Python modules, including NumPy and Pandas.</p>
+  </li>
+  <li>
+    <p>Optionally, <a href="https://www.r-project.org">R</a>. Although not required, to get the full benefit of DSC we recommend installing R.</p>
+  </li>
+</ol>
+
+<p>The DSC software consists of the following three components:</p>
+
+<ol>
+  <li>
+    <p>A <a href="https://docs.python.org/3/tutorial/modules.html">Python module</a> called <code class="language-plaintext highlighter-rouge">dsc</code>. It is installed in the same location as other Python modules (unless you choose to override the standard choice).</p>
+  </li>
+  <li>
+    <p>Two Python executables, <code class="language-plaintext highlighter-rouge">dsc</code> and <code class="language-plaintext highlighter-rouge">dsc-query</code>, that can be run from the command-line shell. These executables are also installed and managed by the <code class="language-plaintext highlighter-rouge">pip</code> program. It is installed in the same location as other Python executables (unless you choose to override the standard choice).</p>
+  </li>
+  <li>
+    <p>An R package called <code class="language-plaintext highlighter-rouge">dscrutils</code> that provides an interface for querying DSC results in R, as well as tools to run R code inside a DSC program. It is installed in the same location as other R packages.</p>
+  </li>
+</ol>
+
+<p>A complete installation of DSC not only involves installing these components, but also setting up your computing environment to ensure that these components can communicate with each other. We will explain how to do this in the steps below.</p>
+
+<h2 id="1-install-python--36">1. Install python &gt;= 3.6</h2>
+
+<p>To use DSC, you must have Python version 3.6 or greater. There are several ways you can install Python &gt;= 3.6.</p>
+
+<p><strong>Our recommendation:</strong> Install Python via a <a href="https://conda.io/docs">conda</a>-based package manager such as <a href="https://conda.io/miniconda.html">Miniconda</a> or <a href="https://anaconda.org/">Anaconda</a>. If you are starting from scratch, we recommend <a href="https://conda.io/miniconda.html">Miniconda</a>. See <a href="faq#installation-troubleshoot">here</a> for additional advice on installing and configuring Miniconda.</p>
+
+<p>** Other options:** DSC will also work with standalone distributions of Python (e.g., downloaded from <a href="https://www.python.org">Python.org</a>), and the instructions below should work regardless of how Python is installed on your computer. However, we recommend <code class="language-plaintext highlighter-rouge">conda</code> because it will provide easy access to various Python packages DSC depends on, thus making it a lot easier to install DSC.</p>
+
+<h2 id="2-check-your-python-installation">2. Check your Python installation</h2>
+
+<p>DSC is distributed via <a href="https://pypi.python.org/pypi/dsc">pypi</a>. The simplest way to install a Python module from pypi is with <code class="language-plaintext highlighter-rouge">pip</code>. <a href="https://pip.pypa.io/en/stable/installing">All recent Python versions are by default bundled with pip</a>. Before running <code class="language-plaintext highlighter-rouge">pip</code>, check that you are running the version bundled with Python &gt;= 3.6:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">--version</span>
+pip <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>or</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">--version</span>
+pip3 <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>If the reported Python version is or greater than 3.6.0 and <code class="language-plaintext highlighter-rouge">pip</code> is reported to come from that version (eg. <code class="language-plaintext highlighter-rouge">pip 9.0.1 from /path/to/python (python 3.6)</code>), then you are ready for the next step.</p>
+
+<p><strong>Important:</strong> <em>In the instructions below, we assume your Python 3.6+ executable is <code class="language-plaintext highlighter-rouge">python</code>, and your pip (python 3.6+) executable is <code class="language-plaintext highlighter-rouge">pip</code>. However, you might need to replace <code class="language-plaintext highlighter-rouge">python</code> with <code class="language-plaintext highlighter-rouge">python3</code> and <code class="language-plaintext highlighter-rouge">pip</code> with <code class="language-plaintext highlighter-rouge">pip3</code>.</em></p>
+
+<p>If you already have an old version of Miniconda or Anaconda installed, but you do not have Python &gt;= 3.6, see <a href="faq#installation-troubleshoot">here</a> for advice on how to proceed.</p>
+
+<h2 id="3-install-or-upgrade-dsc">3. Install (or upgrade) DSC</h2>
+
+<p>We provide two sets of installation instructions: Python installed with <code class="language-plaintext highlighter-rouge">conda</code> (<em>i.e.</em>, Anaconda or Miniconda), and Python not installed with <code class="language-plaintext highlighter-rouge">conda</code>.</p>
+
+<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda">3a. If Python is installed with <code class="language-plaintext highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">conda</code>, install DSC from the conda-forge channel:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge dsc
+</code></pre></div></div>
+
+<h3 id="3b-if-python-is-not-installed-with-conda">3b. If Python is <em>not</em> installed with <code class="language-plaintext highlighter-rouge">conda</code></h3>
+
+<p>Run this command to install or upgrade DSC (and any Python dependencies that remain uninstalled):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-U</span> <span class="nt">--upgrade-strategy</span> only-if-needed dsc
+</code></pre></div></div>
+
+<p>However, we caution that:</p>
+
+<ul>
+  <li>
+    <p>You must have both <code class="language-plaintext highlighter-rouge">C</code> and <code class="language-plaintext highlighter-rouge">Fortran</code> compilers (and accompanying libraries).</p>
+  </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">pip</code> command may take a long time to run because several packages will need to be built from source.</p>
+  </li>
+  <li>
+    <p>Installation of some packages may fail. If so, try running the same command again; <em>sometimes running the same <code class="language-plaintext highlighter-rouge">pip</code> command a second time works!</em></p>
+  </li>
+</ul>
+
+<p>If you are having difficulty installing DSC and its dependnencies directly from source, we recommend switching to using <code class="language-plaintext highlighter-rouge">conda</code>. Since <code class="language-plaintext highlighter-rouge">conda</code> installs binary packages that have already been compiled, this saves you from having to configure the correct compiler settings on your local machine.</p>
+
+<h2 id="4-install-modules-for-network-visualization-of-benchmarks-optional">4. Install modules for network visualization of benchmarks (optional)</h2>
+
+<p>If you’d like to be able to create a network visualization of your benchmarks, you’ll need to install some additional Python modules. This is an entirely optional feature which will not affect the running of your DSC benchmarks.</p>
+
+<h3 id="3a-if-python-is-installed-with-conda-anaconda-or-miniconda-1">3a. If Python is installed with <code class="language-plaintext highlighter-rouge">conda</code> (Anaconda or Miniconda)</h3>
+
+<p>Run the following:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge python-graphviz imageio pillow
+</code></pre></div></div>
+
+<h3 id="3b-if-python-is-not-installed-with-conda-1">3b. If Python is <em>not</em> installed with <code class="language-plaintext highlighter-rouge">conda</code></h3>
+
+<p>Run the following:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-U</span> <span class="nt">--upgrade-strategy</span> only-if-needed graphviz imageio pillow
+</code></pre></div></div>
+
+<h2 id="5-verify-installation-of-python-module">5. Verify installation of Python module</h2>
+
+<p>Check that the Python module is installed and recognized in your current shell environment by running this command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip show dsc
+</code></pre></div></div>
+
+<p>After running this command, you should see something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Name: dsc
+Version: 0.2.7.2
+Summary: Implementation of Dynamic Statistical Comparisons
+Home-page: https://github.com/stephenslab/dsc
+Author: Gao Wang
+Author-email: gaow@uchicago.edu
+License: MIT
+Location: /home/jsmith/anaconda3/lib/python3.6/site-packages
+Requires: numpy, pandas, sympy, numexpr, sos, sos-pbs, h5py, pyarrow, sqlalchemy, msgpack-python
+</code></pre></div></div>
+
+<h2 id="6-test-installation-of-python-executables">6. Test installation of Python executables</h2>
+
+<p>Run the following commands to verify that the Python executables are accessible in your current shell environment:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dsc <span class="nt">--version</span>
+dsc-query <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>For both commands, you should see the software version number printed to the screen.</p>
+
+<p>If you get an error, and you have verified that the Python module has been successfully installed, the most likely explanation is that the Python executables are stored in a location that is not in your command search path. In particular, this location needs to be included in the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable.</p>
+
+<p><em>NOTE: I think it would be better to move this to the FAQ Troubleshooting section, with title, “What do I do when it says that commands dsc or dsc-query cannot be found”?</em></p>
+
+<p>The most reliable is to way to find the location of the executables is to run these two commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip show dsc
+pip show dsc <span class="nt">--files</span> | <span class="nb">grep </span>dsc-query
+</code></pre></div></div>
+
+<p>The first command gives the install location of the Python module, and the second command gives the install location of the executables <em>which may be relative to the Python module.</em> Based on this, you can run the following command in the bash shell to add the appropriate location to your command search path:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>&lt;python-exec-path&gt;:<span class="nv">$PATH</span>
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">&lt;python-exec-path&gt;</code> was identified from running the commands above. For example, in Anaconda the first and second install locations may look something like <code class="language-plaintext highlighter-rouge">/home/jsmith/anaconda3/lib/python3.6/site-packages</code> and <code class="language-plaintext highlighter-rouge">../../../bin/dsc-query</code>, in which case running</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/jsmith/anaconda3/lib:<span class="nv">$PATH</span>
+</code></pre></div></div>
+
+<p>should make the <code class="language-plaintext highlighter-rouge">dsc</code> and <code class="language-plaintext highlighter-rouge">dsc-query</code> commands accessible.</p>
+
+<h2 id="7-install-r-optional">7. Install R (optional)</h2>
+
+<p>R is optional, but highly recommended—it is useful for querying DSC results. It is also required for running any DSC benchmarks that run R code. Follow the instructions on the <a href="https://cran.r-project.org">CRAN website</a> to install R on your computer. DSC also works with <a href="http://rstudio.com">RStudio</a>, although an additional setup step may be required for RStudio.</p>
+
+<h2 id="8-install-dscrutils-r-package-optional">8. Install <code class="language-plaintext highlighter-rouge">dscrutils</code> R package (optional)</h2>
+
+<p>The simplest way to install the <code class="language-plaintext highlighter-rouge">dscrutils</code> package is to start up R or RStudio and run the following code:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span><span class="w">
+</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"stephenslab/dsc"</span><span class="p">,</span><span class="n">subdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dscrutils"</span><span class="p">,</span><span class="n">force</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This will also install the <a href="https://github.com/hadley/devtools">devtools</a> package.</p>
+
+<h2 id="9-ensure-dsc-query-is-recognized-in-r-optional">9. Ensure <code class="language-plaintext highlighter-rouge">dsc-query</code> is recognized in R (optional)</h2>
+
+<p>In a previous step, you verified that <code class="language-plaintext highlighter-rouge">dsc-query</code> can be run from the command-line shell. In order to query DSC results, we also need to make sure that it can be run inside your preferred R environment.</p>
+
+<p>Start up R or RStudio, and run</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">system</span><span class="p">(</span><span class="s2">"dsc-query --version"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If this outputs a version number, then you are ready to use the <code class="language-plaintext highlighter-rouge">dscrutils</code> package. If this command reports an error, then most likely you will need to fix the command search path inside R or RStudio; see the <a href="faq#installation-troubleshoot">Troubleshooting</a> section of the FAQ page for instructions on how to do this.</p>
+
+<h2 id="10-start-your-first-dsc-project">10. Start your first DSC project</h2>
+
+<p><em>If you have reached this point, you have everything you need to start working with DSC.</em></p>
+
+<p>Start from <a href="first_course/Intro_Syntax_I">here</a> for a first course on DSC. See <a href="first_course/first_course">here</a> for more introductory tutorials.</p>
+
+              <nav class="c-page__nav">
+  
+
+  
+</nav>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>
