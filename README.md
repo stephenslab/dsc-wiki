@@ -43,7 +43,7 @@ to build the website automatically once a commit is received. Here is how it was
 3. Add the token to [`secrets`](https://github.com/stephenslab/dsc-wiki/settings/secrets) with name `ACESS_TOKEN` and value `username:token`.
 4. Go to [settings](https://github.com/stephenslab/dsc-wiki/settings) of the repository, in "GitHub Pages" section change "Source" to `gh-pages-branch`.
 
-After these settings, you can make changes to source codes in this repository and the changes will be reflected on the [wiki website](https://stephenslab.github.io/) a minute or two, after your changes are pushed to the `master` branch of this repository.
+After these settings, you can make changes to source codes in this repository and the changes will be reflected on the [wiki website](https://stephenslab.github.io/) a minute or two, after your changes are pushed to the `master` branch of this repository. You can track the progress under [`Actions`](https://github.com/stephenslab/dsc-wiki/actions) tab.
 
 ## Build the website manually
 
