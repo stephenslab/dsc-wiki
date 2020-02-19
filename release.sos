@@ -4,8 +4,11 @@
 [global]
 import getpass
 parameter: workdir = 'jupyter-book'
+parameter: htmldir = 'docs'
 # Set to True to preview it at http://0.0.0.0:4000/${workdir}
 parameter: serve = False
+# Run docker based jekyll. Use --no-use-docker to disable it
+parameter: use_docker = True
 
 [setup: provides = f'{workdir}/Gemfile']
 parameter: version = '0.5.2'
@@ -13,10 +16,10 @@ is_master = version == 'master'
 depends: Py_Module(f'jupyter_book{("==%s" % version) if not is_master else ""}', autoinstall = False if is_master else True)
 if is_master: run('pip install git+https://github.com/jupyter/jupyter-book -U')
 bash: expand = '${ }'
-	rm -rf ${workdir} && jupyter-book create ${workdir} 
+	rm -rf ${workdir} && jupyter-book create ${workdir}
 	rm -rf ${workdir}/content/* && rm -f ${workdir}/Gemfile.lock
 
-[build_1]
+[build]
 depends: executable('rsync'), f'{workdir}/Gemfile'
 from sos.utils import env
 bash: expand = '${ }'
@@ -34,14 +37,14 @@ for x in glob.glob('src/*/[!_]*.ipynb'):
 	if x.is_file():
 		run(f'''{exec} 's/scope=col/scope="col"/g; s/scope=row/scope="row"/g' {x}''', stderr=False, stdout=False)
 
-[build_2]
+[make_jekyll_image]
 docker_build: workdir = workdir, tag = f'{getpass.getuser()}/jekyll-book'
 	FROM jekyll/jekyll:4.0.0
 	RUN apk --update add make gcc g++ libc-dev
 	COPY Gemfile .
-	RUN gem install bundle && bundle install 
+	RUN gem install bundle && bundle install
 
-[build_3]
+[run_jekyll_image]
 depends: executable('docker')
 bash:  workdir = workdir, expand = "${ }"
 	docker container stop $(docker container ls -q --filter ancestor=${getpass.getuser()}/jekyll-book) &> /dev/null || true
@@ -51,16 +54,28 @@ bash:  workdir = workdir, expand = "${ }"
    		${getpass.getuser()}/jekyll-book \
 		 bundle exec jekyll ${'build' if not serve else 'serve --host 0.0.0.0'}
 
-[build_4]
-stop_if(serve)
+[run_jekyll]
+depends: executable('bundle')
+bash:  workdir = workdir, expand = "${ }"
+	${("echo 'Preview the website at: http://0.0.0.0:4000/lab-wiki; type **one** ctrl-c to stop it.'") if serve else ""}
+ 	bundle exec jekyll ${'build' if not serve else 'serve --host 0.0.0.0 > /dev/null'}
+
+[make_site]
 depends: executable('rsync')
 bash: expand = '${ }'
-	mkdir -p docs
-	rsync -auz --delete ${workdir}/_site/* docs/
-	rsync -auz --delete src/external docs/
-	rm -f docs/runtime.txt
-	cp src/index.html docs/index.html
-	echo "Deployed to the docs/ folder"
+	mkdir -p ${htmldir}
+	rsync -auz --delete ${workdir}/_site/* ${htmldir}/
+	rsync -auz --delete src/external ${htmldir}/
+	rm -f ${htmldir}/runtime.txt
+	cp src/index.html ${htmldir}/index.html
+	echo "Deployed to the ${htmldir}/ folder"
 
 [default]
 sos_run('build')
+if (not use_docker):
+	sos_run('run_jekyll')
+else:
+	sos_run('make_jekyll_image')
+	sos_run('run_jekyll_image')
+stop_if(serve or len(htmldir)==0)
+sos_run('make_site')
