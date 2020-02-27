@@ -5,3 +5,4 @@ presentations/*.pdf
 docs/__pycache__/*
 docs/content
 jupyter-book
+src/first_course/.Rhistory
