@@ -212,4 +212,4 @@ Unsurprisingly, running these code by itself produces no error message -- this i
 
 ## More output info
 
-The run-time information are kept in greater when running DSC with verbosity level greater than `2`. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with `-v 4` and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics
+The run-time information are kept in greater when running DSC with verbosity level greater than `2`. Though typically unnecessary, if you still cannot fix issues at this point it may help re-running benchmark with `-v 4` and look into the screen output (or, redirect them to a file) for more run-time information to help performing diagnostics.
