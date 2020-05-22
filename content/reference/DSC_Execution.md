@@ -149,12 +149,14 @@ These parameters are specified in the rest of `DSC` block:
 * `python_modules`: check required Python3 modules, and install from pip if not available.
 * `container`: docker container images to use, eg, `gaow/susie-paper:latest`
 * `container_engine`: optionally specify engine to run containers, can be either `docker` or `singularity`. Default is `docker`.
+* `seed`: what to use for random number generator seed setting, can be either `HASH` (use a seed based on HASH of module instance script) or `REPLICATE` (use DSC replicate ID as seed). Default is `HASH`.
 * `work_dir`: work directory where benchmarking will take place.
 * `output`: folder name to store benchmark output files.
 * `global`: defines global variables which can be used in definition of module parameters through [variable wildcard](Unsupported_Features#wildcard-operators) `$()`.
 * `replicate`: number of replicate to run the benchmark (default is 1).
 
 ### Override runtime options in modules with `@CONF`
+
 Among these DSC runtime options, the following can be customized on per-module basis:
 
 - `exec_path`, `lib_path`, `work_dir`, `R_libs`, `python_modules`
@@ -189,6 +191,7 @@ simulate: simulate.R
 
 - `lib_path` when specified under `@CONF`, all relevant scripts (of the same type as the executable, eg. `R` or `Py`) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.
 - `R_libs` when specified under `@CONF` will automatically load all listed libraries via `library(...)` prior to running the module script. **Please use `DSC::R_libs` instead if this is not the desired behavior**. The same holds for `python_modules`.
+- `seed` can be used to configure module specific behavior, for example `seed = REPLICATE` will use DSC replicate ID as seed for the module. This is useful in cases where consistent behavior among module instances is desired. For example for different parameter input to a statistical method, we may want to use the same seed for all these parameter inputs.
 
 ## Run DSC on HPC cluster or other remote computaters
 
