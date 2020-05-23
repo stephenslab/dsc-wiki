@@ -29,9 +29,9 @@
   "headline":
     "DSC syntax: basics of benchmark execution",
   "datePublished":
-    "2020-05-21T23:29:45-05:00",
+    "2020-05-23T17:39:17-05:00",
   "dateModified":
-    "2020-05-21T23:29:45-05:00",
+    "2020-05-23T17:39:17-05:00",
   "description":
     "",
   "author": {
@@ -1198,7 +1198,7 @@ dsc file.dsc <span class="nt">--target</span> simulate
   <li><code class="language-plaintext highlighter-rouge">python_modules</code>: check required Python3 modules, and install from pip if not available.</li>
   <li><code class="language-plaintext highlighter-rouge">container</code>: docker container images to use, eg, <code class="language-plaintext highlighter-rouge">gaow/susie-paper:latest</code></li>
   <li><code class="language-plaintext highlighter-rouge">container_engine</code>: optionally specify engine to run containers, can be either <code class="language-plaintext highlighter-rouge">docker</code> or <code class="language-plaintext highlighter-rouge">singularity</code>. Default is <code class="language-plaintext highlighter-rouge">docker</code>.</li>
-  <li><code class="language-plaintext highlighter-rouge">seed</code>: what to use for random number generator seed setting, can be either <code class="language-plaintext highlighter-rouge">HASH</code> (use a seed based on HASH of module instance script) or <code class="language-plaintext highlighter-rouge">REPLICATE</code> (use DSC replicate ID as seed). Default is <code class="language-plaintext highlighter-rouge">HASH</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">seed</code>: what to use for random number generator seed setting, can be either <code class="language-plaintext highlighter-rouge">DEFAULT</code> (use a seed based on both replicate ID and module instance ID) or <code class="language-plaintext highlighter-rouge">REPLICATE</code> (use DSC replicate ID as seed). Default is <code class="language-plaintext highlighter-rouge">DEFAULT</code>.</li>
   <li><code class="language-plaintext highlighter-rouge">work_dir</code>: work directory where benchmarking will take place.</li>
   <li><code class="language-plaintext highlighter-rouge">output</code>: folder name to store benchmark output files.</li>
   <li><code class="language-plaintext highlighter-rouge">global</code>: defines global variables which can be used in definition of module parameters through <a href="Unsupported_Features#wildcard-operators">variable wildcard</a> <code class="language-plaintext highlighter-rouge">$()</code>.</li>
@@ -1241,7 +1241,7 @@ dsc file.dsc <span class="nt">--target</span> simulate
 <ul>
   <li><code class="language-plaintext highlighter-rouge">lib_path</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code>, all relevant scripts (of the same type as the executable, eg. <code class="language-plaintext highlighter-rouge">R</code> or <code class="language-plaintext highlighter-rouge">Py</code>) will be kept track of. Changes to their content will result in re-execution of all instances under this module when running the benchmark.</li>
   <li><code class="language-plaintext highlighter-rouge">R_libs</code> when specified under <code class="language-plaintext highlighter-rouge">@CONF</code> will automatically load all listed libraries via <code class="language-plaintext highlighter-rouge">library(...)</code> prior to running the module script. <strong>Please use <code class="language-plaintext highlighter-rouge">DSC::R_libs</code> instead if this is not the desired behavior</strong>. The same holds for <code class="language-plaintext highlighter-rouge">python_modules</code>.</li>
-  <li><code class="language-plaintext highlighter-rouge">seed</code> can be used to configure module specific behavior, for example <code class="language-plaintext highlighter-rouge">seed = REPLICATE</code> will use DSC replicate ID as seed for the module. This is useful in cases where consistent behavior among module instances is desired. For example for different parameter input to a statistical method, we may want to use the same seed for all these parameter inputs.</li>
+  <li><code class="language-plaintext highlighter-rouge">seed</code> can be used to configure module specific behavior, for example <code class="language-plaintext highlighter-rouge">seed = REPLICATE</code> will use DSC replicate ID as seed for the module. This is useful in cases where consistent behavior among module instances is desired. For example for different parameter input to a statistical method (creating different module instances), we may want to use the same seed for all these parameter inputs.</li>
 </ul>
 
 <h2 id="run-dsc-on-hpc-cluster-or-other-remote-computaters">Run DSC on HPC cluster or other remote computaters</h2>
