@@ -29,9 +29,9 @@
   "headline":
     "DSC basics, part II",
   "datePublished":
-    "2020-05-23T17:39:17-05:00",
+    "2020-10-08T09:26:13-05:00",
   "dateModified":
-    "2020-05-23T17:39:17-05:00",
+    "2020-10-08T09:26:13-05:00",
   "description":
     "",
   "author": {
@@ -1270,7 +1270,7 @@ INFO: Elapsed time 29.389 seconds.
     <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setwd</span><span class="p">(</span><span class="s2">"~/GIT/dsc/vignettes/one_sample_location"</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">dscrutils</span><span class="p">)</span><span class="w">
 </span><span class="n">dscout</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">
-  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dsc_result"</span><span class="p">,</span><span class="w">
+  </span><span class="n">dscquery</span><span class="p">(</span><span class="n">dsc.outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"first_investigation"</span><span class="p">,</span><span class="w">
            </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"simulate.n"</span><span class="p">,</span><span class="s2">"analyze"</span><span class="p">,</span><span class="s2">"score.error"</span><span class="p">))</span><span class="w">
 </span><span class="n">nrow</span><span class="p">(</span><span class="n">dscout</span><span class="p">)</span><span class="w">
 
@@ -1323,7 +1323,7 @@ simulate 100 1000
 
 <div class="cell code_cell">
   <div class="input_area">
-    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">score</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"sq_err"</span><span class="p">)</span><span class="w">
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">dscout</span><span class="p">,</span><span class="n">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"sq_err"</span><span class="p">)</span><span class="w">
 </span><span class="n">as.table</span><span class="p">(</span><span class="n">by</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="w">
             </span><span class="n">with</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span><span class="nf">list</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span><span class="n">simulate.n</span><span class="p">)),</span><span class="w">
             </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">score.error</span><span class="p">)))</span><span class="w">
