@@ -75,6 +75,23 @@ docker run --rm --security-opt label:disable -v $(pwd):/srv/jekyll -u $(id -u):1
 
 and enter URL `http://0.0.0.0:4000/dsc-wiki/overview.html` to your browser address bar to preview.
 
+### Publish your changes
+
+The website is published to `gh-pages` branch. You need to switch to that branch and pull the updates,
+
+```
+git checkout gh-pages
+git pull
+```
+
+Then sync your `docs` folder contents previously generated to the branch's root dir:
+
+```
+rsync -azP docs/* ./ 
+```
+
+and finally commit and push.
+
 ## Work with Jupyter Notebooks
 
 `nbdime` is a good tool to work with Jupyter Notebooks for a git repo. To install:

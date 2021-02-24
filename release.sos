@@ -57,7 +57,7 @@ bash:  workdir = workdir, expand = "${ }"
 [run_jekyll]
 depends: executable('bundle')
 bash:  workdir = workdir, expand = "${ }"
-	${("echo 'Preview the website at: http://0.0.0.0:4000/lab-wiki; type **one** ctrl-c to stop it.'") if serve else ""}
+	${("echo 'Preview the website at: http://0.0.0.0:4000/dsc-wiki/overview.html; type **one** ctrl-c to stop it.'") if serve else ""}
  	bundle exec jekyll ${'build' if not serve else 'serve --host 0.0.0.0 > /dev/null'}
 
 [add_external]
