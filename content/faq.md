@@ -140,7 +140,12 @@ pip install --user dsc
 
 **What to do if I try to run `dscquery` in RStudio, and it complains that the `dsc-query` command is not found?**
 
-If you are using DSC in RStudio, you will need to adjust your `~/.Renviron` settings, e.g. if your `dsc-query` is in `/home/osboxes/miniconda3/bin` (use `which dsc-query` to figure this out) then your `~/.Renviron` should look like:
+If you are using DSC in RStudio on Linux, you will need to adjust your `~/.Renviron` settings. To edit that file from Rstudio,
+
+```r
+usethis::edit_r_environ()
+```
+which will create `~/.Renviron` and open it for you to edit on. Then for example, if your `dsc-query` is in `/home/osboxes/miniconda3/bin` (use `which dsc-query` to figure this out) then your `~/.Renviron` should look like:
 
 ```
 $ cat ~/.Renviron
@@ -148,6 +153,9 @@ PATH=/home/osboxes/miniconda3/bin:${PATH}
 ```
 
 and restart `R` to load the setting.
+
+On MacOS this file may be found at `/Library/Frameworks/R.framework/Versions/Current/Resources/etc/Renviron` (your platform may vary).
+
 
 ## Contribute
 

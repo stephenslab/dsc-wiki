@@ -29,9 +29,9 @@
   "headline":
     "FAQ",
   "datePublished":
-    "2020-10-08T09:26:13-05:00",
+    "2021-02-23T20:35:37-06:00",
   "dateModified":
-    "2020-10-08T09:26:13-05:00",
+    "2021-02-23T20:35:37-06:00",
   "description":
     "",
   "author": {
@@ -1195,13 +1195,19 @@ Thank you for installing Miniconda3!
 
 <p><strong>What to do if I try to run <code class="language-plaintext highlighter-rouge">dscquery</code> in RStudio, and it complains that the <code class="language-plaintext highlighter-rouge">dsc-query</code> command is not found?</strong></p>
 
-<p>If you are using DSC in RStudio, you will need to adjust your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> settings, e.g. if your <code class="language-plaintext highlighter-rouge">dsc-query</code> is in <code class="language-plaintext highlighter-rouge">/home/osboxes/miniconda3/bin</code> (use <code class="language-plaintext highlighter-rouge">which dsc-query</code> to figure this out) then your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> should look like:</p>
+<p>If you are using DSC in RStudio on Linux, you will need to adjust your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> settings. To edit that file from Rstudio,</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">usethis</span><span class="o">::</span><span class="n">edit_r_environ</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+<p>which will create <code class="language-plaintext highlighter-rouge">~/.Renviron</code> and open it for you to edit on. Then for example, if your <code class="language-plaintext highlighter-rouge">dsc-query</code> is in <code class="language-plaintext highlighter-rouge">/home/osboxes/miniconda3/bin</code> (use <code class="language-plaintext highlighter-rouge">which dsc-query</code> to figure this out) then your <code class="language-plaintext highlighter-rouge">~/.Renviron</code> should look like:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat ~/.Renviron
 PATH=/home/osboxes/miniconda3/bin:${PATH}
 </code></pre></div></div>
 
 <p>and restart <code class="language-plaintext highlighter-rouge">R</code> to load the setting.</p>
+
+<p>On MacOS this file may be found at <code class="language-plaintext highlighter-rouge">/Library/Frameworks/R.framework/Versions/Current/Resources/etc/Renviron</code> (your platform may vary).</p>
 
 <h2 id="contribute">Contribute</h2>
 
