@@ -51,31 +51,26 @@ You can skip this section if you are using the "Automatic deployment" method abo
 
 The website is built using [`jupyter-book`](https://github.com/jupyter/jupyter-book). We implemented a SoS workflow to streamline the process. You should have SoS installed if you have installed DSC.
 
-### First time build
+### Prerequisit
 
-To build the site for the first time on your computer you need to download `jupyter-book` and create the docker image for relevant tools to compile it. To do so, run
+To build the site for the first time on your computer you need to have `docker` installed and configured on your computer.
 
-```
-./release.sos setup
-```
+### Build website
 
-This command requires that you have `pip` installed on your computer.
-
-### Update website
-
-To build the site, simply type:
+To build the site, type:
 
 ```
-./release.sos
+docker run --rm --security-opt label:disable -v $(pwd):/srv/jekyll -u $(id -u):100 -p 4000:4000 --name wiki-server -t gaow/lab-wiki \
+	sos run release.sos
 ```
-This command requires that you have `docker` installed and configured on your computer.
 
 ### Preview your update
 
 To preview changes before pushing it, run:
 
 ```
-./release.sos serve
+docker run --rm --security-opt label:disable -v $(pwd):/srv/jekyll -u $(id -u):100 -p 4000:4000 --name wiki-server -t gaow/lab-wiki \
+	sos run release.sos --serve
 ```
 
 and enter URL `http://0.0.0.0:4000/dsc-wiki/overview.html` to your browser address bar to preview.

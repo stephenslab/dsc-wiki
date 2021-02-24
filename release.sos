@@ -7,8 +7,8 @@ parameter: workdir = 'jupyter-book'
 parameter: htmldir = 'docs'
 # Set to True to preview it at http://0.0.0.0:4000/${workdir}
 parameter: serve = False
-# Run docker based jekyll. Use --no-use-docker to disable it
-parameter: use_docker = True
+# Run docker based jekyll. Use --use-docker to enable it
+parameter: use_docker = False
 
 [setup: provides = f'{workdir}/Gemfile']
 parameter: version = '0.5.2'
